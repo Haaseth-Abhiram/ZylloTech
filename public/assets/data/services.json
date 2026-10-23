@@ -1,0 +1,196 @@
+[
+  {
+    "slug": "software-development",
+    "legacySlug": "product-strategy-consulting",
+    "title": "Software Development",
+    "tagline": "From idea to roadmap",
+    "description": "Custom software solutions designed to streamline operations, improve productivity, and support business growth.",
+    "subServices": [
+      "Enterprise Software",
+      "Business Applications",
+      "Custom Software Development"
+    ],
+    "overview": "Before any code gets written, we help you validate the idea, scope the right first version, and plan a roadmap that fits your budget and timeline.",
+    "highlights": [
+      "Discovery workshops to define scope and priorities",
+      "Feasibility studies before you commit budget",
+      "Clear, buildable product roadmaps",
+      "Technology and platform recommendations"
+    ],
+    "image": "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=1200&q=80",
+    "icon": "bi-code-slash",
+    "faqs": [
+      {
+        "q": "What does custom software development with Zyllo Tech include?",
+        "a": "We start with product strategy: discovery workshops to define scope and priorities, a feasibility study before you commit budget, and a buildable roadmap. We then design and build the software itself, such as enterprise software and business applications, and recommend the technology and platform that fit."
+      },
+      {
+        "q": "Do I need a finished specification before contacting you?",
+        "a": "No. A short description of the problem you want to solve is enough. Scoping the right first version and planning the roadmap is part of the service."
+      },
+      {
+        "q": "Can you work with a company outside India?",
+        "a": "We are based in Guntur, Andhra Pradesh, India and work remotely with clients worldwide. Collaboration runs over video calls, shared boards and written updates, and we reply to every enquiry within one business day."
+      }
+    ]
+  },
+  {
+    "slug": "web-development",
+    "legacySlug": "web-development",
+    "title": "Web Applications",
+    "tagline": "Built fast, built to grow",
+    "description": "High-performance web applications and portals engineered with modern frontends and scalable cloud APIs.",
+    "subServices": [
+      "Custom SaaS Platforms",
+      "E-Commerce & Portals",
+      "REST & GraphQL APIs"
+    ],
+    "overview": "Business websites, custom web applications and e-commerce solutions. Every build is responsive, performance-first and written as clean, documented code on an architecture that can grow.",
+    "highlights": [
+      "Fast, responsive design across all devices",
+      "Microservices and high-throughput APIs",
+      "Scalable multi-tenant databases",
+      "SEO, security, and edge performance optimization"
+    ],
+    "image": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&q=80",
+    "icon": "bi-browser-chrome",
+    "faqs": [
+      {
+        "q": "What kinds of web projects do you build?",
+        "a": "Business websites, custom web applications, SaaS products, and e-commerce solutions. Every build is responsive, performance-first, and written on scalable architecture."
+      },
+      {
+        "q": "Will my web app work well on phones and tablets?",
+        "a": "Yes. Responsive design and mobile-first performance are core to every web application we build."
+      },
+      {
+        "q": "What tech stack do you recommend?",
+        "a": "We typically use modern stacks like React, Next.js, Node.js, Python, or Go backed by PostgreSQL, Redis, and cloud infrastructure on AWS or GCP."
+      }
+    ]
+  },
+  {
+    "slug": "mobile-app-development",
+    "legacySlug": "mobile-app-development",
+    "title": "Mobile Development",
+    "tagline": "Apps people actually use",
+    "description": "Native and cross-platform mobile apps for iOS and Android delivering fluid UX and offline-first capabilities.",
+    "subServices": [
+      "iOS Applications",
+      "Android Applications",
+      "Flutter & React Native"
+    ],
+    "overview": "From intuitive user interfaces to device sensor integrations and offline sync, we build mobile apps that users love and maintain smooth 60fps performance.",
+    "highlights": [
+      "Fluid 60fps native performance",
+      "Cross-platform efficiency with Flutter and React Native",
+      "Offline-first sync and local storage",
+      "App Store and Google Play publishing support"
+    ],
+    "image": "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=1200&q=80",
+    "icon": "bi-phone",
+    "faqs": [
+      {
+        "q": "Do you build for both iOS and Android?",
+        "a": "Yes. We build native iOS (Swift) and Android (Kotlin) apps as well as cross-platform solutions with Flutter and React Native to target both platforms with a unified codebase."
+      },
+      {
+        "q": "Can you help launch the app on the App Store and Google Play?",
+        "a": "Yes, app store submission, review guidelines compliance, and deployment management are fully included."
+      }
+    ]
+  },
+  {
+    "slug": "ai-solutions",
+    "legacySlug": "ai-solutions",
+    "title": "AI & Machine Learning",
+    "tagline": "Practical, not novelty",
+    "description": "AI-powered applications, LLM workflows, and process automation that enable smarter business decisions.",
+    "subServices": [
+      "AI Chatbots & Agents",
+      "Process Automation",
+      "Enterprise AI Integration"
+    ],
+    "overview": "We integrate AI where it actually saves time: smart automation, in-product copilots, and workflow assistants built around real business data.",
+    "highlights": [
+      "Workflow automation that saves measurable engineering and operational hours",
+      "In-product AI copilots, assistants, and document QA",
+      "Custom models and vector search built around your proprietary data",
+      "Audited for privacy and enterprise compliance"
+    ],
+    "image": "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200&q=80",
+    "icon": "bi-robot",
+    "faqs": [
+      {
+        "q": "What AI solutions do you build?",
+        "a": "AI chatbots, workflow and process automation, in-product copilots, vector database RAG pipelines, and AI integrations into existing enterprise software."
+      },
+      {
+        "q": "How do you decide where AI is worth using?",
+        "a": "We integrate AI where it saves real time or solves a clear operational bottleneck, focusing on measurable business impact rather than hype."
+      }
+    ]
+  },
+  {
+    "slug": "cloud-solutions",
+    "legacySlug": "cloud-solutions",
+    "title": "Cloud & DevOps",
+    "tagline": "Scales as you grow",
+    "description": "Scalable cloud infrastructure, automated CI/CD pipelines, and DevOps for secure, reliable applications.",
+    "subServices": [
+      "Cloud Migration",
+      "Kubernetes & Docker",
+      "DevOps & CI/CD"
+    ],
+    "overview": "We architect and manage cloud infrastructure that scales smoothly with your traffic instead of falling over during peak events.",
+    "highlights": [
+      "Scalable, secure infrastructure setup on AWS, GCP, and Azure",
+      "Automated CI/CD pipelines for reliable, zero-downtime deployments",
+      "24/7 monitoring, alerting, and log aggregation",
+      "Ongoing cloud cost optimization and security audits"
+    ],
+    "image": "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=1200&q=80",
+    "icon": "bi-cloud-arrow-up",
+    "faqs": [
+      {
+        "q": "What cloud services do you provide?",
+        "a": "Cloud migration, infrastructure as code (Terraform), Docker/Kubernetes container orchestration, automated CI/CD pipelines, and 24/7 monitoring."
+      },
+      {
+        "q": "Can you move an existing on-premise application to the cloud?",
+        "a": "Yes. Cloud migration is one of our core capabilities. We plan the migration, set up secure infrastructure, and automate zero-downtime cutover."
+      }
+    ]
+  },
+  {
+    "slug": "ui-ux-design",
+    "legacySlug": "ui-ux-design",
+    "title": "UI/UX & Product Design",
+    "tagline": "Designed to convert",
+    "description": "Human-centric interface design, clickable prototypes, and design systems built for engagement and conversion.",
+    "subServices": [
+      "User Research",
+      "Wireframing & Prototyping",
+      "Design Systems"
+    ],
+    "overview": "We craft clean, intuitive interfaces that guide users effortlessly and establish a strong, trustworthy brand identity.",
+    "highlights": [
+      "Wireframes and clickable interactive prototypes in Figma",
+      "Usability testing with real target user cohorts",
+      "Comprehensive design systems for UI consistency at scale",
+      "Interfaces optimized for retention and conversion"
+    ],
+    "image": "https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?w=1200&q=80",
+    "icon": "bi-palette",
+    "faqs": [
+      {
+        "q": "Do you design before developing?",
+        "a": "Yes. We create interactive Figma prototypes and design systems so you can test and approve the exact user journey before coding begins."
+      },
+      {
+        "q": "Can you redesign our existing app or website?",
+        "a": "Yes. We audit current usability bottlenecks, interview stakeholders, and deliver a modern, conversion-focused redesign."
+      }
+    ]
+  }
+]

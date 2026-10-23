@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="page-title">Service Details | Zyllo Tech</title>
+  <meta name="description" id="page-description" content="Explore custom engineering and software services from Zyllo Tech.">
+  <link rel="icon" href="/assets/images/Zyllo_Tech_Favicon_512x512.png">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <!-- GSAP 3 & ScrollTrigger -->
+  <script src="/assets/vendor/gsap.min.js"></script>
+  <script src="/assets/vendor/ScrollTrigger.min.js"></script>
+</head>
+<body class="theme-light">
+  <!-- ==================== FULLSCREEN PAGE TRANSITION LOADER ==================== -->
+  <div id="zy-page-loader">
+    <div class="loader-ambient-left"></div>
+    <div class="loader-ambient-right"></div>
+    
+    <!-- Floating Tech Badges Matching Screenshot -->
+    <div class="loader-floating-icon icon-cyan loader-icon-1"><i class="bi bi-tools"></i></div>
+    <div class="loader-floating-icon icon-cyan loader-icon-2"><i class="bi bi-code-slash"></i></div>
+    <div class="loader-floating-icon icon-orange loader-icon-3"><i class="bi bi-lightbulb"></i></div>
+    <div class="loader-floating-icon icon-cyan loader-icon-4"><i class="bi bi-cloud"></i></div>
+    <div class="loader-floating-icon icon-orange loader-icon-5"><i class="bi bi-stars"></i></div>
+    <div class="loader-floating-icon icon-cyan loader-icon-6"><i class="bi bi-pencil"></i></div>
+    <div class="loader-floating-icon icon-cyan loader-icon-7"><i class="bi bi-phone"></i></div>
+    <div class="loader-floating-icon icon-orange loader-icon-8"><i class="bi bi-shield-check"></i></div>
+    <div class="loader-floating-icon icon-orange loader-icon-9"><i class="bi bi-palette"></i></div>
+
+    <!-- Center Hub Spinner -->
+    <div class="loader-center-hub">
+      <div class="loader-circle-wrapper">
+        <div class="loader-circle-track"></div>
+        <div class="loader-circle-spinner"></div>
+        <div class="loader-center-disc">
+          <img src="/assets/images/zyllo-icon.png" alt="Zyllo Tech">
+        </div>
+      </div>
+      <div class="loader-brand-title">
+        <span class="brand-part-zyllo">ZYLLO</span>
+        <span class="brand-part-tech">TECH</span>
+      </div>
+      <div class="loader-dots-row">
+        <span class="loader-dot loader-dot-1"></span>
+        <span class="loader-dot loader-dot-2"></span>
+        <span class="loader-dot loader-dot-3"></span>
+      </div>
+      <div class="loader-typewriter-box">
+        <span id="loader-typewriter-text">Connecting...</span><span class="loader-cursor"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== FIXED NAVBAR ==================== -->
+  <nav class="zy-navbar navbar navbar-expand-lg">
+    <div class="container-fluid px-3 px-lg-4 px-xl-5 d-flex align-items-center justify-content-between">
+      <a class="navbar-brand d-flex align-items-center gap-2 m-0 p-0 flex-shrink-0" href="/">
+        <img src="/assets/images/zyllo-icon.png" alt="Zyllo Tech Logo" style="height: 38px; width: auto;">
+        <span class="fs-4 fw-extrabold text-uppercase">
+          <span class="text-gradient-orange">Zyllo</span> <span class="text-gradient-cyan">Tech</span>
+        </span>
+      </a>
+
+      <button class="navbar-toggler border-0 text-white" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileNavOffcanvas">
+        <i class="bi bi-list fs-2"></i>
+      </button>
+
+      <div class="collapse navbar-collapse d-none d-lg-flex justify-content-center mx-auto" id="desktopNavMenu">
+        <ul class="navbar-nav align-items-center justify-content-center mb-0 gap-1">
+          <li class="nav-item"><a class="zy-nav-link" href="/">Home</a></li>
+          <li class="nav-item"><a class="zy-nav-link" href="/about">About Us</a></li>
+          
+          <!-- Services Dropdown (Persistent on hover & click) -->
+          <li class="nav-item dropdown">
+            <a class="zy-nav-link dropdown-toggle active" href="/services" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Services
+            </a>
+            <ul class="dropdown-menu zy-dropdown-menu">
+              <li>
+                <a class="zy-dropdown-item" href="/services/software-development">
+                  <div class="icon-box"><i class="bi bi-code-slash"></i></div>
+                  <div>
+                    <div class="fw-semibold text-white">Software Development</div>
+                    <small class="text-white-50">Enterprise systems & architecture</small>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a class="zy-dropdown-item" href="/services/web-development">
+                  <div class="icon-box"><i class="bi bi-browser-chrome"></i></div>
+                  <div>
+                    <div class="fw-semibold text-white">Web Applications</div>
+                    <small class="text-white-50">High-performance scalable portals</small>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a class="zy-dropdown-item" href="/services/mobile-app-development">
+                  <div class="icon-box"><i class="bi bi-phone"></i></div>
+                  <div>
+                    <div class="fw-semibold text-white">Mobile Development</div>
+                    <small class="text-white-50">iOS, Android, React Native & Flutter</small>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a class="zy-dropdown-item" href="/services/ai-solutions">
+                  <div class="icon-box"><i class="bi bi-robot"></i></div>
+                  <div>
+                    <div class="fw-semibold text-white">AI & Machine Learning</div>
+                    <small class="text-white-50">LLMs, agentic AI & automation</small>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a class="zy-dropdown-item" href="/services/cloud-solutions">
+                  <div class="icon-box"><i class="bi bi-cloud-arrow-up"></i></div>
+                  <div>
+                    <div class="fw-semibold text-white">Cloud Architecture & DevOps</div>
+                    <small class="text-white-50">AWS, GCP, CI/CD, Kubernetes</small>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a class="zy-dropdown-item" href="/services/ui-ux-design">
+                  <div class="icon-box"><i class="bi bi-palette"></i></div>
+                  <div>
+                    <div class="fw-semibold text-white">UI/UX & Product Design</div>
+                    <small class="text-white-50">Wireframing, prototypes & UI systems</small>
+                  </div>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-item"><a class="zy-nav-link" href="/industries">Industries</a></li>
+          <li class="nav-item"><a class="zy-nav-link" href="/portfolio">Portfolio</a></li>
+          <li class="nav-item"><a class="zy-nav-link" href="/blog">Blog</a></li>
+          <li class="nav-item"><a class="zy-nav-link" href="/careers">Careers</a></li>
+          <li class="nav-item"><a class="zy-nav-link" href="/contact">Contact Us</a></li>
+        </ul>
+
+        <div class="d-flex align-items-center gap-3">
+          <button class="nav-search-btn" data-bs-toggle="modal" data-bs-target="#searchModal">
+            <i class="bi bi-search"></i>
+            <span>Search</span>
+            <kbd>Ctrl+K</kbd>
+          </button>
+          <div id="nav-auth-container" class="d-flex align-items-center gap-2">
+            <!-- Universal Light / Dark Mode Toggle Button -->
+          <button class="zy-theme-toggle-btn me-2" onclick="toggleTheme()" title="Switch Light / Dark Theme">
+            <i class="bi bi-moon-stars-fill text-warning" id="mainThemeIcon"></i>
+            <span class="theme-label small d-none d-sm-inline">Dark Mode</span>
+          </button>
+<a href="/login" class="btn btn-brand"><i class="bi bi-box-arrow-in-right"></i> Login</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Offcanvas Menu (Matching Image 1) -->
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="mobileNavOffcanvas" aria-labelledby="mobileNavLabel">
+    <div class="offcanvas-header border-bottom border-light px-3 py-3">
+      <div class="d-flex align-items-center gap-2">
+        <img src="/assets/images/zyllo-icon.png" alt="Zyllo Tech" style="height: 32px;">
+        <span class="fs-5 fw-bold text-uppercase" style="letter-spacing: -0.02em;">
+          <span style="color: #f16623;">Zyllo</span> <span style="color: #262262;">Tech</span>
+        </span>
+      </div>
+      <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      <ul class="nav flex-column gap-1 mb-4">
+        <li class="nav-item">
+          <a class="zy-mobile-nav-link" href="/" data-bs-dismiss="offcanvas">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="zy-mobile-nav-link" href="/about" data-bs-dismiss="offcanvas">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="zy-mobile-nav-link" href="#mobileServicesDropdown" data-bs-toggle="collapse" role="button" aria-expanded="false">
+            <span>Services</span>
+            <i class="bi bi-chevron-down text-white-50 fs-6"></i>
+          </a>
+          <div class="collapse" id="mobileServicesDropdown">
+            <div class="d-flex flex-column gap-2 py-1">
+              <a href="/services/software-development" data-bs-dismiss="offcanvas">Software Development</a>
+              <a href="/services/web-development" data-bs-dismiss="offcanvas">Web Applications</a>
+              <a href="/services/mobile-app-development" data-bs-dismiss="offcanvas">Mobile Development</a>
+              <a href="/services/ai-solutions" data-bs-dismiss="offcanvas">AI Solutions</a>
+              <a href="/services/cloud-solutions" data-bs-dismiss="offcanvas">Cloud Solutions</a>
+              <a href="/services/ui-ux-design" data-bs-dismiss="offcanvas">UI/UX Design</a>
+            </div>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a class="zy-mobile-nav-link" href="/industries" data-bs-dismiss="offcanvas">Industries</a>
+        </li>
+        <li class="nav-item">
+          <a class="zy-mobile-nav-link" href="/portfolio" data-bs-dismiss="offcanvas">Portfolio</a>
+        </li>
+        <li class="nav-item">
+          <a class="zy-mobile-nav-link" href="/blog" data-bs-dismiss="offcanvas">Blog</a>
+        </li>
+      </ul>
+
+      <div class="zy-mobile-bottom-card">
+        <div class="row g-2 mb-2">
+          <div class="col-6">
+            <a href="/careers" class="zy-mobile-pill-btn" data-bs-dismiss="offcanvas">Careers</a>
+          </div>
+          <div class="col-6">
+            <a href="/contact" class="zy-mobile-pill-btn zy-contact-btn" data-bs-dismiss="offcanvas">Contact Us</a>
+          </div>
+        </div>
+        <a href="/login" class="zy-mobile-login-btn" data-bs-dismiss="offcanvas">Login</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Dynamic Service Content Container -->
+  <main class="pt-5 mt-5">
+    
+    <!-- Hero Section for Specific Service -->
+    <header class="py-5 text-center position-relative overflow-hidden">
+      <div class="container py-4 position-relative z-1">
+        
+        <!-- Breadcrumbs -->
+        <nav aria-label="breadcrumb" class="d-inline-block mb-3">
+          <ol class="breadcrumb mb-0 justify-content-center small text-white-50">
+            <li class="breadcrumb-item"><a href="/" class="text-white-50 text-decoration-none">Home</a></li>
+            <li class="breadcrumb-item"><a href="/services" class="text-white-50 text-decoration-none">Services</a></li>
+            <li class="breadcrumb-item active text-gradient-orange" aria-current="page" id="breadcrumb-title">Software Development</li>
+          </ol>
+        </nav>
+
+        <div class="mb-3">
+          <span class="zy-badge" id="service-badge">
+            <i class="bi bi-stars"></i> <span id="service-tagline">From idea to roadmap</span>
+          </span>
+        </div>
+
+        <h1 class="display-3 fw-extrabold text-white mb-4" id="service-heading">Software Development</h1>
+
+        <p class="lead text-secondary mx-auto mb-4" style="max-width: 780px;" id="service-overview">
+          Before any code gets written, we help you validate the idea, scope the right first version, and plan a roadmap that fits your budget and timeline.
+        </p>
+
+        <!-- Subservices Chips -->
+        <div class="d-flex flex-wrap justify-content-center gap-3 mb-5" id="subservices-container">
+          <div class="zy-subservice-pill">
+            <span class="pill-icon-jewel"><i class="bi bi-buildings-fill"></i></span>
+            <span class="pill-text">Enterprise Software</span>
+          </div>
+          <div class="zy-subservice-pill">
+            <span class="pill-icon-jewel"><i class="bi bi-code-square"></i></span>
+            <span class="pill-text">Business Applications</span>
+          </div>
+          <div class="zy-subservice-pill">
+            <span class="pill-icon-jewel"><i class="bi bi-layers-fill"></i></span>
+            <span class="pill-text">Custom Software Development</span>
+          </div>
+        </div>
+
+        <div>
+          <a href="/contact" class="btn btn-brand px-4 py-3" id="cta-button">
+            Request Proposal for This Service <i class="bi bi-arrow-right ms-1"></i>
+          </a>
+        </div>
+
+      </div>
+    </header>
+
+    <!-- Deep Dive & Highlights Section -->
+    <section class="py-5">
+      <div class="container">
+        <div class="zy-card p-4 p-md-5 mb-5">
+          <div class="row align-items-center g-5">
+            <div class="col-lg-6">
+              <span class="zy-badge mb-3"><i class="bi bi-check2-circle"></i> What's Included</span>
+              <h2 class="h2 fw-bold text-white mb-3">Engineered for High-Reliability Delivery</h2>
+              <p class="text-white-50 mb-4" id="service-description">
+                Custom software solutions designed to streamline operations, improve productivity, and support business growth.
+              </p>
+              
+              <ul class="list-unstyled mb-4" id="highlights-container">
+                <!-- Rendered dynamically -->
+              </ul>
+
+              <a href="/contact" class="btn btn-brand-outline px-4 py-2.5">
+                <i class="bi bi-chat-left-dots me-2"></i> Book Technical Scoping Session
+              </a>
+            </div>
+            
+            <div class="col-lg-6 text-center">
+              <div class="position-relative d-inline-block w-100">
+                <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=1200&q=80" alt="Service Showcase" id="service-hero-img" class="img-fluid rounded-4 border border-white-15 shadow-lg w-100" style="max-height: 420px; object-fit: cover;">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- FAQs for this specific service -->
+        <div class="zy-card p-4 p-md-5 mb-5">
+          <div class="text-center mb-5">
+            <span class="zy-badge mb-2"><i class="bi bi-question-circle"></i> Service FAQs</span>
+            <h2 class="display-6 fw-bold text-white mb-2">Frequently Asked Questions</h2>
+            <p class="text-white-50 small">Clear answers regarding deliverables, remote collaboration, and timelines.</p>
+          </div>
+
+          <div class="accordion accordion-flush" id="serviceFaqAccordion">
+            <!-- Rendered dynamically -->
+          </div>
+        </div>
+
+        <!-- ==================== EXPLORE OTHER SERVICES INFINITE MARQUEE ==================== -->
+        <div class="pt-5 mt-4 border-top border-white-10">
+          <div class="text-center mb-4">
+            <div class="text-uppercase fw-bold small tracking-wider mb-1" style="color: #f16623; letter-spacing: 0.16em; font-size: 0.8rem;">
+              EXPLORE MORE
+            </div>
+            <h2 class="display-6 fw-bold text-white mb-2">Our Other Services</h2>
+            <p class="text-white-50 small mx-auto" style="max-width: 620px;">
+              End-to-end engineering and digital capabilities delivering performance, security, and continuous innovation.
+            </p>
+          </div>
+
+          <!-- Right-to-Left Auto-Scrolling Track -->
+          <div class="zy-services-marquee-wrapper">
+            <div class="zy-services-marquee-track">
+              <!-- Rendered dynamically by main.js with seamless loop -->
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+    <!-- ==================== FOOTER ==================== -->
+  <footer class="zy-footer">
+    <div class="container">
+      <div class="row g-4 mb-5">
+        
+        <!-- Brand Info -->
+        <div class="col-lg-4">
+          <a class="d-flex align-items-center gap-2 text-decoration-none mb-3" href="/">
+            <img src="/assets/images/zyllo-icon.png" alt="Zyllo Tech Logo" style="height: 38px;">
+            <span class="fs-4 fw-extrabold text-uppercase">
+              <span class="text-gradient-orange">Zyllo</span> <span class="text-gradient-cyan">Tech</span>
+            </span>
+          </a>
+          <p class="text-white-50 small mb-4" style="line-height: 1.6;">
+            Zyllo Tech Software Solutions Private Limited is a custom software, web, mobile app and AI development company in India delivering remote engineering worldwide.
+          </p>
+          <div class="d-flex gap-2">
+            <a href="https://www.linkedin.com/company/zyllo-tech/" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-brand-outline rounded-circle" style="width: 36px; height: 36px; padding: 0; display: inline-flex; align-items: center; justify-content: center;" title="LinkedIn" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+            <a href="https://wa.me/917075773680" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-brand-outline rounded-circle" style="width: 36px; height: 36px; padding: 0; display: inline-flex; align-items: center; justify-content: center;" title="WhatsApp" aria-label="WhatsApp"><i class="bi bi-whatsapp"></i></a>
+            <a href="https://x.com/ZylloS85154" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-brand-outline rounded-circle" style="width: 36px; height: 36px; padding: 0; display: inline-flex; align-items: center; justify-content: center;" title="X (Twitter)" aria-label="X (Twitter)"><i class="bi bi-twitter-x"></i></a>
+            <a href="#" class="btn btn-sm btn-brand-outline rounded-circle" style="width: 36px; height: 36px; padding: 0; display: inline-flex; align-items: center; justify-content: center;"><i class="bi bi-github"></i></a>
+          </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="col-6 col-lg-2">
+          <h5 class="fw-bold text-white small text-uppercase mb-3" style="letter-spacing: 0.05em;">Company</h5>
+          <ul class="list-unstyled">
+            <li><a href="/" class="zy-footer-link">Home</a></li>
+            <li><a href="/about" class="zy-footer-link">About Us</a></li>
+            <li><a href="/portfolio" class="zy-footer-link">Portfolio</a></li>
+            <li><a href="/blog" class="zy-footer-link">Blog & News</a></li>
+            <li><a href="/careers" class="zy-footer-link">Careers</a></li>
+            <li><a href="/login" class="zy-footer-link">Client Portal</a></li>
+          </ul>
+        </div>
+
+        <!-- Services Links -->
+        <div class="col-6 col-lg-3">
+          <h5 class="fw-bold text-white small text-uppercase mb-3" style="letter-spacing: 0.05em;">Services</h5>
+          <ul class="list-unstyled">
+            <li><a href="/services/software-development" class="zy-footer-link">Software Development</a></li>
+            <li><a href="/services/web-development" class="zy-footer-link">Web Applications</a></li>
+            <li><a href="/services/mobile-app-development" class="zy-footer-link">Mobile Apps (iOS/Android)</a></li>
+            <li><a href="/services/ai-solutions" class="zy-footer-link">AI & Machine Learning</a></li>
+            <li><a href="/services/cloud-solutions" class="zy-footer-link">Cloud & DevOps</a></li>
+            <li><a href="/services/ui-ux-design" class="zy-footer-link">UI/UX Product Design</a></li>
+          </ul>
+        </div>
+
+        <!-- Newsletter Subscription -->
+        <div class="col-lg-3">
+          <h5 class="fw-bold text-white small text-uppercase mb-3" style="letter-spacing: 0.05em;">Stay Updated</h5>
+          <p class="text-white-50 small mb-3">Subscribe to our monthly newsletter on software trends and emerging AI technologies.</p>
+          <form class="newsletter-form">
+            <div class="newsletter-input-group">
+              <input type="email" class="form-control zy-input" placeholder="Your work email..." required>
+              <button class="btn btn-brand" type="submit"><i class="bi bi-arrow-right"></i></button>
+            </div>
+          </form>
+        </div>
+
+      </div>
+
+            <!-- Interactive Particle Typography Footer Wordmark (ZYLLOTECH) -->
+      <div class="zy-footer-particle-wrap my-4 text-center">
+        <canvas id="zy-footer-particle-canvas" class="zy-footer-particle-canvas"></canvas>
+      </div>
+
+<div class="pt-4 border-top border-white/10 d-flex flex-wrap align-items-center justify-content-between gap-2 text-white-50 small">
+        <div>
+          &copy; 2026 Zyllo Tech Software Solutions Private Limited. All rights reserved.
+        </div>
+        <div class="d-flex gap-3">
+          <a href="#" class="text-white-50 text-decoration-none">Privacy Policy</a>
+          <a href="#" class="text-white-50 text-decoration-none">Terms of Service</a>
+          <a href="/login" class="text-warning text-decoration-none"><i class="bi bi-lock-fill"></i> Authorized Access</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==================== SEARCH / ASK MODAL (Image 2) ==================== -->
+  <div class="modal fade" id="searchModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 580px;">
+      <div class="modal-content zy-search-modal">
+        <div class="p-3 px-4 d-flex align-items-center justify-content-between border-bottom border-white/10">
+          <div class="d-flex align-items-center gap-2">
+            <img src="/assets/images/zyllo-icon.png" alt="Zyllo Tech" style="height: 28px; width: auto;">
+            <span class="fw-bold text-white" style="font-size: 1.05rem;">
+              Ask anything about <span style="color: #f16623;">Zyllo</span> <span style="color: #262262;">Tech</span>
+            </span>
+          </div>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="p-4 pb-3">
+          <div class="zy-search-input-pill mb-3">
+            <i class="bi bi-search text-muted fs-5 me-2"></i>
+            <input type="text" id="zy-search-input" placeholder="e.g. Do you build mobile apps?">
+            <button type="button" class="btn zy-search-ask-btn ms-2" id="zy-ask-btn">Ask</button>
+          </div>
+          <div class="mb-2">
+            <div class="text-uppercase fw-bold text-muted small mb-2" style="font-size: 0.72rem; letter-spacing: 0.08em; color: #64748b !important;">TRY ASKING</div>
+            <div class="d-flex flex-column gap-1">
+              <button type="button" class="zy-try-question">What services does Zyllo Tech offer?</button>
+              <button type="button" class="zy-try-question">Do you build mobile apps?</button>
+              <button type="button" class="zy-try-question">How do I get a quote?</button>
+            </div>
+          </div>
+          <div id="zy-search-results" class="mt-2" style="max-height: 260px; overflow-y: auto;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/assets/js/main.js"></script>
+
+  <script>
+    // Embedded services data for instant client-side rendering
+    const allServices = [
+      {
+        slug: "software-development",
+        aliases: ["product-strategy-consulting", "software-development"],
+        title: "Software Development",
+        tagline: "From idea to roadmap",
+        description: "Custom software solutions designed to streamline operations, improve productivity, and support business growth.",
+        subServices: ["Enterprise Software", "Business Applications", "Custom Software Development"],
+        overview: "Before any code gets written, we help you validate the idea, scope the right first version, and plan a roadmap that fits your budget and timeline.",
+        highlights: [
+          "Discovery workshops to define scope and priorities",
+          "Feasibility studies before you commit budget",
+          "Clear, buildable product roadmaps",
+          "Technology and platform recommendations"
+        ],
+        image: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=1200&q=80",
+        icon: "bi-code-slash",
+        faqs: [
+          {
+            q: "What does custom software development with Zyllo Tech include?",
+            a: "We start with product strategy: discovery workshops to define scope and priorities, a feasibility study before you commit budget, and a buildable roadmap. We then design and build the software itself, such as enterprise software and business applications, and recommend the technology and platform that fit."
+          },
+          {
+            q: "Do I need a finished specification before contacting you?",
+            a: "No. A short description of the problem you want to solve is enough. Scoping the right first version and planning the roadmap is part of the service."
+          },
+          {
+            q: "Can you work with a company outside India?",
+            a: "We are based in Guntur, Andhra Pradesh, India and work remotely with clients worldwide. Collaboration runs over video calls, shared boards and written updates, and we reply to every enquiry within one business day."
+          }
+        ]
+      },
+      {
+        slug: "web-development",
+        aliases: ["web-development", "web-applications"],
+        title: "Web Applications",
+        tagline: "Built fast, built to grow",
+        description: "High-performance web applications and portals engineered with modern frontends and scalable cloud APIs.",
+        subServices: ["Custom SaaS Platforms", "E-Commerce & Portals", "REST & GraphQL APIs"],
+        overview: "Business websites, custom web applications and e-commerce solutions. Every build is responsive, performance-first and written as clean, documented code on an architecture that can grow.",
+        highlights: [
+          "Fast, responsive design across all devices",
+          "Microservices and high-throughput APIs",
+          "Scalable multi-tenant databases",
+          "SEO, security, and edge performance optimization"
+        ],
+        image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&q=80",
+        icon: "bi-browser-chrome",
+        faqs: [
+          {
+            q: "What kinds of web projects do you build?",
+            a: "Business websites, custom web applications, SaaS products, and e-commerce solutions. Every build is responsive, performance-first, and written on scalable architecture."
+          },
+          {
+            q: "Will my web app work well on phones and tablets?",
+            a: "Yes. Responsive design and mobile-first performance are core to every web application we build."
+          },
+          {
+            q: "What tech stack do you recommend?",
+            a: "We typically use modern stacks like React, Next.js, Node.js, Python, or Go backed by PostgreSQL, Redis, and cloud infrastructure on AWS or GCP."
+          }
+        ]
+      },
+      {
+        slug: "mobile-app-development",
+        aliases: ["mobile-app-development", "mobile-development"],
+        title: "Mobile Development",
+        tagline: "Apps people actually use",
+        description: "Native and cross-platform mobile apps for iOS and Android delivering fluid UX and offline-first capabilities.",
+        subServices: ["iOS Applications", "Android Applications", "Flutter & React Native"],
+        overview: "From intuitive user interfaces to device sensor integrations and offline sync, we build mobile apps that users love and maintain smooth 60fps performance.",
+        highlights: [
+          "Fluid 60fps native performance",
+          "Cross-platform efficiency with Flutter and React Native",
+          "Offline-first sync and local storage",
+          "App Store and Google Play publishing support"
+        ],
+        image: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=1200&q=80",
+        icon: "bi-phone",
+        faqs: [
+          {
+            q: "Do you build for both iOS and Android?",
+            a: "Yes. We build native iOS (Swift) and Android (Kotlin) apps as well as cross-platform solutions with Flutter and React Native to target both platforms with a unified codebase."
+          },
+          {
+            q: "Can you help launch the app on the App Store and Google Play?",
+            a: "Yes, app store submission, review guidelines compliance, and deployment management are fully included."
+          }
+        ]
+      },
+      {
+        slug: "ai-solutions",
+        aliases: ["ai-solutions", "ai-machine-learning"],
+        title: "AI & Machine Learning",
+        tagline: "Practical, not novelty",
+        description: "AI-powered applications, LLM workflows, and process automation that enable smarter business decisions.",
+        subServices: ["AI Chatbots & Agents", "Process Automation", "Enterprise AI Integration"],
+        overview: "We integrate AI where it actually saves time: smart automation, in-product copilots, and workflow assistants built around real business data.",
+        highlights: [
+          "Workflow automation that saves measurable engineering and operational hours",
+          "In-product AI copilots, assistants, and document QA",
+          "Custom models and vector search built around your proprietary data",
+          "Audited for privacy and enterprise compliance"
+        ],
+        image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200&q=80",
+        icon: "bi-robot",
+        faqs: [
+          {
+            q: "What AI solutions do you build?",
+            a: "AI chatbots, workflow and process automation, in-product copilots, vector database RAG pipelines, and AI integrations into existing enterprise software."
+          },
+          {
+            q: "How do you decide where AI is worth using?",
+            a: "We integrate AI where it saves real time or solves a clear operational bottleneck, focusing on measurable business impact rather than hype."
+          }
+        ]
+      },
+      {
+        slug: "cloud-solutions",
+        aliases: ["cloud-solutions", "cloud-devops"],
+        title: "Cloud & DevOps",
+        tagline: "Scales as you grow",
+        description: "Scalable cloud infrastructure, automated CI/CD pipelines, and DevOps for secure, reliable applications.",
+        subServices: ["Cloud Migration", "Kubernetes & Docker", "DevOps & CI/CD"],
+        overview: "We architect and manage cloud infrastructure that scales smoothly with your traffic instead of falling over during peak events.",
+        highlights: [
+          "Scalable, secure infrastructure setup on AWS, GCP, and Azure",
+          "Automated CI/CD pipelines for reliable, zero-downtime deployments",
+          "24/7 monitoring, alerting, and log aggregation",
+          "Ongoing cloud cost optimization and security audits"
+        ],
+        image: "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=1200&q=80",
+        icon: "bi-cloud-arrow-up",
+        faqs: [
+          {
+            q: "What cloud services do you provide?",
+            a: "Cloud migration, infrastructure as code (Terraform), Docker/Kubernetes container orchestration, automated CI/CD pipelines, and 24/7 monitoring."
+          },
+          {
+            q: "Can you move an existing on-premise application to the cloud?",
+            a: "Yes. Cloud migration is one of our core capabilities. We plan the migration, set up secure infrastructure, and automate zero-downtime cutover."
+          }
+        ]
+      },
+      {
+        slug: "ui-ux-design",
+        aliases: ["ui-ux-design", "ui-ux"],
+        title: "UI/UX & Product Design",
+        tagline: "Designed to convert",
+        description: "Human-centric interface design, clickable prototypes, and design systems built for engagement and conversion.",
+        subServices: ["User Research", "Wireframing & Prototyping", "Design Systems"],
+        overview: "We craft clean, intuitive interfaces that guide users effortlessly and establish a strong, trustworthy brand identity.",
+        highlights: [
+          "Wireframes and clickable interactive prototypes in Figma",
+          "Usability testing with real target user cohorts",
+          "Comprehensive design systems for UI consistency at scale",
+          "Interfaces optimized for retention and conversion"
+        ],
+        image: "https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?w=1200&q=80",
+        icon: "bi-palette",
+        faqs: [
+          {
+            q: "Do you design before developing?",
+            a: "Yes. We create interactive Figma prototypes and design systems so you can test and approve the exact user journey before coding begins."
+          },
+          {
+            q: "Can you redesign our existing app or website?",
+            a: "Yes. We audit current usability bottlenecks, interview stakeholders, and deliver a modern, conversion-focused redesign."
+          }
+        ]
+      }
+    ];
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // Determine slug from URL: /services/xyz or ?service=xyz
+      const pathParts = window.location.pathname.split('/').filter(Boolean);
+      let targetSlug = 'software-development';
+
+      if (pathParts.length >= 2 && pathParts[0] === 'services') {
+        targetSlug = pathParts[1].toLowerCase();
+      } else {
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('slug')) targetSlug = urlParams.get('slug').toLowerCase();
+      }
+
+      // Find matching service
+      const service = allServices.find(s => s.slug === targetSlug || s.aliases.includes(targetSlug)) || allServices[0];
+
+      // Populate Headings & Metadata
+      document.title = `${service.title} | Zyllo Tech`;
+      document.getElementById('page-title').textContent = `${service.title} | Zyllo Tech`;
+      document.getElementById('breadcrumb-title').textContent = service.title;
+      document.getElementById('service-tagline').textContent = service.tagline;
+      document.getElementById('service-heading').textContent = service.title;
+      document.getElementById('service-overview').textContent = service.overview;
+      document.getElementById('service-description').textContent = service.description;
+      document.getElementById('service-hero-img').src = service.image;
+      document.getElementById('service-hero-img').alt = service.title;
+      document.getElementById('cta-button').href = `/contact?service=${encodeURIComponent(service.title)}`;
+
+      // Render Subservices chips
+      const subContainer = document.getElementById('subservices-container');
+      subContainer.innerHTML = service.subServices.map(sub => {
+        let iconClass = 'bi-layers-fill';
+        const s = sub.toLowerCase();
+        if (s.includes('saas') || s.includes('cloud')) iconClass = 'bi-cloud-check-fill';
+        else if (s.includes('commerce') || s.includes('portal') || s.includes('shop')) iconClass = 'bi-cart-check-fill';
+        else if (s.includes('api') || s.includes('rest') || s.includes('graphql')) iconClass = 'bi-braces-asterisk';
+        else if (s.includes('enterprise') || s.includes('business')) iconClass = 'bi-buildings-fill';
+        else if (s.includes('custom') || s.includes('software')) iconClass = 'bi-code-square';
+        else if (s.includes('ai') || s.includes('agent') || s.includes('bot') || s.includes('machine')) iconClass = 'bi-stars';
+        else if (s.includes('mobile') || s.includes('ios') || s.includes('android')) iconClass = 'bi-phone-fill';
+        else if (s.includes('design') || s.includes('ui') || s.includes('ux') || s.includes('proto') || s.includes('wireframe')) iconClass = 'bi-palette-fill';
+        else if (s.includes('devops') || s.includes('docker') || s.includes('ci')) iconClass = 'bi-cpu-fill';
+        else if (s.includes('security') || s.includes('audit')) iconClass = 'bi-shield-lock-fill';
+
+        return `
+          <div class="zy-subservice-pill">
+            <span class="pill-icon-jewel">
+              <i class="bi ${iconClass}"></i>
+            </span>
+            <span class="pill-text">${escapeHtml(sub)}</span>
+          </div>
+        `;
+      }).join('');
+
+      // Render Highlights Checklist
+      const hlContainer = document.getElementById('highlights-container');
+      hlContainer.innerHTML = service.highlights.map(hl => `
+        <li class="d-flex align-items-start gap-3 mb-3">
+          <i class="bi bi-check-circle-fill text-gradient-orange fs-5 mt-0.5"></i>
+          <span class="text-white">${escapeHtml(hl)}</span>
+        </li>
+      `).join('');
+
+      // Render FAQs Accordion
+      const faqAccordion = document.getElementById('serviceFaqAccordion');
+      faqAccordion.innerHTML = service.faqs.map((faq, idx) => `
+        <div class="accordion-item mb-3 rounded-3 overflow-hidden" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);">
+          <h2 class="accordion-header" id="faq-heading-${idx}">
+            <button class="accordion-button ${idx === 0 ? '' : 'collapsed'} bg-transparent text-white fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#faq-collapse-${idx}" aria-expanded="${idx === 0 ? 'true' : 'false'}" style="box-shadow: none;">
+              ${escapeHtml(faq.q)}
+            </button>
+          </h2>
+          <div id="faq-collapse-${idx}" class="accordion-collapse collapse ${idx === 0 ? 'show' : ''}" data-bs-parent="#serviceFaqAccordion">
+            <div class="accordion-body text-white-50 small leading-relaxed pt-0">
+              ${escapeHtml(faq.a)}
+            </div>
+          </div>
+        </div>
+      `).join('');
+
+      // Infinite Marquee is automatically populated by main.js
+    });
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+  </script>
+<script src="/assets/js/theme.js"></script>
+</body>
+</html>

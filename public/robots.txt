@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /dashboard
+Disallow: /api/
+Disallow: /portal
+Disallow: /uploads/resumes/
+
+Sitemap: https://zyllotech.com/sitemap.xml

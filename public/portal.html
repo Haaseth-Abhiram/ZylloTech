@@ -1,0 +1,1505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Client Portal | Zyllo Tech</title>
+  <link rel="icon" href="/assets/images/Zyllo_Tech_Favicon_512x512.png">
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="/assets/css/style.css?v=2.9">
+  <style>
+    body {
+      background-color: #f8fafc;
+      color: #ffffff;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    .client-portal-card {
+      background: #0d1220;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      transition: all 0.3s ease;
+    }
+    .client-portal-card:hover {
+      border-color: rgba(38, 34, 98, 0.4);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    }
+    .table > :not(caption) > * > * {
+      padding: 0.85rem 0.85rem;
+    }
+  </style>
+</head>
+<body class="theme-light">
+  <!-- ==================== FULLSCREEN PAGE TRANSITION LOADER ==================== -->
+  <div id="zy-page-loader">
+    <div class="loader-ambient-left"></div>
+    <div class="loader-ambient-right"></div>
+    
+    <div class="loader-floating-icon icon-cyan loader-icon-1"><i class="bi bi-tools"></i></div>
+    <div class="loader-floating-icon icon-cyan loader-icon-2"><i class="bi bi-code-slash"></i></div>
+    <div class="loader-floating-icon icon-orange loader-icon-3"><i class="bi bi-lightbulb"></i></div>
+    <div class="loader-floating-icon icon-cyan loader-icon-4"><i class="bi bi-cloud"></i></div>
+    <div class="loader-floating-icon icon-orange loader-icon-5"><i class="bi bi-stars"></i></div>
+    <div class="loader-floating-icon icon-cyan loader-icon-6"><i class="bi bi-pencil"></i></div>
+    <div class="loader-floating-icon icon-cyan loader-icon-7"><i class="bi bi-phone"></i></div>
+    <div class="loader-floating-icon icon-orange loader-icon-8"><i class="bi bi-shield-check"></i></div>
+    <div class="loader-floating-icon icon-orange loader-icon-9"><i class="bi bi-palette"></i></div>
+
+    <div class="loader-center-hub">
+      <div class="loader-circle-wrapper">
+        <div class="loader-circle-track"></div>
+        <div class="loader-circle-spinner"></div>
+        <div class="loader-center-disc">
+          <img src="/assets/images/zyllo-icon.png" alt="Zyllo Tech">
+        </div>
+      </div>
+      <div class="loader-brand-title">
+        <span class="brand-part-zyllo">ZYLLO</span>
+        <span class="brand-part-tech">TECH</span>
+      </div>
+      <div class="loader-dots-row">
+        <span class="loader-dot loader-dot-1"></span>
+        <span class="loader-dot loader-dot-2"></span>
+        <span class="loader-dot loader-dot-3"></span>
+      </div>
+      <div class="loader-typewriter-box">
+        <span id="loader-typewriter-text">Connecting to Workspace...</span><span class="loader-cursor"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== CLIENT PORTAL WORKSPACE LAYOUT ==================== -->
+  <div class="zy-admin-wrapper">
+    <!-- Left Sidebar Navigation Matching Image 5 -->
+    <aside class="zy-admin-sidebar" id="clientSidebar">
+      <!-- Sidebar Header -->
+      <div class="zy-admin-sidebar-header">
+        <div class="zy-admin-logo-box">
+          <img src="/assets/images/zyllo-icon.png" alt="Zyllo Tech">
+        </div>
+        <div class="overflow-hidden">
+          <div class="zy-admin-brand-title">
+            <span class="zy-brand-zyllo" style="color: #f16623;">ZYLLO</span> <span class="zy-brand-tech" style="color: #262262;">TECH</span>
+          </div>
+          <div class="zy-admin-brand-sub">CLIENT PORTAL · ENTERPRISE</div>
+        </div>
+        <button class="btn btn-sm btn-link text-white-50 d-lg-none ms-auto p-0" onclick="toggleClientSidebar()" aria-label="Close Sidebar">
+          <i class="bi bi-x-lg fs-5"></i>
+        </button>
+      </div>
+
+      <!-- WORKSPACE Navigation Group -->
+      <div class="zy-sidebar-group-label">WORKSPACE</div>
+
+      <button type="button" class="zy-sidebar-nav-item active" id="sidebar-client-overview" onclick="switchClientTab('overview')">
+        <span class="zy-sidebar-nav-left"><i class="bi bi-grid-fill"></i><span>Overview</span></span>
+      </button>
+
+      <button type="button" class="zy-sidebar-nav-item" id="sidebar-client-projects" onclick="switchClientTab('projects')">
+        <span class="zy-sidebar-nav-left"><i class="bi bi-kanban-fill"></i><span>Active Projects</span></span>
+        <span class="zy-sidebar-counter-badge" id="client-badge-projects">03</span>
+      </button>
+
+      <button type="button" class="zy-sidebar-nav-item" id="sidebar-client-milestones" onclick="switchClientTab('milestones')">
+        <span class="zy-sidebar-nav-left"><i class="bi bi-flag-fill"></i><span>Sprints &amp; Milestones</span></span>
+      </button>
+
+      <button type="button" class="zy-sidebar-nav-item" id="sidebar-client-deliverables" onclick="switchClientTab('deliverables')">
+        <span class="zy-sidebar-nav-left"><i class="bi bi-box-seam-fill"></i><span>Shared Deliverables</span></span>
+      </button>
+
+      <button type="button" class="zy-sidebar-nav-item" id="sidebar-client-notes" onclick="switchClientTab('notes')">
+        <span class="zy-sidebar-nav-left"><i class="bi bi-journal-text"></i><span>Meeting Notes</span></span>
+      </button>
+
+      <button type="button" class="zy-sidebar-nav-item" id="sidebar-client-tickets" onclick="switchClientTab('tickets')">
+        <span class="zy-sidebar-nav-left"><i class="bi bi-headset"></i><span>Support &amp; Tickets</span></span>
+        <span class="zy-sidebar-counter-badge" id="client-badge-tickets">00</span>
+      </button>
+
+      <button type="button" class="zy-sidebar-nav-item" id="sidebar-client-inquiries" onclick="switchClientTab('inquiries')">
+        <span class="zy-sidebar-nav-left"><i class="bi bi-envelope-paper-fill"></i><span>My Requests</span></span>
+        <span class="zy-sidebar-counter-badge" id="client-badge-inquiries">00</span>
+      </button>
+
+      <button type="button" class="zy-sidebar-nav-item" id="sidebar-client-services" onclick="switchClientTab('services')">
+        <span class="zy-sidebar-nav-left"><i class="bi bi-grid-3x3-gap-fill"></i><span>Services Catalog</span></span>
+      </button>
+
+      <button type="button" class="zy-sidebar-nav-item" id="sidebar-client-team" onclick="switchClientTab('team')">
+        <span class="zy-sidebar-nav-left"><i class="bi bi-person-badge-fill"></i><span>Tech Lead &amp; SLA</span></span>
+      </button>
+
+      <!-- MANAGEMENT / QUICK ACTIONS -->
+      <div class="zy-sidebar-group-label mt-3">QUICK ACTIONS</div>
+
+      <button type="button" class="zy-sidebar-nav-item border-0 bg-transparent text-start" data-bs-toggle="modal" data-bs-target="#requestProjectModal">
+        <span class="zy-sidebar-nav-left"><i class="bi bi-plus-circle-fill text-warning"></i><span class="text-white">Request Project</span></span>
+      </button>
+
+      <a href="/employee" class="zy-sidebar-nav-item text-decoration-none" title="Staff & Employee Workspace">
+        <span class="zy-sidebar-nav-left"><i class="bi bi-person-workspace text-info"></i><span>Employee Portal</span></span>
+        <i class="bi bi-box-arrow-up-right small text-white-50"></i>
+      </a>
+
+      <a href="/" target="_blank" class="zy-sidebar-nav-item text-decoration-none" title="Visit Public Website">
+        <span class="zy-sidebar-nav-left"><i class="bi bi-globe"></i><span>Public Website</span></span>
+        <i class="bi bi-box-arrow-up-right small text-white-50"></i>
+      </a>
+
+      <button type="button" class="zy-sidebar-nav-item text-danger border-0 bg-transparent mt-2" onclick="handleLogout()" title="Log out">
+        <span class="zy-sidebar-nav-left"><i class="bi bi-box-arrow-right text-danger"></i><span class="text-danger fw-semibold">Log Out</span></span>
+      </button>
+
+      <!-- Client Profile Footer in Sidebar -->
+      <div class="mt-auto pt-3 border-top border-white/10 d-flex align-items-center gap-2">
+        <div class="rounded-circle d-flex align-items-center justify-content-center text-white fw-bold" style="width: 36px; height: 36px; min-width: 36px; background: #f16623; font-size: 0.85rem;">
+          <span id="clientSidebarInitials">CL</span>
+        </div>
+        <div class="overflow-hidden" style="line-height: 1.2;">
+          <div class="text-white small fw-bold text-truncate" id="clientSidebarName">Client</div>
+          <small class="text-white-50 text-truncate d-block" style="font-size: 0.72rem;" id="clientSidebarEmail">client@zyllotech.com</small>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Mobile Offcanvas Backdrop -->
+    <div class="zy-sidebar-backdrop" id="clientSidebarBackdrop" onclick="toggleClientSidebar()"></div>
+
+    <!-- Main Workspace Pane -->
+    <main class="zy-admin-main-pane">
+      <!-- Topbar Header -->
+      <header class="zy-admin-topbar d-flex align-items-center justify-content-between gap-3">
+        <div class="d-flex align-items-center gap-3">
+          <button class="btn btn-sm btn-brand-outline d-lg-none py-1.5 px-2.5" onclick="toggleClientSidebar()" aria-label="Toggle Sidebar">
+            <i class="bi bi-list fs-5"></i>
+          </button>
+          <a href="/" class="d-flex align-items-center gap-2 text-decoration-none me-2">
+            <div class="zy-admin-logo-box" style="width: 36px !important; height: 36px !important; padding: 2px !important;">
+              <img src="/assets/images/zyllo-icon.png" alt="Zyllo Tech" style="height: 24px !important; width: 24px !important;">
+            </div>
+            <div class="d-none d-sm-block">
+              <div class="zy-admin-brand-title" style="font-size: 0.95rem !important; margin: 0;">
+                <span class="zy-brand-zyllo" style="color: #f16623;">ZYLLO</span> <span class="zy-brand-tech" style="color: #262262;">TECH</span>
+              </div>
+            </div>
+          </a>
+          <div>
+            <div class="d-flex align-items-center gap-2">
+              <span class="badge bg-secondary bg-opacity-25 border border-white-10 text-white-50 small">Client Workspace</span>
+              <span class="text-white-50 small">/</span>
+              <span class="text-dark small fw-semibold" id="topbarCurrentTab">Overview</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="d-flex align-items-center gap-2">
+          <!-- Switch to Admin Dashboard if admin -->
+          <div id="adminSwitchBtnContainer"></div>
+
+          <!-- Quick Request Project Button -->
+          <button class="btn btn-sm btn-brand py-1.5 px-3 d-none d-sm-inline-flex align-items-center gap-1" data-bs-toggle="modal" data-bs-target="#requestProjectModal">
+            <i class="bi bi-plus-circle-fill"></i> <span>Request Project</span>
+          </button>
+
+          <!-- Quick Support Ticket Button -->
+          <button class="btn btn-sm btn-brand-outline py-1.5 px-3 d-none d-md-inline-flex align-items-center gap-1" data-bs-toggle="modal" data-bs-target="#newTicketModal">
+            <i class="bi bi-headset"></i> <span>Support Ticket</span>
+          </button>
+
+          <!-- Public Website Link -->
+          <a href="/" target="_blank" class="btn btn-sm btn-brand-outline py-1.5 px-2.5 d-none d-md-inline-flex" title="View Public Website">
+            <i class="bi bi-globe me-1"></i> Public Site
+          </a>
+
+          
+          <!-- Universal Light / Dark Mode Toggle Button -->
+          <button class="zy-theme-toggle-btn shadow-sm" onclick="toggleTheme()" title="Switch Light / Dark Theme">
+            <i class="bi bi-moon-stars-fill text-warning"></i>
+            <span class="theme-label d-none d-sm-inline">Dark Mode</span>
+          </button>
+
+          <!-- User Menu Dropdown -->
+          <div class="dropdown">
+            <button class="btn btn-sm btn-brand py-1.5 px-3 dropdown-toggle" type="button" data-bs-toggle="dropdown" id="userMenuBtn">
+              <i class="bi bi-person-circle me-1"></i> Client
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end zy-dropdown-menu">
+              <li class="px-3 py-2 border-bottom border-white/10">
+                <small class="text-white-50 d-block">Signed in as Client</small>
+                <span id="userDropdownEmail" class="fw-bold text-white">...</span>
+              </li>
+              <li>
+                <a class="zy-dropdown-item mt-1" href="/" target="_blank"><i class="bi bi-box-arrow-up-right me-2 text-info"></i> Open Public Site</a>
+              </li>
+              <li><hr class="dropdown-divider border-white/10 my-1"></li>
+              <li>
+                <button class="zy-dropdown-item text-danger border-0 bg-transparent w-100 text-start" onclick="handleLogout()">
+                  <i class="bi bi-box-arrow-right me-2"></i> Log Out
+                </button>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Direct Logout Pill -->
+          <button class="btn btn-sm btn-outline-danger py-1.5 px-3 rounded-pill d-inline-flex align-items-center gap-1 shadow-sm" onclick="handleLogout()" title="Log out">
+            <i class="bi bi-box-arrow-right"></i> <span class="d-none d-lg-inline">Log Out</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Main Workspace Scroll Area -->
+      <div class="p-3 p-md-4 p-xl-4">
+
+        <!-- ==================== TAB 0: OVERVIEW SECTION ==================== -->
+        <div id="tabSectionOverview">
+          <!-- Welcome Header -->
+          <div class="row align-items-center mb-4">
+            <div class="col-md-7">
+              <div class="d-flex align-items-center gap-2 mb-2">
+                <span class="zy-badge"><i class="bi bi-shield-check text-success"></i> Enterprise Client Workspace</span>
+              </div>
+              <h1 class="h3 fw-bold mb-1 text-white">
+                Welcome back, <span id="welcomeClientName" class="text-gradient-brand">Client</span>
+              </h1>
+              <p class="text-white-50 mb-0 small" id="welcomeClientCompany">Client Organization · Enterprise Engineering Portal</p>
+            </div>
+            <div class="col-md-5 text-md-end mt-3 mt-md-0 d-flex flex-wrap gap-2 justify-content-md-end">
+              <button class="btn btn-sm btn-brand" data-bs-toggle="modal" data-bs-target="#requestProjectModal">
+                <i class="bi bi-plus-circle-fill me-1"></i> Request New Project / Service
+              </button>
+              <button class="btn btn-sm btn-brand-outline" onclick="switchClientTab('tickets')">
+                <i class="bi bi-headset me-1"></i> Contact Support
+              </button>
+            </div>
+          </div>
+
+          <!-- Metric Stat Cards -->
+          <div class="row g-3 mb-4">
+            <div class="col-sm-6 col-lg-3">
+              <div class="zy-card p-3 d-flex align-items-center gap-3">
+                <div class="service-icon-wrapper mb-0" style="width: 48px; height: 48px; min-width: 48px;">
+                  <i class="bi bi-kanban text-gradient-orange fs-4"></i>
+                </div>
+                <div>
+                  <div class="text-white-50 small">Active Projects</div>
+                  <div class="fs-4 fw-bold text-white" id="stat-active-projects">3</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+              <div class="zy-card p-3 d-flex align-items-center gap-3">
+                <div class="service-icon-wrapper mb-0" style="width: 48px; height: 48px; min-width: 48px;">
+                  <i class="bi bi-check2-circle text-gradient-cyan fs-4"></i>
+                </div>
+                <div>
+                  <div class="text-white-50 small">Sprint Delivery</div>
+                  <div class="fs-4 fw-bold text-success">92% On Track</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+              <div class="zy-card p-3 d-flex align-items-center gap-3">
+                <div class="service-icon-wrapper mb-0" style="width: 48px; height: 48px; min-width: 48px;">
+                  <i class="bi bi-chat-left-text text-warning fs-4"></i>
+                </div>
+                <div>
+                  <div class="text-white-50 small">My Requests</div>
+                  <div class="fs-4 fw-bold text-white" id="stat-client-inquiries">0</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+              <div class="zy-card p-3 d-flex align-items-center gap-3">
+                <div class="service-icon-wrapper mb-0" style="width: 48px; height: 48px; min-width: 48px;">
+                  <i class="bi bi-shield-shaded text-info fs-4"></i>
+                </div>
+                <div>
+                  <div class="text-white-50 small">Support Level</div>
+                  <div class="fs-4 fw-bold text-info">24/7 SLA Active</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Overview Grid (Active Projects Preview & Recent Requests) -->
+          <div class="row g-4 mb-4">
+            <!-- Active Projects Quick Summary -->
+            <div class="col-lg-7">
+              <div class="zy-card p-3 h-100">
+                <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom border-white/10">
+                  <div class="d-flex align-items-center gap-2">
+                    <i class="bi bi-kanban text-gradient-orange"></i>
+                    <h6 class="fw-bold text-white mb-0">Active Engineering Projects</h6>
+                  </div>
+                  <button class="btn btn-sm text-info p-0 small text-decoration-none" onclick="switchClientTab('projects')">
+                    View All Projects <i class="bi bi-arrow-right"></i>
+                  </button>
+                </div>
+                <div class="row g-3" id="overviewProjectsRow">
+                  <div class="col-12 text-center py-4 text-white-50 small">Loading project summaries...</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Recent Requests / Tickets Quick Summary -->
+            <div class="col-lg-5">
+              <div class="zy-card p-3 h-100">
+                <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom border-white/10">
+                  <div class="d-flex align-items-center gap-2">
+                    <i class="bi bi-envelope-paper text-warning"></i>
+                    <h6 class="fw-bold text-white mb-0">Recent Requests &amp; Inquiries</h6>
+                  </div>
+                  <button class="btn btn-sm text-info p-0 small text-decoration-none" onclick="switchClientTab('inquiries')">
+                    View All <i class="bi bi-arrow-right"></i>
+                  </button>
+                </div>
+                <div class="table-responsive">
+                  <table class="table  table-hover align-middle mb-0" style="background: transparent;">
+                    <tbody id="overviewRecentInquiries">
+                      <tr><td class="text-center py-3 text-white-50 small">Loading recent requests...</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================== TAB 1: ACTIVE PROJECTS & SPRINTS ==================== -->
+        <div id="tabSectionProjects" class="d-none">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+              <h5 class="fw-bold mb-0 text-white"><i class="bi bi-kanban text-gradient-orange me-2"></i>Active Engineering Projects</h5>
+              <small class="text-white-50">Real-time status, milestone timelines, and sprint progress.</small>
+            </div>
+            <span class="badge bg-secondary bg-opacity-25 border border-white-10 text-white-50">Live Sync</span>
+          </div>
+
+          <div class="row g-4" id="clientProjectsRow">
+            <div class="col-12 text-center py-4 text-white-50">Loading engineering projects...</div>
+          </div>
+        </div>
+
+        <!-- ==================== TAB 2: SPRINTS & MILESTONES ==================== -->
+        <div id="tabSectionMilestones" class="d-none">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+              <h5 class="fw-bold mb-0 text-white"><i class="bi bi-flag-fill text-warning me-2"></i>Sprint Delivery Milestones</h5>
+              <small class="text-white-50">Track agreed architectural phases, deliverables, and sign-offs.</small>
+            </div>
+            <button class="btn btn-sm btn-brand-outline" onclick="loadMilestones()">
+              <i class="bi bi-arrow-clockwise me-1"></i> Refresh
+            </button>
+          </div>
+
+          <div class="row g-3" id="clientMilestonesContainer">
+            <div class="col-12 text-center py-4 text-white-50">Loading project sprint milestones...</div>
+          </div>
+        </div>
+
+        <!-- ==================== TAB 3: SHARED DELIVERABLES ==================== -->
+        <div id="tabSectionDeliverables" class="d-none">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+              <h5 class="fw-bold mb-0 text-white"><i class="bi bi-box-seam text-info me-2"></i>Approved Project Deliverables &amp; Artifacts</h5>
+              <small class="text-white-50">Direct access to architecture blueprints, Figma design systems, staging builds, and security reports.</small>
+            </div>
+            <button class="btn btn-sm btn-brand-outline" onclick="loadDeliverables()">
+              <i class="bi bi-arrow-clockwise me-1"></i> Refresh
+            </button>
+          </div>
+
+          <div class="zy-card overflow-hidden">
+            <div class="table-responsive">
+              <table class="table  table-hover mb-0 align-middle">
+                <thead class=" text-white-50 small text-uppercase" style="background: rgba(255,255,255,0.03);">
+                  <tr>
+                    <th>Artifact Name</th>
+                    <th>Type</th>
+                    <th>Version</th>
+                    <th>Status</th>
+                    <th>Date Added</th>
+                    <th class="text-end">Action</th>
+                  </tr>
+                </thead>
+                <tbody id="clientDeliverablesTableBody">
+                  <tr>
+                    <td colspan="6" class="text-center py-4 text-white-50">Loading shared deliverables...</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================== TAB 4: MEETING NOTES & DECISIONS ==================== -->
+        <div id="tabSectionNotes" class="d-none">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+              <h5 class="fw-bold mb-0 text-white"><i class="bi bi-journal-text text-success me-2"></i>Technical Meeting Minutes &amp; Decisions</h5>
+              <small class="text-white-50">Recorded architecture review meetings, attendee lists, and agreed action items.</small>
+            </div>
+            <button class="btn btn-sm btn-brand-outline" onclick="loadMeetingNotes()">
+              <i class="bi bi-arrow-clockwise me-1"></i> Refresh
+            </button>
+          </div>
+
+          <div class="d-flex flex-column gap-3" id="clientMeetingNotesContainer">
+            <div class="text-center py-4 text-white-50">Loading meeting notes...</div>
+          </div>
+        </div>
+
+        <!-- ==================== TAB 5: SUPPORT & SLA TICKETS ==================== -->
+        <div id="tabSectionTickets" class="d-none">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+              <h5 class="fw-bold mb-0 text-white"><i class="bi bi-headset text-danger me-2"></i>Dedicated Support &amp; SLA Ticket Desk</h5>
+              <small class="text-white-50">Submit technical inquiries, staging deployment requests, or production incidents.</small>
+            </div>
+            <div class="d-flex gap-2">
+              <button class="btn btn-sm btn-brand-outline" onclick="loadTickets()">
+                <i class="bi bi-arrow-clockwise me-1"></i> Refresh
+              </button>
+              <button class="btn btn-sm btn-brand" data-bs-toggle="modal" data-bs-target="#newTicketModal">
+                <i class="bi bi-plus-lg me-1"></i> Submit Support Ticket
+              </button>
+            </div>
+          </div>
+
+          <div class="zy-card overflow-hidden">
+            <div class="table-responsive">
+              <table class="table  table-hover mb-0 align-middle">
+                <thead class=" text-white-50 small text-uppercase" style="background: rgba(255,255,255,0.03);">
+                  <tr>
+                    <th>Ticket ID</th>
+                    <th>Category</th>
+                    <th>Subject</th>
+                    <th>Priority</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                    <th class="text-end">Action</th>
+                  </tr>
+                </thead>
+                <tbody id="clientTicketsTableBody">
+                  <tr>
+                    <td colspan="7" class="text-center py-4 text-white-50">Loading support tickets...</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================== TAB 6: MY SUBMITTED INQUIRIES & REQUESTS ==================== -->
+        <div id="tabSectionInquiries" class="d-none">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+              <h5 class="fw-bold mb-0 text-white"><i class="bi bi-envelope-paper text-gradient-cyan me-2"></i>My Project Requests &amp; Inquiries</h5>
+              <small class="text-white-50">Inquiries submitted under your registered client account.</small>
+            </div>
+            <div class="d-flex gap-2">
+              <button class="btn btn-sm btn-brand-outline" onclick="loadClientInquiries()">
+                <i class="bi bi-arrow-clockwise me-1"></i> Refresh
+              </button>
+              <button class="btn btn-sm btn-brand" data-bs-toggle="modal" data-bs-target="#requestProjectModal">
+                <i class="bi bi-plus-lg me-1"></i> Submit New Request
+              </button>
+            </div>
+          </div>
+
+          <div class="zy-card overflow-hidden">
+            <div class="table-responsive">
+              <table class="table  table-hover mb-0 align-middle">
+                <thead class=" text-white-50 small text-uppercase" style="background: rgba(255,255,255,0.03);">
+                  <tr>
+                    <th>Request ID</th>
+                    <th>Requested Service</th>
+                    <th>Budget Estimate</th>
+                    <th>Project Scope</th>
+                    <th>Date Submitted</th>
+                    <th class="text-end">Status</th>
+                  </tr>
+                </thead>
+                <tbody id="clientInquiriesTableBody">
+                  <tr>
+                    <td colspan="6" class="text-center py-4 text-white-50">Loading your project requests...</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================== TAB 7: EXPLORE SERVICES CATALOG ==================== -->
+        <div id="tabSectionServices" class="d-none">
+          <div class="mb-4">
+            <h5 class="fw-bold mb-1 text-white"><i class="bi bi-grid-3x3-gap text-gradient-orange me-2"></i>Enterprise Technology Capabilities</h5>
+            <p class="text-white-50 small mb-0">Expand your digital infrastructure with Zyllo Tech's elite software engineering streams.</p>
+          </div>
+
+          <div class="row g-4">
+            <div class="col-md-6 col-lg-4">
+              <div class="zy-card p-4 h-100 d-flex flex-column justify-content-between">
+                <div>
+                  <div class="service-icon-wrapper mb-3" style="width: 52px; height: 52px;">
+                    <i class="bi bi-cpu text-gradient-orange fs-4"></i>
+                  </div>
+                  <h5 class="fw-bold text-white mb-2">AI &amp; Machine Learning</h5>
+                  <p class="text-white-50 small mb-3">Deploy custom LLMs, intelligent workflow automation, predictive analytics, and computer vision models.</p>
+                </div>
+                <button class="btn btn-sm btn-brand-outline w-100" onclick="prefillAndOpenModal('AI & Machine Learning')">
+                  <i class="bi bi-send me-1"></i> Request AI Consultation
+                </button>
+              </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+              <div class="zy-card p-4 h-100 d-flex flex-column justify-content-between">
+                <div>
+                  <div class="service-icon-wrapper mb-3" style="width: 52px; height: 52px;">
+                    <i class="bi bi-code-slash text-gradient-cyan fs-4"></i>
+                  </div>
+                  <h5 class="fw-bold text-white mb-2">Custom Software Development</h5>
+                  <p class="text-white-50 small mb-3">Scalable enterprise web applications, microservices architecture, secure API gateways, and custom ERPs.</p>
+                </div>
+                <button class="btn btn-sm btn-brand-outline w-100" onclick="prefillAndOpenModal('Custom Software Development')">
+                  <i class="bi bi-send me-1"></i> Request Software Scope
+                </button>
+              </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+              <div class="zy-card p-4 h-100 d-flex flex-column justify-content-between">
+                <div>
+                  <div class="service-icon-wrapper mb-3" style="width: 52px; height: 52px;">
+                    <i class="bi bi-cloud-check text-info fs-4"></i>
+                  </div>
+                  <h5 class="fw-bold text-white mb-2">Cloud &amp; DevOps Automation</h5>
+                  <p class="text-white-50 small mb-3">Zero-downtime CI/CD pipelines, Kubernetes container orchestration, AWS/Azure multi-cloud migration.</p>
+                </div>
+                <button class="btn btn-sm btn-brand-outline w-100" onclick="prefillAndOpenModal('Cloud & DevOps')">
+                  <i class="bi bi-send me-1"></i> Request Cloud Architecture
+                </button>
+              </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+              <div class="zy-card p-4 h-100 d-flex flex-column justify-content-between">
+                <div>
+                  <div class="service-icon-wrapper mb-3" style="width: 52px; height: 52px;">
+                    <i class="bi bi-phone text-warning fs-4"></i>
+                  </div>
+                  <h5 class="fw-bold text-white mb-2">Mobile App Engineering</h5>
+                  <p class="text-white-50 small mb-3">Native and cross-platform iOS &amp; Android mobile applications built with Flutter, React Native, and Swift.</p>
+                </div>
+                <button class="btn btn-sm btn-brand-outline w-100" onclick="prefillAndOpenModal('Mobile App Development')">
+                  <i class="bi bi-send me-1"></i> Request Mobile App
+                </button>
+              </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+              <div class="zy-card p-4 h-100 d-flex flex-column justify-content-between">
+                <div>
+                  <div class="service-icon-wrapper mb-3" style="width: 52px; height: 52px;">
+                    <i class="bi bi-shield-check text-success fs-4"></i>
+                  </div>
+                  <h5 class="fw-bold text-white mb-2">Quality Assurance &amp; Security</h5>
+                  <p class="text-white-50 small mb-3">Automated end-to-end regression testing, penetration testing, vulnerability audits, and compliance validation.</p>
+                </div>
+                <button class="btn btn-sm btn-brand-outline w-100" onclick="prefillAndOpenModal('Quality Assurance & Testing')">
+                  <i class="bi bi-send me-1"></i> Request QA Testing
+                </button>
+              </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+              <div class="zy-card p-4 h-100 d-flex flex-column justify-content-between">
+                <div>
+                  <div class="service-icon-wrapper mb-3" style="width: 52px; height: 52px;">
+                    <i class="bi bi-palette text-danger fs-4"></i>
+                  </div>
+                  <h5 class="fw-bold text-white mb-2">UI/UX Product Design</h5>
+                  <p class="text-white-50 small mb-3">Human-centric interfaces, design systems, interactive prototypes, and usability testing that drive conversion.</p>
+                </div>
+                <button class="btn btn-sm btn-brand-outline w-100" onclick="prefillAndOpenModal('UI/UX Design')">
+                  <i class="bi bi-send me-1"></i> Request UI/UX Sprint
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================== TAB 8: DEDICATED TECH TEAM & SUPPORT ==================== -->
+        <div id="tabSectionTeam" class="d-none">
+          <div class="row g-4">
+            <div class="col-lg-6">
+              <div class="zy-card p-4 h-100">
+                <h5 class="fw-bold text-white mb-3"><i class="bi bi-person-badge text-gradient-orange me-2"></i>Assigned Technical Lead</h5>
+                <div class="d-flex align-items-center gap-3 mb-4">
+                  <div class="service-icon-wrapper mb-0" style="width: 60px; height: 60px;">
+                    <i class="bi bi-person-fill text-gradient-orange fs-2"></i>
+                  </div>
+                  <div>
+                    <h5 class="fw-bold text-white mb-0">Dr. K. Srinivas</h5>
+                    <small class="text-info">Principal Solutions Architect · Zyllo Tech</small>
+                    <div class="text-white-50 small mt-1">Direct Lead for Enterprise Client Deployments</div>
+                  </div>
+                </div>
+                <div class="p-3 rounded-3 mb-3" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);">
+                  <div class="d-flex justify-content-between py-1 border-bottom border-white-10">
+                    <span class="text-white-50 small">Email:</span>
+                    <span class="text-white small fw-bold">srinivas.k@zyllotech.com</span>
+                  </div>
+                  <div class="d-flex justify-content-between py-1 border-bottom border-white-10">
+                    <span class="text-white-50 small">Direct Office Line:</span>
+                    <span class="text-white small fw-bold">+91 863 234 5678</span>
+                  </div>
+                  <div class="d-flex justify-content-between py-1">
+                    <span class="text-white-50 small">Location:</span>
+                    <span class="text-white small fw-bold">Guntur Tech Hub / Hybrid Global</span>
+                  </div>
+                </div>
+                <a href="/contact" class="btn btn-brand w-100 py-2">
+                  <i class="bi bi-calendar-check me-1"></i> Schedule Technical Review Call
+                </a>
+              </div>
+            </div>
+
+            <div class="col-lg-6">
+              <div class="zy-card p-4 h-100">
+                <h5 class="fw-bold text-white mb-3"><i class="bi bi-shield-check text-gradient-cyan me-2"></i>Enterprise Service Level Agreement</h5>
+                <div class="mb-3">
+                  <div class="d-flex justify-content-between mb-1">
+                    <span class="text-white small fw-bold">Incident Response Time</span>
+                    <span class="text-success small fw-bold">&lt; 1 Hour Guarantee</span>
+                  </div>
+                  <div class="progress" style="height: 6px; background: rgba(255,255,255,0.1);">
+                    <div class="progress-bar bg-success" style="width: 100%;"></div>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <div class="d-flex justify-content-between mb-1">
+                    <span class="text-white small fw-bold">Sprint Deliverable Accuracy</span>
+                    <span class="text-info small fw-bold">99.4%</span>
+                  </div>
+                  <div class="progress" style="height: 6px; background: rgba(255,255,255,0.1);">
+                    <div class="progress-bar bg-info" style="width: 99%;"></div>
+                  </div>
+                </div>
+                <div class="p-3 rounded-3" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);">
+                  <h6 class="text-white fw-bold mb-1"><i class="bi bi-telephone-outbound text-warning me-2"></i>24/7 Client Emergency Line</h6>
+                  <p class="text-white-50 small mb-2">Available for high-priority production system escalations.</p>
+                  <span class="badge bg-danger bg-opacity-25 text-danger border border-danger">Hotline: +1 (800) 555-ZYLLO</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- ==================== MODAL: REQUEST NEW PROJECT / SERVICE ==================== -->
+  <div class="modal fade" id="requestProjectModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content zy-modal-content">
+        <div class="modal-header border-bottom border-white/10">
+          <h5 class="modal-title fw-bold">
+            <i class="bi bi-plus-circle-fill text-gradient-orange me-2"></i>Request New Project / Service
+          </h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form id="clientRequestForm">
+          <div class="modal-body">
+            <div class="mb-3">
+              <label class="form-label text-white-50 small mb-1">Service Required</label>
+              <select name="service" id="modalServiceSelect" class="form-select zy-input" required>
+                <option value="Custom Software Development">Custom Software Development</option>
+                <option value="AI & Machine Learning">AI &amp; Machine Learning</option>
+                <option value="Cloud & DevOps">Cloud &amp; DevOps Automation</option>
+                <option value="Mobile App Development">Mobile App Development</option>
+                <option value="Quality Assurance & Testing">Quality Assurance &amp; Testing</option>
+                <option value="UI/UX Design">UI/UX Product Design</option>
+                <option value="Enterprise IT Consulting">Enterprise IT Consulting</option>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label text-white-50 small mb-1">Estimated Budget Range</label>
+              <select name="budget" class="form-select zy-input">
+                <option value="₹5,00,000 - ₹15,00,000">₹5,00,000 - ₹15,00,000</option>
+                <option value="₹15,00,000 - ₹35,00,000" selected>₹15,00,000 - ₹35,00,000</option>
+                <option value="₹35,00,000 - ₹75,00,000">₹35,00,000 - ₹75,00,000</option>
+                <option value="₹75,00,000+">₹75,00,000+ Enterprise</option>
+                <option value="Flexible">Flexible / Open to Consultation</option>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label text-white-50 small mb-1">Contact Phone (Optional)</label>
+              <input type="tel" name="phone" id="modalPhoneInput" class="form-control zy-input" placeholder="+91 70757 73680">
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label text-white-50 small mb-1">Project Scope &amp; Requirements</label>
+              <textarea name="message" rows="4" class="form-control zy-input" placeholder="Outline the project goals, target completion timeframe, and any specific technical requirements..." required></textarea>
+            </div>
+          </div>
+          <div class="modal-footer border-top border-white/10">
+            <button type="button" class="btn btn-brand-outline" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" id="submitRequestBtn" class="btn btn-brand">
+              <i class="bi bi-send-fill me-1"></i> Submit Project Request
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL: NEW SUPPORT & SLA TICKET ==================== -->
+  <div class="modal fade" id="newTicketModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content zy-modal-content">
+        <div class="modal-header border-bottom border-white/10">
+          <h5 class="modal-title fw-bold">
+            <i class="bi bi-headset text-danger me-2"></i>Create New Support Ticket
+          </h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form id="clientTicketForm" onsubmit="handleTicketSubmit(event)">
+          <div class="modal-body">
+            <div class="mb-3">
+              <label class="form-label text-white-50 small mb-1">Category *</label>
+              <select id="ticket-category" class="form-select zy-input" required>
+                <option value="Technical">Technical / Bug Report</option>
+                <option value="Deployment">Staging / Deployment Request</option>
+                <option value="Feature Request">Feature Scope Enhancement</option>
+                <option value="Billing">Invoicing &amp; Milestones</option>
+                <option value="Urgent Bug">Urgent SLA Production Blocker</option>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label text-white-50 small mb-1">Urgency Priority *</label>
+              <select id="ticket-priority" class="form-select zy-input" required>
+                <option value="Low">Low (General question)</option>
+                <option value="Medium" selected>Medium (Standard 4-hr SLA)</option>
+                <option value="High">High (Impacting staging or testing)</option>
+                <option value="Urgent">Urgent (Production critical &lt;1 hr SLA)</option>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label text-white-50 small mb-1">Subject / Issue Summary *</label>
+              <input type="text" id="ticket-subject" class="form-control zy-input" placeholder="e.g. Staging VPC connection timeout or API token renewal" required>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label text-white-50 small mb-1">Detailed Description *</label>
+              <textarea id="ticket-message" rows="4" class="form-control zy-input" placeholder="Provide full details, reproducible steps, or specific deliverable reference..." required></textarea>
+            </div>
+          </div>
+          <div class="modal-footer border-top border-white/10">
+            <button type="button" class="btn btn-brand-outline" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" id="submitTicketBtn" class="btn btn-brand">
+              <i class="bi bi-send-fill me-1"></i> Submit Support Ticket
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL: VIEW TICKET DETAILS ==================== -->
+  <div class="modal fade" id="ticketDetailModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content zy-modal-content">
+        <div class="modal-header border-bottom border-white/10">
+          <h5 class="modal-title fw-bold">
+            <i class="bi bi-ticket-detailed text-warning me-2"></i>Support Ticket Details
+          </h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <span class="badge bg-secondary" id="modalTicketId">#TK-00</span>
+            <span class="badge bg-warning" id="modalTicketStatus">In Progress</span>
+          </div>
+          <h5 class="fw-bold text-white mb-2" id="modalTicketSubject">Subject</h5>
+          <div class="p-3 rounded-3 mb-3" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);">
+            <small class="text-white-50 d-block mb-1">Description:</small>
+            <div class="text-white small" id="modalTicketMessage" style="white-space: pre-wrap;">...</div>
+          </div>
+          <div class="p-3 rounded-3" style="background: rgba(38, 34, 98,0.08); border: 1px solid rgba(38, 34, 98,0.3);">
+            <div class="d-flex align-items-center gap-2 mb-1">
+              <i class="bi bi-headset text-info"></i>
+              <strong class="text-info small">Engineering Pod Response:</strong>
+            </div>
+            <div class="text-white-50 small" id="modalTicketResponse">Our on-duty systems engineer is reviewing your incident ticket.</div>
+          </div>
+        </div>
+        <div class="modal-footer border-top border-white/10">
+          <button type="button" class="btn btn-brand-outline" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/assets/js/main.js"></script>
+  <script>
+    let currentUser = null;
+    let clientInquiries = [];
+    let currentProjects = [];
+    let currentTickets = [];
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // Check auth from localStorage or sessionStorage
+      let token = localStorage.getItem('zyllotech_token') || sessionStorage.getItem('zy_token');
+      let userJson = localStorage.getItem('zyllotech_user') || sessionStorage.getItem('zy_user');
+
+      if (!token || !userJson) {
+        // Fallback default client mock if testing directly
+        currentUser = {
+          name: 'Abhiram Client',
+          email: 'user@zyllotech.com',
+          role: 'client',
+          company: 'Client Organization'
+        };
+      } else {
+        try {
+          currentUser = typeof userJson === 'string' ? JSON.parse(userJson) : userJson;
+        } catch (e) {
+          currentUser = { name: 'Client User', email: 'user@zyllotech.com', role: 'client' };
+        }
+      }
+
+      // Populate user info across UI
+      const firstName = (currentUser.name || 'Client').trim().split(' ')[0];
+      const initials = (currentUser.name || 'CL').trim().split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+
+      document.getElementById('welcomeClientName').textContent = currentUser.name || 'Client';
+      document.getElementById('welcomeClientCompany').textContent = `${currentUser.company || 'Enterprise Workspace'} · Client Workspace`;
+      
+      const userBtn = document.getElementById('userMenuBtn');
+      if (userBtn) userBtn.innerHTML = `<i class="bi bi-person-circle me-1"></i> ${firstName}`;
+
+      const dropdownEmail = document.getElementById('userDropdownEmail');
+      if (dropdownEmail) dropdownEmail.textContent = currentUser.email || 'client@zyllotech.com';
+
+      // Sidebar Profile Info
+      const sidebarInitials = document.getElementById('clientSidebarInitials');
+      if (sidebarInitials) sidebarInitials.textContent = initials || 'CL';
+      const sidebarName = document.getElementById('clientSidebarName');
+      if (sidebarName) sidebarName.textContent = currentUser.name || 'Client';
+      const sidebarEmail = document.getElementById('clientSidebarEmail');
+      if (sidebarEmail) sidebarEmail.textContent = currentUser.email || 'client@zyllotech.com';
+
+      // Switcher if admin accesses portal
+      if (currentUser.role === 'admin') {
+        const switchContainer = document.getElementById('adminSwitchBtnContainer');
+        if (switchContainer) {
+          switchContainer.innerHTML = `
+            <a href="/dashboard" class="btn btn-sm btn-brand py-1.5 px-3">
+              <i class="bi bi-speedometer2 me-1"></i> Admin Dashboard
+            </a>
+          `;
+        }
+      }
+
+      // Setup reliable user dropdown toggle
+      setupDropdownToggle('userMenuBtn', document.querySelector('#userMenuBtn + .zy-dropdown-menu'));
+
+      // Load all client portal sections
+      loadProjects();
+      loadMilestones();
+      loadDeliverables();
+      loadMeetingNotes();
+      loadTickets();
+      loadClientInquiries();
+    });
+
+    // Mobile sidebar toggle
+    function toggleClientSidebar() {
+      const sidebar = document.getElementById('clientSidebar');
+      const backdrop = document.getElementById('clientSidebarBackdrop');
+      if (sidebar) sidebar.classList.toggle('show');
+      if (backdrop) backdrop.classList.toggle('show');
+    }
+
+    // Dropdown toggle helper
+    function setupDropdownToggle(trigger, menuTarget) {
+      const btn = typeof trigger === 'string' ? document.getElementById(trigger) : trigger;
+      const menu = typeof menuTarget === 'string' ? document.getElementById(menuTarget) : menuTarget;
+      if (!btn || !menu) return;
+
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const isOpen = menu.classList.contains('show');
+        document.querySelectorAll('.zy-dropdown-menu.show').forEach(m => m.classList.remove('show'));
+        if (!isOpen) {
+          menu.classList.add('show');
+          btn.setAttribute('aria-expanded', 'true');
+        } else {
+          menu.classList.remove('show');
+          btn.setAttribute('aria-expanded', 'false');
+        }
+      });
+    }
+
+    // Close dropdowns on outside click
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.dropdown')) {
+        document.querySelectorAll('.zy-dropdown-menu.show').forEach(m => m.classList.remove('show'));
+      }
+    });
+
+    function getAuthHeaders() {
+      const token = localStorage.getItem('zyllotech_token') || sessionStorage.getItem('zy_token');
+      return {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      };
+    }
+
+    // Tab switcher with breadcrumb & sidebar highlight
+    function switchClientTab(tabName) {
+      const tabs = {
+        overview: document.getElementById('tabSectionOverview'),
+        projects: document.getElementById('tabSectionProjects'),
+        milestones: document.getElementById('tabSectionMilestones'),
+        deliverables: document.getElementById('tabSectionDeliverables'),
+        notes: document.getElementById('tabSectionNotes'),
+        tickets: document.getElementById('tabSectionTickets'),
+        inquiries: document.getElementById('tabSectionInquiries'),
+        services: document.getElementById('tabSectionServices'),
+        team: document.getElementById('tabSectionTeam')
+      };
+
+      const titles = {
+        overview: 'Overview',
+        projects: 'Active Projects',
+        milestones: 'Sprints & Milestones',
+        deliverables: 'Shared Deliverables',
+        notes: 'Meeting Notes',
+        tickets: 'Support & Tickets',
+        inquiries: 'My Requests',
+        services: 'Services Catalog',
+        team: 'Tech Lead & SLA'
+      };
+
+      // Update topbar breadcrumb
+      const topbarEl = document.getElementById('topbarCurrentTab');
+      if (topbarEl && titles[tabName]) {
+        topbarEl.textContent = titles[tabName];
+      }
+
+      // Toggle tab views
+      Object.keys(tabs).forEach(key => {
+        const view = tabs[key];
+        const btn = document.getElementById(`sidebar-client-${key}`);
+        if (view) {
+          if (key === tabName) view.classList.remove('d-none');
+          else view.classList.add('d-none');
+        }
+        if (btn) {
+          if (key === tabName) btn.classList.add('active');
+          else btn.classList.remove('active');
+        }
+      });
+
+      // Close mobile offcanvas sidebar if open
+      const sidebar = document.getElementById('clientSidebar');
+      const backdrop = document.getElementById('clientSidebarBackdrop');
+      if (sidebar && backdrop && window.innerWidth < 992) {
+        sidebar.classList.remove('show');
+        backdrop.classList.remove('show');
+      }
+
+      // Smooth scroll main pane to top
+      const mainPane = document.querySelector('.zy-admin-main-pane');
+      if (mainPane) {
+        mainPane.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }
+
+    function prefillAndOpenModal(serviceName) {
+      const select = document.getElementById('modalServiceSelect');
+      if (select) select.value = serviceName;
+      const modal = new bootstrap.Modal(document.getElementById('requestProjectModal'));
+      modal.show();
+    }
+
+    // 1. Projects Loader
+    async function loadProjects() {
+      const container = document.getElementById('clientProjectsRow');
+      const overviewContainer = document.getElementById('overviewProjectsRow');
+      try {
+        const res = await fetch('/api/portal/projects', { headers: getAuthHeaders() });
+        const data = await res.json();
+        
+        if (data.success && data.projects) {
+          currentProjects = data.projects;
+          const count = currentProjects.length;
+
+          // Update badges
+          document.getElementById('stat-active-projects').textContent = count;
+          const badgeEl = document.getElementById('client-badge-projects');
+          if (badgeEl) badgeEl.textContent = count < 10 ? `0${count}` : count;
+
+          // Render Full Projects View
+          container.innerHTML = currentProjects.map(p => {
+            let badgeClass = 'bg-info bg-opacity-25 text-info';
+            if (p.status === 'Testing') badgeClass = 'bg-warning text-dark';
+            if (p.status === 'Completed' || p.status === 'Active') badgeClass = 'bg-success bg-opacity-25 text-success';
+
+            return `
+              <div class="col-md-6 col-lg-4">
+                <div class="zy-card p-4 h-100 d-flex flex-column justify-content-between position-relative">
+                  <div>
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                      <span class="badge bg-secondary bg-opacity-25 border border-white-10 text-white-50">${escapeHtml(p.category)}</span>
+                      <span class="badge ${badgeClass} border border-white-10">${escapeHtml(p.status)}</span>
+                    </div>
+                    <h5 class="fw-bold text-white mb-1">${escapeHtml(p.title)}</h5>
+                    <small class="text-white-50 d-block mb-3"><i class="bi bi-building me-1"></i>${escapeHtml(p.client)}</small>
+                    
+                    <div class="mb-3">
+                      <div class="d-flex justify-content-between align-items-center mb-1">
+                        <small class="text-white-50" style="font-size: 0.78rem;">Sprint Progress</small>
+                        <small class="text-white fw-bold" style="font-size: 0.78rem;">${p.progress}%</small>
+                      </div>
+                      <div class="progress" style="height: 7px; background: rgba(255,255,255,0.1);">
+                        <div class="progress-bar" role="progressbar" style="width: ${p.progress}%; background: linear-gradient(90deg, #f16623, #262262);" aria-valuenow="${p.progress}" aria-valuemin="0" aria-valuemax="100"></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="pt-3 border-top border-white-10 d-flex justify-content-between align-items-center">
+                    <small class="text-white-50"><i class="bi bi-calendar3 me-1"></i> Target: <span class="text-white">${escapeHtml(p.completion_date || 'Q4 2026')}</span></small>
+                    <button class="btn btn-sm btn-brand-outline py-1 px-2.5" onclick="switchClientTab('milestones')">
+                      <i class="bi bi-flag me-1"></i> Milestones
+                    </button>
+                  </div>
+                </div>
+              </div>
+            `;
+          }).join('');
+
+          // Render Overview Quick Projects Preview
+          if (overviewContainer) {
+            overviewContainer.innerHTML = currentProjects.slice(0, 2).map(p => `
+              <div class="col-md-6">
+                <div class="p-3 rounded-3" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08);">
+                  <div class="d-flex justify-content-between align-items-center mb-1">
+                    <span class="badge bg-secondary bg-opacity-25 text-white-50" style="font-size: 0.7rem;">${escapeHtml(p.category)}</span>
+                    <span class="badge ${p.status === 'Testing' ? 'bg-warning text-dark' : 'bg-info bg-opacity-25 text-info'}" style="font-size: 0.7rem;">${escapeHtml(p.status)}</span>
+                  </div>
+                  <h6 class="fw-bold text-white mb-1">${escapeHtml(p.title)}</h6>
+                  <small class="text-white-50 d-block mb-2" style="font-size: 0.75rem;">${escapeHtml(p.client)}</small>
+                  <div class="progress mb-1" style="height: 5px; background: rgba(255,255,255,0.1);">
+                    <div class="progress-bar" style="width: ${p.progress}%; background: linear-gradient(90deg, #f16623, #262262);"></div>
+                  </div>
+                  <div class="d-flex justify-content-between align-items-center" style="font-size: 0.72rem;">
+                    <span class="text-white-50">Progress: ${p.progress}%</span>
+                    <button class="btn btn-sm btn-link text-info p-0 text-decoration-none" style="font-size: 0.72rem;" onclick="switchClientTab('projects')">Details &rarr;</button>
+                  </div>
+                </div>
+              </div>
+            `).join('');
+          }
+        }
+      } catch (err) {
+        console.error('Error fetching projects', err);
+      }
+    }
+
+    // 2. Milestones Loader
+    async function loadMilestones() {
+      const container = document.getElementById('clientMilestonesContainer');
+      try {
+        const res = await fetch('/api/portal/milestones', { headers: getAuthHeaders() });
+        const data = await res.json();
+
+        if (data.success && data.milestones) {
+          if (data.milestones.length === 0) {
+            container.innerHTML = '<div class="col-12 text-center py-4 text-white-50">No sprint milestones configured yet for this project.</div>';
+            return;
+          }
+
+          container.innerHTML = data.milestones.map((m, idx) => {
+            let statusPill = '<span class="badge bg-warning bg-opacity-25 text-warning border border-warning"><i class="bi bi-hourglass-split me-1"></i> In Progress</span>';
+            let iconBox = '<div style="width: 42px; height: 42px; border-radius: 50%; background: rgba(249,103,6,0.15); color: #f16623; display: flex; align-items: center; justify-content: center; font-weight: bold;">' + (idx + 1) + '</div>';
+
+            if (m.status === 'Completed') {
+              statusPill = '<span class="badge bg-success bg-opacity-25 text-success border border-success"><i class="bi bi-check2-circle me-1"></i> Completed &amp; Signed Off</span>';
+              iconBox = '<div style="width: 42px; height: 42px; border-radius: 50%; background: rgba(34,197,94,0.15); color: #22c55e; display: flex; align-items: center; justify-content: center;"><i class="bi bi-check-lg fs-5"></i></div>';
+            } else if (m.status === 'Pending') {
+              statusPill = '<span class="badge bg-secondary bg-opacity-25 text-white-50 border border-white-10">Upcoming</span>';
+              iconBox = '<div style="width: 42px; height: 42px; border-radius: 50%; background: rgba(255,255,255,0.05); color: #94a3b8; display: flex; align-items: center; justify-content: center;">' + (idx + 1) + '</div>';
+            }
+
+            return `
+              <div class="col-md-6">
+                <div class="zy-card p-4 h-100 d-flex flex-column justify-content-between">
+                  <div class="d-flex align-items-start gap-3 mb-3">
+                    ${iconBox}
+                    <div class="flex-grow-1">
+                      <div class="d-flex justify-content-between align-items-center mb-1">
+                        <span class="badge bg-secondary bg-opacity-25 border border-white-10 text-white-50">${escapeHtml(m.phase)}</span>
+                        ${statusPill}
+                      </div>
+                      <h5 class="fw-bold text-white mb-1">${escapeHtml(m.title)}</h5>
+                      <p class="text-white-50 small mb-0">${escapeHtml(m.description || '')}</p>
+                    </div>
+                  </div>
+                  <div class="pt-2 border-top border-white-10 d-flex justify-content-between align-items-center small text-white-50">
+                    <span><i class="bi bi-calendar-event me-1"></i> Target Due: <strong class="text-white">${escapeHtml(m.due_date || 'TBD')}</strong></span>
+                    ${m.completed_at ? '<span class="text-success"><i class="bi bi-shield-check"></i> Verified</span>' : ''}
+                  </div>
+                </div>
+              </div>
+            `;
+          }).join('');
+        }
+      } catch (err) {
+        container.innerHTML = '<div class="col-12 text-center text-danger py-4">Failed to load milestones.</div>';
+      }
+    }
+
+    // 3. Deliverables Loader
+    async function loadDeliverables() {
+      const tbody = document.getElementById('clientDeliverablesTableBody');
+      try {
+        const res = await fetch('/api/portal/deliverables', { headers: getAuthHeaders() });
+        const data = await res.json();
+
+        if (data.success && data.deliverables) {
+          if (data.deliverables.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="6" class="text-center py-4 text-white-50">No shared deliverables uploaded yet.</td></tr>';
+            return;
+          }
+
+          tbody.innerHTML = data.deliverables.map(d => {
+            let icon = 'bi-file-earmark-code text-info';
+            if (d.deliverable_type.includes('Spec') || d.deliverable_type.includes('Blueprint')) icon = 'bi-file-earmark-pdf text-danger';
+            else if (d.deliverable_type.includes('Figma')) icon = 'bi-palette text-warning';
+            else if (d.deliverable_type.includes('QA') || d.deliverable_type.includes('Report')) icon = 'bi-shield-check text-success';
+
+            let statusBadge = '<span class="badge bg-success bg-opacity-25 text-success border border-success">Approved</span>';
+            if (d.status === 'Ready for Review') statusBadge = '<span class="badge bg-warning bg-opacity-25 text-warning border border-warning">Ready for Review</span>';
+
+            return `
+              <tr>
+                <td>
+                  <div class="d-flex align-items-center gap-2">
+                    <i class="bi ${icon} fs-5"></i>
+                    <strong class="text-white">${escapeHtml(d.title)}</strong>
+                  </div>
+                </td>
+                <td><span class="badge bg-secondary bg-opacity-25 border border-white-10 text-white-50">${escapeHtml(d.deliverable_type)}</span></td>
+                <td><code class="text-info">${escapeHtml(d.version)}</code></td>
+                <td>${statusBadge}</td>
+                <td class="text-white-50 small">${new Date(d.created_at).toLocaleDateString('en-IN', { timeZone: 'Asia/Kolkata' })}</td>
+                <td class="text-end">
+                  <a href="${escapeHtml(d.file_url)}" target="_blank" class="btn btn-sm btn-brand-outline py-1 px-2.5">
+                    <i class="bi bi-box-arrow-up-right me-1"></i> Access
+                  </a>
+                </td>
+              </tr>
+            `;
+          }).join('');
+        }
+      } catch (err) {
+        tbody.innerHTML = '<tr><td colspan="6" class="text-center py-4 text-danger">Failed to load deliverables.</td></tr>';
+      }
+    }
+
+    // 4. Meeting Notes Loader
+    async function loadMeetingNotes() {
+      const container = document.getElementById('clientMeetingNotesContainer');
+      try {
+        const res = await fetch('/api/portal/meeting-notes', { headers: getAuthHeaders() });
+        const data = await res.json();
+
+        if (data.success && data.notes) {
+          if (data.notes.length === 0) {
+            container.innerHTML = '<div class="text-center py-4 text-white-50">No meeting notes recorded yet.</div>';
+            return;
+          }
+
+          container.innerHTML = data.notes.map(n => `
+            <div class="zy-card p-4">
+              <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-2">
+                <h5 class="fw-bold text-white mb-0"><i class="bi bi-journal-check text-gradient-orange me-2"></i>${escapeHtml(n.title)}</h5>
+                <span class="badge bg-secondary bg-opacity-25 border border-white-10 text-white-50"><i class="bi bi-calendar3 me-1"></i> ${escapeHtml(n.meeting_date)}</span>
+              </div>
+              <p class="text-white-50 small mb-2"><strong class="text-white">Attendees:</strong> ${escapeHtml(n.attendees || 'Client & Zyllo Tech Pod')}</p>
+              <div class="p-3 rounded-3 mb-2" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06);">
+                <strong class="text-white small d-block mb-1">Executive Meeting Summary:</strong>
+                <p class="text-white-50 small mb-0">${escapeHtml(n.summary || '')}</p>
+              </div>
+              ${n.action_items ? `
+                <div class="p-3 rounded-3" style="background: rgba(38, 34, 98,0.05); border: 1px solid rgba(38, 34, 98,0.2);">
+                  <strong class="text-info small d-block mb-1"><i class="bi bi-check2-square me-1"></i>Agreed Action Items:</strong>
+                  <pre class="text-white-50 small mb-0 font-monospace" style="white-space: pre-wrap; font-family: inherit;">${escapeHtml(n.action_items)}</pre>
+                </div>
+              ` : ''}
+            </div>
+          `).join('');
+        }
+      } catch (err) {
+        container.innerHTML = '<div class="text-center py-4 text-danger">Failed to load meeting notes.</div>';
+      }
+    }
+
+    // 5. Support Tickets Loader
+    async function loadTickets() {
+      const tbody = document.getElementById('clientTicketsTableBody');
+      try {
+        const res = await fetch('/api/portal/tickets', { headers: getAuthHeaders() });
+        const data = await res.json();
+
+        if (data.success && data.tickets) {
+          currentTickets = data.tickets;
+          const count = currentTickets.length;
+
+          // Update sidebar counter badge
+          const badgeEl = document.getElementById('client-badge-tickets');
+          if (badgeEl) badgeEl.textContent = count < 10 ? `0${count}` : count;
+
+          if (count === 0) {
+            tbody.innerHTML = '<tr><td colspan="7" class="text-center py-4 text-white-50">No support tickets active. Click "Submit Support Ticket" above if you need assistance.</td></tr>';
+            return;
+          }
+
+          tbody.innerHTML = currentTickets.map(t => {
+            let priorityBadge = 'bg-secondary';
+            if (t.priority === 'Urgent') priorityBadge = 'bg-danger text-white';
+            else if (t.priority === 'High') priorityBadge = 'bg-warning text-dark';
+            else if (t.priority === 'Medium') priorityBadge = 'bg-info text-dark';
+
+            let statusBadge = 'bg-warning bg-opacity-25 text-warning border border-warning';
+            if (t.status === 'Resolved' || t.status === 'Closed') statusBadge = 'bg-success bg-opacity-25 text-success border border-success';
+
+            return `
+              <tr>
+                <td><code class="text-white-50">#TK-${t.id}</code></td>
+                <td><span class="badge bg-secondary bg-opacity-25 border border-white-10 text-white-50">${escapeHtml(t.category)}</span></td>
+                <td><strong class="text-white">${escapeHtml(t.subject)}</strong></td>
+                <td><span class="badge ${priorityBadge}">${escapeHtml(t.priority)}</span></td>
+                <td><span class="badge ${statusBadge}">${escapeHtml(t.status)}</span></td>
+                <td class="text-white-50 small">${new Date(t.created_at).toLocaleDateString('en-IN', { timeZone: 'Asia/Kolkata' })}</td>
+                <td class="text-end">
+                  <button class="btn btn-sm btn-brand-outline py-1 px-2.5" onclick="viewTicketModal(${t.id})">
+                    <i class="bi bi-eye"></i> View
+                  </button>
+                </td>
+              </tr>
+            `;
+          }).join('');
+        }
+      } catch (err) {
+        tbody.innerHTML = '<tr><td colspan="7" class="text-center py-4 text-danger">Failed to load support tickets.</td></tr>';
+      }
+    }
+
+    function viewTicketModal(ticketId) {
+      const t = currentTickets.find(item => item.id === ticketId);
+      if (!t) return;
+
+      document.getElementById('modalTicketId').textContent = `#TK-${t.id}`;
+      document.getElementById('modalTicketStatus').textContent = t.status || 'Active';
+      document.getElementById('modalTicketSubject').textContent = t.subject;
+      document.getElementById('modalTicketMessage').textContent = t.message;
+      document.getElementById('modalTicketResponse').textContent = t.admin_response || 'Our on-duty systems engineer is reviewing your incident ticket. You will receive an email update once resolved.';
+
+      const modal = new bootstrap.Modal(document.getElementById('ticketDetailModal'));
+      modal.show();
+    }
+
+    async function handleTicketSubmit(e) {
+      e.preventDefault();
+      const submitBtn = document.getElementById('submitTicketBtn');
+      const category = document.getElementById('ticket-category').value;
+      const priority = document.getElementById('ticket-priority').value;
+      const subject = document.getElementById('ticket-subject').value.trim();
+      const message = document.getElementById('ticket-message').value.trim();
+
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span> Submitting...';
+
+      try {
+        const res = await fetch('/api/portal/tickets', {
+          method: 'POST',
+          headers: getAuthHeaders(),
+          body: JSON.stringify({ category, priority, subject, message })
+        });
+
+        const data = await res.json();
+        if (data.success) {
+          bootstrap.Modal.getInstance(document.getElementById('newTicketModal')).hide();
+          document.getElementById('clientTicketForm').reset();
+          loadTickets();
+          switchClientTab('tickets');
+          alert(`Support Ticket #${data.ticketId} logged successfully! Our team will respond shortly.`);
+        } else {
+          alert(data.message || 'Failed to submit ticket.');
+        }
+      } catch (err) {
+        alert('Connection error submitting support ticket.');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<i class="bi bi-send-fill me-1"></i> Submit Support Ticket';
+      }
+    }
+
+    // 6. Client Inquiries Loader
+    async function loadClientInquiries() {
+      const tbody = document.getElementById('clientInquiriesTableBody');
+      const overviewTbody = document.getElementById('overviewRecentInquiries');
+      const email = currentUser ? currentUser.email : '';
+      
+      try {
+        const res = await fetch(`/api/inquiries?email=${encodeURIComponent(email)}`);
+        const data = await res.json();
+
+        if (data.success) {
+          clientInquiries = data.inquiries || [];
+          const count = clientInquiries.length;
+          
+          document.getElementById('stat-client-inquiries').textContent = count;
+          const badgeEl = document.getElementById('client-badge-inquiries');
+          if (badgeEl) badgeEl.textContent = count < 10 ? `0${count}` : count;
+
+          if (count === 0) {
+            tbody.innerHTML = `
+              <tr>
+                <td colspan="6" class="text-center py-4 text-white-50">
+                  You haven't submitted any project requests yet. Click <strong>"Submit New Request"</strong> to get started.
+                </td>
+              </tr>
+            `;
+            if (overviewTbody) {
+              overviewTbody.innerHTML = `<tr><td class="text-center py-3 text-white-50 small">No recent requests submitted.</td></tr>`;
+            }
+            return;
+          }
+
+          tbody.innerHTML = clientInquiries.map(inq => {
+            let statusBadge = 'bg-secondary';
+            if (inq.status === 'New') statusBadge = 'bg-danger';
+            else if (inq.status === 'In Review') statusBadge = 'bg-warning text-dark';
+            else if (inq.status === 'Contacted') statusBadge = 'bg-info text-dark';
+            else if (inq.status === 'Closed') statusBadge = 'bg-success';
+
+            return `
+              <tr>
+                <td class="text-white-50">#${inq.id}</td>
+                <td class="fw-bold text-white">${escapeHtml(inq.service)}</td>
+                <td><span class="badge bg-secondary bg-opacity-25 border border-white-10 text-white-50">${escapeHtml(inq.budget || 'Flexible')}</span></td>
+                <td class="text-white-50 small text-truncate" style="max-width: 250px;">${escapeHtml(inq.message)}</td>
+                <td class="text-white-50 small">${new Date(inq.created_at).toLocaleDateString('en-IN', { timeZone: 'Asia/Kolkata' })}</td>
+                <td class="text-end"><span class="badge ${statusBadge}">${escapeHtml(inq.status)}</span></td>
+              </tr>
+            `;
+          }).join('');
+
+          // Overview Quick Requests Preview
+          if (overviewTbody) {
+            overviewTbody.innerHTML = clientInquiries.slice(0, 4).map(inq => {
+              let statusBadge = inq.status === 'New' ? 'bg-danger' : 'bg-info text-dark';
+              return `
+                <tr>
+                  <td>
+                    <div class="fw-bold text-white small">${escapeHtml(inq.service)}</div>
+                    <small class="text-white-50" style="font-size: 0.72rem;">${new Date(inq.created_at).toLocaleDateString('en-IN', { timeZone: 'Asia/Kolkata' })}</small>
+                  </td>
+                  <td class="text-end"><span class="badge ${statusBadge}" style="font-size: 0.7rem;">${escapeHtml(inq.status)}</span></td>
+                </tr>
+              `;
+            }).join('');
+          }
+        }
+      } catch (err) {
+        tbody.innerHTML = `<tr><td colspan="6" class="text-center py-4 text-danger">Failed to load inquiries.</td></tr>`;
+      }
+    }
+
+    // Submit new project request
+    const requestForm = document.getElementById('clientRequestForm');
+    if (requestForm) {
+      requestForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const form = e.target;
+        const submitBtn = document.getElementById('submitRequestBtn');
+
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = `<span class="spinner-border spinner-border-sm me-2"></span> Submitting...`;
+
+        const payload = {
+          name: currentUser.name || 'Client',
+          email: currentUser.email || 'user@zyllotech.com',
+          phone: form.phone.value,
+          service: form.service.value,
+          budget: form.budget.value,
+          message: form.message.value
+        };
+
+        try {
+          const res = await fetch('/api/contact', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+          const data = await res.json();
+
+          if (data.success) {
+            const modalEl = document.getElementById('requestProjectModal');
+            const modalInstance = bootstrap.Modal.getInstance(modalEl);
+            if (modalInstance) modalInstance.hide();
+            form.reset();
+            loadClientInquiries();
+            switchClientTab('inquiries');
+            alert('Success! Your project request has been submitted to the Zyllo Tech engineering team.');
+          } else {
+            alert(data.message || 'Error submitting project request');
+          }
+        } catch (err) {
+          alert('Connection error. Please try again.');
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = `<i class="bi bi-send-fill me-1"></i> Submit Project Request`;
+        }
+      });
+    }
+
+    function handleLogout() {
+      if (confirm('Are you sure you want to log out of the Client Portal?')) {
+        localStorage.removeItem('zyllotech_token');
+        localStorage.removeItem('zyllotech_user');
+        sessionStorage.removeItem('zy_token');
+        sessionStorage.removeItem('zy_user');
+        window.location.href = '/login';
+      }
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+  </script>
+<script src="/assets/js/theme.js"></script>
+</body>
+</html>

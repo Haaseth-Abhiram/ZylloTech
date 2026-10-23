@@ -1,0 +1,2080 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Employee Portal | Zyllo Tech</title>
+  <link rel="icon" href="/assets/images/Zyllo_Tech_Favicon_512x512.png">
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="/assets/css/style.css?v=3.0">
+  <style>
+    body {
+      background-color: #f8fafc;
+      color: #0f172a;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    .table > :not(caption) > * > * {
+      padding: 0.85rem 0.85rem;
+    }
+    .emp-stat-pill {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 14px;
+    }
+
+    /* ==================== CALENDAR & EMPLOYEE STYLES (LIGHT THEME FIRST) ==================== */
+    .zy-calendar-card {
+      background: #ffffff;
+      color: #0f172a;
+      border-radius: 16px;
+      border: 1px solid #e2e8f0;
+      padding: 24px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+    }
+    .zy-cal-nav-btn {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 1px solid #cbd5e1;
+      background: #f1f5f9;
+      color: #334155;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s ease;
+      cursor: pointer;
+    }
+    .zy-cal-nav-btn:hover {
+      background: #e2e8f0;
+      border-color: #94a3b8;
+      color: #0f172a;
+    }
+    .zy-cal-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 8px;
+    }
+    .zy-cal-header-cell {
+      text-align: center;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #475569;
+      padding: 6px 0;
+      text-transform: capitalize;
+    }
+    .zy-cal-cell {
+      min-height: 52px;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: all 0.15s ease;
+      user-select: none;
+      cursor: pointer;
+      border: 1px solid #e2e8f0;
+      background: #ffffff;
+      color: #0f172a;
+    }
+    .zy-cal-cell.is-empty {
+      background: transparent !important;
+      border-color: transparent !important;
+      cursor: default;
+      pointer-events: none;
+    }
+    .zy-cal-cell.is-weekday:hover {
+      background: #fef4ee;
+      border-color: #ff9c68;
+      color: #16133d;
+      transform: translateY(-1px);
+    }
+    .zy-cal-cell.is-weekend {
+      background: #f8fafc;
+      border-color: #e2e8f0;
+      color: #64748b;
+    }
+    .zy-cal-cell.is-weekend:hover {
+      background: #fef4ee;
+      border-color: #ff9c68;
+      color: #16133d;
+      transform: translateY(-1px);
+    }
+    .zy-cal-cell.is-holiday {
+      background: #fef4ee;
+      border: 1.5px solid #ff9c68;
+      color: #16133d;
+      font-weight: 700;
+    }
+    .zy-cal-cell.is-holiday:hover {
+      background: #fde8dc;
+      border-color: #f16623;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 14px rgba(241, 102, 35, 0.2);
+    }
+    .zy-cal-cell.is-today {
+      outline: 2px solid #f16623;
+      outline-offset: 1px;
+      box-shadow: 0 0 10px rgba(241, 102, 35, 0.25);
+      color: #f16623;
+      font-weight: 800;
+    }
+    .zy-cal-dot {
+      width: 5px;
+      height: 5px;
+      background-color: #f16623;
+      border-radius: 50%;
+      margin-top: 3px;
+    }
+    .zy-holiday-item-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 12px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: all 0.15s ease;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+      color: #0f172a;
+    }
+    .zy-holiday-item-card:hover {
+      background: #fef4ee;
+      border-color: #ff9c68;
+    }
+    .zy-date-badge-pill {
+      background: #fef4ee;
+      color: #16133d;
+      border: 1px solid #bfdbfe;
+      font-weight: 700;
+      font-size: 0.85rem;
+      padding: 6px 14px;
+      border-radius: 8px;
+      white-space: nowrap;
+    }
+    .emp-stat-pill {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 14px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+      color: #0f172a;
+    }
+    @media (max-width: 576px) {
+      .zy-cal-cell {
+        min-height: 42px;
+        font-size: 0.82rem;
+      }
+      .zy-cal-grid {
+        gap: 4px;
+      }
+      .zy-cal-header-cell {
+        font-size: 0.7rem;
+      }
+    }
+  </style>
+</head>
+<body class="theme-light">
+
+  <!-- ==================== EMPLOYEE WORKSPACE WRAPPER ==================== -->
+  <div class="zy-admin-wrapper">
+    <!-- Left Sidebar Matching Image 2 Reference -->
+    <aside class="zy-admin-sidebar" id="employeeSidebar">
+      <!-- Sidebar Header -->
+      <div class="zy-admin-sidebar-header">
+        <div class="zy-admin-logo-box">
+          <img src="/assets/images/zyllo-icon.png" alt="Zyllo Tech">
+        </div>
+        <div class="overflow-hidden">
+          <div class="zy-admin-brand-title">
+            <span class="zy-brand-zyllo" style="color: #f16623;">ZYLLO</span> <span class="zy-brand-tech" style="color: #262262;">TECH</span>
+          </div>
+          <div class="zy-admin-brand-sub">EMPLOYEE PORTAL · WORKSPACE</div>
+        </div>
+        <button class="btn btn-sm btn-link text-white-50 d-lg-none ms-auto p-0" onclick="toggleEmployeeSidebar()" aria-label="Close Sidebar">
+          <i class="bi bi-x-lg fs-5"></i>
+        </button>
+      </div>
+
+      <!-- WORKSPACE Navigation Group (Matching Image 2) -->
+      <div class="zy-sidebar-group-label">WORKSPACE</div>
+
+      <!-- 1. Overview -->
+      <button type="button" class="zy-sidebar-nav-item active" id="sidebar-emp-overview" onclick="switchEmpTab('overview')">
+        <span class="zy-sidebar-nav-left"><i class="bi bi-grid-fill"></i><span>Overview</span></span>
+      </button>
+
+      <!-- 2. My Profile -->
+      <button type="button" class="zy-sidebar-nav-item" id="sidebar-emp-profile" onclick="switchEmpTab('profile')">
+        <span class="zy-sidebar-nav-left"><i class="bi bi-person-fill"></i><span>My profile</span></span>
+      </button>
+
+      <!-- 3. Attendance -->
+      <button type="button" class="zy-sidebar-nav-item" id="sidebar-emp-attendance" onclick="switchEmpTab('attendance')">
+        <span class="zy-sidebar-nav-left"><i class="bi bi-clock-fill"></i><span>Attendance</span></span>
+      </button>
+
+      <!-- 4. Holidays & Calendar -->
+      <button type="button" class="zy-sidebar-nav-item" id="sidebar-emp-holidays" onclick="switchEmpTab('holidays')">
+        <span class="zy-sidebar-nav-left"><i class="bi bi-calendar3"></i><span>Holidays &amp; calendar</span></span>
+      </button>
+
+      <!-- 5. Leave Requests -->
+      <button type="button" class="zy-sidebar-nav-item" id="sidebar-emp-leaves" onclick="switchEmpTab('leaves')">
+        <span class="zy-sidebar-nav-left"><i class="bi bi-arrow-up-right-square-fill"></i><span>Leave requests</span></span>
+        <span class="zy-sidebar-counter-badge" id="emp-badge-leaves">14</span>
+      </button>
+
+      <!-- 6. Salary & Payslips -->
+      <button type="button" class="zy-sidebar-nav-item" id="sidebar-emp-payslips" onclick="switchEmpTab('payslips')">
+        <span class="zy-sidebar-nav-left"><i class="bi bi-currency-rupee"></i><span>Salary &amp; payslips</span></span>
+      </button>
+
+      <!-- 7. Documents -->
+      <button type="button" class="zy-sidebar-nav-item" id="sidebar-emp-documents" onclick="switchEmpTab('documents')">
+        <span class="zy-sidebar-nav-left"><i class="bi bi-file-earmark-text-fill"></i><span>Documents</span></span>
+      </button>
+
+      <!-- 8. HR Help Desk (Exact Pill Highlight from Image 2) -->
+      <button type="button" class="zy-employee-hr-pill" id="sidebar-emp-hr" onclick="switchEmpTab('hr')">
+        <i class="bi bi-heart-fill"></i><span>HR help desk</span>
+      </button>
+
+      <!-- QUICK SWITCH Group -->
+      <div class="zy-sidebar-group-label mt-3">QUICK SWITCH</div>
+
+      <a href="/portal" class="zy-sidebar-nav-item text-decoration-none" title="Open Client Portal">
+        <span class="zy-sidebar-nav-left"><i class="bi bi-kanban"></i><span>Client Portal</span></span>
+        <i class="bi bi-box-arrow-up-right small text-white-50"></i>
+      </a>
+
+      <a href="/" target="_blank" class="zy-sidebar-nav-item text-decoration-none" title="Visit Public Website">
+        <span class="zy-sidebar-nav-left"><i class="bi bi-globe"></i><span>Public Website</span></span>
+        <i class="bi bi-box-arrow-up-right small text-white-50"></i>
+      </a>
+
+      <button type="button" class="zy-sidebar-nav-item text-danger border-0 bg-transparent mt-2" onclick="handleLogout()" title="Log out">
+        <span class="zy-sidebar-nav-left"><i class="bi bi-box-arrow-right text-danger"></i><span class="text-danger fw-semibold">Log Out</span></span>
+      </button>
+
+      <!-- Employee Mini Profile Footer -->
+      <div class="mt-auto pt-3 border-top border-white/10 d-flex align-items-center gap-2">
+        <div class="rounded-circle d-flex align-items-center justify-content-center text-white fw-bold" style="width: 36px; height: 36px; min-width: 36px; background: #f16623; font-size: 0.85rem;">
+          <span id="empSidebarInitials">AM</span>
+        </div>
+        <div class="overflow-hidden" style="line-height: 1.2;">
+          <div class="text-white small fw-bold text-truncate" id="empSidebarName">Alex Morgan</div>
+          <small class="text-white-50 text-truncate d-block" style="font-size: 0.72rem;" id="empSidebarId">ZY-EMP-1042</small>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Mobile Offcanvas Backdrop -->
+    <div class="zy-sidebar-backdrop" id="empSidebarBackdrop" onclick="toggleEmployeeSidebar()"></div>
+
+    <!-- Main Workspace Pane -->
+    <main class="zy-admin-main-pane">
+      <!-- Topbar Header -->
+      <header class="zy-admin-topbar d-flex align-items-center justify-content-between gap-3">
+        <div class="d-flex align-items-center gap-3">
+          <button class="btn btn-sm btn-brand-outline d-lg-none py-1.5 px-2.5" onclick="toggleEmployeeSidebar()" aria-label="Toggle Sidebar">
+            <i class="bi bi-list fs-5"></i>
+          </button>
+          <a href="/" class="d-flex align-items-center gap-2 text-decoration-none me-2">
+            <div class="zy-admin-logo-box" style="width: 36px !important; height: 36px !important; padding: 2px !important;">
+              <img src="/assets/images/zyllo-icon.png" alt="Zyllo Tech" style="height: 24px !important; width: 24px !important;">
+            </div>
+            <div class="d-none d-sm-block">
+              <div class="zy-admin-brand-title" style="font-size: 0.95rem !important; margin: 0;">
+                <span class="zy-brand-zyllo" style="color: #f16623;">ZYLLO</span> <span class="zy-brand-tech" style="color: #262262;">TECH</span>
+              </div>
+            </div>
+          </a>
+          <div>
+            <div class="d-flex align-items-center gap-2">
+              <span class="badge bg-secondary bg-opacity-25 border border-white-10 text-white-50 small">Employee Self-Service</span>
+              <span class="text-white-50 small">/</span>
+              <span class="text-dark small fw-semibold" id="topbarCurrentTab">Overview</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="d-flex align-items-center gap-2">
+          <!-- Live Punch Status Pill in Topbar -->
+          <button type="button" class="btn btn-sm btn-outline-success py-1.5 px-3 rounded-pill d-none d-sm-inline-flex align-items-center gap-2" id="topbarPunchBtn" onclick="togglePunch()">
+            <span class="spinner-grow spinner-grow-sm text-success" role="status" style="width: 8px; height: 8px;"></span>
+            <span id="topbarPunchText">Punched In (09:15 AM)</span>
+          </button>
+
+          
+          <!-- Universal Light / Dark Mode Toggle Button -->
+          <button class="zy-theme-toggle-btn shadow-sm" onclick="toggleTheme()" title="Switch Light / Dark Theme">
+            <i class="bi bi-moon-stars-fill text-warning"></i>
+            <span class="theme-label d-none d-sm-inline">Dark Mode</span>
+          </button>
+
+          <!-- Apply Leave Quick Button -->
+          <button class="btn btn-sm btn-brand py-1.5 px-3 d-none d-md-inline-flex align-items-center gap-1" data-bs-toggle="modal" data-bs-target="#applyLeaveModal">
+            <i class="bi bi-calendar-plus"></i> <span>Apply Leave</span>
+          </button>
+
+          <!-- HR Help Desk Quick Button -->
+          <button class="btn btn-sm btn-brand-outline py-1.5 px-3 d-none d-md-inline-flex align-items-center gap-1" data-bs-toggle="modal" data-bs-target="#newHrTicketModal">
+            <i class="bi bi-heart-fill text-danger"></i> <span>HR Query</span>
+          </button>
+
+          <!-- User Menu Dropdown -->
+          <div class="dropdown">
+            <button class="btn btn-sm btn-brand py-1.5 px-3 dropdown-toggle" type="button" data-bs-toggle="dropdown" id="userMenuBtn">
+              <i class="bi bi-person-circle me-1"></i> Alex
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end zy-dropdown-menu">
+              <li class="px-3 py-2 border-bottom border-white/10">
+                <small class="text-white-50 d-block">Employee ID: <strong class="text-white" id="dropdownEmpId">ZY-EMP-1042</strong></small>
+                <span id="userDropdownEmail" class="fw-bold text-white">user@zyllotech.com</span>
+              </li>
+              <li>
+                <a class="zy-dropdown-item mt-1" href="/portal"><i class="bi bi-kanban me-2 text-warning"></i> Switch to Client Portal</a>
+              </li>
+              <li>
+                <a class="zy-dropdown-item" href="/" target="_blank"><i class="bi bi-box-arrow-up-right me-2 text-info"></i> Public Website</a>
+              </li>
+              <li><hr class="dropdown-divider border-white/10 my-1"></li>
+              <li>
+                <button class="zy-dropdown-item text-danger border-0 bg-transparent w-100 text-start" onclick="handleLogout()">
+                  <i class="bi bi-box-arrow-right me-2"></i> Log Out
+                </button>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Direct Logout Pill -->
+          <button class="btn btn-sm btn-outline-danger py-1.5 px-3 rounded-pill d-inline-flex align-items-center gap-1 shadow-sm" onclick="handleLogout()" title="Log out">
+            <i class="bi bi-box-arrow-right"></i> <span class="d-none d-lg-inline">Log Out</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Main Workspace Scroll Area -->
+      <div class="p-3 p-md-4 p-xl-4">
+
+        <!-- ==================== TAB 1: OVERVIEW ==================== -->
+        <div id="tabEmpOverview">
+          <!-- Welcome Hero Banner -->
+          <div class="row align-items-center mb-4">
+            <div class="col-md-7">
+              <div class="d-flex align-items-center gap-2 mb-2">
+                <span class="zy-badge"><i class="bi bi-shield-check text-success"></i> Verified Zyllo Tech Employee</span>
+                <span class="badge bg-secondary bg-opacity-25 border border-white-10 text-white-50">Emp ID: ZY-EMP-1042</span>
+              </div>
+              <h1 class="h3 fw-bold mb-1 text-white">
+                Good Day, <span id="welcomeEmpName" class="text-gradient-brand">Alex Morgan</span> 👋
+              </h1>
+              <p class="text-white-50 mb-0 small" id="welcomeEmpRole">Senior Full-Stack &amp; AI Solutions Engineer · Applied AI Pod</p>
+            </div>
+            <div class="col-md-5 text-md-end mt-3 mt-md-0 d-flex flex-wrap gap-2 justify-content-md-end">
+              <button class="btn btn-sm btn-brand" data-bs-toggle="modal" data-bs-target="#applyLeaveModal">
+                <i class="bi bi-calendar-plus me-1"></i> Apply for Leave
+              </button>
+              <button class="btn btn-sm btn-brand-outline" onclick="switchEmpTab('attendance')">
+                <i class="bi bi-clock-history me-1"></i> View Attendance Log
+              </button>
+            </div>
+          </div>
+
+          <!-- Live Digital Clock & Punch Station Card -->
+          <div class="zy-card p-4 mb-4 zy-punch-card" style="border: 2px solid #bfdbfe; border-radius: 16px;">
+            <div class="row align-items-center g-3">
+              <div class="col-md-7">
+                <div class="d-flex align-items-center gap-2 mb-2 flex-wrap">
+                  <span class="shift-pill"><i class="bi bi-clock-history"></i> Today's Shift: 09:30 AM – 06:30 PM IST</span>
+                  <span class="punch-status-pill punched-in" id="overviewPunchStatusBadge"><i class="bi bi-check-circle-fill me-1"></i> Punched In</span>
+                </div>
+                <div class="zy-punch-clock-display" id="liveClockDisplay">09:15:42 AM</div>
+                <div class="small fw-semibold mt-1" style="color: #475569;" id="liveDateDisplay">Wednesday, 21 October 2026 · Indian Standard Time (IST)</div>
+              </div>
+              <div class="col-md-5 text-md-end">
+                <div class="d-inline-flex flex-column align-items-md-end gap-2">
+                  <button type="button" class="btn btn-lg btn-success px-4 py-2.5 fw-bold shadow-sm" id="heroPunchBtn" onclick="togglePunch()">
+                    <i class="bi bi-box-arrow-right me-1"></i> Punch Out for the Day
+                  </button>
+                  <small style="color: #475569;" id="punchHeroSubtext">Punched in at <strong style="color: #0f172a;">09:15 AM</strong> · Active session</small>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4 Metric Cards -->
+          <div class="row g-3 mb-4">
+            <div class="col-sm-6 col-lg-3">
+              <div class="zy-card p-3 d-flex align-items-center gap-3">
+                <div class="service-icon-wrapper mb-0" style="width: 48px; height: 48px; background: rgba(241, 102, 35,0.18); color: #f16623;">
+                  <i class="bi bi-calendar-check fs-4"></i>
+                </div>
+                <div>
+                  <div class="text-white-50 small">Leaves Balance</div>
+                  <div class="fs-4 fw-bold text-white" id="stat-leaves-avail">14 Days</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-6 col-lg-3">
+              <div class="zy-card p-3 d-flex align-items-center gap-3">
+                <div class="service-icon-wrapper mb-0" style="width: 48px; height: 48px; background: rgba(34,197,94,0.15); color: #22c55e;">
+                  <i class="bi bi-check2-circle fs-4"></i>
+                </div>
+                <div>
+                  <div class="text-white-50 small">Attendance (Oct)</div>
+                  <div class="fs-4 fw-bold text-success">96.2% Present</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-6 col-lg-3">
+              <div class="zy-card p-3 d-flex align-items-center gap-3">
+                <div class="service-icon-wrapper mb-0" style="width: 48px; height: 48px; background: rgba(249,103,6,0.18); color: #f16623;">
+                  <i class="bi bi-currency-rupee fs-4"></i>
+                </div>
+                <div>
+                  <div class="text-white-50 small">Net Salary (Sep)</div>
+                  <div class="fs-4 fw-bold text-white">₹88,450</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-6 col-lg-3">
+              <div class="zy-card p-3 d-flex align-items-center gap-3">
+                <div class="service-icon-wrapper mb-0" style="width: 48px; height: 48px; background: rgba(168,85,247,0.18); color: #a855f7;">
+                  <i class="bi bi-stars fs-4"></i>
+                </div>
+                <div>
+                  <div class="text-white-50 small">Next Holiday</div>
+                  <div class="fs-5 fw-bold text-white">Diwali (31 Oct)</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2-Column Overview Summary Grid -->
+          <div class="row g-4 mb-4">
+            <!-- Left: Recent Attendance Logs -->
+            <div class="col-lg-7">
+              <div class="zy-card p-3 h-100">
+                <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom border-white/10">
+                  <div class="d-flex align-items-center gap-2">
+                    <i class="bi bi-clock-history text-info"></i>
+                    <h6 class="fw-bold text-white mb-0">Recent Attendance Logs</h6>
+                  </div>
+                  <button class="btn btn-sm text-info p-0 small text-decoration-none" onclick="switchEmpTab('attendance')">
+                    View Full Month <i class="bi bi-arrow-right"></i>
+                  </button>
+                </div>
+                <div class="table-responsive">
+                  <table class="table  table-hover align-middle mb-0" style="background: transparent;">
+                    <thead class="text-white-50 small text-uppercase">
+                      <tr>
+                        <th>Date</th>
+                        <th>Punch In</th>
+                        <th>Punch Out</th>
+                        <th>Hours</th>
+                        <th class="text-end">Status</th>
+                      </tr>
+                    </thead>
+                    <tbody id="overviewAttendanceTable">
+                      <tr><td colspan="5" class="text-center py-3 text-white-50 small">Loading attendance...</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right: Upcoming Holidays & Calendar -->
+            <div class="col-lg-5">
+              <div class="zy-card p-3 h-100">
+                <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom border-white/10">
+                  <div class="d-flex align-items-center gap-2">
+                    <i class="bi bi-calendar-event text-warning"></i>
+                    <h6 class="fw-bold text-white mb-0">Upcoming Holidays</h6>
+                  </div>
+                  <button class="btn btn-sm text-info p-0 small text-decoration-none" onclick="switchEmpTab('holidays')">
+                    All Holidays <i class="bi bi-arrow-right"></i>
+                  </button>
+                </div>
+                <div class="d-flex flex-column gap-2" id="overviewHolidaysList">
+                  <div class="text-center py-3 text-white-50 small">Loading company calendar...</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================== TAB 2: MY PROFILE ==================== -->
+        <div id="tabEmpProfile" class="d-none">
+          <div class="mb-4">
+            <h5 class="fw-bold mb-1 text-white"><i class="bi bi-person-fill text-gradient-orange me-2"></i>My Official Employee Profile</h5>
+            <p class="text-white-50 small mb-0">Verified identity, department allocation, and statutory payroll details.</p>
+          </div>
+
+          <div class="row g-4">
+            <!-- Profile Overview Card -->
+            <div class="col-lg-4">
+              <div class="zy-card p-4 text-center">
+                <div class="rounded-circle d-inline-flex align-items-center justify-content-center text-white fw-bold mb-3 shadow" style="width: 84px; height: 84px; background: linear-gradient(135deg, #f16623, #16133d); font-size: 2rem;">
+                  <span id="profileAvatarInitials">AM</span>
+                </div>
+                <h5 class="fw-bold text-white mb-1" id="profileCardName">Alex Morgan</h5>
+                <div class="badge bg-primary bg-opacity-25 text-info border border-primary px-3 py-1 mb-2" id="profileCardDesig">Senior Full-Stack &amp; AI Engineer</div>
+                <p class="text-white-50 small mb-3" id="profileCardDept">Engineering &amp; Applied AI Pod</p>
+
+                <div class="p-3 rounded-3 text-start small mb-3" style="background: #ffffff; border: 1px solid #e2e8f0;">
+                  <div class="d-flex justify-content-between py-1 border-bottom border-white/10">
+                    <span class="text-white-50">Employee ID:</span>
+                    <strong class="text-white" id="profileEmpId">ZY-EMP-1042</strong>
+                  </div>
+                  <div class="d-flex justify-content-between py-1 border-bottom border-white/10">
+                    <span class="text-white-50">Joining Date:</span>
+                    <span class="text-white" id="profileJoiningDate">15 Jan 2024</span>
+                  </div>
+                  <div class="d-flex justify-content-between py-1 border-bottom border-white/10">
+                    <span class="text-white-50">Reporting Manager:</span>
+                    <span class="text-white" id="profileManager">Dr. K. Srinivas</span>
+                  </div>
+                  <div class="d-flex justify-content-between py-1">
+                    <span class="text-white-50">Employment Status:</span>
+                    <span class="badge bg-success bg-opacity-25 text-success border border-success">Permanent / Full-Time</span>
+                  </div>
+                </div>
+
+                <button class="btn btn-sm btn-brand-outline w-100" onclick="switchEmpTab('documents')">
+                  <i class="bi bi-file-earmark-arrow-down me-1"></i> Access Offer &amp; NDA Documents
+                </button>
+              </div>
+            </div>
+
+            <!-- Profile Details Grid -->
+            <div class="col-lg-8">
+              <!-- Contact Information -->
+              <div class="zy-card p-4 mb-4">
+                <h6 class="fw-bold text-white mb-3 pb-2 border-bottom border-white/10">
+                  <i class="bi bi-person-lines-fill text-warning me-2"></i>Official Contact &amp; Location
+                </h6>
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <small class="text-white-50 d-block">Official Email</small>
+                    <div class="fw-bold text-white" id="profileEmail">user@zyllotech.com</div>
+                  </div>
+                  <div class="col-md-6">
+                    <small class="text-white-50 d-block">Direct Phone</small>
+                    <div class="fw-bold text-white" id="profilePhone">+91 98480 22334</div>
+                  </div>
+                  <div class="col-md-6">
+                    <small class="text-white-50 d-block">Work Location</small>
+                    <div class="fw-bold text-white" id="profileLocation">Guntur Tech Hub / Hybrid Global</div>
+                  </div>
+                  <div class="col-md-6">
+                    <small class="text-white-50 d-block">Emergency Contact</small>
+                    <div class="fw-bold text-white" id="profileEmergency">Rajesh Morgan (+91 98480 99887)</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Statutory & Bank Details -->
+              <div class="zy-card p-4">
+                <h6 class="fw-bold text-white mb-3 pb-2 border-bottom border-white/10">
+                  <i class="bi bi-bank text-info me-2"></i>Bank &amp; Statutory Details (Salary Account)
+                </h6>
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <small class="text-white-50 d-block">Bank Name</small>
+                    <div class="fw-bold text-white" id="profileBank">HDFC Bank Ltd.</div>
+                  </div>
+                  <div class="col-md-6">
+                    <small class="text-white-50 d-block">Account Number</small>
+                    <div class="fw-bold text-white" id="profileAccount">••••••••4921</div>
+                  </div>
+                  <div class="col-md-6">
+                    <small class="text-white-50 d-block">IFSC Code</small>
+                    <div class="fw-bold text-white" id="profileIfsc">HDFC0001248</div>
+                  </div>
+                  <div class="col-md-6">
+                    <small class="text-white-50 d-block">PAN Number</small>
+                    <div class="fw-bold text-white font-monospace" id="profilePan">ABCDE1234F</div>
+                  </div>
+                  <div class="col-md-6">
+                    <small class="text-white-50 d-block">Universal Account Number (UAN / PF)</small>
+                    <div class="fw-bold text-white font-monospace" id="profileUan">101234567890</div>
+                  </div>
+                  <div class="col-md-6">
+                    <small class="text-white-50 d-block">PF Organization</small>
+                    <div class="fw-bold text-white">EPFO Regional Office, AP</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================== TAB 3: ATTENDANCE ==================== -->
+        <div id="tabEmpAttendance" class="d-none">
+          <!-- Live Digital Clock & Attendance Punch Station -->
+          <div class="zy-card p-4 mb-4 zy-punch-card" style="border: 2px solid #bfdbfe; border-radius: 16px; background: #ffffff;">
+            <div class="row align-items-center g-3">
+              <div class="col-md-7">
+                <div class="d-flex align-items-center gap-2 mb-2 flex-wrap">
+                  <span class="shift-pill"><i class="bi bi-clock-history"></i> Today's Shift: 09:30 AM – 06:30 PM IST</span>
+                  <span class="punch-status-pill punched-in" id="attendancePunchStatusBadge"><i class="bi bi-check-circle-fill me-1"></i> Punched In</span>
+                </div>
+                <div class="zy-punch-clock-display" id="attendanceLiveClockDisplay">09:15:42 AM</div>
+                <div class="small fw-semibold mt-1" style="color: #475569;" id="attendanceLiveDateDisplay">Wednesday, 21 October 2026 · Indian Standard Time (IST)</div>
+              </div>
+              <div class="col-md-5 text-md-end">
+                <div class="d-inline-flex flex-column align-items-md-end gap-2">
+                  <button type="button" class="btn btn-lg btn-success px-4 py-2.5 fw-bold shadow-sm" id="attendancePunchBtn" onclick="togglePunch()">
+                    <i class="bi bi-box-arrow-right me-1"></i> Punch Out for the Day
+                  </button>
+                  <small style="color: #475569;" id="attendancePunchSubtext">Punched in at <strong style="color: #0f172a;">09:15 AM</strong> · Active session</small>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+              <h5 class="fw-bold mb-0 text-white"><i class="bi bi-clock-fill text-info me-2"></i>Daily Attendance &amp; Shift Logs</h5>
+              <small class="text-white-50">Shift: 09:30 AM – 06:30 PM IST · Biometric &amp; Remote Web Punch</small>
+            </div>
+            <button class="btn btn-sm btn-brand-outline" onclick="loadAttendance()">
+              <i class="bi bi-arrow-clockwise me-1"></i> Refresh
+            </button>
+          </div>
+
+          <!-- Attendance Metrics Row -->
+          <div class="row g-3 mb-4">
+            <div class="col-6 col-md-3">
+              <div class="emp-stat-pill text-center">
+                <span class="text-white-50 small d-block">Working Days</span>
+                <strong class="text-white fs-4">22</strong>
+              </div>
+            </div>
+            <div class="col-6 col-md-3">
+              <div class="emp-stat-pill text-center">
+                <span class="text-white-50 small d-block">Days Present</span>
+                <strong class="text-success fs-4">21</strong>
+              </div>
+            </div>
+            <div class="col-6 col-md-3">
+              <div class="emp-stat-pill text-center">
+                <span class="text-white-50 small d-block">Work From Home</span>
+                <strong class="text-info fs-4">2</strong>
+              </div>
+            </div>
+            <div class="col-6 col-md-3">
+              <div class="emp-stat-pill text-center">
+                <span class="text-white-50 small d-block">Late Logins</span>
+                <strong class="text-white fs-4">0</strong>
+              </div>
+            </div>
+          </div>
+
+          <!-- Attendance Table -->
+          <div class="zy-card overflow-hidden">
+            <div class="table-responsive">
+              <table class="table  table-hover mb-0 align-middle">
+                <thead class=" text-white-50 small text-uppercase" style="background: #ffffff; border: 1px solid #e2e8f0;">
+                  <tr>
+                    <th>Date</th>
+                    <th>Shift</th>
+                    <th>Punch In Time</th>
+                    <th>Punch Out Time</th>
+                    <th>Total Hours</th>
+                    <th class="text-end">Status</th>
+                  </tr>
+                </thead>
+                <tbody id="attendanceFullTableBody">
+                  <tr><td colspan="6" class="text-center py-4 text-white-50">Loading attendance records...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================== TAB 4: HOLIDAYS & CALENDAR ==================== -->
+        <div id="tabEmpHolidays" class="d-none">
+          <!-- Top Header matching Screenshot Reference -->
+          <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
+            <div>
+              <span class="text-primary fw-bold text-uppercase" style="font-size: 0.72rem; letter-spacing: 0.08em;">EMPLOYEE SELF SERVICE</span>
+              <h4 class="fw-bold text-white mb-0 mt-0.5">Holidays &amp; calendar</h4>
+              <p class="text-white-50 small mb-0">Plan around holidays and important dates.</p>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+              <span class="badge border" style="background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.15) !important; color: #cbd5e1; font-size: 0.68rem; letter-spacing: 0.08em; padding: 6px 12px; border-radius: 9999px;">
+                PREVIEW ENVIRONMENT
+              </span>
+              <button class="btn btn-sm btn-primary d-inline-flex align-items-center gap-1 shadow-sm px-3 py-1.5" onclick="openAskHrForCalendar()" style="border-radius: 9999px; font-weight: 600;">
+                <i class="bi bi-stars"></i> Ask HR
+              </button>
+            </div>
+          </div>
+
+          <!-- Main Calendar Dark Mode Card matching Image -->
+          <div class="zy-calendar-card mb-4">
+            <!-- Calendar Card Header with Month Navigation -->
+            <div class="d-flex flex-wrap justify-content-between align-items-center pb-3 border-bottom border-white/10 gap-3">
+              <div>
+                <span class="text-primary fw-bold text-uppercase" style="font-size: 0.7rem; letter-spacing: 0.08em; display: block;">PLAN AHEAD</span>
+                <h5 class="fw-bold text-white mb-0">Holidays &amp; calendar</h5>
+                <small class="text-white-50" style="font-size: 0.8rem;">India holiday calendar preview · confirm dates with your actual HR team.</small>
+              </div>
+
+              <!-- Month Navigation Controls -->
+              <div class="d-flex align-items-center gap-2">
+                <button type="button" class="zy-cal-nav-btn" onclick="changeCalendarMonth(-1)" title="Previous Month" aria-label="Previous Month">
+                  <i class="bi bi-chevron-left" style="font-size: 0.75rem;"></i>
+                </button>
+                <div class="fw-bold text-white px-2 text-center" id="calMonthTitle" style="min-width: 140px; font-size: 0.95rem;">
+                  October 2026
+                </div>
+                <button type="button" class="zy-cal-nav-btn" onclick="changeCalendarMonth(1)" title="Next Month" aria-label="Next Month">
+                  <i class="bi bi-chevron-right" style="font-size: 0.75rem;"></i>
+                </button>
+                <button type="button" class="btn btn-sm btn-outline-light border-white/20 ms-1 py-1 px-2.5 rounded-pill text-white-50" style="font-size: 0.72rem; font-weight: 600; background: rgba(255,255,255,0.04);" onclick="goToCurrentCalendarMonth()">
+                  Today
+                </button>
+              </div>
+            </div>
+
+            <!-- Calendar Weekday Headers (Mon - Sun) -->
+            <div class="cal-grid-header mt-3" style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px;">
+              <div class="zy-cal-header-cell">Mon</div>
+              <div class="zy-cal-header-cell">Tue</div>
+              <div class="zy-cal-header-cell">Wed</div>
+              <div class="zy-cal-header-cell">Thu</div>
+              <div class="zy-cal-header-cell">Fri</div>
+              <div class="zy-cal-header-cell">Sat</div>
+              <div class="zy-cal-header-cell">Sun</div>
+            </div>
+
+            <!-- Calendar Days Grid (7 columns) -->
+            <div id="calDaysGrid" class="zy-cal-grid mt-1">
+              <!-- Dynamically populated via JS -->
+            </div>
+
+            <!-- Calendar Legend in Dark Mode -->
+            <div class="d-flex flex-wrap align-items-center gap-4 mt-3 pt-3 border-top border-white/10" style="font-size: 0.8rem; color: #94a3b8;">
+              <div class="d-flex align-items-center gap-2">
+                <span style="display: inline-flex; align-items: center; justify-content: center; width: 14px; height: 14px; border-radius: 4px; background: rgba(241, 102, 35, 0.25); border: 1.5px solid #f16623;">
+                  <span style="width: 4px; height: 4px; border-radius: 50%; background: #9f9cb8; box-shadow: 0 0 4px #9f9cb8;"></span>
+                </span>
+                <span class="fw-semibold text-white-50">Company holiday</span>
+              </div>
+              <div class="d-flex align-items-center gap-2">
+                <span style="display: inline-block; width: 14px; height: 14px; border-radius: 4px; background: rgba(241, 102, 35, 0.12); border: 1.5px solid rgba(241, 102, 35, 0.35);"></span>
+                <span class="fw-semibold text-white-50">Weekend</span>
+              </div>
+              <div class="ms-auto d-flex align-items-center gap-2">
+                <small class="text-white-50"><i class="bi bi-info-circle me-1"></i>Click any date to apply for leave or view festival details.</small>
+              </div>
+            </div>
+
+            <!-- Upcoming Holidays Section below calendar in Dark Mode -->
+            <div class="mt-4 pt-3 border-top border-white/10">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <h6 class="fw-bold text-white mb-0" style="font-size: 0.95rem;">Upcoming holidays</h6>
+                <span class="badge" style="background: rgba(255,255,255,0.06); color: #cbd5e1; border: 1px solid rgba(255,255,255,0.1); font-size: 0.72rem;" id="calUpcomingBadge">October 2026</span>
+              </div>
+              <div id="calUpcomingHolidaysList" class="d-flex flex-column gap-2">
+                <!-- Dynamically populated via JS for selected month -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Collapsible / Full Annual Holiday Schedule -->
+          <div class="zy-card overflow-hidden">
+            <div class="d-flex justify-content-between align-items-center p-3 border-bottom border-white/10" style="background: rgba(255,255,255,0.02);">
+              <div>
+                <h6 class="fw-bold mb-0 text-white"><i class="bi bi-calendar3 text-gradient-orange me-2"></i>Official Company Holidays &amp; Calendar (2026 – 2027)</h6>
+                <small class="text-white-50">Zyllo Tech observed national and state public holidays for all engineering pods.</small>
+              </div>
+              <button class="btn btn-sm btn-brand-outline" onclick="loadHolidays()">
+                <i class="bi bi-arrow-clockwise me-1"></i> Refresh List
+              </button>
+            </div>
+            <div class="table-responsive">
+              <table class="table  table-hover mb-0 align-middle">
+                <thead class=" text-white-50 small text-uppercase" style="background: #ffffff; border: 1px solid #e2e8f0;">
+                  <tr>
+                    <th>Date</th>
+                    <th>Festival / Occasion</th>
+                    <th>Day of Week</th>
+                    <th>Holiday Classification</th>
+                    <th class="text-end">Status</th>
+                  </tr>
+                </thead>
+                <tbody id="holidaysTableBody">
+                  <tr><td colspan="5" class="text-center py-4 text-white-50">Loading company holiday calendar...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================== TAB 5: LEAVE REQUESTS ==================== -->
+        <div id="tabEmpLeaves" class="d-none">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+              <h5 class="fw-bold mb-0 text-white"><i class="bi bi-arrow-up-right-square-fill text-warning me-2"></i>Leave Balances &amp; Applications</h5>
+              <small class="text-white-50">Apply for planned time off, sick leave, or comp-off days.</small>
+            </div>
+            <div class="d-flex gap-2">
+              <button class="btn btn-sm btn-brand-outline" onclick="loadLeaves()">
+                <i class="bi bi-arrow-clockwise me-1"></i> Refresh
+              </button>
+              <button class="btn btn-sm btn-brand" data-bs-toggle="modal" data-bs-target="#applyLeaveModal">
+                <i class="bi bi-plus-lg me-1"></i> Apply for Leave
+              </button>
+            </div>
+          </div>
+
+          <!-- Leave Balances -->
+          <div class="row g-3 mb-4">
+            <div class="col-sm-6 col-lg-3">
+              <div class="emp-stat-pill">
+                <span class="text-white-50 small d-block">Casual Leave (CL)</span>
+                <strong class="text-white fs-4" id="leaveBalCasual">4 Days</strong>
+                <small class="text-white-50 d-block mt-1">Available for personal needs</small>
+              </div>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+              <div class="emp-stat-pill">
+                <span class="text-white-50 small d-block">Sick Leave (SL)</span>
+                <strong class="text-info fs-4" id="leaveBalSick">5 Days</strong>
+                <small class="text-white-50 d-block mt-1">Medical recuperation</small>
+              </div>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+              <div class="emp-stat-pill">
+                <span class="text-white-50 small d-block">Earned Leave (EL)</span>
+                <strong class="text-success fs-4" id="leaveBalEarned">5 Days</strong>
+                <small class="text-white-50 d-block mt-1">Vacation &amp; carry-forward</small>
+              </div>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+              <div class="emp-stat-pill">
+                <span class="text-white-50 small d-block">Total Leaves Available</span>
+                <strong class="text-warning fs-4" id="leaveBalTotal">14 Days</strong>
+                <small class="text-white-50 d-block mt-1">Annual entitlement</small>
+              </div>
+            </div>
+          </div>
+
+          <!-- Leave Requests History Table -->
+          <div class="zy-card overflow-hidden">
+            <div class="table-responsive">
+              <table class="table  table-hover mb-0 align-middle">
+                <thead class=" text-white-50 small text-uppercase" style="background: #ffffff; border: 1px solid #e2e8f0;">
+                  <tr>
+                    <th>Request ID</th>
+                    <th>Leave Category</th>
+                    <th>From Date</th>
+                    <th>To Date</th>
+                    <th>Days</th>
+                    <th>Reason</th>
+                    <th class="text-end">Approval Status</th>
+                  </tr>
+                </thead>
+                <tbody id="leavesTableBody">
+                  <tr><td colspan="7" class="text-center py-4 text-white-50">Loading leave requests...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================== TAB 6: SALARY & PAYSLIPS ==================== -->
+        <div id="tabEmpPayslips" class="d-none">
+          <div class="mb-4">
+            <h5 class="fw-bold mb-1 text-white"><i class="bi bi-currency-rupee text-gradient-orange me-2"></i>Compensation Structure &amp; Monthly Payslips</h5>
+            <p class="text-white-50 small mb-0">Monthly salary breakdown, statutory deductions, and tax withholding receipts.</p>
+          </div>
+
+          <!-- CTC Salary Structure Card -->
+          <div class="zy-card p-4 mb-4">
+            <h6 class="fw-bold text-white mb-3 pb-2 border-bottom border-white/10">
+              <i class="bi bi-cash-stack text-success me-2"></i>Current Monthly CTC Structure
+            </h6>
+            <div class="row g-3">
+              <div class="col-md-3">
+                <div class="emp-stat-pill">
+                  <span class="text-white-50 small d-block">Basic Salary</span>
+                  <strong class="text-white fs-5">₹52,500</strong>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="emp-stat-pill">
+                  <span class="text-white-50 small d-block">House Rent Allowance (HRA)</span>
+                  <strong class="text-white fs-5">₹26,250</strong>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="emp-stat-pill">
+                  <span class="text-white-50 small d-block">Special Allowance</span>
+                  <strong class="text-white fs-5">₹26,250</strong>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="emp-stat-pill" style="border-color: rgba(34,197,94,0.3); background: rgba(34,197,94,0.05);">
+                  <span class="text-success small d-block fw-bold">Gross Monthly Pay</span>
+                  <strong class="text-success fs-5">₹1,05,000</strong>
+                </div>
+              </div>
+
+              <!-- Deductions Row -->
+              <div class="col-md-4">
+                <small class="text-white-50 d-block">Provident Fund (Employee PF 12%)</small>
+                <div class="fw-bold text-danger">- ₹1,800</div>
+              </div>
+              <div class="col-md-4">
+                <small class="text-white-50 d-block">Professional Tax (PT)</small>
+                <div class="fw-bold text-danger">- ₹200</div>
+              </div>
+              <div class="col-md-4">
+                <small class="text-white-50 d-block">Income Tax Withholding (TDS)</small>
+                <div class="fw-bold text-danger">- ₹14,550</div>
+              </div>
+
+              <div class="col-12 pt-3 border-top border-white/10 d-flex justify-content-between align-items-center">
+                <div>
+                  <span class="text-white-50 small d-block">Net Take-Home Deposited in Bank</span>
+                  <strong class="text-gradient-brand fs-4">₹88,450 / month</strong>
+                </div>
+                <span class="badge bg-success bg-opacity-25 text-success border border-success px-3 py-2">Deposited on 30th of each month</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Monthly Payslips History -->
+          <div class="zy-card overflow-hidden">
+            <div class="d-flex justify-content-between align-items-center p-3 border-bottom border-white/10">
+              <h6 class="fw-bold text-white mb-0"><i class="bi bi-file-earmark-pdf text-danger me-2"></i>Issued Salary Slips</h6>
+              <button class="btn btn-sm btn-brand-outline" onclick="loadPayslips()">
+                <i class="bi bi-arrow-clockwise me-1"></i> Refresh
+              </button>
+            </div>
+            <div class="table-responsive">
+              <table class="table  table-hover mb-0 align-middle">
+                <thead class=" text-white-50 small text-uppercase" style="background: #ffffff; border: 1px solid #e2e8f0;">
+                  <tr>
+                    <th>Salary Month</th>
+                    <th>Gross Pay</th>
+                    <th>Total Deductions</th>
+                    <th>Net Take-Home</th>
+                    <th>Payment Date</th>
+                    <th>Status</th>
+                    <th class="text-end">Action</th>
+                  </tr>
+                </thead>
+                <tbody id="payslipsTableBody">
+                  <tr><td colspan="7" class="text-center py-4 text-white-50">Loading payslip records...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================== TAB 7: DOCUMENTS ==================== -->
+        <div id="tabEmpDocuments" class="d-none">
+          <div class="mb-4">
+            <h5 class="fw-bold mb-1 text-white"><i class="bi bi-file-earmark-text-fill text-info me-2"></i>Official Employee Document Repository</h5>
+            <p class="text-white-50 small mb-0">Legal employment agreements, tax certificates, and merit letters.</p>
+          </div>
+
+          <div class="zy-card overflow-hidden">
+            <div class="table-responsive">
+              <table class="table  table-hover mb-0 align-middle">
+                <thead class=" text-white-50 small text-uppercase" style="background: #ffffff; border: 1px solid #e2e8f0;">
+                  <tr>
+                    <th>Document Name</th>
+                    <th>Type</th>
+                    <th>File Size</th>
+                    <th>Issued / Uploaded Date</th>
+                    <th class="text-end">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="documentsTableBody">
+                  <tr><td colspan="5" class="text-center py-4 text-white-50">Loading official documents...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================== TAB 8: HR HELP DESK (MATCHING IMAGE 2) ==================== -->
+        <div id="tabEmpHr" class="d-none">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+              <h5 class="fw-bold mb-0 text-white"><i class="bi bi-heart-fill text-danger me-2"></i>People Operations &amp; HR Help Desk</h5>
+              <small class="text-white-50">Confidential HR desk for payroll questions, asset allocation, PF transfer, and employee benefits.</small>
+            </div>
+            <div class="d-flex gap-2">
+              <button class="btn btn-sm btn-brand-outline" onclick="loadHrTickets()">
+                <i class="bi bi-arrow-clockwise me-1"></i> Refresh
+              </button>
+              <button class="btn btn-sm btn-brand" data-bs-toggle="modal" data-bs-target="#newHrTicketModal">
+                <i class="bi bi-plus-lg me-1"></i> Raise HR Query
+              </button>
+            </div>
+          </div>
+
+          <!-- HR Pod Direct Contacts Card -->
+          <div class="zy-card p-4 mb-4" style="background: rgba(241, 102, 35,0.06); border: 1px solid rgba(241, 102, 35,0.25);">
+            <div class="row align-items-center g-3">
+              <div class="col-md-8">
+                <div class="d-flex align-items-center gap-3">
+                  <div class="rounded-circle d-flex align-items-center justify-content-center text-white" style="width: 48px; height: 48px; background: #f16623;">
+                    <i class="bi bi-person-heart fs-4"></i>
+                  </div>
+                  <div>
+                    <h6 class="fw-bold text-white mb-0">Assigned HR Business Partner: Priya Sharma</h6>
+                    <small class="text-white-50">Head of People &amp; Culture · Zyllo Tech Software Solutions</small>
+                    <div class="text-white-50 small mt-1">Direct Help Desk Email: <strong class="text-info">hr@zyllotech.com</strong> · Ext: 204</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 text-md-end">
+                <button class="btn btn-sm btn-brand" data-bs-toggle="modal" data-bs-target="#newHrTicketModal">
+                  <i class="bi bi-chat-heart-fill me-1"></i> Raise New HR Query
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- HR Tickets History Table -->
+          <div class="zy-card overflow-hidden">
+            <div class="table-responsive">
+              <table class="table  table-hover mb-0 align-middle">
+                <thead class=" text-white-50 small text-uppercase" style="background: #ffffff; border: 1px solid #e2e8f0;">
+                  <tr>
+                    <th>Ticket ID</th>
+                    <th>Category</th>
+                    <th>Subject</th>
+                    <th>Priority</th>
+                    <th>Date Raised</th>
+                    <th>Status</th>
+                    <th class="text-end">HR Response</th>
+                  </tr>
+                </thead>
+                <tbody id="hrTicketsTableBody">
+                  <tr><td colspan="7" class="text-center py-4 text-white-50">Loading HR tickets...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- ==================== MODAL: APPLY FOR LEAVE ==================== -->
+  <div class="modal fade" id="applyLeaveModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content zy-modal-content">
+        <div class="modal-header border-bottom border-white/10">
+          <h5 class="modal-title fw-bold">
+            <i class="bi bi-calendar-plus text-warning me-2"></i>Apply for Leave
+          </h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form id="applyLeaveForm" onsubmit="handleLeaveSubmit(event)">
+          <div class="modal-body">
+            <div class="mb-3">
+              <label class="form-label text-white-50 small mb-1">Leave Type *</label>
+              <select id="leave-type-select" class="form-select zy-input" required>
+                <option value="Casual Leave">Casual Leave (4 days available)</option>
+                <option value="Sick Leave">Sick Leave (5 days available)</option>
+                <option value="Earned Leave">Earned Leave (5 days available)</option>
+                <option value="Compensatory Off">Compensatory Off</option>
+              </select>
+            </div>
+
+            <div class="row g-2 mb-3">
+              <div class="col-6">
+                <label class="form-label text-white-50 small mb-1">Start Date *</label>
+                <input type="date" id="leave-start-date" class="form-control zy-input" required>
+              </div>
+              <div class="col-6">
+                <label class="form-label text-white-50 small mb-1">End Date *</label>
+                <input type="date" id="leave-end-date" class="form-control zy-input" required>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label text-white-50 small mb-1">Number of Days *</label>
+              <input type="number" id="leave-days-count" class="form-control zy-input" min="1" max="14" value="1" required>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label text-white-50 small mb-1">Reason for Leave *</label>
+              <textarea id="leave-reason" rows="3" class="form-control zy-input" placeholder="State reason for absence and handover person if applicable..." required></textarea>
+            </div>
+          </div>
+          <div class="modal-footer border-top border-white/10">
+            <button type="button" class="btn btn-brand-outline" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" id="submitLeaveBtn" class="btn btn-brand">
+              <i class="bi bi-send-fill me-1"></i> Submit for Approval
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL: RAISE HR TICKET ==================== -->
+  <div class="modal fade" id="newHrTicketModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content zy-modal-content">
+        <div class="modal-header border-bottom border-white/10">
+          <h5 class="modal-title fw-bold">
+            <i class="bi bi-heart-fill text-danger me-2"></i>Raise HR Query / Request
+          </h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form id="newHrTicketForm" onsubmit="handleHrTicketSubmit(event)">
+          <div class="modal-body">
+            <div class="mb-3">
+              <label class="form-label text-white-50 small mb-1">Category *</label>
+              <select id="hr-category" class="form-select zy-input" required>
+                <option value="Payroll & Tax">Payroll &amp; Tax Withholding</option>
+                <option value="IT & Hardware">IT Equipment &amp; Workspace</option>
+                <option value="Leave & Attendance">Leave &amp; Attendance Correction</option>
+                <option value="PF & Benefits">EPFO, PF Transfer &amp; Insurance</option>
+                <option value="General HR">General HR &amp; Company Policy</option>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label text-white-50 small mb-1">Priority</label>
+              <select id="hr-priority" class="form-select zy-input">
+                <option value="Low">Low (General Query)</option>
+                <option value="Medium" selected>Medium (Standard 24-hr response)</option>
+                <option value="High">High (Urgent matter)</option>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label text-white-50 small mb-1">Subject *</label>
+              <input type="text" id="hr-subject" class="form-control zy-input" placeholder="Summary of question or request" required>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label text-white-50 small mb-1">Description / Details *</label>
+              <textarea id="hr-desc" rows="4" class="form-control zy-input" placeholder="Provide full details so HR operations can assist quickly..." required></textarea>
+            </div>
+          </div>
+          <div class="modal-footer border-top border-white/10">
+            <button type="button" class="btn btn-brand-outline" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" id="submitHrBtn" class="btn btn-brand">
+              <i class="bi bi-send-fill me-1"></i> Submit to HR
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL: PAYSLIP VIEWER ==================== -->
+  <div class="modal fade" id="payslipModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content zy-modal-content">
+        <div class="modal-header border-bottom border-white/10">
+          <div class="d-flex align-items-center gap-2">
+            <img src="/assets/images/zyllo-icon.png" alt="Zyllo" style="height: 28px;">
+            <h5 class="modal-title fw-bold text-white mb-0" id="payslipModalTitle">Salary Slip - September 2026</h5>
+          </div>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body p-4" id="printablePayslipContent">
+          <div class="text-center pb-3 border-bottom border-white/10 mb-3">
+            <h5 class="fw-bold text-white mb-0">ZYLLO TECH SOFTWARE SOLUTIONS PRIVATE LIMITED</h5>
+            <small class="text-white-50">R V Plaza, Gayathri Nagar, Phase-2, MG Inner Ring Road, Guntur, AP - 522034</small>
+            <div class="badge bg-primary bg-opacity-25 text-info mt-2" id="payslipPeriodBadge">Payslip for the month of September 2026</div>
+          </div>
+
+          <div class="row g-2 mb-3 small">
+            <div class="col-6">
+              <span class="text-white-50">Employee Name:</span> <strong class="text-white" id="slipEmpName">Alex Morgan</strong>
+            </div>
+            <div class="col-6">
+              <span class="text-white-50">Employee ID:</span> <strong class="text-white">ZY-EMP-1042</strong>
+            </div>
+            <div class="col-6">
+              <span class="text-white-50">Designation:</span> <strong class="text-white">Senior Solutions Engineer</strong>
+            </div>
+            <div class="col-6">
+              <span class="text-white-50">Bank Account:</span> <strong class="text-white">HDFC Bank (••••4921)</strong>
+            </div>
+            <div class="col-6">
+              <span class="text-white-50">PAN Number:</span> <strong class="text-white font-monospace">ABCDE1234F</strong>
+            </div>
+            <div class="col-6">
+              <span class="text-white-50">UAN:</span> <strong class="text-white font-monospace">101234567890</strong>
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table class="table  table-bordered mb-0 align-middle">
+              <thead>
+                <tr class=" text-white-50 small">
+                  <th>Earnings</th>
+                  <th class="text-end">Amount (INR)</th>
+                  <th>Deductions</th>
+                  <th class="text-end">Amount (INR)</th>
+                </tr>
+              </thead>
+              <tbody class="small">
+                <tr>
+                  <td>Basic Salary</td>
+                  <td class="text-end" id="slipBasic">₹52,500</td>
+                  <td>Provident Fund (PF)</td>
+                  <td class="text-end" id="slipPf">₹1,800</td>
+                </tr>
+                <tr>
+                  <td>House Rent Allowance (HRA)</td>
+                  <td class="text-end" id="slipHra">₹26,250</td>
+                  <td>Professional Tax (PT)</td>
+                  <td class="text-end" id="slipPt">₹200</td>
+                </tr>
+                <tr>
+                  <td>Special Allowance</td>
+                  <td class="text-end" id="slipSpecial">₹26,250</td>
+                  <td>Income Tax (TDS)</td>
+                  <td class="text-end" id="slipTds">₹14,550</td>
+                </tr>
+                <tr class="fw-bold border-top border-white/20">
+                  <td>Gross Earnings</td>
+                  <td class="text-end text-success" id="slipGross">₹1,05,000</td>
+                  <td>Total Deductions</td>
+                  <td class="text-end text-danger" id="slipDeductions">₹16,550</td>
+                </tr>
+                <tr class="table-active fw-bold">
+                  <td colspan="3" class="fs-6 text-white">NET SALARY DISBURSED IN BANK</td>
+                  <td class="text-end fs-6 text-info" id="slipNet">₹88,450</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="text-center pt-3 text-white-50 small" style="font-size: 0.72rem;">
+            This is a computer-generated official payslip issued by Zyllo Tech HR &amp; Payroll system.
+          </div>
+        </div>
+        <div class="modal-footer border-top border-white/10">
+          <button type="button" class="btn btn-brand-outline" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-brand" onclick="window.print()">
+            <i class="bi bi-printer me-1"></i> Print / Save PDF
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/assets/js/main.js"></script>
+  <script>
+    let isPunchedIn = true;
+    let employeeProfile = null;
+    let payslipsData = [];
+
+    document.addEventListener('DOMContentLoaded', () => {
+      initLiveClock();
+      loadProfile();
+      loadAttendance();
+      loadLeaves();
+      loadHolidays();
+      loadPayslips();
+      loadDocuments();
+      loadHrTickets();
+
+      // Setup user dropdown toggle
+      setupDropdownToggle('userMenuBtn', document.querySelector('#userMenuBtn + .zy-dropdown-menu'));
+    });
+
+    // Mobile sidebar toggle
+    function toggleEmployeeSidebar() {
+      const sidebar = document.getElementById('employeeSidebar');
+      const backdrop = document.getElementById('empSidebarBackdrop');
+      if (sidebar) sidebar.classList.toggle('show');
+      if (backdrop) backdrop.classList.toggle('show');
+    }
+
+    // Dropdown toggle helper
+    function setupDropdownToggle(trigger, menuTarget) {
+      const btn = typeof trigger === 'string' ? document.getElementById(trigger) : trigger;
+      const menu = typeof menuTarget === 'string' ? document.getElementById(menuTarget) : menuTarget;
+      if (!btn || !menu) return;
+
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const isOpen = menu.classList.contains('show');
+        document.querySelectorAll('.zy-dropdown-menu.show').forEach(m => m.classList.remove('show'));
+        if (!isOpen) {
+          menu.classList.add('show');
+          btn.setAttribute('aria-expanded', 'true');
+        } else {
+          menu.classList.remove('show');
+          btn.setAttribute('aria-expanded', 'false');
+        }
+      });
+    }
+
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.dropdown')) {
+        document.querySelectorAll('.zy-dropdown-menu.show').forEach(m => m.classList.remove('show'));
+      }
+    });
+
+    // Real-time Digital Clock
+    function initLiveClock() {
+      const clockEl = document.getElementById('liveClockDisplay');
+      const dateEl = document.getElementById('liveDateDisplay');
+      const attClockEl = document.getElementById('attendanceLiveClockDisplay');
+      const attDateEl = document.getElementById('attendanceLiveDateDisplay');
+      function update() {
+        const now = new Date();
+        const timeStr = now.toLocaleTimeString('en-US', { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
+        const dateStr = now.toLocaleDateString('en-US', { timeZone: 'Asia/Kolkata', weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }) + ' · Indian Standard Time (IST)';
+        if (clockEl) clockEl.textContent = timeStr;
+        if (dateEl) dateEl.textContent = dateStr;
+        if (attClockEl) attClockEl.textContent = timeStr;
+        if (attDateEl) attDateEl.textContent = dateStr;
+      }
+      update();
+      setInterval(update, 1000);
+    }
+
+    // Toggle Punch In / Punch Out
+    async function togglePunch() {
+      const heroBtn = document.getElementById('heroPunchBtn');
+      const heroBtn2 = document.getElementById('attendancePunchBtn');
+      const topbarText = document.getElementById('topbarPunchText');
+      const topbarBtn = document.getElementById('topbarPunchBtn');
+      const badge = document.getElementById('overviewPunchStatusBadge');
+      const badge2 = document.getElementById('attendancePunchStatusBadge');
+      const subtext = document.getElementById('punchHeroSubtext');
+      const subtext2 = document.getElementById('attendancePunchSubtext');
+
+      const action = isPunchedIn ? 'out' : 'in';
+
+      try {
+        const res = await fetch('/api/employee/attendance/punch', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action })
+        });
+        const data = await res.json();
+
+        if (data.success) {
+          isPunchedIn = !isPunchedIn;
+          if (isPunchedIn) {
+            heroBtn.className = 'btn btn-lg btn-success px-4 py-2.5 fw-bold shadow-sm';
+            heroBtn.innerHTML = '<i class="bi bi-box-arrow-right me-1"></i> Punch Out for the Day';
+        if (heroBtn2) heroBtn2.innerHTML = '<i class="bi bi-box-arrow-right me-1"></i> Punch Out for the Day';
+            topbarText.textContent = `Punched In (${data.punch_in || 'Active'})`;
+            topbarBtn.className = 'btn btn-sm btn-outline-success py-1.5 px-3 rounded-pill d-none d-sm-inline-flex align-items-center gap-2 fw-semibold';
+            badge.className = 'punch-status-pill punched-in';
+            badge.innerHTML = '<i class="bi bi-check-circle-fill me-1"></i> Punched In';
+            subtext.innerHTML = `Punched in at <strong style="color: #0f172a;">${data.punch_in || '09:15 AM'}</strong> · Active session`;
+          } else {
+            heroBtn.className = 'btn btn-lg btn-primary px-4 py-2.5 fw-bold shadow-sm';
+            heroBtn.innerHTML = '<i class="bi bi-box-arrow-in-right me-1"></i> Punch In for the Day';
+        if (heroBtn2) heroBtn2.innerHTML = '<i class="bi bi-box-arrow-in-right me-1"></i> Punch In for the Day';
+            topbarText.textContent = 'Punched Out (Shift Closed)';
+            topbarBtn.className = 'btn btn-sm btn-outline-secondary py-1.5 px-3 rounded-pill d-none d-sm-inline-flex align-items-center gap-2 fw-semibold';
+            badge.className = 'punch-status-pill punched-out';
+            badge.innerHTML = '<i class="bi bi-dash-circle me-1"></i> Punched Out';
+            subtext.innerHTML = `Punched out at <strong style="color: #0f172a;">${data.punch_out || '06:30 PM'}</strong> · 8h 45m recorded`;
+          }
+          alert(data.message || 'Punch recorded successfully!');
+          loadAttendance();
+        }
+      } catch (e) {
+        alert('Network error recording punch.');
+      }
+    }
+
+    // Tab Switcher matching Image 2
+    function switchEmpTab(tabName) {
+      const tabs = {
+        overview: document.getElementById('tabEmpOverview'),
+        profile: document.getElementById('tabEmpProfile'),
+        attendance: document.getElementById('tabEmpAttendance'),
+        holidays: document.getElementById('tabEmpHolidays'),
+        leaves: document.getElementById('tabEmpLeaves'),
+        payslips: document.getElementById('tabEmpPayslips'),
+        documents: document.getElementById('tabEmpDocuments'),
+        hr: document.getElementById('tabEmpHr')
+      };
+
+      const titles = {
+        overview: 'Overview',
+        profile: 'My Profile',
+        attendance: 'Attendance',
+        holidays: 'Holidays & Calendar',
+        leaves: 'Leave Requests',
+        payslips: 'Salary & Payslips',
+        documents: 'Documents',
+        hr: 'HR Help Desk'
+      };
+
+      const topbarEl = document.getElementById('topbarCurrentTab');
+      if (topbarEl && titles[tabName]) topbarEl.textContent = titles[tabName];
+
+      Object.keys(tabs).forEach(key => {
+        const view = tabs[key];
+        const btn = document.getElementById(`sidebar-emp-${key}`);
+        if (view) {
+          if (key === tabName) view.classList.remove('d-none');
+          else view.classList.add('d-none');
+        }
+        if (btn) {
+          if (key === tabName) btn.classList.add('active');
+          else btn.classList.remove('active');
+        }
+      });
+
+      if (tabName === 'holidays' && typeof renderCalendar === 'function') {
+        renderCalendar();
+      }
+
+      // Close mobile offcanvas sidebar if open
+      const sidebar = document.getElementById('employeeSidebar');
+      const backdrop = document.getElementById('empSidebarBackdrop');
+      if (sidebar && backdrop && window.innerWidth < 992) {
+        sidebar.classList.remove('show');
+        backdrop.classList.remove('show');
+      }
+
+      // Smooth scroll main pane to top
+      const mainPane = document.querySelector('.zy-admin-main-pane');
+      if (mainPane) mainPane.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // 1. Profile Loader
+    async function loadProfile() {
+      try {
+        const res = await fetch('/api/employee/profile');
+        const data = await res.json();
+        if (data.success && data.profile) {
+          const p = data.profile;
+          employeeProfile = p;
+
+          const firstName = p.full_name.split(' ')[0];
+          const initials = p.full_name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+
+          document.getElementById('welcomeEmpName').textContent = p.full_name;
+          document.getElementById('welcomeEmpRole').textContent = `${p.designation} · ${p.department}`;
+          document.getElementById('empSidebarName').textContent = p.full_name;
+          document.getElementById('empSidebarId').textContent = p.emp_id;
+          document.getElementById('empSidebarInitials').textContent = initials;
+          document.getElementById('userMenuBtn').innerHTML = `<i class="bi bi-person-circle me-1"></i> ${firstName}`;
+          document.getElementById('userDropdownEmail').textContent = p.email;
+          document.getElementById('dropdownEmpId').textContent = p.emp_id;
+
+          // Profile view
+          document.getElementById('profileAvatarInitials').textContent = initials;
+          document.getElementById('profileCardName').textContent = p.full_name;
+          document.getElementById('profileCardDesig').textContent = p.designation;
+          document.getElementById('profileCardDept').textContent = p.department;
+          document.getElementById('profileEmpId').textContent = p.emp_id;
+          document.getElementById('profileJoiningDate').textContent = p.joining_date;
+          document.getElementById('profileManager').textContent = p.manager_name;
+          document.getElementById('profileEmail').textContent = p.email;
+          document.getElementById('profilePhone').textContent = p.phone || '+91 98480 22334';
+          document.getElementById('profileLocation').textContent = p.work_location || 'Guntur Tech Hub';
+          document.getElementById('profileEmergency').textContent = p.emergency_contact || 'None';
+          document.getElementById('profileBank').textContent = p.bank_name || 'HDFC Bank';
+          document.getElementById('profileAccount').textContent = p.bank_account || '••••4921';
+          document.getElementById('profileIfsc').textContent = p.ifsc_code || 'HDFC0001248';
+          document.getElementById('profilePan').textContent = p.pan_number || 'ABCDE1234F';
+          document.getElementById('profileUan').textContent = p.uan_number || '101234567890';
+        }
+      } catch (e) {
+        console.error('Error loading employee profile', e);
+      }
+    }
+
+    // 2. Attendance Loader
+    async function loadAttendance() {
+      const fullTbody = document.getElementById('attendanceFullTableBody');
+      const overviewTbody = document.getElementById('overviewAttendanceTable');
+      try {
+        const res = await fetch('/api/employee/attendance');
+        const data = await res.json();
+        if (data.success && data.attendance) {
+          const list = data.attendance;
+          if (list.length === 0) {
+            fullTbody.innerHTML = '<tr><td colspan="6" class="text-center py-4 text-white-50">No attendance logs found.</td></tr>';
+            return;
+          }
+
+          function formatHoursBadge(hours) {
+            const isProgress = !hours || hours === 'In Progress' || hours === '--:--';
+            const label = isProgress ? 'In Progress' : hours;
+            const cls = isProgress ? 'in-progress' : 'completed';
+            return `<span class="badge-hours ${cls}">${escapeHtml(label)}</span>`;
+          }
+
+          function formatStatusBadge(status) {
+            if (status === 'Present') return `<span class="badge-status-present"><i class="bi bi-check-circle-fill me-1"></i>Present</span>`;
+            if (status === 'Work From Home') return `<span class="badge-status-wfh"><i class="bi bi-house-door-fill me-1"></i>WFH</span>`;
+            return `<span class="badge-status-present">${escapeHtml(status || 'Present')}</span>`;
+          }
+
+          fullTbody.innerHTML = list.map(a => `
+            <tr>
+              <td><strong class="fw-bold" style="color: var(--text-primary, #0f172a);">${escapeHtml(a.date)}</strong></td>
+              <td><span class="shift-pill" style="font-size: 0.75rem; padding: 3px 10px;">09:30 AM – 06:30 PM</span></td>
+              <td><span class="text-success fw-bold">${escapeHtml(a.punch_in)}</span></td>
+              <td><span class="fw-semibold" style="color: #475569;">${escapeHtml(a.punch_out || '--:--')}</span></td>
+              <td>${formatHoursBadge(a.work_hours)}</td>
+              <td class="text-end">${formatStatusBadge(a.status)}</td>
+            </tr>
+          `).join('');
+
+          // Overview short table
+          if (overviewTbody) {
+            overviewTbody.innerHTML = list.slice(0, 5).map(a => `
+              <tr>
+                <td><strong class="fw-bold small" style="color: var(--text-primary, #0f172a);">${escapeHtml(a.date)}</strong></td>
+                <td><span class="text-success small fw-bold">${escapeHtml(a.punch_in)}</span></td>
+                <td><span class="small fw-semibold" style="color: #475569;">${escapeHtml(a.punch_out || '--:--')}</span></td>
+                <td>${formatHoursBadge(a.work_hours)}</td>
+                <td class="text-end">${formatStatusBadge(a.status)}</td>
+              </tr>
+            `).join('');
+          }
+        }
+      } catch (e) {
+        fullTbody.innerHTML = '<tr><td colspan="6" class="text-center py-4 text-danger">Failed to load attendance records.</td></tr>';
+      }
+    }
+
+    // 3. Holidays Loader & Interactive Calendar (Dark Mode)
+    const initialCalDate = new Date();
+    let calCurrentYear = initialCalDate.getFullYear();
+    let calCurrentMonth = initialCalDate.getMonth(); // Current active month (October)
+    let cachedHolidays = [];
+
+    const calMonthNames = [
+      'January', 'February', 'March', 'April', 'May', 'June',
+      'July', 'August', 'September', 'October', 'November', 'December'
+    ];
+    const calShortMonthNames = [
+      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+    ];
+
+    async function loadHolidays() {
+      const tbody = document.getElementById('holidaysTableBody');
+      const overviewList = document.getElementById('overviewHolidaysList');
+      try {
+        const res = await fetch('/api/employee/holidays');
+        const data = await res.json();
+        if (data.success && data.holidays) {
+          cachedHolidays = data.holidays;
+
+          // Render annual tabular list
+          if (tbody) {
+            tbody.innerHTML = data.holidays.map(h => `
+              <tr>
+                <td><strong class="fw-bold" style="color: var(--text-primary, #0f172a);">${escapeHtml(h.date)}</strong></td>
+                <td><span class="fw-bold" style="color: var(--text-primary, #0f172a);">${escapeHtml(h.name)}</span></td>
+                <td><span style="color: #475569;">${escapeHtml(h.day)}</span></td>
+                <td><span class="badge-hours completed">${escapeHtml(h.type)}</span></td>
+                <td class="text-end"><span class="badge-status-holiday">Official</span></td>
+              </tr>
+            `).join('');
+          }
+
+          // Overview short widget
+          if (overviewList) {
+            overviewList.innerHTML = data.holidays.slice(0, 4).map(h => `
+              <div class="p-2.5 rounded-3 d-flex justify-content-between align-items-center mb-1" style="background: var(--bg-card, #ffffff); border: 1px solid #e2e8f0;">
+                <div>
+                  <strong class="small d-block fw-bold" style="color: var(--text-primary, #0f172a);">${escapeHtml(h.name)}</strong>
+                  <small style="font-size: 0.74rem; color: #475569;"><i class="bi bi-calendar-event me-1 text-primary"></i>${escapeHtml(h.date)} (${escapeHtml(h.day)})</small>
+                </div>
+                <span class="badge-status-holiday" style="font-size: 0.72rem; padding: 3px 10px;">Holiday</span>
+              </div>
+            `).join('');
+          }
+
+          // Render interactive calendar widget
+          renderCalendar();
+        }
+      } catch (e) {
+        if (tbody) tbody.innerHTML = '<tr><td colspan="5" class="text-center py-4 text-danger">Failed to load holidays.</td></tr>';
+      }
+    }
+
+    // Helper: Find holiday matching given year, month (0-11), and day (1-31)
+    function getHolidayForDate(year, month, day) {
+      const shortM = calShortMonthNames[month];
+      const padDay = String(day).padStart(2, '0');
+      const dStr1 = `${padDay} ${shortM} ${year}`;
+      const dStr2 = `${day} ${shortM} ${year}`;
+      const isoStr = `${year}-${String(month + 1).padStart(2, '0')}-${padDay}`;
+
+      return cachedHolidays.find(h => {
+        if (!h.date) return false;
+        const hd = h.date.trim();
+        return hd === dStr1 || hd === dStr2 || hd === isoStr;
+      });
+    }
+
+    // Render Calendar Grid & Upcoming Holidays List
+    function renderCalendar() {
+      const gridEl = document.getElementById('calDaysGrid');
+      const titleEl = document.getElementById('calMonthTitle');
+      const upcomingListEl = document.getElementById('calUpcomingHolidaysList');
+      const upcomingBadgeEl = document.getElementById('calUpcomingBadge');
+      if (!gridEl) return;
+
+      if (titleEl) {
+        titleEl.textContent = `${calMonthNames[calCurrentMonth]} ${calCurrentYear}`;
+      }
+      if (upcomingBadgeEl) {
+        upcomingBadgeEl.textContent = `${calMonthNames[calCurrentMonth]} ${calCurrentYear}`;
+      }
+
+      const totalDays = new Date(calCurrentYear, calCurrentMonth + 1, 0).getDate();
+      const firstDayOfWeek = new Date(calCurrentYear, calCurrentMonth, 1).getDay(); // 0 = Sun
+      const startOffset = (firstDayOfWeek + 6) % 7; // Monday = 0, Sunday = 6
+
+      const realToday = new Date();
+      const isRealMonth = (realToday.getFullYear() === calCurrentYear && realToday.getMonth() === calCurrentMonth);
+      const realDay = realToday.getDate();
+
+      let gridHtml = '';
+
+      // Leading blank padding cells
+      for (let i = 0; i < startOffset; i++) {
+        gridHtml += '<div class="zy-cal-cell is-empty"></div>';
+      }
+
+      // Day cells
+      for (let day = 1; day <= totalDays; day++) {
+        const colIndex = (startOffset + (day - 1)) % 7;
+        const isWeekend = (colIndex === 5 || colIndex === 6); // Sat or Sun
+        const holiday = getHolidayForDate(calCurrentYear, calCurrentMonth, day);
+        const isToday = (isRealMonth && day === realDay);
+
+        let cellClasses = ['zy-cal-cell'];
+        if (holiday) {
+          cellClasses.push('is-holiday');
+          if (isWeekend) cellClasses.push('is-weekend');
+        } else if (isWeekend) {
+          cellClasses.push('is-weekend');
+        } else {
+          cellClasses.push('is-weekday');
+        }
+        if (isToday) cellClasses.push('is-today');
+
+        const holidayNameAttr = holiday ? escapeHtml(holiday.name).replace(/"/g, '&quot;') : '';
+        const titleTooltip = holiday ? `${holiday.name} (${holiday.type || 'Holiday'})` : (isWeekend ? 'Weekend' : `Working Day (${day} ${calShortMonthNames[calCurrentMonth]})`);
+
+        gridHtml += `
+          <div class="${cellClasses.join(' ')}" title="${titleTooltip}" onclick="handleCalDayClick(${calCurrentYear}, ${calCurrentMonth}, ${day}, '${holidayNameAttr}')">
+            <span>${day}</span>
+            ${holiday ? '<span class="zy-cal-dot"></span>' : ''}
+          </div>
+        `;
+      }
+
+      gridEl.innerHTML = gridHtml;
+
+      // Populate Upcoming Holidays section for this specific month
+      if (upcomingListEl) {
+        const currentMonthHolidays = cachedHolidays.filter(h => {
+          if (!h.date) return false;
+          const parts = h.date.trim().split(/\s+/);
+          if (parts.length >= 3) {
+            const hMonth = parts[1];
+            const hYear = parseInt(parts[2], 10);
+            return hMonth.toLowerCase().startsWith(calShortMonthNames[calCurrentMonth].toLowerCase()) && hYear === calCurrentYear;
+          }
+          return false;
+        });
+
+        if (currentMonthHolidays.length > 0) {
+          upcomingListEl.innerHTML = currentMonthHolidays.map(h => {
+            const parts = h.date.trim().split(/\s+/);
+            const dateBadge = `${parts[0]} ${parts[1]}`;
+            return `
+              <div class="zy-holiday-item-card">
+                <div class="d-flex align-items-center gap-3">
+                  <div class="zy-date-badge-pill">${dateBadge}</div>
+                  <div>
+                    <div class="fw-bold text-white" style="font-size: 0.95rem;">${escapeHtml(h.name)}</div>
+                    <div class="text-white-50" style="font-size: 0.78rem;">${escapeHtml(h.type || 'Festival · Verify with actual HR')}</div>
+                  </div>
+                </div>
+                <div class="d-flex align-items-center gap-2">
+                  <button class="btn btn-sm btn-primary d-inline-flex align-items-center gap-1 shadow-sm px-3 py-1" style="border-radius: 9999px; font-size: 0.76rem; font-weight: 600;" onclick="openAskHrForCalendar('${escapeHtml(h.name)} (${dateBadge})')">
+                    <i class="bi bi-stars"></i> Ask HR
+                  </button>
+                </div>
+              </div>
+            `;
+          }).join('');
+        } else {
+          upcomingListEl.innerHTML = `
+            <div class="p-3 text-center rounded-3" style="background: rgba(255, 255, 255, 0.02); border: 1px dashed rgba(255, 255, 255, 0.12); color: #94a3b8; font-size: 0.85rem;">
+              <i class="bi bi-calendar-check text-white-50 me-1"></i> No company holidays scheduled for ${calMonthNames[calCurrentMonth]} ${calCurrentYear}.
+            </div>
+          `;
+        }
+      }
+    }
+
+    // Month Navigation Controls
+    function changeCalendarMonth(delta) {
+      calCurrentMonth += delta;
+      if (calCurrentMonth < 0) {
+        calCurrentMonth = 11;
+        calCurrentYear -= 1;
+      } else if (calCurrentMonth > 11) {
+        calCurrentMonth = 0;
+        calCurrentYear += 1;
+      }
+      renderCalendar();
+    }
+
+    function goToCurrentCalendarMonth() {
+      const now = new Date();
+      calCurrentYear = now.getFullYear();
+      calCurrentMonth = now.getMonth();
+      renderCalendar();
+    }
+
+    // Click handler for day cell
+    function handleCalDayClick(year, month, day, holidayName) {
+      if (holidayName) {
+        openAskHrForCalendar(`${holidayName} (${day} ${calShortMonthNames[month]} ${year})`);
+      } else {
+        // Pre-fill leave application modal for that date
+        const padMonth = String(month + 1).padStart(2, '0');
+        const padDay = String(day).padStart(2, '0');
+        const dateStr = `${year}-${padMonth}-${padDay}`;
+
+        const startEl = document.getElementById('leave-start-date');
+        const endEl = document.getElementById('leave-end-date');
+        const daysEl = document.getElementById('leave-days-count');
+        const reasonEl = document.getElementById('leave-reason');
+
+        if (startEl) startEl.value = dateStr;
+        if (endEl) endEl.value = dateStr;
+        if (daysEl) daysEl.value = 1;
+        if (reasonEl) reasonEl.value = `Planned time off for ${day} ${calShortMonthNames[month]} ${year}`;
+
+        const leaveModal = document.getElementById('applyLeaveModal');
+        if (leaveModal) {
+          bootstrap.Modal.getOrCreateInstance(leaveModal).show();
+        }
+      }
+    }
+
+    // Open Ask HR Modal pre-filled
+    function openAskHrForCalendar(holidayQuery) {
+      const catEl = document.getElementById('hr-category');
+      const subEl = document.getElementById('hr-subject');
+      const descEl = document.getElementById('hr-desc');
+
+      if (catEl) catEl.value = 'Leave & Attendance';
+      if (subEl) {
+        subEl.value = holidayQuery 
+          ? `Holiday Query: ${holidayQuery}` 
+          : `Calendar & Holiday Schedule Query (${calMonthNames[calCurrentMonth]} ${calCurrentYear})`;
+      }
+      if (descEl) {
+        descEl.value = holidayQuery
+          ? `Hello People Operations,\n\nI have a question regarding the upcoming holiday for ${holidayQuery}. Please confirm the official pod schedule and attendance guidelines.\n\nThank you,\nAlex Morgan`
+          : `Hello People Operations,\n\nI would like to verify the upcoming holiday schedule for ${calMonthNames[calCurrentMonth]} ${calCurrentYear} and confirm planned pod coverage.\n\nThank you,\nAlex Morgan`;
+      }
+
+      const modalEl = document.getElementById('newHrTicketModal');
+      if (modalEl) {
+        bootstrap.Modal.getOrCreateInstance(modalEl).show();
+      }
+    }
+
+    // 4. Leaves Loader
+    async function loadLeaves() {
+      const tbody = document.getElementById('leavesTableBody');
+      try {
+        const res = await fetch('/api/employee/leaves');
+        const data = await res.json();
+        if (data.success) {
+          if (data.balances) {
+            document.getElementById('leaveBalCasual').textContent = `${data.balances.casual} Days`;
+            document.getElementById('leaveBalSick').textContent = `${data.balances.sick} Days`;
+            document.getElementById('leaveBalEarned').textContent = `${data.balances.earned} Days`;
+            document.getElementById('leaveBalTotal').textContent = `${data.balances.total} Days`;
+            document.getElementById('stat-leaves-avail').textContent = `${data.balances.total} Days`;
+            document.getElementById('emp-badge-leaves').textContent = data.balances.total;
+          }
+
+          const leaves = data.leaves || [];
+          if (leaves.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="7" class="text-center py-4 text-white-50">No leave applications found.</td></tr>';
+            return;
+          }
+
+          tbody.innerHTML = leaves.map(l => {
+            let statusBadge = 'bg-warning text-dark';
+            if (l.status === 'Approved') statusBadge = 'bg-success';
+            if (l.status === 'Rejected') statusBadge = 'bg-danger';
+
+            return `
+              <tr>
+                <td><code class="text-white-50">#LV-${l.id}</code></td>
+                <td><strong class="text-white">${escapeHtml(l.leave_type)}</strong></td>
+                <td><span class="text-white-50">${escapeHtml(l.start_date)}</span></td>
+                <td><span class="text-white-50">${escapeHtml(l.end_date)}</span></td>
+                <td><span class="badge bg-secondary bg-opacity-50 text-white">${l.days} ${l.days === 1 ? 'Day' : 'Days'}</span></td>
+                <td class="text-white-50 small">${escapeHtml(l.reason)}</td>
+                <td class="text-end"><span class="badge ${statusBadge}">${escapeHtml(l.status)}</span></td>
+              </tr>
+            `;
+          }).join('');
+        }
+      } catch (e) {
+        tbody.innerHTML = '<tr><td colspan="7" class="text-center py-4 text-danger">Failed to load leaves.</td></tr>';
+      }
+    }
+
+    async function handleLeaveSubmit(e) {
+      e.preventDefault();
+      const submitBtn = document.getElementById('submitLeaveBtn');
+      const payload = {
+        leave_type: document.getElementById('leave-type-select').value,
+        start_date: document.getElementById('leave-start-date').value,
+        end_date: document.getElementById('leave-end-date').value,
+        days: parseInt(document.getElementById('leave-days-count').value, 10) || 1,
+        reason: document.getElementById('leave-reason').value
+      };
+
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span> Submitting...';
+
+      try {
+        const res = await fetch('/api/employee/leaves', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        if (data.success) {
+          bootstrap.Modal.getInstance(document.getElementById('applyLeaveModal')).hide();
+          document.getElementById('applyLeaveForm').reset();
+          loadLeaves();
+          alert(data.message || 'Leave application submitted successfully!');
+        } else {
+          alert(data.message || 'Failed to apply for leave.');
+        }
+      } catch (err) {
+        alert('Connection error submitting leave.');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<i class="bi bi-send-fill me-1"></i> Submit for Approval';
+      }
+    }
+
+    // 5. Payslips Loader
+    async function loadPayslips() {
+      const tbody = document.getElementById('payslipsTableBody');
+      try {
+        const res = await fetch('/api/employee/payslips');
+        const data = await res.json();
+        if (data.success && data.payslips) {
+          payslipsData = data.payslips;
+          tbody.innerHTML = payslipsData.map(p => `
+            <tr>
+              <td><strong class="text-white"><i class="bi bi-file-earmark-pdf text-danger me-2"></i>${escapeHtml(p.month_year)}</strong></td>
+              <td><span class="text-white">₹${Number(p.gross_salary).toLocaleString()}</span></td>
+              <td><span class="text-danger">- ₹${Number(p.pf_deduction + p.prof_tax + p.tds_tax).toLocaleString()}</span></td>
+              <td><strong class="text-success fs-6">₹${Number(p.net_take_home).toLocaleString()}</strong></td>
+              <td><span class="text-white-50 small">${escapeHtml(p.paid_on)}</span></td>
+              <td><span class="badge bg-success bg-opacity-25 text-success border border-success">Paid</span></td>
+              <td class="text-end">
+                <button class="btn btn-sm btn-brand-outline py-1 px-2.5" onclick="viewPayslip(${p.id})">
+                  <i class="bi bi-eye me-1"></i> View Slip
+                </button>
+              </td>
+            </tr>
+          `).join('');
+        }
+      } catch (e) {
+        tbody.innerHTML = '<tr><td colspan="7" class="text-center py-4 text-danger">Failed to load payslips.</td></tr>';
+      }
+    }
+
+    function viewPayslip(id) {
+      const p = payslipsData.find(item => item.id === id);
+      if (!p) return;
+
+      document.getElementById('payslipModalTitle').textContent = `Salary Slip - ${p.month_year}`;
+      document.getElementById('payslipPeriodBadge').textContent = `Payslip for the month of ${p.month_year}`;
+      document.getElementById('slipBasic').textContent = `₹${Number(p.basic_salary).toLocaleString()}`;
+      document.getElementById('slipHra').textContent = `₹${Number(p.hra).toLocaleString()}`;
+      document.getElementById('slipSpecial').textContent = `₹${Number(p.special_allowance).toLocaleString()}`;
+      document.getElementById('slipPf').textContent = `₹${Number(p.pf_deduction).toLocaleString()}`;
+      document.getElementById('slipPt').textContent = `₹${Number(p.prof_tax).toLocaleString()}`;
+      document.getElementById('slipTds').textContent = `₹${Number(p.tds_tax).toLocaleString()}`;
+      document.getElementById('slipGross').textContent = `₹${Number(p.gross_salary).toLocaleString()}`;
+      document.getElementById('slipDeductions').textContent = `₹${Number(p.pf_deduction + p.prof_tax + p.tds_tax).toLocaleString()}`;
+      document.getElementById('slipNet').textContent = `₹${Number(p.net_take_home).toLocaleString()}`;
+
+      const modal = new bootstrap.Modal(document.getElementById('payslipModal'));
+      modal.show();
+    }
+
+    // 6. Documents Loader
+    async function loadDocuments() {
+      const tbody = document.getElementById('documentsTableBody');
+      try {
+        const res = await fetch('/api/employee/documents');
+        const data = await res.json();
+        if (data.success && data.documents) {
+          tbody.innerHTML = data.documents.map(d => `
+            <tr>
+              <td>
+                <div class="d-flex align-items-center gap-2">
+                  <i class="bi bi-file-earmark-pdf text-danger fs-5"></i>
+                  <div>
+                    <strong class="text-white">${escapeHtml(d.title)}</strong>
+                    <small class="text-white-50 d-block" style="font-size: 0.72rem;">Official Company Record</small>
+                  </div>
+                </div>
+              </td>
+              <td><span class="badge bg-secondary bg-opacity-25 border border-white-10 text-white-50">${escapeHtml(d.doc_type)}</span></td>
+              <td><span class="text-white-50 small">${escapeHtml(d.file_size)}</span></td>
+              <td><span class="text-white-50 small">${escapeHtml(d.uploaded_at)}</span></td>
+              <td class="text-end">
+                <a href="${escapeHtml(d.file_url)}" target="_blank" class="btn btn-sm btn-brand-outline py-1 px-2.5">
+                  <i class="bi bi-download me-1"></i> Access File
+                </a>
+              </td>
+            </tr>
+          `).join('');
+        }
+      } catch (e) {
+        tbody.innerHTML = '<tr><td colspan="5" class="text-center py-4 text-danger">Failed to load documents.</td></tr>';
+      }
+    }
+
+    // 7. HR Help Desk Tickets Loader (Matching Image 2)
+    async function loadHrTickets() {
+      const tbody = document.getElementById('hrTicketsTableBody');
+      try {
+        const res = await fetch('/api/employee/hr-tickets');
+        const data = await res.json();
+        if (data.success && data.tickets) {
+          const list = data.tickets;
+          if (list.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="7" class="text-center py-4 text-white-50">No active HR queries. Click "Raise HR Query" above to submit a question.</td></tr>';
+            return;
+          }
+
+          tbody.innerHTML = list.map(t => {
+            let statusBadge = 'bg-warning text-dark';
+            if (t.status === 'Resolved') statusBadge = 'bg-success';
+
+            return `
+              <tr>
+                <td><code class="text-white-50">#HR-${t.id}</code></td>
+                <td><span class="badge bg-secondary bg-opacity-25 border border-white-10 text-white-50">${escapeHtml(t.category)}</span></td>
+                <td><strong class="text-white">${escapeHtml(t.subject)}</strong></td>
+                <td><span class="badge bg-info bg-opacity-25 text-info">${escapeHtml(t.priority)}</span></td>
+                <td><span class="text-white-50 small">${new Date(t.created_at).toLocaleDateString()}</span></td>
+                <td><span class="badge ${statusBadge}">${escapeHtml(t.status)}</span></td>
+                <td class="text-end">
+                  <button class="btn btn-sm btn-brand-outline py-0.5 px-2" onclick="alert('HR Response for Ticket #${t.id}:\\n\\n${escapeHtml(t.hr_response || 'Your query is being reviewed by People Operations.')}')">
+                    <i class="bi bi-eye"></i> View Response
+                  </button>
+                </td>
+              </tr>
+            `;
+          }).join('');
+        }
+      } catch (e) {
+        tbody.innerHTML = '<tr><td colspan="7" class="text-center py-4 text-danger">Failed to load HR tickets.</td></tr>';
+      }
+    }
+
+    async function handleHrTicketSubmit(e) {
+      e.preventDefault();
+      const submitBtn = document.getElementById('submitHrBtn');
+      const payload = {
+        category: document.getElementById('hr-category').value,
+        priority: document.getElementById('hr-priority').value,
+        subject: document.getElementById('hr-subject').value.trim(),
+        description: document.getElementById('hr-desc').value.trim()
+      };
+
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span> Submitting...';
+
+      try {
+        const res = await fetch('/api/employee/hr-tickets', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        if (data.success) {
+          bootstrap.Modal.getInstance(document.getElementById('newHrTicketModal')).hide();
+          document.getElementById('newHrTicketForm').reset();
+          loadHrTickets();
+          alert(data.message || 'HR Query submitted successfully!');
+        } else {
+          alert(data.message || 'Failed to submit HR query.');
+        }
+      } catch (err) {
+        alert('Connection error submitting query.');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<i class="bi bi-send-fill me-1"></i> Submit to HR';
+      }
+    }
+
+    function handleLogout() {
+      if (confirm('Are you sure you want to log out of the Employee Portal?')) {
+        localStorage.removeItem('zyllotech_token');
+        localStorage.removeItem('zyllotech_user');
+        sessionStorage.removeItem('zy_token');
+        sessionStorage.removeItem('zy_user');
+        window.location.href = '/login';
+      }
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+  </script>
+<script src="/assets/js/theme.js"></script>
+</body>
+</html>

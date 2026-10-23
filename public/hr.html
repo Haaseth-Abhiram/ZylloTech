@@ -1,0 +1,3082 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HR Operations & Talent Portal | Zyllo Tech</title>
+  <link rel="icon" href="/assets/images/Zyllo_Tech_Favicon_512x512.png">
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="/assets/css/style.css?v=3.0">
+  <style>
+    /* ==================== GLOBAL LAYOUT & STICKY SIDEBAR ==================== */
+    html, body {
+      height: 100vh !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      overflow: hidden !important;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+    }
+
+    .zy-admin-wrapper {
+      display: flex !important;
+      height: 100vh !important;
+      width: 100vw !important;
+      overflow: hidden !important;
+      position: relative !important;
+    }
+
+    /* Left Sidebar: Permanently sticky / locked on left */
+    .zy-admin-sidebar {
+      width: 270px !important;
+      min-width: 270px !important;
+      max-width: 270px !important;
+      height: 100vh !important;
+      max-height: 100vh !important;
+      position: sticky !important;
+      top: 0 !important;
+      left: 0 !important;
+      bottom: 0 !important;
+      flex-shrink: 0 !important;
+      overflow-y: auto !important;
+      overflow-x: hidden !important;
+      z-index: 1020 !important;
+    }
+
+    @media (max-width: 991.98px) {
+      .zy-admin-sidebar {
+        position: fixed !important;
+        top: 0 !important;
+        left: -290px !important;
+        bottom: 0 !important;
+        z-index: 1050 !important;
+        transition: left 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+      }
+      .zy-admin-sidebar.show {
+        left: 0 !important;
+      }
+    }
+
+    /* Right Main Pane: Only this container scrolls up and down */
+    .zy-admin-main-pane {
+      flex: 1 1 0% !important;
+      min-width: 0 !important;
+      height: 100vh !important;
+      max-height: 100vh !important;
+      overflow-y: auto !important;
+      overflow-x: hidden !important;
+      display: flex !important;
+      flex-direction: column !important;
+      scroll-behavior: smooth !important;
+    }
+
+    /* ==================== PROFESSIONAL IT LIGHT THEME ==================== */
+    body.theme-light,
+    .theme-light .zy-admin-wrapper,
+    .theme-light .zy-admin-main-pane {
+      background-color: #f8fafc !important;
+      color: #0f172a !important;
+    }
+
+    /* Light Sidebar */
+    .theme-light .zy-admin-sidebar {
+      background: #ffffff !important;
+      border-right: 1px solid #e2e8f0 !important;
+      box-shadow: 2px 0 8px rgba(0, 0, 0, 0.02) !important;
+    }
+
+    .theme-light .zy-admin-sidebar-header {
+      border-bottom: 1px solid #f1f5f9 !important;
+    }
+
+    .theme-light .zy-admin-brand-title {
+      color: #0f172a !important;
+      font-weight: 800 !important;
+      letter-spacing: 0.04em !important;
+    }
+
+    .theme-light .zy-admin-brand-sub {
+      color: #64748b !important;
+      font-weight: 600 !important;
+    }
+
+    .theme-light .zy-sidebar-nav-item {
+      color: #475569 !important;
+      background: transparent !important;
+      font-weight: 500 !important;
+      border-radius: 10px !important;
+      transition: all 0.2s ease !important;
+    }
+
+    .theme-light .zy-sidebar-nav-item:hover {
+      color: #0f172a !important;
+      background: #f1f5f9 !important;
+    }
+
+    .theme-light .zy-sidebar-nav-item.active {
+      background: linear-gradient(135deg, rgba(241, 102, 35, 0.1) 0%, rgba(241, 102, 35, 0.06) 100%) !important;
+      color: #f16623 !important;
+      border: 1px solid rgba(241, 102, 35, 0.2) !important;
+      font-weight: 600 !important;
+    }
+
+    .theme-light .zy-sidebar-group-label {
+      color: #94a3b8 !important;
+      font-size: 0.68rem !important;
+      font-weight: 700 !important;
+      letter-spacing: 0.08em !important;
+    }
+
+    .theme-light .zy-sidebar-counter-badge {
+      background: #f1f5f9 !important;
+      color: #475569 !important;
+      border: 1px solid #e2e8f0 !important;
+    }
+
+    .theme-light .zy-sidebar-nav-item.active .zy-sidebar-counter-badge {
+      background: #fde8dc !important;
+      color: #16133d !important;
+      border-color: #bfdbfe !important;
+    }
+
+    /* Light Topbar */
+    .theme-light .zy-admin-topbar {
+      background: #ffffff !important;
+      border-bottom: 1px solid #e2e8f0 !important;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04) !important;
+    }
+
+    .theme-light .zy-admin-topbar h5 {
+      color: #0f172a !important;
+    }
+
+    .theme-light .zy-topbar-quick-btn {
+      background: #f8fafc !important;
+      border: 1px solid #e2e8f0 !important;
+      color: #334155 !important;
+    }
+
+    .theme-light .zy-topbar-quick-btn:hover {
+      background: #f1f5f9 !important;
+      color: #0f172a !important;
+      border-color: #cbd5e1 !important;
+    }
+
+    .theme-light .zy-topbar-quick-btn.btn-brand {
+      background: linear-gradient(135deg, #f16623 0%, #16133d 100%) !important;
+      color: #ffffff !important;
+      border: none !important;
+    }
+
+    .theme-light .zy-topbar-quick-btn.btn-brand:hover {
+      box-shadow: 0 4px 12px rgba(234, 88, 12, 0.3) !important;
+    }
+
+    /* Light Stat Pills / Metric Cards */
+    .theme-light .hr-stat-pill {
+      background: #ffffff !important;
+      border: 1px solid #e2e8f0 !important;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 4px 12px rgba(0, 0, 0, 0.02) !important;
+    }
+
+    .theme-light .hr-stat-pill:hover {
+      border-color: #cbd5e1 !important;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06) !important;
+      transform: translateY(-2px) !important;
+    }
+
+    .theme-light .hr-stat-pill strong {
+      color: #0f172a !important;
+    }
+
+    .theme-light .hr-stat-pill strong.text-primary {
+      color: #f16623 !important;
+    }
+
+    .theme-light .hr-stat-pill strong.text-warning {
+      color: #d97706 !important;
+    }
+
+    .theme-light .hr-stat-pill strong.text-success {
+      color: #16a34a !important;
+    }
+
+    .theme-light .hr-stat-pill strong.text-info {
+      color: #262262 !important;
+    }
+
+    .theme-light .hr-stat-pill .text-white-50 {
+      color: #64748b !important;
+    }
+
+    /* Light Cards & Pod Containers */
+    .theme-light .zy-card,
+    .theme-light .pod-card {
+      background: #ffffff !important;
+      border: 1px solid #e2e8f0 !important;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 6px 16px rgba(0, 0, 0, 0.02) !important;
+      color: #1e293b !important;
+    }
+
+    .theme-light .pod-card:hover {
+      border-color: #ff9c68 !important;
+      background: #ffffff !important;
+      box-shadow: 0 10px 25px rgba(241, 102, 35, 0.08) !important;
+    }
+
+    /* Light Tables */
+    .theme-light .table {
+      color: #1e293b !important;
+      border-color: #e2e8f0 !important;
+      background: #ffffff !important;
+    }
+
+    .theme-light .table thead,
+    .theme-light .table thead.table-dark,
+    .theme-light .table thead[style*="rgba(255,255,255"] {
+      background: #f1f5f9 !important;
+      color: #475569 !important;
+      border-bottom: 2px solid #e2e8f0 !important;
+    }
+
+    .theme-light .table thead th {
+      background: #f1f5f9 !important;
+      color: #475569 !important;
+      font-weight: 600 !important;
+      font-size: 0.76rem !important;
+      letter-spacing: 0.04em !important;
+    }
+
+    .theme-light .table tbody tr {
+      background: #ffffff !important;
+      color: #1e293b !important;
+      border-bottom: 1px solid #f1f5f9 !important;
+    }
+
+    .theme-light .table-hover > tbody > tr:hover > * {
+      background-color: #f8fafc !important;
+      color: #0f172a !important;
+    }
+
+    .theme-light .table td {
+      background: transparent !important;
+    }
+
+    /* Light Form Inputs */
+    .theme-light .zy-input,
+    .theme-light .form-control,
+    .theme-light .form-select {
+      background-color: #ffffff !important;
+      border: 1px solid #cbd5e1 !important;
+      color: #0f172a !important;
+    }
+
+    .theme-light .zy-input:focus,
+    .theme-light .form-control:focus,
+    .theme-light .form-select:focus {
+      border-color: #f16623 !important;
+      box-shadow: 0 0 0 3px rgba(241, 102, 35, 0.15) !important;
+      background-color: #ffffff !important;
+      color: #0f172a !important;
+    }
+
+    .theme-light .input-group-text {
+      background-color: #f8fafc !important;
+      border-color: #cbd5e1 !important;
+      color: #64748b !important;
+    }
+
+    /* Light Buttons & Filters */
+    .theme-light .btn-outline-light {
+      border-color: #cbd5e1 !important;
+      color: #475569 !important;
+      background: #ffffff !important;
+    }
+
+    .theme-light .btn-outline-light:hover,
+    .theme-light .btn-outline-light.active {
+      background: #0f172a !important;
+      color: #ffffff !important;
+      border-color: #0f172a !important;
+    }
+
+    .theme-light .btn-brand-outline {
+      border: 1px solid #cbd5e1 !important;
+      color: #334155 !important;
+      background: #ffffff !important;
+    }
+
+    .theme-light .btn-brand-outline:hover {
+      background: #f1f5f9 !important;
+      border-color: #94a3b8 !important;
+      color: #0f172a !important;
+    }
+
+    /* Light Modals & Menus */
+    .theme-light .modal-content,
+    .theme-light .zy-modal-content,
+    .theme-light .dropdown-menu,
+    .theme-light .zy-dropdown-menu {
+      background: #ffffff !important;
+      color: #0f172a !important;
+      border: 1px solid #e2e8f0 !important;
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.12) !important;
+    }
+
+    .theme-light .modal-header {
+      background: #f8fafc !important;
+      border-bottom: 1px solid #e2e8f0 !important;
+    }
+
+    .theme-light .modal-footer {
+      background: #f8fafc !important;
+      border-top: 1px solid #e2e8f0 !important;
+    }
+
+    .theme-light .modal-header .btn-close-white {
+      filter: invert(1) grayscale(100%) brightness(20%) !important;
+    }
+
+    /* General Light Text Overrides */
+    .theme-light .text-white {
+      color: #0f172a !important;
+    }
+
+    .theme-light .text-white-50 {
+      color: #64748b !important;
+    }
+
+    /* Keep solid buttons & solid badges readable with crisp white text */
+    .theme-light .btn-brand,
+    .theme-light .btn-brand *,
+    .theme-light .btn-primary,
+    .theme-light .btn-primary *,
+    .theme-light .btn-danger,
+    .theme-light .btn-danger *,
+    .theme-light .btn-success,
+    .theme-light .btn-success *,
+    .theme-light .badge.bg-primary,
+    .theme-light .badge.bg-danger,
+    .theme-light .badge.bg-success,
+    .theme-light .badge.bg-brand {
+      color: #ffffff !important;
+    }
+
+    .theme-light .border-white\/10,
+    .theme-light .border-white\/5,
+    .theme-light .border-white-10 {
+      border-color: #e2e8f0 !important;
+    }
+
+    .theme-light [style*="background: rgba(255, 255, 255, 0.03)"],
+    .theme-light [style*="background: rgba(255, 255, 255, 0.02)"],
+    .theme-light [style*="background: rgba(13, 18, 34, 0.65)"] {
+      background: #f8fafc !important;
+      border-color: #e2e8f0 !important;
+    }
+
+    .theme-light [style*="background: rgba(13, 18, 34, 0.85)"] {
+      background: #ffffff !important;
+      border-color: #e2e8f0 !important;
+    }
+
+    body {
+      background-color: #070a13;
+      color: #ffffff;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    .table > :not(caption) > * > * {
+      padding: 0.85rem 0.85rem;
+    }
+    
+    /* Topbar Layout */
+    .zy-admin-topbar {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      gap: 1.5rem !important;
+      padding: 14px 28px !important;
+      background: rgba(11, 18, 34, 0.9) !important;
+      backdrop-filter: blur(12px) !important;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+    }
+
+    /* Unified Border-Radius System for HR Portal */
+    /* 1. All action, quick, brand & filter buttons -> Consistent pill radius */
+    .btn:not(.btn-close):not(.zy-sidebar-nav-item),
+    .btn-brand,
+    .btn-brand-outline {
+      border-radius: 9999px !important;
+    }
+
+    /* 2. All badges, chips, counters & status indicators -> Unified pill curvature */
+    .badge,
+    .zy-badge,
+    .zy-sidebar-counter-badge {
+      border-radius: 9999px !important;
+    }
+
+    /* 3. Stat Cards & Overview Containers -> Unified 14px radius */
+    .hr-stat-pill {
+      background: rgba(13, 18, 34, 0.75) !important;
+      backdrop-filter: blur(10px) !important;
+      border: 1px solid rgba(255, 255, 255, 0.09) !important;
+      border-radius: 14px !important;
+      padding: 18px 20px !important;
+      transition: all 0.2s ease !important;
+      display: flex !important;
+      flex-direction: column !important;
+      justify-content: space-between !important;
+    }
+    .hr-stat-pill:hover {
+      border-color: rgba(255, 255, 255, 0.2) !important;
+      transform: translateY(-2px) !important;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35) !important;
+    }
+
+    .pod-card {
+      background: rgba(13, 18, 32, 0.75) !important;
+      backdrop-filter: blur(10px) !important;
+      border: 1px solid rgba(255, 255, 255, 0.09) !important;
+      border-radius: 14px !important;
+      padding: 22px !important;
+      display: flex !important;
+      flex-direction: column !important;
+      height: 100% !important;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    }
+    .pod-card:hover {
+      border-color: rgba(241, 102, 35, 0.45) !important;
+      background: #ffffff !important;
+      transform: translateY(-3px) !important;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5) !important;
+    }
+
+    .zy-card {
+      border-radius: 14px !important;
+      transition: all 0.2s ease !important;
+    }
+    .zy-card:hover {
+      transform: none !important;
+      scale: 1 !important;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4) !important;
+    }
+
+    /* 4. Modals, Menus & Dropdowns -> Sleek 16px & 12px radii */
+    .modal-content {
+      border-radius: 16px !important;
+      overflow: hidden;
+    }
+    .dropdown-menu {
+      border-radius: 12px !important;
+      overflow: hidden;
+    }
+
+    /* 5. Inputs, selects & textareas -> Uniform 10px radius */
+    .zy-input,
+    .form-control,
+    .form-select {
+      border-radius: 10px !important;
+      background-color: rgba(255, 255, 255, 0.05) !important;
+      border: 1px solid rgba(255, 255, 255, 0.12) !important;
+      color: #ffffff !important;
+    }
+    .zy-input:focus,
+    .form-control:focus,
+    .form-select:focus {
+      border-color: #f16623 !important;
+      box-shadow: 0 0 0 2px rgba(241, 102, 35, 0.25) !important;
+    }
+
+    /* 6. Aligned Topbar quick buttons */
+    .zy-topbar-quick-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      padding: 0.42rem 1.15rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      border-radius: 9999px !important;
+      line-height: 1.25;
+      height: 36px;
+      transition: all 0.2s ease;
+    }
+  
+    /* Refined Light Theme typography and components */
+    .theme-light body,
+    .theme-light {
+      background-color: #f8fafc !important;
+      color: #0f172a !important;
+    }
+
+    .theme-light .text-muted {
+      color: #64748b !important;
+    }
+
+    .theme-light .card,
+    .theme-light .zy-card,
+    .theme-light .table-responsive {
+      background: #ffffff !important;
+      border: 1px solid #e2e8f0 !important;
+    }
+
+    .theme-light .table thead th {
+      background-color: #f1f5f9 !important;
+      color: #334155 !important;
+      border-bottom: 2px solid #e2e8f0 !important;
+    }
+
+    .theme-light .table tbody tr:hover td {
+      background-color: #f8fafc !important;
+    }
+
+    .theme-light .table tbody td {
+      border-bottom: 1px solid #f1f5f9 !important;
+      color: #1e293b !important;
+    }
+
+    .theme-light .zy-badge-pill,
+    .theme-light .badge {
+      font-weight: 600 !important;
+    }
+
+    /* Light Theme Nav Tabs */
+    .theme-light .nav-pills .nav-link {
+      color: #475569 !important;
+    }
+    .theme-light .nav-pills .nav-link.active {
+      background: #f16623 !important;
+      color: #ffffff !important;
+    }
+
+    /* Fix any hardcoded dark text */
+    .theme-light .text-light,
+    .theme-light .text-white-75 {
+      color: #334155 !important;
+    }
+
+    /* Ensure modals are crisp white in light mode */
+    .theme-light .modal-content {
+      background: #ffffff !important;
+      color: #0f172a !important;
+      border: 1px solid #cbd5e1 !important;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15) !important;
+    }
+    .theme-light .modal-header,
+    .theme-light .modal-footer {
+      background: #f8fafc !important;
+      border-color: #e2e8f0 !important;
+    }
+
+    /* Smooth scrollbar styling */
+    .zy-admin-main-pane::-webkit-scrollbar,
+    .zy-admin-sidebar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .zy-admin-main-pane::-webkit-scrollbar-thumb,
+    .zy-admin-sidebar::-webkit-scrollbar-thumb {
+      background: rgba(148, 163, 184, 0.5);
+      border-radius: 9999px;
+    }
+    .zy-admin-main-pane::-webkit-scrollbar-thumb:hover,
+    .zy-admin-sidebar::-webkit-scrollbar-thumb:hover {
+      background: rgba(100, 116, 139, 0.7);
+    }
+
+    /* Zoho Mail Redirect Action Button */
+    .zy-btn-zoho {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      border-radius: 9999px;
+      font-weight: 600;
+      font-size: 0.82rem;
+      padding: 0.38rem 0.95rem;
+      text-decoration: none !important;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      background: #ffffff !important;
+      color: #16133d !important;
+      border: 1.5px solid #f16623 !important;
+      box-shadow: 0 1px 3px rgba(241, 102, 35, 0.12);
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .zy-btn-zoho:hover {
+      background: #f16623 !important;
+      color: #ffffff !important;
+      border-color: #f16623 !important;
+      box-shadow: 0 4px 14px rgba(241, 102, 35, 0.3);
+      transform: translateY(-1px);
+    }
+
+    .zy-btn-zoho:hover i,
+    .zy-btn-zoho:hover span {
+      color: #ffffff !important;
+    }
+
+    .theme-dark .zy-btn-zoho,
+    body.theme-dark .zy-btn-zoho {
+      background: rgba(241, 102, 35, 0.15) !important;
+      color: #ff9c68 !important;
+      border: 1.5px solid rgba(241, 102, 35, 0.4) !important;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    }
+
+    .theme-dark .zy-btn-zoho:hover,
+    body.theme-dark .zy-btn-zoho:hover {
+      background: #f16623 !important;
+      color: #ffffff !important;
+      border-color: #f16623 !important;
+      box-shadow: 0 4px 14px rgba(241, 102, 35, 0.45);
+    }
+
+  </style>
+</head>
+<body class="theme-light">
+
+  <!-- ==================== HR WORKSPACE WRAPPER ==================== -->
+  <div class="zy-admin-wrapper">
+    <!-- Left Sidebar -->
+    <aside class="zy-admin-sidebar" id="hrSidebar">
+      <!-- Sidebar Header -->
+      <div class="zy-admin-sidebar-header">
+        <div class="zy-admin-logo-box">
+          <img src="/assets/images/zyllo-icon.png" alt="Zyllo Tech">
+        </div>
+        <div class="overflow-hidden">
+          <div class="zy-admin-brand-title">
+            <span class="zy-brand-zyllo" style="color: #f16623;">ZYLLO</span> <span class="zy-brand-tech" style="color: #262262;">TECH</span>
+          </div>
+          <div class="zy-admin-brand-sub">HR OPERATIONS &amp; TALENT</div>
+        </div>
+        <button class="btn btn-sm btn-link text-white-50 d-lg-none ms-auto p-0" onclick="toggleHrSidebar()" aria-label="Close Sidebar">
+          <i class="bi bi-x-lg fs-5"></i>
+        </button>
+      </div>
+
+      <!-- WORKSPACE Navigation Group -->
+      <div class="zy-sidebar-group-label">HR DESK</div>
+
+      <!-- 1. Overview -->
+      <button type="button" class="zy-sidebar-nav-item active" id="sidebar-hr-overview" onclick="switchHrTab('overview')">
+        <span class="zy-sidebar-nav-left"><i class="bi bi-grid-fill"></i><span>HR Overview</span></span>
+      </button>
+
+      <!-- 2. Employee Directory -->
+      <button type="button" class="zy-sidebar-nav-item" id="sidebar-hr-employees" onclick="switchHrTab('employees')">
+        <span class="zy-sidebar-nav-left"><i class="bi bi-people-fill text-info"></i><span>All Employees</span></span>
+        <span class="zy-sidebar-counter-badge" id="hr-badge-employees">00</span>
+      </button>
+
+      <!-- 3. Teams & Leads -->
+      <button type="button" class="zy-sidebar-nav-item" id="sidebar-hr-teams" onclick="switchHrTab('teams')">
+        <span class="zy-sidebar-nav-left"><i class="bi bi-diagram-3-fill text-primary"></i><span>Teams &amp; Leads</span></span>
+      </button>
+
+      <!-- 4. Leave Approvals -->
+      <button type="button" class="zy-sidebar-nav-item" id="sidebar-hr-leaves" onclick="switchHrTab('leaves')">
+        <span class="zy-sidebar-nav-left"><i class="bi bi-calendar2-check-fill text-warning"></i><span>Leave Approvals</span></span>
+        <span class="zy-sidebar-counter-badge text-warning" id="hr-badge-leaves">00</span>
+      </button>
+
+      <!-- 5. Attendance Monitor -->
+      <button type="button" class="zy-sidebar-nav-item" id="sidebar-hr-attendance" onclick="switchHrTab('attendance')">
+        <span class="zy-sidebar-nav-left"><i class="bi bi-clock-history text-success"></i><span>Attendance</span></span>
+        <span class="zy-sidebar-counter-badge" id="hr-badge-attendance">00</span>
+      </button>
+
+      <!-- 6. HR Help Desk Tickets -->
+      <button type="button" class="zy-sidebar-nav-item" id="sidebar-hr-tickets" onclick="switchHrTab('tickets')">
+        <span class="zy-sidebar-nav-left"><i class="bi bi-chat-heart-fill text-danger"></i><span>HR Help Desk</span></span>
+        <span class="zy-sidebar-counter-badge" id="hr-badge-tickets">00</span>
+      </button>
+
+      <!-- 7. Company Holidays -->
+      <button type="button" class="zy-sidebar-nav-item" id="sidebar-hr-holidays" onclick="switchHrTab('holidays')">
+        <span class="zy-sidebar-nav-left"><i class="bi bi-calendar3 text-gradient-orange"></i><span>Holidays &amp; Calendar</span></span>
+      </button>
+
+      <!-- 8. Candidate Communications & Email Open Tracking -->
+      <button type="button" class="zy-sidebar-nav-item" id="sidebar-hr-emails" onclick="switchHrTab('emails')">
+        <span class="zy-sidebar-nav-left"><i class="bi bi-envelope-check-fill text-warning"></i><span>Candidate Emails &amp; Tracking</span></span>
+        <span class="zy-sidebar-counter-badge text-warning" id="hr-badge-emails">0</span>
+      </button>
+
+      <!-- QUICK SWITCH Group -->
+      <div class="zy-sidebar-group-label mt-3">QUICK SWITCH</div>
+
+      <a href="https://mail.zoho.com" target="_blank" rel="noopener noreferrer" class="zy-sidebar-nav-item text-decoration-none" title="Open Zoho Mail Web Client in new tab">
+        <span class="zy-sidebar-nav-left"><i class="bi bi-envelope-at-fill text-warning"></i><span>Zoho Mail</span></span>
+        <i class="bi bi-box-arrow-up-right small text-white-50"></i>
+      </a>
+
+      <a href="/employee" class="zy-sidebar-nav-item text-decoration-none" title="Staff Self Service">
+        <span class="zy-sidebar-nav-left"><i class="bi bi-person-workspace text-info"></i><span>Employee Portal</span></span>
+        <i class="bi bi-box-arrow-up-right small text-white-50"></i>
+      </a>
+
+      <a href="/portal" class="zy-sidebar-nav-item text-decoration-none" title="Client Project Portal">
+        <span class="zy-sidebar-nav-left"><i class="bi bi-kanban"></i><span>Client Portal</span></span>
+        <i class="bi bi-box-arrow-up-right small text-white-50"></i>
+      </a>
+
+      <a href="/" target="_blank" class="zy-sidebar-nav-item text-decoration-none" title="Visit Public Website">
+        <span class="zy-sidebar-nav-left"><i class="bi bi-globe"></i><span>Public Website</span></span>
+        <i class="bi bi-box-arrow-up-right small text-white-50"></i>
+      </a>
+
+      <button type="button" class="zy-sidebar-nav-item text-danger border-0 bg-transparent mt-2" onclick="handleLogout()" title="Log out">
+        <span class="zy-sidebar-nav-left"><i class="bi bi-box-arrow-right text-danger"></i><span class="text-danger fw-semibold">Log Out</span></span>
+      </button>
+
+      <!-- HR User Mini Profile Footer -->
+      <div class="mt-auto pt-3 border-top border-white/10 d-flex align-items-center gap-2">
+        <div class="rounded-circle d-flex align-items-center justify-content-center text-white fw-bold" style="width: 36px; height: 36px; min-width: 36px; background: #eab308; font-size: 0.85rem;">
+          <span id="hrSidebarInitials">PS</span>
+        </div>
+        <div class="overflow-hidden">
+          <div class="text-white small fw-bold text-truncate" id="hrSidebarName">Priya Sharma</div>
+          <div class="text-white-50 small" style="font-size: 0.72rem;">HR Operations Lead</div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Mobile Offcanvas Backdrop -->
+    <div class="zy-sidebar-backdrop" id="hrSidebarBackdrop" onclick="toggleHrSidebar()"></div>
+
+    <!-- Main Workspace Pane -->
+    <main class="zy-admin-main-pane">
+      <!-- Topbar Header -->
+      <header class="zy-admin-topbar d-flex align-items-center justify-content-between gap-3">
+        <div class="d-flex align-items-center gap-3">
+          <button class="btn btn-sm btn-brand-outline d-lg-none py-1.5 px-2.5" onclick="toggleHrSidebar()" aria-label="Open Sidebar">
+            <i class="bi bi-list fs-5"></i>
+          </button>
+          <a href="/" class="d-flex align-items-center gap-2 text-decoration-none me-2">
+            <div class="zy-admin-logo-box" style="width: 36px !important; height: 36px !important; padding: 2px !important;">
+              <img src="/assets/images/zyllo-icon.png" alt="Zyllo Tech" style="height: 24px !important; width: 24px !important;">
+            </div>
+            <div class="d-none d-sm-block">
+              <div class="zy-admin-brand-title" style="font-size: 0.95rem !important; margin: 0;">
+                <span class="zy-brand-zyllo" style="color: #f16623;">ZYLLO</span> <span class="zy-brand-tech" style="color: #262262;">TECH</span>
+              </div>
+            </div>
+          </a>
+          <div class="d-flex flex-column align-items-start">
+            <span class="badge border bg-primary bg-opacity-10 border-primary text-primary rounded-pill px-3 py-1 mb-1" style="font-size: 0.68rem; letter-spacing: 0.06em; font-weight: 700; text-transform: uppercase; display: inline-block;">
+              PEOPLE &amp; CULTURE
+            </span>
+            <h5 class="fw-bold mb-0 d-none d-sm-block" style="font-size: 1.15rem; line-height: 1.2; color: #0f172a;" id="topbarCurrentTab">HR Overview</h5>
+          </div>
+        </div>
+
+        <div class="d-flex align-items-center gap-2">
+          <!-- Zoho Mail Quick Redirect Button -->
+          <a href="https://mail.zoho.com" target="_blank" rel="noopener noreferrer" class="zy-btn-zoho d-none d-lg-inline-flex" title="Redirect to Zoho Mail inbox">
+            <i class="bi bi-envelope-at-fill text-primary"></i> <span>Zoho Mail</span>
+            <i class="bi bi-box-arrow-up-right ms-0.5" style="font-size: 0.65rem; opacity: 0.7;"></i>
+          </a>
+
+          <!-- Add Employee Quick Button -->
+          <button class="btn btn-brand zy-topbar-quick-btn d-none d-md-inline-flex shadow-sm" data-bs-toggle="modal" data-bs-target="#addEmployeeModal">
+            <i class="bi bi-person-plus-fill"></i> <span>Add Employee</span>
+          </button>
+
+          <!-- Regularize Attendance Quick Button -->
+          <button class="btn btn-brand-outline zy-topbar-quick-btn d-none d-md-inline-flex" data-bs-toggle="modal" data-bs-target="#regularizeAttendanceModal">
+            <i class="bi bi-clock"></i> <span>Regularize</span>
+          </button>
+
+          <!-- Theme Toggle Switcher Button -->
+          <button id="hrThemeToggleBtn" class="btn zy-topbar-quick-btn d-inline-flex align-items-center gap-2 shadow-sm px-3" onclick="toggleHrTheme()" title="Switch Light / Dark Theme">
+            <i class="bi bi-moon-stars-fill text-warning" id="themeIcon"></i>
+            <span id="themeLabel" class="fw-semibold">Dark Mode</span>
+          </button>
+
+          <!-- User Menu Dropdown -->
+          <div class="dropdown">
+            <button class="btn btn-brand zy-topbar-quick-btn dropdown-toggle" type="button" data-bs-toggle="dropdown" id="userMenuBtn">
+              <i class="bi bi-person-circle me-1"></i> Priya
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end zy-dropdown-menu" >
+              <li class="px-3 py-2 border-bottom border-white/10">
+                <strong class="text-white d-block" id="dropdownUserName">Priya Sharma</strong>
+                <small class="text-white-50" id="dropdownUserEmail">hr@zyllotech.com</small>
+                <div class="mt-1"><span class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25">HR Manager</span></div>
+
+              </li>
+              <li><a class="dropdown-item text-white py-2" href="/employee"><i class="bi bi-person-workspace me-2"></i>Employee Portal</a></li>
+              <li><hr class="dropdown-divider border-white/10"></li>
+              <li><button class="dropdown-item text-danger py-2" onclick="handleLogout()"><i class="bi bi-box-arrow-right me-2"></i>Log Out</button></li>
+            </ul>
+          </div>
+
+          <!-- Direct Visible Logout Button in HR Topbar -->
+          <button class="btn btn-sm btn-outline-danger rounded-pill px-3 py-1.5 d-inline-flex align-items-center gap-1.5 fw-semibold shadow-sm" onclick="handleLogout()" title="Log out of HR Operations">
+            <i class="bi bi-box-arrow-right"></i> <span class="d-none d-sm-inline">Log Out</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Main Scrollable Content Container -->
+      <div class="p-3 p-md-4">
+
+        <!-- ==================== TAB 1: HR OVERVIEW ==================== -->
+        <div id="tabHrOverview">
+          <!-- Welcome Hero Banner -->
+          <div class="row align-items-center mb-4">
+            <div class="col-md-7">
+              <div class="d-flex align-items-center gap-2 mb-2">
+                <span class="zy-badge"><i class="bi bi-heart-fill text-danger"></i> People &amp; Talent Hub</span>
+                <span class="badge bg-success bg-opacity-25 border border-success text-success">Active Workspace</span>
+              </div>
+              <h2 class="h3 fw-bold mb-1 text-white">
+                HR Desk &mdash; <span class="text-gradient-brand">Priya Sharma</span>
+              </h2>
+              <p class="text-white-50 mb-0 small">Zyllo Tech Global People Operations · Team Leads, Attendance, and Leave Approvals</p>
+            </div>
+            <div class="col-md-5 text-md-end mt-3 mt-md-0 d-flex flex-wrap gap-2 justify-content-md-end">
+              <button class="btn btn-sm btn-brand" data-bs-toggle="modal" data-bs-target="#addEmployeeModal">
+                <i class="bi bi-person-plus-fill me-1"></i> Register Employee
+              </button>
+              <button class="btn btn-sm btn-brand-outline" onclick="switchHrTab('leaves')">
+                <i class="bi bi-calendar2-check-fill me-1"></i> Review Leaves
+              </button>
+            </div>
+          </div>
+
+          <!-- HR Key Metric Cards -->
+          <div class="row g-3 mb-4 pb-2">
+            <div class="col-6 col-lg-2">
+              <div class="hr-stat-pill">
+                <span class="text-white-50 small d-block">Total Staff</span>
+                <strong class="text-white fs-3" id="hrStatTotalEmployees">0</strong>
+                <small class="text-white-50 d-block mt-1">Across all pods</small>
+              </div>
+            </div>
+            <div class="col-6 col-lg-2">
+              <div class="hr-stat-pill">
+                <span class="text-white-50 small d-block">Team Leads</span>
+                <strong class="text-primary fs-3" id="hrStatTotalLeads">0</strong>
+                <small class="text-white-50 d-block mt-1">Pod Directors</small>
+              </div>
+            </div>
+            <div class="col-6 col-lg-3">
+              <div class="hr-stat-pill border-primary border-opacity-25">
+                <span class="text-white-50 small d-block">Pending Leaves</span>
+                <strong class="text-warning fs-3" id="hrStatPendingLeaves">0</strong>
+                <small class="text-warning d-block mt-1"><i class="bi bi-exclamation-circle me-1"></i>Needs approval</small>
+              </div>
+            </div>
+            <div class="col-6 col-lg-2">
+              <div class="hr-stat-pill">
+                <span class="text-white-50 small d-block">Present Today</span>
+                <strong class="text-success fs-3" id="hrStatPresentToday">0</strong>
+                <small class="text-success d-block mt-1">On Shift</small>
+              </div>
+            </div>
+            <div class="col-6 col-lg-2">
+              <div class="hr-stat-pill">
+                <span class="text-white-50 small d-block">Open Queries</span>
+                <strong class="text-info fs-3" id="hrStatOpenTickets">0</strong>
+                <small class="text-white-50 d-block mt-1">Help Desk</small>
+              </div>
+            </div>
+            <div class="col-6 col-lg-3">
+              <div class="hr-stat-pill border-primary border-opacity-25 cursor-pointer" onclick="switchHrTab('emails')" title="Click to view candidate email open tracking">
+                <span class="text-white-50 small d-block">Candidate Emails</span>
+                <strong class="text-warning fs-3" id="hrStatCandidateEmails">0</strong>
+                <small class="text-warning d-block mt-1"><i class="bi bi-eye-fill me-1"></i>Tracked with 1x1 pixel</small>
+              </div>
+            </div>
+          </div>
+
+          <!-- Action Station: Pending Leaves Preview & Teams Shortcut -->
+          <div class="row g-4 mb-4">
+            <!-- Pending Leaves Preview -->
+            <div class="col-lg-7">
+              <div class="zy-card p-4 h-100" >
+                <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom border-white/10">
+                  <div class="d-flex align-items-center gap-2">
+                    <i class="bi bi-calendar2-check-fill text-warning fs-5"></i>
+                    <h5 class="fw-bold text-white mb-0" style="font-size: 1.05rem;">Pending Leave Approvals</h5>
+                  </div>
+                  <button class="btn btn-sm btn-link text-warning p-0 text-decoration-none small fw-semibold" onclick="switchHrTab('leaves')">View All &rarr;</button>
+                </div>
+                <div id="overviewPendingLeavesList" class="d-flex flex-column gap-2.5">
+                  <div class="text-center py-4 text-white-50 small">Loading pending leave applications...</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Pods / Team Leads Summary Preview -->
+            <div class="col-lg-5">
+              <div class="zy-card p-4 h-100" >
+                <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom border-white/10">
+                  <div class="d-flex align-items-center gap-2">
+                    <i class="bi bi-diagram-3-fill text-primary fs-5"></i>
+                    <h5 class="fw-bold text-white mb-0" style="font-size: 1.05rem;">Engineering Pods &amp; Leads</h5>
+                  </div>
+                  <button class="btn btn-sm btn-link text-primary p-0 text-decoration-none small fw-semibold" onclick="switchHrTab('teams')">Manage Pods &rarr;</button>
+                </div>
+                <div id="overviewTeamsList" class="d-flex flex-column gap-2.5">
+                  <div class="text-center py-4 text-white-50 small">Loading active team pods...</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================== TAB 2: ALL EMPLOYEES DIRECTORY ==================== -->
+        <div id="tabHrEmployees" class="d-none">
+          <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4 pb-3 border-bottom border-white/10">
+            <div>
+              <h4 class="fw-bold text-white mb-0"><i class="bi bi-people-fill text-info me-2"></i>Global Employee Directory</h4>
+              <small class="text-white-50">Complete staff registry, team pod allocations, and reporting hierarchy.</small>
+            </div>
+            <div class="d-flex gap-2">
+              <button class="btn btn-sm btn-brand-outline" onclick="loadHrEmployees()">
+                <i class="bi bi-arrow-clockwise me-1"></i> Refresh
+              </button>
+              <button class="btn btn-sm btn-brand" data-bs-toggle="modal" data-bs-target="#addEmployeeModal">
+                <i class="bi bi-person-plus-fill me-1"></i> Add Employee
+              </button>
+            </div>
+          </div>
+
+          <!-- Search & Filter Controls -->
+          <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3">
+            <div class="d-flex align-items-center gap-2 flex-wrap">
+              <button class="btn btn-sm btn-outline-light active rounded-pill px-3" id="empFilterAll" onclick="filterEmployeesPod('all')">All Pods</button>
+              <button class="btn btn-sm btn-outline-light rounded-pill px-3" id="empFilterEng" onclick="filterEmployeesPod('Engineering')">Engineering &amp; AI</button>
+              <button class="btn btn-sm btn-outline-light rounded-pill px-3" id="empFilterCloud" onclick="filterEmployeesPod('Cloud')">Cloud &amp; SRE</button>
+              <button class="btn btn-sm btn-outline-light rounded-pill px-3" id="empFilterDesign" onclick="filterEmployeesPod('Frontend')">Frontend &amp; UX</button>
+            </div>
+            <input type="text" id="employeeSearchInput" class="form-control form-control-sm zy-input" placeholder="Search by name, ID, team lead..." onkeyup="filterEmployeesSearch()" style="max-width: 280px;">
+          </div>
+
+          <!-- Employee Table -->
+          <div class="zy-card overflow-hidden">
+            <div class="table-responsive">
+              <table class="table table-hover mb-0 align-middle">
+                <thead class=" text-white-50 small text-uppercase" style="background: rgba(255,255,255,0.03);">
+                  <tr>
+                    <th>Employee Name</th>
+                    <th>Designation</th>
+                    <th>Pod / Department</th>
+                    <th>Reporting Team Lead</th>
+                    <th>Contact Info</th>
+                    <th>Work Location</th>
+                    <th>Joined</th>
+                    <th class="text-end">Action</th>
+                  </tr>
+                </thead>
+                <tbody id="hrEmployeesTableBody">
+                  <tr><td colspan="8" class="text-center py-4 text-white-50">Loading employee directory...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================== TAB 3: TEAMS & TEAM LEADS ==================== -->
+        <div id="tabHrTeams" class="d-none">
+          <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4 pb-3 border-bottom border-white/10">
+            <div>
+              <h4 class="fw-bold text-white mb-0"><i class="bi bi-diagram-3-fill text-primary me-2"></i>Engineering Pods &amp; Team Leads</h4>
+              <small class="text-white-50">Team allocations, reporting managers, and member rosters across pods.</small>
+            </div>
+            <button class="btn btn-sm btn-brand-outline" onclick="loadHrTeams()">
+              <i class="bi bi-arrow-clockwise me-1"></i> Refresh Pods
+            </button>
+          </div>
+
+          <!-- Pods Cards Grid -->
+          <div class="row g-4" id="hrTeamsGrid">
+            <div class="col-12 text-center py-4 text-white-50">Loading teams and reporting managers...</div>
+          </div>
+        </div>
+
+        <!-- ==================== TAB 4: LEAVE APPROVALS ==================== -->
+        <div id="tabHrLeaves" class="d-none">
+          <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4 pb-3 border-bottom border-white/10">
+            <div>
+              <h4 class="fw-bold text-white mb-0"><i class="bi bi-calendar2-check-fill text-warning me-2"></i>Leave Approvals &amp; Applications Desk</h4>
+              <small class="text-white-50">Review employee time-off requests, accept leaves, or communicate rejection reasons.</small>
+            </div>
+            <button class="btn btn-sm btn-brand-outline" onclick="loadHrLeaves()">
+              <i class="bi bi-arrow-clockwise me-1"></i> Refresh
+            </button>
+          </div>
+
+          <!-- Filter & Search -->
+          <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3">
+            <div class="d-flex flex-wrap align-items-center gap-2" role="group">
+              <button type="button" class="btn btn-sm btn-outline-light active rounded-pill px-3" id="filterHrLeaveAll" onclick="filterHrLeaves('all')">All Requests</button>
+              <button type="button" class="btn btn-sm btn-outline-light rounded-pill px-3" id="filterHrLeavePending" onclick="filterHrLeaves('Pending')">Pending (<span id="hrLeavePendingFilterNum">0</span>)</button>
+              <button type="button" class="btn btn-sm btn-outline-light rounded-pill px-3" id="filterHrLeaveApproved" onclick="filterHrLeaves('Approved')">Approved</button>
+              <button type="button" class="btn btn-sm btn-outline-light rounded-pill px-3" id="filterHrLeaveRejected" onclick="filterHrLeaves('Rejected')">Rejected</button>
+            </div>
+            <input type="text" id="searchHrLeavesInput" class="form-control form-control-sm zy-input" placeholder="Search by employee, type, or reason..." onkeyup="filterHrLeavesSearch()" style="max-width: 280px;">
+          </div>
+
+          <!-- Leaves Table -->
+          <div class="zy-card overflow-hidden">
+            <div class="table-responsive">
+              <table class="table table-hover mb-0 align-middle">
+                <thead class=" text-white-50 small text-uppercase" style="background: rgba(255,255,255,0.03);">
+                  <tr>
+                    <th>Employee</th>
+                    <th>Leave Type</th>
+                    <th>Duration</th>
+                    <th>Date Range</th>
+                    <th>Reason</th>
+                    <th>Status</th>
+                    <th class="text-end">HR Decision</th>
+                  </tr>
+                </thead>
+                <tbody id="hrLeavesTableBody">
+                  <tr><td colspan="7" class="text-center py-4 text-white-50">Loading leave applications...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================== TAB 5: ATTENDANCE MONITOR ==================== -->
+        <div id="tabHrAttendance" class="d-none">
+          <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4 pb-3 border-bottom border-white/10">
+            <div>
+              <h4 class="fw-bold text-white mb-0"><i class="bi bi-clock-history text-success me-2"></i>Employee Attendance &amp; Shift Monitor</h4>
+              <small class="text-white-50">Real-time biometric and remote punch logs, hours tracked, and regularization.</small>
+            </div>
+            <div class="d-flex gap-2">
+              <button class="btn btn-sm btn-brand-outline" onclick="loadHrAttendance()">
+                <i class="bi bi-arrow-clockwise me-1"></i> Refresh
+              </button>
+              <button class="btn btn-sm btn-brand" data-bs-toggle="modal" data-bs-target="#regularizeAttendanceModal">
+                <i class="bi bi-plus-lg me-1"></i> Regularize Punch
+              </button>
+            </div>
+          </div>
+
+          <!-- Attendance Search & Filter -->
+          <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3">
+            <div class="d-flex flex-wrap align-items-center gap-2" role="group">
+              <button type="button" class="btn btn-sm btn-outline-light active rounded-pill px-3" id="filterHrAttAll" onclick="filterHrAttendance('all')">All Records</button>
+              <button type="button" class="btn btn-sm btn-outline-light rounded-pill px-3" id="filterHrAttPresent" onclick="filterHrAttendance('Present')">In-Office Present</button>
+              <button type="button" class="btn btn-sm btn-outline-light rounded-pill px-3" id="filterHrAttWfh" onclick="filterHrAttendance('Work From Home')">Work From Home (WFH)</button>
+            </div>
+            <input type="text" id="searchHrAttendanceInput" class="form-control form-control-sm zy-input" placeholder="Search by employee, date, or status..." onkeyup="filterHrAttendanceSearch()" style="max-width: 280px;">
+          </div>
+
+          <!-- Attendance Table -->
+          <div class="zy-card overflow-hidden">
+            <div class="table-responsive">
+              <table class="table table-hover mb-0 align-middle">
+                <thead class=" text-white-50 small text-uppercase" style="background: rgba(255,255,255,0.03);">
+                  <tr>
+                    <th>Employee</th>
+                    <th>Date</th>
+                    <th>Shift Timing</th>
+                    <th>Punch In</th>
+                    <th>Punch Out</th>
+                    <th>Total Hours</th>
+                    <th class="text-end">Status</th>
+                  </tr>
+                </thead>
+                <tbody id="hrAttendanceTableBody">
+                  <tr><td colspan="7" class="text-center py-4 text-white-50">Loading attendance logs...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================== TAB 6: HR HELP DESK TICKETS ==================== -->
+        <div id="tabHrTickets" class="d-none">
+          <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4 pb-3 border-bottom border-white/10">
+            <div>
+              <h4 class="fw-bold text-white mb-0"><i class="bi bi-chat-heart-fill text-danger me-2"></i>HR Help Desk &amp; Grievance Management</h4>
+              <small class="text-white-50">Queries submitted by team members regarding payroll, attendance, benefits, or hardware.</small>
+            </div>
+            <button class="btn btn-sm btn-brand-outline" onclick="loadHrTickets()">
+              <i class="bi bi-arrow-clockwise me-1"></i> Refresh
+            </button>
+          </div>
+
+          <!-- Tickets Table -->
+          <div class="zy-card overflow-hidden">
+            <div class="table-responsive">
+              <table class="table table-hover mb-0 align-middle">
+                <thead class=" text-white-50 small text-uppercase" style="background: rgba(255,255,255,0.03);">
+                  <tr>
+                    <th>Ticket ID</th>
+                    <th>Employee</th>
+                    <th>Category</th>
+                    <th>Subject &amp; Description</th>
+                    <th>Priority</th>
+                    <th>Status</th>
+                    <th class="text-end">HR Action</th>
+                  </tr>
+                </thead>
+                <tbody id="hrTicketsTableBody">
+                  <tr><td colspan="7" class="text-center py-4 text-white-50">Loading HR tickets...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================== TAB 7: HOLIDAYS & CALENDAR ==================== -->
+        <div id="tabHrHolidays" class="d-none">
+          <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4 pb-3 border-bottom border-white/10">
+            <div>
+              <h4 class="fw-bold text-white mb-0"><i class="bi bi-calendar3 text-gradient-orange me-2"></i>Official 2026 – 2027 Holiday Schedule</h4>
+              <small class="text-white-50">National and public holidays observed across all engineering and operations pods.</small>
+            </div>
+            <button class="btn btn-sm btn-brand-outline" onclick="loadHrHolidays()">
+              <i class="bi bi-arrow-clockwise me-1"></i> Refresh
+            </button>
+          </div>
+
+          <div class="zy-card overflow-hidden">
+            <div class="table-responsive">
+              <table class="table table-hover mb-0 align-middle">
+                <thead class=" text-white-50 small text-uppercase" style="background: rgba(255,255,255,0.03);">
+                  <tr>
+                    <th>Date</th>
+                    <th>Festival / Occasion</th>
+                    <th>Day of Week</th>
+                    <th>Classification</th>
+                    <th class="text-end">Status</th>
+                  </tr>
+                </thead>
+                <tbody id="hrHolidaysTableBody">
+                  <tr><td colspan="5" class="text-center py-4 text-white-50">Loading holidays...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================== TAB 8: CANDIDATE COMMUNICATIONS & EMAIL OPEN TRACKING ==================== -->
+        <div id="tabHrEmails" class="d-none">
+          <!-- Header & Action Station -->
+          <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4 pb-3 border-bottom border-white/10">
+            <div>
+              <div class="d-flex align-items-center gap-2 mb-1">
+                <h4 class="fw-bold text-white mb-0"><i class="bi bi-envelope-check-fill text-warning me-2"></i>Candidate Communications &amp; Email Open Tracking</h4>
+                <span class="badge bg-primary bg-opacity-10 text-primary rounded-pill px-2.5 py-0.5" style="font-size: 0.72rem; font-weight: 600;">1x1 Pixel Detection</span>
+              </div>
+              <small class="text-white-50">Authorized HR correspondence desk for candidate outreach with real-time open detection and chronological engagement timeline.</small>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+              <a href="https://mail.zoho.com" target="_blank" rel="noopener noreferrer" class="zy-btn-zoho" title="Open Zoho Mail in new tab">
+                <i class="bi bi-envelope-at-fill text-primary fs-6"></i>
+                <span>Zoho Mail</span>
+                <i class="bi bi-box-arrow-up-right ms-0.5" style="font-size: 0.65rem; opacity: 0.7;"></i>
+              </a>
+              <button class="btn btn-sm btn-brand-outline" onclick="loadHrCandidateEmails(1)">
+                <i class="bi bi-arrow-clockwise me-1"></i> Refresh Tracking
+              </button>
+              <button class="btn btn-sm btn-brand" onclick="openComposeCandidateEmailModal()">
+                <i class="bi bi-envelope-plus-fill me-1"></i> Compose Candidate Email
+              </button>
+            </div>
+          </div>
+
+          <!-- Email Tracking KPI Summary Cards -->
+          <div class="row g-3 mb-4">
+            <div class="col-6 col-md-3">
+              <div class="hr-stat-pill shadow-sm" style="background: #ffffff; border: 1.5px solid #e2e8f0; border-radius: 14px; padding: 18px 20px;">
+                <span class="small d-block fw-semibold" style="color: #64748b;">Total Dispatched</span>
+                <strong class="fs-2 fw-extrabold d-block my-1" style="color: #0f172a;" id="kpiEmailsSent">0</strong>
+                <small class="d-block" style="color: #64748b; font-size: 0.75rem;"><i class="bi bi-send-check text-primary me-1"></i> Direct to candidate inbox</small>
+              </div>
+            </div>
+            <div class="col-6 col-md-3">
+              <div class="hr-stat-pill shadow-sm" style="background: #ffffff; border: 1.5px solid #86efac; border-radius: 14px; padding: 18px 20px;">
+                <span class="small d-block fw-semibold" style="color: #166534;">Detected Opens</span>
+                <strong class="fs-2 fw-extrabold text-success d-block my-1" id="kpiEmailsOpened">0</strong>
+                <small class="text-success d-block fw-bold" style="font-size: 0.75rem;"><i class="bi bi-eye-fill me-1"></i><span id="kpiOpenRate">0.0%</span> open rate</small>
+              </div>
+            </div>
+            <div class="col-6 col-md-3">
+              <div class="hr-stat-pill shadow-sm" style="background: #ffffff; border: 1.5px solid #fde047; border-radius: 14px; padding: 18px 20px;">
+                <span class="small d-block fw-semibold" style="color: #854d0e;">Pending Candidate Read</span>
+                <strong class="fs-2 fw-extrabold d-block my-1" style="color: #ca8a04;" id="kpiEmailsUnopened">0</strong>
+                <small class="d-block" style="color: #854d0e; font-size: 0.75rem;"><i class="bi bi-clock-history me-1"></i> Awaiting first pixel hit</small>
+              </div>
+            </div>
+            <div class="col-6 col-md-3">
+              <div class="hr-stat-pill shadow-sm" style="background: #ffffff; border: 1.5px solid #bae6fd; border-radius: 14px; padding: 18px 20px;">
+                <span class="small d-block fw-semibold" style="color: #0369a1;">Total Open Events</span>
+                <strong class="fs-2 fw-extrabold text-info d-block my-1" id="kpiTotalViews">0</strong>
+                <small class="text-info d-block fw-semibold" style="font-size: 0.75rem;"><i class="bi bi-bar-chart-fill me-1"></i> Includes repeat reads</small>
+              </div>
+            </div>
+          </div>
+
+          <!-- Filters, Search & Date Range Toolbar -->
+          <div class="zy-card p-3 mb-3">
+            <div class="row g-2 align-items-center">
+              <div class="col-12 col-xl-5 col-lg-5">
+                <div class="d-flex flex-wrap align-items-center gap-1.5" role="group">
+                  <button type="button" class="btn btn-sm btn-outline-light active rounded-pill px-3" id="filterHrEmailAll" onclick="filterHrEmailStatus('all')">All Emails</button>
+                  <button type="button" class="btn btn-sm btn-outline-light rounded-pill px-3" id="filterHrEmailOpened" onclick="filterHrEmailStatus('opened')">Opened (<span id="hrEmailCountOpened">0</span>)</button>
+                  <button type="button" class="btn btn-sm btn-outline-light rounded-pill px-3" id="filterHrEmailUnopened" onclick="filterHrEmailStatus('not_detected')">Awaiting Open (<span id="hrEmailCountUnopened">0</span>)</button>
+                  <button type="button" class="btn btn-sm btn-outline-light rounded-pill px-3" id="filterHrEmailDisabled" onclick="filterHrEmailStatus('disabled')">Tracking Off</button>
+                </div>
+              </div>
+              <div class="col-6 col-xl-2 col-lg-2">
+                <select class="form-select form-select-sm zy-input text-white" id="filterHrEmailDateRange" onchange="filterHrEmailDateRange(this.value)">
+                  <option value="all">All Dates Range</option>
+                  <option value="today">Today's Dispatches</option>
+                  <option value="week">Past 7 Days</option>
+                  <option value="month">Past 30 Days</option>
+                </select>
+              </div>
+              <div class="col-6 col-xl-3 col-lg-3">
+                <div class="input-group input-group-sm">
+                  <span class="input-group-text bg-transparent border-white/10 text-white-50"><i class="bi bi-search"></i></span>
+                  <input type="text" id="searchHrEmailsInput" class="form-control form-control-sm zy-input text-white" placeholder="Search candidate, email, or subject..." onkeyup="handleHrEmailSearch(event)">
+                </div>
+              </div>
+              <div class="col-12 col-xl-2 col-lg-2 d-flex justify-content-xl-end">
+                <a href="https://mail.zoho.com" target="_blank" rel="noopener noreferrer" class="zy-btn-zoho w-100 w-xl-auto justify-content-center" id="hrToolbarZohoMailBtn" title="Redirect to Zoho Mail Web Client">
+                  <i class="bi bi-envelope-at-fill text-primary fs-6"></i>
+                  <span>Zoho Mail</span>
+                  <i class="bi bi-box-arrow-up-right ms-0.5" style="font-size: 0.65rem; opacity: 0.7;"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Email Tracking Table -->
+          <div class="zy-card overflow-hidden mb-3">
+            <div class="table-responsive">
+              <table class="table table-hover mb-0 align-middle">
+                <thead class=" text-white-50 small text-uppercase" style="background: rgba(255,255,255,0.03);">
+                  <tr>
+                    <th>Candidate</th>
+                    <th>Email Subject</th>
+                    <th>Delivery Status</th>
+                    <th>Open Status</th>
+                    <th>Detected Opens</th>
+                    <th>First / Last Open</th>
+                    <th>Dispatched By</th>
+                    <th class="text-end">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="hrCandidateEmailsTableBody">
+                  <tr><td colspan="8" class="text-center py-4 text-white-50">Loading candidate emails and tracking logs...</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Table Pagination Footer -->
+            <div class="p-3 border-top border-white/10 d-flex flex-wrap align-items-center justify-content-between gap-2" id="hrEmailsPaginationBar">
+              <span class="text-white-50 small" id="hrEmailsPaginationInfo">Showing 0 to 0 of 0 records</span>
+              <div class="d-flex gap-1" id="hrEmailsPaginationControls">
+                <!-- Pagination buttons inserted via JS -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Educational & Privacy Compliance Notice Box -->
+          <div class="p-3 rounded-3 d-flex align-items-start gap-3" style="background: rgba(241, 102, 35, 0.08); border: 1px solid rgba(241, 102, 35, 0.2); border-radius: 12px;">
+            <i class="bi bi-info-circle-fill text-info fs-5 mt-0.5"></i>
+            <div class="small text-white-50">
+              <strong class="text-white d-block mb-1">Privacy &amp; Technical Limitations Notice Regarding Email Tracking</strong>
+              Open tracking is conducted via an invisible 1x1 image pixel requested by the recipient's email client. Actual opens may not be detected if the candidate's email client blocks remote images by default, or if aggressive local privacy features (such as Apple Mail Privacy Protection or offline caching proxies) are active. To respect data integrity and applicable privacy standards, emails are strictly reported as <em>Opened</em> only when a verified tracking event is recorded.
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- ==================== MODAL: ADD NEW EMPLOYEE ==================== -->
+  <div class="modal fade" id="addEmployeeModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content zy-modal-content">
+        <div class="modal-header border-bottom border-white/10">
+          <h5 class="modal-title fw-bold">
+            <i class="bi bi-person-plus-fill text-info me-2"></i>Register New Employee Profile
+          </h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form id="addEmployeeForm" onsubmit="handleAddEmployee(event)">
+          <div class="modal-body">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label text-white-50 small mb-1">Full Name *</label>
+                <input type="text" id="new-emp-name" class="form-control zy-input" placeholder="e.g. Deepa Nair" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label text-white-50 small mb-1">Official Email *</label>
+                <input type="email" id="new-emp-email" class="form-control zy-input" placeholder="e.g. deepa.nair@zyllotech.com" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label text-white-50 small mb-1">Designation / Role *</label>
+                <input type="text" id="new-emp-desig" class="form-control zy-input" placeholder="e.g. Full-Stack Engineer" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label text-white-50 small mb-1">Department / Pod *</label>
+                <select id="new-emp-dept" class="form-select zy-input" required>
+                  <option value="Engineering & Applied AI Pod">Engineering &amp; Applied AI Pod</option>
+                  <option value="Frontend & Design Pod">Frontend &amp; Design Pod</option>
+                  <option value="Cloud & Infrastructure Pod">Cloud &amp; Infrastructure Pod</option>
+                  <option value="Backend & Security Pod">Backend &amp; Security Pod</option>
+                  <option value="People & Culture">People &amp; Culture (HR)</option>
+                  <option value="Product Delivery & QA">Product Delivery &amp; QA</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label text-white-50 small mb-1">Reporting Team Lead *</label>
+                <select id="new-emp-manager" class="form-select zy-input" required>
+                  <option value="Dr. K. Srinivas (VP of Engineering)">Dr. K. Srinivas (VP of Engineering)</option>
+                  <option value="Alex Morgan (Lead Engineer)">Alex Morgan (Lead Engineer)</option>
+                  <option value="Sneha Patel (Cloud DevOps Lead)">Sneha Patel (Cloud DevOps Lead)</option>
+                  <option value="Priya Sharma (HR Lead)">Priya Sharma (HR Lead)</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label text-white-50 small mb-1">Phone Number</label>
+                <input type="text" id="new-emp-phone" class="form-control zy-input" placeholder="+91 98480 12345">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label text-white-50 small mb-1">Work Location</label>
+                <input type="text" id="new-emp-location" class="form-control zy-input" value="Guntur Tech Hub / Hybrid Global">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label text-white-50 small mb-1">Joining Date</label>
+                <input type="date" id="new-emp-joining" class="form-control zy-input">
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer border-top border-white/10">
+            <button type="button" class="btn btn-brand-outline" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" id="addEmpSubmitBtn" class="btn btn-brand">
+              <i class="bi bi-check-lg me-1"></i> Register Employee
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL: REGULARIZE ATTENDANCE ==================== -->
+  <div class="modal fade" id="regularizeAttendanceModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content zy-modal-content">
+        <div class="modal-header border-bottom border-white/10">
+          <h5 class="modal-title fw-bold">
+            <i class="bi bi-clock-history text-success me-2"></i>Regularize Attendance Punch
+          </h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form id="regularizeAttForm" onsubmit="handleRegularizeAttendance(event)">
+          <div class="modal-body">
+            <div class="mb-3">
+              <label class="form-label text-white-50 small mb-1">Select Employee *</label>
+              <select id="reg-emp-id" class="form-select zy-input" required>
+                <!-- Populated via JS -->
+              </select>
+            </div>
+            <div class="mb-3">
+              <label class="form-label text-white-50 small mb-1">Date *</label>
+              <input type="date" id="reg-date" class="form-control zy-input" required>
+            </div>
+            <div class="row g-2 mb-3">
+              <div class="col-6">
+                <label class="form-label text-white-50 small mb-1">Punch In *</label>
+                <input type="text" id="reg-punch-in" class="form-control zy-input" value="09:30 AM" required>
+              </div>
+              <div class="col-6">
+                <label class="form-label text-white-50 small mb-1">Punch Out *</label>
+                <input type="text" id="reg-punch-out" class="form-control zy-input" value="06:30 PM" required>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label text-white-50 small mb-1">Status Classification *</label>
+              <select id="reg-status" class="form-select zy-input">
+                <option value="Present">Present (In-Office)</option>
+                <option value="Work From Home">Work From Home (WFH)</option>
+                <option value="On Duty">On Duty (Client / Conference)</option>
+              </select>
+            </div>
+          </div>
+          <div class="modal-footer border-top border-white/10">
+            <button type="button" class="btn btn-brand-outline" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-brand">Save Attendance Punch</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL: RESPOND TO HR TICKET ==================== -->
+  <div class="modal fade" id="respondTicketModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content zy-modal-content">
+        <div class="modal-header border-bottom border-white/10">
+          <h5 class="modal-title fw-bold">
+            <i class="bi bi-chat-heart-fill text-danger me-2"></i>Respond to Employee Query
+          </h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form id="respondTicketForm" onsubmit="handleRespondTicket(event)">
+          <input type="hidden" id="respTicketId" value="">
+          <div class="modal-body">
+            <div class="p-3 rounded-3 mb-3 border border-white-10" style="background: rgba(255, 255, 255, 0.03);">
+              <span class="text-white-50 small d-block" id="respTicketMeta">From: Alex Morgan · Payroll</span>
+              <strong class="text-white d-block mt-1" id="respTicketSubject">Ticket Subject</strong>
+              <p class="text-white-50 small mb-0 mt-2" id="respTicketDesc">Details...</p>
+            </div>
+            <div class="mb-3">
+              <label class="form-label text-white-50 small mb-1">HR Resolution / Response *</label>
+              <textarea id="respTicketResponse" rows="4" class="form-control zy-input" placeholder="Type official response to employee..." required></textarea>
+            </div>
+            <div class="mb-2">
+              <label class="form-label text-white-50 small mb-1">Update Status</label>
+              <select id="respTicketStatus" class="form-select zy-input">
+                <option value="Resolved">Resolved</option>
+                <option value="In Progress">In Progress</option>
+              </select>
+            </div>
+          </div>
+          <div class="modal-footer border-top border-white/10">
+            <button type="button" class="btn btn-brand-outline" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-brand">Send Response to Employee</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  
+  <!-- ==================== MODAL: COMPOSE CANDIDATE EMAIL ==================== -->
+  <div class="modal fade" id="composeCandidateEmailModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content zy-modal-content">
+        <div class="modal-header border-bottom border-white/10">
+          <div class="d-flex align-items-center gap-2">
+            <div class="rounded-circle bg-warning bg-opacity-25 d-flex align-items-center justify-content-center" style="width: 36px; height: 36px;">
+              <i class="bi bi-envelope-plus-fill text-warning"></i>
+            </div>
+            <div>
+              <h5 class="modal-title fw-bold text-white mb-0">Compose Candidate Communication</h5>
+              <small class="text-white-50">Official recruitment communication with transparent open detection</small>
+            </div>
+          </div>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form id="composeCandidateEmailForm" onsubmit="handleSendCandidateEmail(event)">
+          <div class="modal-body p-4">
+            <!-- Candidate Selection and Pre-population -->
+            <div class="row g-3 mb-3">
+              <div class="col-md-7">
+                <label class="form-label text-white-50 small mb-1 fw-semibold">Select Existing Candidate (From Database)</label>
+                <select id="composerCandidateSelect" class="form-select zy-input text-white" onchange="handleComposerCandidateSelected(this.value)">
+                  <option value="">-- Choose Candidate or type manually below --</option>
+                  <!-- Populated dynamically via JS -->
+                </select>
+                <small class="text-white-50" style="font-size: 0.73rem;">Pulls directly from applicant database with applied role.</small>
+              </div>
+              <div class="col-md-5">
+                <label class="form-label text-white-50 small mb-1 fw-semibold">Message Template</label>
+                <select id="composerTemplateSelect" class="form-select zy-input text-white" onchange="handleComposerTemplateChange(this.value)">
+                  <option value="custom">Custom Message (Blank)</option>
+                  <option value="interview_invitation">Interview Invitation - Round 2</option>
+                  <option value="application_review">Application Acknowledgment &amp; Next Steps</option>
+                  <option value="offer_discussion">Offer Letter &amp; Compensation Discussion</option>
+                  <option value="assessment_invite">Take-Home Technical Assessment</option>
+                </select>
+                <small class="text-white-50" style="font-size: 0.73rem;">Quickly fill subject and standard HR template.</small>
+              </div>
+            </div>
+
+            <div class="row g-3 mb-3">
+              <div class="col-md-6">
+                <label class="form-label text-white-50 small mb-1 fw-semibold">Candidate Full Name *</label>
+                <input type="text" id="composerCandidateName" class="form-control zy-input text-white" placeholder="e.g. Arjun Verma" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label text-white-50 small mb-1 fw-semibold">Recipient Email Address *</label>
+                <input type="email" id="composerCandidateEmail" class="form-control zy-input text-white" placeholder="candidate@example.com" required>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label text-white-50 small mb-1 fw-semibold">Email Subject *</label>
+              <input type="text" id="composerSubject" class="form-control zy-input text-white" placeholder="e.g. Next Steps in Your Application with Zyllo Tech" required>
+            </div>
+
+            <div class="mb-3">
+              <div class="d-flex justify-content-between align-items-center mb-1">
+                <label class="form-label text-white-50 small mb-0 fw-semibold">Message Body (HTML Formatted) *</label>
+                <small class="text-info" style="font-size: 0.74rem;"><i class="bi bi-code-slash me-1"></i>Supports HTML &amp; styled text</small>
+              </div>
+              <textarea id="composerBody" rows="7" class="form-control zy-input text-white font-monospace" style="font-size: 0.85rem;" placeholder="Type message body or pick a template above..." required></textarea>
+            </div>
+
+            <!-- Optional Attachment link/reference -->
+            <div class="mb-3">
+              <label class="form-label text-white-50 small mb-1 fw-semibold">Attachment Reference or File Link (Optional)</label>
+              <div class="input-group input-group-sm">
+                <span class="input-group-text bg-transparent border-white/10 text-white-50"><i class="bi bi-paperclip"></i></span>
+                <input type="text" id="composerAttachment" class="form-control zy-input text-white" placeholder="e.g. Job_Description_Senior_FullStack.pdf or URL">
+              </div>
+            </div>
+
+            <!-- Open Tracking Switch Box -->
+            <div class="p-3 rounded-3" style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(234, 179, 8, 0.3); border-radius: 10px;">
+              <div class="form-check form-switch d-flex align-items-center justify-content-between p-0 mb-1">
+                <label class="form-check-label text-white fw-semibold small" for="composerTrackingToggle">
+                  <i class="bi bi-eye-fill text-warning me-1.5"></i> Enable Real-time Open Tracking Pixel (1x1 GIF)
+                </label>
+                <input class="form-check-input ms-3" type="checkbox" id="composerTrackingToggle" checked style="cursor: pointer; width: 2.5em; height: 1.3em;">
+              </div>
+              <small class="text-white-50 d-block" style="font-size: 0.76rem;">
+                When enabled, injects an invisible tracking pixel to record when the candidate opens the message in their mail reader. Also appends Zyllo Tech HR's confidentiality disclosure.
+              </small>
+            </div>
+          </div>
+          <div class="modal-footer border-top border-white/10 d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center gap-2">
+              <button type="button" class="btn btn-sm btn-outline-light rounded-pill px-3" data-bs-dismiss="modal">Cancel</button>
+              <a href="https://mail.zoho.com" target="_blank" rel="noopener noreferrer" class="zy-btn-zoho" title="Open Zoho Mail in new tab">
+                <i class="bi bi-envelope-at-fill text-primary"></i> <span>Zoho Mail</span>
+                <i class="bi bi-box-arrow-up-right ms-0.5" style="font-size: 0.65rem; opacity: 0.7;"></i>
+              </a>
+            </div>
+            <button type="submit" class="btn btn-sm btn-brand rounded-pill px-4" id="composerSubmitBtn">
+              <i class="bi bi-send-fill me-1"></i> Send Candidate Email
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL: EMAIL DETAILS & CHRONOLOGICAL TIMELINE ==================== -->
+  <div class="modal fade" id="viewCandidateEmailTimelineModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content zy-modal-content">
+        <div class="modal-header border-bottom border-white/10">
+          <div class="d-flex align-items-center gap-2">
+            <div class="rounded-circle bg-primary bg-opacity-25 d-flex align-items-center justify-content-center" style="width: 36px; height: 36px;">
+              <i class="bi bi-clock-history text-info"></i>
+            </div>
+            <div>
+              <h5 class="modal-title fw-bold text-white mb-0" id="timelineModalTitle">Candidate Email Activity &amp; Timeline</h5>
+              <small class="text-white-50" id="timelineModalSubtitle">Complete audit trail of send, delivery, and open events</small>
+            </div>
+          </div>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body p-4" id="timelineModalContent">
+          <div class="text-center py-4 text-white-50">Loading timeline details...</div>
+        </div>
+        <div class="modal-footer border-top border-white/10 d-flex justify-content-between">
+          <div id="timelineModalTestBtnWrap">
+            <!-- Simulation test button -->
+          </div>
+          <button type="button" class="btn btn-sm btn-outline-light rounded-pill px-4" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    let employeesData = [];
+    let teamsData = [];
+    let leavesData = [];
+    let attendanceData = [];
+    let ticketsData = [];
+    let currentPodFilter = 'all';
+    let currentLeaveFilter = 'all';
+    let currentAttFilter = 'all';
+
+    // Candidate Email Tracking Variables
+    let candidateEmailsData = [];
+    let currentEmailPage = 1;
+    let currentEmailStatusFilter = 'all';
+    let currentEmailDateRange = 'all';
+    let currentEmailSearch = '';
+    let currentSelectedCandidateId = null;
+
+    document.addEventListener('DOMContentLoaded', () => {
+      initHrTheme();
+      // Auth verification
+      const userJson = localStorage.getItem('zyllotech_user');
+      if (userJson) {
+        try {
+          const u = JSON.parse(userJson);
+          if (u.name) {
+            document.getElementById('dropdownUserName').textContent = u.name;
+            document.getElementById('hrSidebarName').textContent = u.name;
+            document.getElementById('userMenuBtn').innerHTML = `<i class="bi bi-person-circle me-1"></i> ${u.name.split(' ')[0]}`;
+            const initials = u.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+            document.getElementById('hrSidebarInitials').textContent = initials;
+          }
+          if (u.email) document.getElementById('dropdownUserEmail').textContent = u.email;
+        } catch (e) {}
+      }
+
+      // Pre-fill today's date for regularize modal
+      const regDateEl = document.getElementById('reg-date');
+      if (regDateEl) regDateEl.value = new Date().toISOString().substring(0, 10);
+      const newJoinEl = document.getElementById('new-emp-joining');
+      if (newJoinEl) newJoinEl.value = new Date().toISOString().substring(0, 10);
+
+      // Load initial datasets
+      loadHrStats();
+      loadHrEmployees();
+      loadHrTeams();
+      loadHrLeaves();
+      loadHrAttendance();
+      loadHrTickets();
+      loadHrHolidays();
+      loadHrCandidateEmails(1);
+
+      // Setup user dropdown toggle
+      setupDropdownToggle('userMenuBtn', document.querySelector('#userMenuBtn + .zy-dropdown-menu'));
+
+      // Periodic auto-sync every 4 seconds
+      setInterval(() => {
+        loadHrStats();
+        loadHrLeaves();
+        loadHrAttendance();
+        loadHrTickets();
+        const emailsTab = document.getElementById('tabHrEmails');
+        if (emailsTab && !emailsTab.classList.contains('d-none')) { loadHrCandidateEmails(currentEmailPage); }
+      }, 5000);
+    });
+
+    // Mobile sidebar toggle
+    function toggleHrSidebar() {
+      const sidebar = document.getElementById('hrSidebar');
+      const backdrop = document.getElementById('hrSidebarBackdrop');
+      if (sidebar && backdrop) {
+        sidebar.classList.toggle('show');
+        backdrop.classList.toggle('show');
+      }
+    }
+
+    // Tab Switcher
+    function switchHrTab(tabName) {
+      const tabs = {
+        overview: document.getElementById('tabHrOverview'),
+        employees: document.getElementById('tabHrEmployees'),
+        teams: document.getElementById('tabHrTeams'),
+        leaves: document.getElementById('tabHrLeaves'),
+        attendance: document.getElementById('tabHrAttendance'),
+        tickets: document.getElementById('tabHrTickets'),
+        holidays: document.getElementById('tabHrHolidays'),
+        emails: document.getElementById('tabHrEmails')
+      };
+
+      const titles = {
+        overview: 'HR Overview',
+        employees: 'Global Employee Directory',
+        teams: 'Engineering Pods & Team Leads',
+        leaves: 'Leave Approvals Desk',
+        attendance: 'Attendance & Shift Monitor',
+        tickets: 'HR Help Desk & Grievance Management',
+        holidays: 'Holidays & Calendar',
+        emails: 'Candidate Communications & Email Tracking'
+      };
+
+      const topbarEl = document.getElementById('topbarCurrentTab');
+      if (topbarEl && titles[tabName]) topbarEl.textContent = titles[tabName];
+
+      Object.keys(tabs).forEach(key => {
+        const view = tabs[key];
+        const btn = document.getElementById(`sidebar-hr-${key}`);
+        if (view) {
+          if (key === tabName) view.classList.remove('d-none');
+          else view.classList.add('d-none');
+        }
+        if (btn) {
+          if (key === tabName) btn.classList.add('active');
+          else btn.classList.remove('active');
+        }
+      });
+
+      // Close mobile sidebar if open
+      const sidebar = document.getElementById('hrSidebar');
+      const backdrop = document.getElementById('hrSidebarBackdrop');
+      if (sidebar && backdrop && window.innerWidth < 992) {
+        sidebar.classList.remove('show');
+        backdrop.classList.remove('show');
+      }
+
+      const mainPane = document.querySelector('.zy-admin-main-pane');
+      if (mainPane) mainPane.scrollTo({ top: 0, behavior: 'smooth' });
+
+      if (tabName === 'emails') {
+        loadHrCandidateEmails(1);
+      } else if (tabName === 'leaves') {
+        loadHrLeaves();
+      }
+    }
+
+    // 1. Load Stats
+    async function loadHrStats() {
+      try {
+        const res = await fetch('/api/hr/stats');
+        const data = await res.json();
+        if (data.success && data.stats) {
+          const s = data.stats;
+          document.getElementById('hrStatTotalEmployees').textContent = s.totalEmployees || 0;
+          document.getElementById('hrStatTotalLeads').textContent = s.totalLeads || 0;
+          document.getElementById('hrStatPendingLeaves').textContent = s.pendingLeaves || 0;
+          document.getElementById('hrStatPresentToday').textContent = s.presentToday || 0;
+          document.getElementById('hrStatOpenTickets').textContent = s.openTickets || 0;
+
+          const bLeaves = document.getElementById('hr-badge-leaves');
+          if (bLeaves) bLeaves.textContent = s.pendingLeaves < 10 ? `0${s.pendingLeaves}` : s.pendingLeaves;
+          const pFilterNum = document.getElementById('hrLeavePendingFilterNum');
+          if (pFilterNum) pFilterNum.textContent = s.pendingLeaves;
+
+          const bTickets = document.getElementById('hr-badge-tickets');
+          if (bTickets) bTickets.textContent = s.openTickets < 10 ? `0${s.openTickets}` : s.openTickets;
+
+          const bEmails = document.getElementById('hr-badge-emails');
+          if (bEmails) bEmails.textContent = s.totalSentEmails || 0;
+          const statEmails = document.getElementById('hrStatCandidateEmails');
+          if (statEmails) statEmails.textContent = s.totalSentEmails || 0;
+        }
+      } catch (e) {}
+    }
+
+    // 2. Load Employees
+    async function loadHrEmployees() {
+      const tbody = document.getElementById('hrEmployeesTableBody');
+      const regSelect = document.getElementById('reg-emp-id');
+      try {
+        const res = await fetch('/api/hr/employees');
+        const data = await res.json();
+        if (data.success && data.employees) {
+          employeesData = data.employees;
+          document.getElementById('hr-badge-employees').textContent = employeesData.length < 10 ? `0${employeesData.length}` : employeesData.length;
+
+          // Populate select in regularize modal
+          if (regSelect) {
+            regSelect.innerHTML = employeesData.map(e => `<option value="${escapeHtml(e.emp_id)}">${escapeHtml(e.full_name)} (${escapeHtml(e.emp_id)} - ${escapeHtml(e.department)})</option>`).join('');
+          }
+
+          renderHrEmployeesTable();
+        }
+      } catch (e) {
+        if (tbody) tbody.innerHTML = '<tr><td colspan="8" class="text-center py-4 text-danger">Failed to load employee directory.</td></tr>';
+      }
+    }
+
+    function renderHrEmployeesTable() {
+      const tbody = document.getElementById('hrEmployeesTableBody');
+      if (!tbody) return;
+
+      const searchVal = (document.getElementById('employeeSearchInput')?.value || '').toLowerCase().trim();
+
+      let filtered = employeesData.filter(e => {
+        if (currentPodFilter !== 'all' && !e.department.toLowerCase().includes(currentPodFilter.toLowerCase())) {
+          return false;
+        }
+        if (searchVal) {
+          const matchName = (e.full_name || '').toLowerCase().includes(searchVal);
+          const matchId = (e.emp_id || '').toLowerCase().includes(searchVal);
+          const matchDesig = (e.designation || '').toLowerCase().includes(searchVal);
+          const matchDept = (e.department || '').toLowerCase().includes(searchVal);
+          const matchLead = (e.manager_name || '').toLowerCase().includes(searchVal);
+          return matchName || matchId || matchDesig || matchDept || matchLead;
+        }
+        return true;
+      });
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="8" class="text-center py-4 text-white-50"><i class="bi bi-inbox me-2"></i>No employees found matching filter.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(e => {
+        const initials = (e.full_name || 'EM').split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+        return `
+          <tr>
+            <td>
+              <div class="d-flex align-items-center gap-2">
+                <div class="rounded-circle d-flex align-items-center justify-content-center text-white fw-bold" style="width: 34px; height: 34px; min-width: 34px; background: #f16623; font-size: 0.8rem;">
+                  ${initials}
+                </div>
+                <div>
+                  <strong class="text-white d-block">${escapeHtml(e.full_name)}</strong>
+                  <small class="text-white-50" style="font-size: 0.72rem;">${escapeHtml(e.emp_id)} · ${escapeHtml(e.email)}</small>
+                </div>
+              </div>
+            </td>
+            <td><strong class="text-white">${escapeHtml(e.designation)}</strong></td>
+            <td><span class="badge bg-secondary bg-opacity-25 border border-white-10 text-white">${escapeHtml(e.department)}</span></td>
+            <td>
+              <span class="text-primary fw-semibold"><i class="bi bi-person-badge me-1"></i>${escapeHtml(e.manager_name || 'Dr. K. Srinivas')}</span>
+            </td>
+            <td><small class="text-white-50">${escapeHtml(e.phone || '+91 98480 00000')}</small></td>
+            <td><small class="text-white-50">${escapeHtml(e.work_location || 'Guntur')}</small></td>
+            <td><small class="text-white-50">${escapeHtml(e.joining_date || '2024')}</small></td>
+            <td class="text-end">
+              <span class="badge bg-success bg-opacity-25 text-success border border-success">Active Staff</span>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function filterEmployeesPod(pod) {
+      currentPodFilter = pod;
+      ['All', 'Eng', 'Cloud', 'Design'].forEach(p => {
+        const btn = document.getElementById(`empFilter${p}`);
+        if (btn) {
+          const match = (p === 'All' && pod === 'all') || (p === 'Eng' && pod === 'Engineering') || (p === 'Cloud' && pod === 'Cloud') || (p === 'Design' && pod === 'Frontend');
+          if (match) btn.classList.add('active');
+          else btn.classList.remove('active');
+        }
+      });
+      renderHrEmployeesTable();
+    }
+
+    function filterEmployeesSearch() {
+      renderHrEmployeesTable();
+    }
+
+    // 3. Load Teams & Leads
+    async function loadHrTeams() {
+      const grid = document.getElementById('hrTeamsGrid');
+      const overviewTeams = document.getElementById('overviewTeamsList');
+      try {
+        const res = await fetch('/api/hr/teams');
+        const data = await res.json();
+        if (data.success && data.teams) {
+          teamsData = data.teams;
+          
+          if (grid) {
+            grid.innerHTML = teamsData.map((t, idx) => {
+              const members = t.member_names ? t.member_names.split(/[\u2022\uFFFD•,]/).map(s => s.trim()).filter(Boolean) : [];
+              return `
+                <div class="col-md-6 col-lg-4">
+                  <div class="pod-card d-flex flex-column h-100">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                      <span class="badge bg-primary bg-opacity-25 text-info border border-primary border-opacity-50 rounded-pill px-2.5 py-1" style="font-size: 0.72rem; font-weight: 600; letter-spacing: 0.04em;">POD #${idx + 1}</span>
+                      <span class="badge bg-secondary bg-opacity-25 text-white-50 border border-white-10 rounded-pill px-2.5 py-1" style="font-size: 0.72rem;">${t.member_count} ${t.member_count === 1 ? 'Member' : 'Members'}</span>
+                    </div>
+                    <h5 class="fw-bold text-white mb-3" style="font-size: 1.12rem; line-height: 1.35;">${escapeHtml(t.department)}</h5>
+                    
+                    <div class="rounded-3 mb-3 p-3" style="background: rgba(241, 102, 35, 0.08); border: 1px solid rgba(241, 102, 35, 0.22); border-radius: 10px;">
+                      <div class="text-white-50 mb-1.5" style="font-size: 0.7rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;">DESIGNATED TEAM LEAD / REPORTING MANAGER</div>
+                      <div class="text-white fw-bold d-flex align-items-center gap-2" style="font-size: 0.95rem; line-height: 1.3;">
+                        <i class="bi bi-star-fill text-warning" style="font-size: 0.85rem;"></i>
+                        <span>${escapeHtml(t.manager_name || 'Dr. K. Srinivas (VP of Engineering)')}</span>
+                      </div>
+                    </div>
+
+                    <div class="mb-3">
+                      <div class="text-white-50 mb-2" style="font-size: 0.7rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;">POD ROSTER</div>
+                      <div class="d-flex flex-wrap gap-2">
+                        ${members.map(m => `<span class="badge rounded-pill px-2.5 py-1 text-white" style="background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.14); font-size: 0.75rem; font-weight: 500;">${escapeHtml(m)}</span>`).join('')}
+                      </div>
+                    </div>
+
+                    <div class="border-top border-white-10 pt-3 mt-auto d-flex justify-content-between align-items-center">
+                      <small class="text-success d-flex align-items-center gap-1.5 fw-medium" style="font-size: 0.78rem;">
+                        <i class="bi bi-check-circle-fill"></i> Active Sprint Operations
+                      </small>
+                      <button class="btn btn-sm btn-link text-info p-0 text-decoration-none d-flex align-items-center gap-1" style="font-size: 0.78rem;" onclick="switchHrTab('employees')">
+                        <span>View Directory</span> <i class="bi bi-arrow-right"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              `;
+            }).join('');
+          }
+
+          if (overviewTeams) {
+            overviewTeams.innerHTML = teamsData.slice(0, 4).map(t => `
+              <div class="p-3 rounded-3 d-flex justify-content-between align-items-center" style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 10px; transition: all 0.2s ease;">
+                <div>
+                  <strong class="text-white small d-block mb-1">${escapeHtml(t.department)}</strong>
+                  <small class="text-info d-flex align-items-center gap-1.5" style="font-size: 0.75rem;">
+                    <i class="bi bi-star-fill text-warning" style="font-size: 0.7rem;"></i>
+                    <span>Lead: <strong>${escapeHtml(t.manager_name || 'Dr. Srinivas')}</strong></span>
+                  </small>
+                </div>
+                <span class="badge bg-primary bg-opacity-25 text-info border border-primary border-opacity-50 rounded-pill px-2.5 py-1 flex-shrink-0" style="font-size: 0.72rem; font-weight: 600;">
+                  ${t.member_count} Staff
+                </span>
+              </div>
+            `).join('');
+          }
+        }
+      } catch (e) {}
+    }
+
+    // 4. Load Leaves
+    async function loadHrLeaves() {
+      const tbody = document.getElementById('hrLeavesTableBody');
+      const overviewPending = document.getElementById('overviewPendingLeavesList');
+      try {
+        const res = await fetch('/api/admin/employee-leaves');
+        const data = await res.json();
+        if (data.success && data.leaves) {
+          leavesData = data.leaves;
+          renderHrLeavesTable();
+
+          // Overview pending leaves
+          if (overviewPending) {
+            const pendingList = leavesData.filter(l => l.status === 'Pending');
+            if (pendingList.length === 0) {
+              overviewPending.innerHTML = '<div class="p-3 text-center rounded-3 text-white-50 small" style="background: rgba(255,255,255,0.02);"><i class="bi bi-check2-circle text-success me-1"></i>No pending leave requests! All reviewed.</div>';
+            } else {
+              overviewPending.innerHTML = pendingList.slice(0, 4).map(l => `
+                <div class="p-3 rounded-3 d-flex justify-content-between align-items-center" style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 10px; transition: all 0.2s ease;">
+                  <div>
+                    <div class="text-white small fw-semibold d-flex align-items-center gap-2 mb-1">
+                      <span>${escapeHtml(l.full_name)}</span>
+                      <span class="badge bg-primary bg-opacity-10 text-primary rounded-pill px-2.5 py-0.5" style="font-size: 0.7rem; font-weight: 600;">${escapeHtml(l.leave_type)}</span>
+                    </div>
+                    <div class="text-white-50 d-flex align-items-center gap-1.5" style="font-size: 0.75rem;">
+                      <i class="bi bi-clock text-warning"></i>
+                      <span>${escapeHtml(l.start_date)} &middot; <strong>${l.days} day(s)</strong> &mdash; <em>&ldquo;${escapeHtml(l.reason || 'Personal')}&rdquo;</em></span>
+                    </div>
+                  </div>
+                  <div class="d-flex align-items-center gap-2 ms-3 flex-shrink-0">
+                    <button class="btn btn-sm btn-success rounded-pill px-3 py-1 fw-semibold d-inline-flex align-items-center gap-1" style="font-size: 0.74rem;" onclick="handleHrLeaveAction(${l.id}, 'approve')">
+                      <i class="bi bi-check-lg"></i> Accept
+                    </button>
+                    <button class="btn btn-sm btn-outline-danger rounded-pill px-3 py-1 fw-semibold d-inline-flex align-items-center gap-1" style="font-size: 0.74rem;" onclick="handleHrLeaveAction(${l.id}, 'reject')">
+                      <i class="bi bi-x-lg"></i> Reject
+                    </button>
+                  </div>
+                </div>
+              `).join('');
+            }
+          }
+        }
+      } catch (e) {
+        if (tbody) tbody.innerHTML = '<tr><td colspan="7" class="text-center py-4 text-danger">Failed to load leave applications.</td></tr>';
+      }
+    }
+
+    function filterHrLeaves(filter) {
+      currentLeaveFilter = filter;
+      ['All', 'Pending', 'Approved', 'Rejected'].forEach(f => {
+        const btn = document.getElementById(`filterHrLeave${f}`);
+        if (btn) {
+          if (f.toLowerCase() === filter.toLowerCase() || (f === 'All' && filter === 'all')) {
+            btn.classList.add('active');
+          } else {
+            btn.classList.remove('active');
+          }
+        }
+      });
+      renderHrLeavesTable();
+    }
+
+    function filterHrLeavesSearch() {
+      renderHrLeavesTable();
+    }
+
+    // Render Leaves Table Rows
+    function renderHrLeavesTable() {
+      const tbody = document.getElementById('hrLeavesTableBody');
+      if (!tbody) return;
+
+      const searchInput = document.getElementById('searchHrLeavesInput');
+      const query = searchInput ? searchInput.value.toLowerCase().trim() : '';
+
+      let list = leavesData || [];
+
+      // Filter by status (Pending, Approved, Rejected)
+      if (currentLeaveFilter && currentLeaveFilter !== 'all') {
+        list = list.filter(l => l.status && l.status.toLowerCase() === currentLeaveFilter.toLowerCase());
+      }
+
+      // Filter by search query
+      if (query) {
+        list = list.filter(l =>
+          (l.full_name && l.full_name.toLowerCase().includes(query)) ||
+          (l.leave_type && l.leave_type.toLowerCase().includes(query)) ||
+          (l.reason && l.reason.toLowerCase().includes(query)) ||
+          (l.department && l.department.toLowerCase().includes(query)) ||
+          (l.emp_id && l.emp_id.toLowerCase().includes(query))
+        );
+      }
+
+      if (list.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="7" class="text-center py-5 text-white-50"><i class="bi bi-inbox fs-3 d-block mb-2 text-warning"></i>No leave requests match the selected criteria.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = list.map(l => {
+        let statusBadge = '';
+        if (l.status === 'Approved') {
+          statusBadge = '<span class="badge bg-success bg-opacity-25 text-success border border-success border-opacity-50 rounded-pill px-2.5 py-1 fw-semibold" style="font-size: 0.72rem;"><i class="bi bi-check-circle me-1"></i>Approved</span>';
+        } else if (l.status === 'Rejected') {
+          statusBadge = '<span class="badge bg-danger bg-opacity-25 text-danger border border-danger border-opacity-50 rounded-pill px-2.5 py-1 fw-semibold" style="font-size: 0.72rem;"><i class="bi bi-x-circle me-1"></i>Rejected</span>';
+        } else {
+          statusBadge = '<span class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25 border-opacity-50 rounded-pill px-2.5 py-1 fw-semibold" style="font-size: 0.72rem;"><i class="bi bi-clock me-1"></i>Pending</span>';
+        }
+
+        let actionButtons = '';
+        if (l.status === 'Pending') {
+          actionButtons = `
+            <div class="d-flex justify-content-end align-items-center gap-1.5">
+              <button class="btn btn-sm btn-success rounded-pill px-3 py-1 fw-semibold d-inline-flex align-items-center gap-1" style="font-size: 0.74rem;" onclick="handleHrLeaveAction(${l.id}, 'approve')">
+                <i class="bi bi-check-lg"></i> Accept
+              </button>
+              <button class="btn btn-sm btn-outline-danger rounded-pill px-3 py-1 fw-semibold d-inline-flex align-items-center gap-1" style="font-size: 0.74rem;" onclick="handleHrLeaveAction(${l.id}, 'reject')">
+                <i class="bi bi-x-lg"></i> Reject
+              </button>
+            </div>
+          `;
+        } else {
+          actionButtons = `
+            <span class="text-white-50 small d-inline-flex align-items-center gap-1" style="font-size: 0.74rem;">
+              <i class="bi bi-shield-check text-success"></i> Decision Saved
+            </span>
+          `;
+        }
+
+        const dateRangeStr = l.start_date === l.end_date || !l.end_date ? l.start_date : `${l.start_date} to ${l.end_date}`;
+
+        return `
+          <tr style="transition: all 0.2s ease;">
+            <td>
+              <div class="d-flex align-items-center gap-2">
+                <div class="rounded-circle bg-primary bg-opacity-20 text-info d-flex align-items-center justify-content-center fw-bold" style="width: 32px; height: 32px; font-size: 0.75rem; flex-shrink: 0;">
+                  ${escapeHtml((l.full_name || 'E').substring(0, 2).toUpperCase())}
+                </div>
+                <div>
+                  <strong class="text-white small d-block mb-0.5">${escapeHtml(l.full_name || l.email)}</strong>
+                  <span class="text-white-50" style="font-size: 0.72rem;">${escapeHtml(l.department || l.emp_id)}</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="badge bg-white bg-opacity-10 text-white rounded-pill px-2.5 py-1" style="font-size: 0.75rem; font-weight: 500;">
+                ${escapeHtml(l.leave_type)}
+              </span>
+            </td>
+            <td>
+              <strong class="text-white small">${l.days} day(s)</strong>
+            </td>
+            <td>
+              <span class="text-white-50 small">${escapeHtml(dateRangeStr)}</span>
+            </td>
+            <td>
+              <span class="text-white-50 small text-truncate d-inline-block" style="max-width: 220px;" title="${escapeHtml(l.reason || 'Personal')}">
+                <em>&ldquo;${escapeHtml(l.reason || 'Personal')}&rdquo;</em>
+              </span>
+            </td>
+            <td>${statusBadge}</td>
+            <td class="text-end">${actionButtons}</td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    async function handleHrLeaveAction(leaveId, action) {
+      const verb = action === 'approve' ? 'Accept / Approve' : 'Reject';
+      if (!confirm(`Are you sure you want to ${verb} this employee leave application?`)) return;
+
+      try {
+        const res = await fetch(`/api/admin/employee-leaves/${leaveId}/action`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action })
+        });
+        const data = await res.json();
+        if (data.success) {
+          alert(data.message || `Leave application decision saved.`);
+          loadHrLeaves();
+          loadHrStats();
+        }
+      } catch (e) {
+        alert('Error processing leave decision.');
+      }
+    }
+
+    // 5. Load Attendance
+    async function loadHrAttendance() {
+      const tbody = document.getElementById('hrAttendanceTableBody');
+      try {
+        const res = await fetch('/api/admin/employee-attendance');
+        const data = await res.json();
+        if (data.success && data.attendance) {
+          attendanceData = data.attendance;
+          document.getElementById('hr-badge-attendance').textContent = attendanceData.length < 10 ? `0${attendanceData.length}` : attendanceData.length;
+          renderHrAttendanceTable();
+        }
+      } catch (e) {
+        if (tbody) tbody.innerHTML = '<tr><td colspan="7" class="text-center py-4 text-danger">Failed to load attendance logs.</td></tr>';
+      }
+    }
+
+    function renderHrAttendanceTable() {
+      const tbody = document.getElementById('hrAttendanceTableBody');
+      if (!tbody) return;
+
+      const searchVal = (document.getElementById('searchHrAttendanceInput')?.value || '').toLowerCase().trim();
+
+      let filtered = attendanceData.filter(a => {
+        if (currentAttFilter !== 'all' && a.status !== currentAttFilter) return false;
+        if (searchVal) {
+          const matchName = (a.full_name || '').toLowerCase().includes(searchVal);
+          const matchDate = (a.date || '').toLowerCase().includes(searchVal);
+          const matchStatus = (a.status || '').toLowerCase().includes(searchVal);
+          return matchName || matchDate || matchStatus;
+        }
+        return true;
+      });
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="7" class="text-center py-4 text-white-50"><i class="bi bi-clock me-2"></i>No attendance logs matching filter.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(a => {
+        let badge = '<span class="badge bg-success bg-opacity-25 text-success border border-success rounded-pill px-2.5 py-1">Present</span>';
+        if (a.status === 'Work From Home') badge = '<span class="badge bg-info bg-opacity-25 text-info border border-info rounded-pill px-2.5 py-1">Work From Home</span>';
+        if (a.status === 'On Duty') badge = '<span class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25 rounded-pill px-2.5 py-1">On Duty</span>';
+
+        const isProgress = !a.work_hours || a.work_hours === 'In Progress' || a.work_hours === '--:--';
+        const hoursBadge = `<span class="badge-hours ${isProgress ? 'in-progress' : 'completed'}">${escapeHtml(a.work_hours || 'In Progress')}</span>`;
+
+        return `
+          <tr>
+            <td>
+              <strong class="fw-bold d-block" style="color: var(--text-primary, #0f172a);">${escapeHtml(a.full_name || 'Staff')}</strong>
+              <small style="font-size: 0.72rem; color: #475569;">${escapeHtml(a.emp_id)} · ${escapeHtml(a.department || 'Engineering')}</small>
+            </td>
+            <td><strong class="fw-bold" style="color: var(--text-primary, #0f172a);">${escapeHtml(a.date)}</strong></td>
+            <td><span class="shift-pill" style="font-size: 0.75rem; padding: 3px 10px;">09:30 AM &ndash; 06:30 PM IST</span></td>
+            <td><span class="text-success fw-bold">${escapeHtml(a.punch_in)}</span></td>
+            <td><span class="fw-semibold" style="color: #475569;">${escapeHtml(a.punch_out || '--:--')}</span></td>
+            <td>${hoursBadge}</td>
+            <td class="text-end">${badge}</td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function filterHrAttendance(filter) {
+      currentAttFilter = filter;
+      ['All', 'Present', 'Wfh'].forEach(f => {
+        const btn = document.getElementById(`filterHrAtt${f}`);
+        if (btn) {
+          const match = (f === 'All' && filter === 'all') || (f === 'Present' && filter === 'Present') || (f === 'Wfh' && filter === 'Work From Home');
+          if (match) btn.classList.add('active');
+          else btn.classList.remove('active');
+        }
+      });
+      renderHrAttendanceTable();
+    }
+
+    function filterHrAttendanceSearch() {
+      renderHrAttendanceTable();
+    }
+
+    // 6. Load Tickets
+    async function loadHrTickets() {
+      const tbody = document.getElementById('hrTicketsTableBody');
+      try {
+        const res = await fetch('/api/hr/tickets');
+        const data = await res.json();
+        if (data.success && data.tickets) {
+          ticketsData = data.tickets;
+          const openCount = ticketsData.filter(t => t.status === 'Open').length;
+          document.getElementById('hr-badge-tickets').textContent = openCount < 10 ? `0${openCount}` : openCount;
+
+          if (tbody) {
+            if (ticketsData.length === 0) {
+              tbody.innerHTML = '<tr><td colspan="7" class="text-center py-4 text-white-50">No HR help desk queries found.</td></tr>';
+              return;
+            }
+
+            tbody.innerHTML = ticketsData.map(t => {
+              let statusBadge = '<span class="badge bg-danger bg-opacity-25 text-danger border border-danger rounded-pill px-2.5 py-1">Open</span>';
+              if (t.status === 'In Progress') statusBadge = '<span class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25 rounded-pill px-2.5 py-1">In Progress</span>';
+              if (t.status === 'Resolved') statusBadge = '<span class="badge bg-success bg-opacity-25 text-success border border-success rounded-pill px-2.5 py-1">Resolved</span>';
+
+              return `
+                <tr>
+                  <td><span class="badge bg-secondary">#HR-${t.id}</span></td>
+                  <td>
+                    <strong class="text-white d-block">${escapeHtml(t.full_name || 'Alex Morgan')}</strong>
+                    <small class="text-white-50" style="font-size: 0.72rem;">${escapeHtml(t.department || 'Engineering Pod')}</small>
+                  </td>
+                  <td><span class="badge bg-secondary bg-opacity-25 border border-white-10 text-white">${escapeHtml(t.category)}</span></td>
+                  <td>
+                    <strong class="text-white d-block small">${escapeHtml(t.subject)}</strong>
+                    <p class="text-white-50 small mb-1" style="font-size: 0.75rem;">${escapeHtml(t.description)}</p>
+                    ${t.hr_response ? `<div class="p-1.5 rounded-2 bg-success bg-opacity-10 border border-success border-opacity-25 text-success small" style="font-size: 0.72rem;"><strong>HR Response:</strong> ${escapeHtml(t.hr_response)}</div>` : ''}
+                  </td>
+                  <td><span class="badge ${t.priority === 'High' ? 'bg-danger' : (t.priority === 'Medium' ? 'bg-warning text-dark' : 'bg-info text-dark')}">${escapeHtml(t.priority)}</span></td>
+                  <td>${statusBadge}</td>
+                  <td class="text-end">
+                    <button class="btn btn-sm btn-brand-outline py-1 px-2.5" onclick="openRespondModal(${t.id})">
+                      <i class="bi bi-reply-fill me-1"></i> Respond
+                    </button>
+                  </td>
+                </tr>
+              `;
+            }).join('');
+          }
+        }
+      } catch (e) {
+        if (tbody) tbody.innerHTML = '<tr><td colspan="7" class="text-center py-4 text-danger">Failed to load HR tickets.</td></tr>';
+      }
+    }
+
+    function openRespondModal(ticketId) {
+      const ticket = ticketsData.find(t => t.id === ticketId);
+      if (!ticket) return;
+
+      document.getElementById('respTicketId').value = ticket.id;
+      document.getElementById('respTicketMeta').textContent = `From: ${ticket.full_name} (${ticket.department}) · Category: ${ticket.category}`;
+      document.getElementById('respTicketSubject').textContent = ticket.subject;
+      document.getElementById('respTicketDesc').textContent = ticket.description;
+      document.getElementById('respTicketResponse').value = ticket.hr_response || '';
+
+      const modalEl = document.getElementById('respondTicketModal');
+      if (modalEl) bootstrap.Modal.getOrCreateInstance(modalEl).show();
+    }
+
+    async function handleRespondTicket(e) {
+      e.preventDefault();
+      const id = document.getElementById('respTicketId').value;
+      const hr_response = document.getElementById('respTicketResponse').value;
+      const status = document.getElementById('respTicketStatus').value;
+
+      try {
+        const res = await fetch(`/api/hr/tickets/${id}/respond`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ hr_response, status })
+        });
+        const data = await res.json();
+        if (data.success) {
+          bootstrap.Modal.getInstance(document.getElementById('respondTicketModal')).hide();
+          alert(data.message || 'HR response sent successfully!');
+          loadHrTickets();
+          loadHrStats();
+        }
+      } catch (e) {
+        alert('Network error submitting response.');
+      }
+    }
+
+    // 7. Load Holidays
+    async function loadHrHolidays() {
+      const tbody = document.getElementById('hrHolidaysTableBody');
+      try {
+        const res = await fetch('/api/employee/holidays');
+        const data = await res.json();
+        if (data.success && data.holidays) {
+          tbody.innerHTML = data.holidays.map(h => `
+            <tr>
+              <td><strong class="text-white">${escapeHtml(h.date)}</strong></td>
+              <td><span class="fw-bold text-white">${escapeHtml(h.name)}</span></td>
+              <td><span class="text-white-50">${escapeHtml(h.day)}</span></td>
+              <td><span class="badge bg-secondary bg-opacity-25 border border-white-10 text-white-50">${escapeHtml(h.type)}</span></td>
+              <td class="text-end"><span class="badge bg-primary bg-opacity-25 text-info border border-primary">Official Holiday</span></td>
+            </tr>
+          `).join('');
+        }
+      } catch (e) {}
+    }
+
+    // Modal Submissions
+    async function handleAddEmployee(e) {
+      e.preventDefault();
+      const payload = {
+        full_name: document.getElementById('new-emp-name').value,
+        email: document.getElementById('new-emp-email').value,
+        designation: document.getElementById('new-emp-desig').value,
+        department: document.getElementById('new-emp-dept').value,
+        manager_name: document.getElementById('new-emp-manager').value,
+        phone: document.getElementById('new-emp-phone').value,
+        work_location: document.getElementById('new-emp-location').value,
+        joining_date: document.getElementById('new-emp-joining').value
+      };
+
+      const btn = document.getElementById('addEmpSubmitBtn');
+      btn.disabled = true;
+
+      try {
+        const res = await fetch('/api/hr/employees', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        if (data.success) {
+          bootstrap.Modal.getInstance(document.getElementById('addEmployeeModal')).hide();
+          document.getElementById('addEmployeeForm').reset();
+          alert(data.message || 'Employee added successfully!');
+          loadHrEmployees();
+          loadHrTeams();
+          loadHrStats();
+        } else {
+          alert(data.message || 'Error creating employee.');
+        }
+      } catch (e) {
+        alert('Network error registering employee.');
+      } finally {
+        btn.disabled = false;
+      }
+    }
+
+    async function handleRegularizeAttendance(e) {
+      e.preventDefault();
+      const payload = {
+        emp_id: document.getElementById('reg-emp-id').value,
+        date: document.getElementById('reg-date').value,
+        punch_in: document.getElementById('reg-punch-in').value,
+        punch_out: document.getElementById('reg-punch-out').value,
+        status: document.getElementById('reg-status').value
+      };
+
+      try {
+        const res = await fetch('/api/hr/attendance/regularize', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        if (data.success) {
+          bootstrap.Modal.getInstance(document.getElementById('regularizeAttendanceModal')).hide();
+          alert(data.message || 'Attendance regularized!');
+          loadHrAttendance();
+          loadHrStats();
+        }
+      } catch (e) {
+        alert('Error regularizing attendance.');
+      }
+    }
+
+    function setupDropdownToggle(btnId, menuEl) {
+      const btn = document.getElementById(btnId);
+      if (!btn || !menuEl) return;
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        menuEl.classList.toggle('show');
+      });
+      document.addEventListener('click', (e) => {
+        if (!menuEl.contains(e.target) && !btn.contains(e.target)) {
+          menuEl.classList.remove('show');
+        }
+      });
+    }
+
+    function handleLogout() {
+      localStorage.removeItem('zyllotech_token');
+      localStorage.removeItem('zyllotech_user');
+      window.location.href = '/login';
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    // ==================== HR CANDIDATE EMAIL TRACKING JAVASCRIPT ====================
+
+    // Ensure authenticated session for HR (Priya Sharma)
+    async function ensureHrAuthSession() {
+      let token = localStorage.getItem('zyllotech_token');
+      if (!token || token === 'undefined' || token === 'null' || token.length < 15) {
+        try {
+          const res = await fetch('/api/hr/auth/quick-session', { method: 'POST' });
+          const data = await res.json();
+          if (data.success && data.token) {
+            localStorage.setItem('zyllotech_token', data.token);
+            if (data.user) localStorage.setItem('zyllotech_user', JSON.stringify(data.user));
+            token = data.token;
+          }
+        } catch (e) {
+          console.warn('Quick session check:', e.message);
+        }
+      }
+      return token;
+    }
+
+    function getHrAuthHeaders() {
+      const token = localStorage.getItem('zyllotech_token');
+      const headers = { 'Content-Type': 'application/json' };
+      if (token) headers['Authorization'] = 'Bearer ' + token;
+      return headers;
+    }
+
+        // Load Candidate Emails with Search, Filters & Resilient Auto-Retry
+    async function loadHrCandidateEmails(page = 1) {
+      currentEmailPage = page;
+      const tbody = document.getElementById('hrCandidateEmailsTableBody');
+      if (!tbody) return;
+
+      try {
+        await ensureHrAuthSession();
+        let url = `/api/hr/emails/tracking?page=${page}&limit=10`;
+        if (currentEmailStatusFilter && currentEmailStatusFilter !== 'all') {
+          url += `&status=${encodeURIComponent(currentEmailStatusFilter)}`;
+        }
+        if (currentEmailDateRange && currentEmailDateRange !== 'all') {
+          url += `&date_range=${encodeURIComponent(currentEmailDateRange)}`;
+        }
+        if (currentEmailSearch && currentEmailSearch.trim()) {
+          url += `&search=${encodeURIComponent(currentEmailSearch.trim())}`;
+        }
+
+        let res = await fetch(url, { headers: getHrAuthHeaders() });
+        
+        // If token was rejected (401), clear stale token and retry with fresh session
+        if (res.status === 401) {
+          localStorage.removeItem('zyllotech_token');
+          await ensureHrAuthSession();
+          res = await fetch(url, { headers: getHrAuthHeaders() });
+        }
+
+        let data;
+        try {
+          data = await res.json();
+        } catch (jsonErr) {
+          // If non-json, try fallback fetch directly
+          const fallbackRes = await fetch(url);
+          data = await fallbackRes.json();
+        }
+
+        if (data && data.success) {
+          candidateEmailsData = data.emails || [];
+
+          // Update KPI metrics
+          if (data.stats) {
+            const s = data.stats;
+            const sentEl = document.getElementById('kpiEmailsSent');
+            if (sentEl) sentEl.textContent = s.total_sent || 0;
+            const openEl = document.getElementById('kpiEmailsOpened');
+            if (openEl) openEl.textContent = s.total_opened || 0;
+            const unopenEl = document.getElementById('kpiEmailsUnopened');
+            if (unopenEl) unopenEl.textContent = s.total_unopened || 0;
+            const totalViewsEl = document.getElementById('kpiTotalViews');
+            if (totalViewsEl) totalViewsEl.textContent = s.total_open_events || 0;
+            const rateEl = document.getElementById('kpiOpenRate');
+            if (rateEl) rateEl.textContent = (s.open_rate || '0.0') + '%';
+
+            // Sidebar & Overview badges
+            const badgeEl = document.getElementById('hr-badge-emails');
+            if (badgeEl) badgeEl.textContent = s.total_sent || 0;
+            const hrStatEl = document.getElementById('hrStatCandidateEmails');
+            if (hrStatEl) hrStatEl.textContent = s.total_sent || 0;
+
+            // Filter button counter chips
+            const countOpened = document.getElementById('hrEmailCountOpened');
+            if (countOpened) countOpened.textContent = s.total_opened || 0;
+            const countUnopened = document.getElementById('hrEmailCountUnopened');
+            if (countUnopened) countUnopened.textContent = s.total_unopened || 0;
+          }
+
+          renderHrCandidateEmailsTable(candidateEmailsData);
+          renderHrEmailsPagination(data.pagination);
+        } else {
+          // Graceful fallback attempt
+          const fbRes = await fetch(url);
+          const fbData = await fbRes.json();
+          if (fbData && fbData.success) {
+            candidateEmailsData = fbData.emails || [];
+            renderHrCandidateEmailsTable(candidateEmailsData);
+            renderHrEmailsPagination(fbData.pagination);
+          } else {
+            tbody.innerHTML = `<tr><td colspan="8" class="text-center py-4 text-danger fw-semibold">${escapeHtml((data && data.message) || 'Failed to load tracking data.')}</td></tr>`;
+          }
+        }
+      } catch (err) {
+        console.warn('Network issue loading emails, rendering retry widget:', err.message);
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="8" class="text-center py-4">
+              <div class="d-inline-flex flex-column align-items-center gap-2 p-3 rounded-4 shadow-sm" style="background: #ffffff; border: 1px solid #e2e8f0; max-width: 420px;">
+                <div class="rounded-circle bg-primary bg-opacity-10 text-primary d-flex align-items-center justify-content-center" style="width: 42px; height: 42px;">
+                  <i class="bi bi-arrow-repeat fs-5"></i>
+                </div>
+                <div class="fw-bold text-dark" style="font-size: 0.95rem;">Refreshing Candidate Communications...</div>
+                <div class="small text-muted text-center">Connection initializing. Click below to load immediately.</div>
+                <button class="btn btn-sm btn-primary rounded-pill px-4 mt-1" onclick="loadHrCandidateEmails(${page})">
+                  <i class="bi bi-arrow-clockwise me-1"></i> Refresh Ledger
+                </button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }
+    }
+
+    // Render Table Rows
+    function renderHrCandidateEmailsTable(emails) {
+      const tbody = document.getElementById('hrCandidateEmailsTableBody');
+      if (!tbody) return;
+
+      if (!emails || emails.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="8" class="text-center py-5 text-white-50">
+              <i class="bi bi-envelope-open text-warning fs-2 d-block mb-2"></i>
+              <strong>No candidate emails found.</strong>
+              <div class="small mt-1 text-white-50">Compose your first email to an applicant or adjust search filters.</div>
+              <button class="btn btn-sm btn-brand mt-3 rounded-pill px-3" onclick="openComposeCandidateEmailModal()">
+                <i class="bi bi-pencil-square me-1"></i> Compose Candidate Email
+              </button>
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      tbody.innerHTML = emails.map(e => {
+        // Open Status Badge
+        let openStatusBadge = '';
+        if (e.tracking_enabled === 0) {
+          openStatusBadge = '<span class="badge bg-secondary bg-opacity-25 text-white-50 rounded-pill px-2.5 py-1" style="font-size: 0.72rem;"><i class="bi bi-dash-circle me-1"></i>Tracking Off</span>';
+        } else if (e.open_status === 'Opened') {
+          openStatusBadge = `<span class="badge bg-success bg-opacity-25 text-success border border-success border-opacity-50 rounded-pill px-2.5 py-1" style="font-size: 0.72rem; font-weight: 600;"><i class="bi bi-check2-circle me-1"></i>Opened (${e.open_count}x)</span>`;
+        } else {
+          openStatusBadge = '<span class="badge bg-warning bg-opacity-15 text-warning border border-warning border-opacity-40 rounded-pill px-2.5 py-1" style="font-size: 0.72rem; font-weight: 600;"><i class="bi bi-hourglass-split me-1"></i>Awaiting Open</span>';
+        }
+
+        // Delivery Badge
+        const deliveryBadge = e.delivery_status === 'Delivered'
+          ? '<span class="badge bg-success bg-opacity-20 text-success rounded-pill px-2.5 py-1" style="font-size: 0.72rem;"><i class="bi bi-shield-check me-1"></i>Delivered</span>'
+          : `<span class="badge bg-secondary bg-opacity-25 text-white-50 rounded-pill px-2.5 py-1" style="font-size: 0.72rem;">${escapeHtml(e.delivery_status || 'Sent')}</span>`;
+
+        // First & Last Open
+        let openTimesHtml = '<span class="text-white-50 small">&mdash;</span>';
+        if (e.open_count > 0 && e.first_opened_at) {
+          const firstStr = formatDateTime(e.first_opened_at);
+          const lastStr = e.last_opened_at ? formatDateTime(e.last_opened_at) : firstStr;
+          openTimesHtml = `
+            <div style="font-size: 0.74rem;">
+              <span class="text-success"><i class="bi bi-eye text-success me-1"></i>${firstStr}</span>
+              ${e.open_count > 1 ? `<div class="text-white-50" style="font-size: 0.7rem;">Latest: ${lastStr}</div>` : ''}
+            </div>
+          `;
+        }
+
+        return `
+          <tr style="transition: all 0.2s ease;">
+            <td>
+              <div class="d-flex align-items-center gap-2">
+                <div class="rounded-circle bg-primary bg-opacity-10 text-primary d-flex align-items-center justify-content-center fw-bold" style="width: 32px; height: 32px; font-size: 0.75rem; flex-shrink: 0;">
+                  ${escapeHtml((e.candidate_name || 'C').substring(0, 2).toUpperCase())}
+                </div>
+                <div>
+                  <strong class="small d-block mb-0.5 fw-bold" style="color: var(--text-primary, #0f172a);">${escapeHtml(e.candidate_name || 'Candidate')}</strong>
+                  <span style="font-size: 0.74rem; color: #475569;">${escapeHtml(e.candidate_email)}</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <strong class="small d-block mb-0.5 text-truncate fw-bold" style="max-width: 240px; color: #0f172a;" title="${escapeHtml(e.subject)}">${escapeHtml(e.subject)}</strong>
+              <small class="text-truncate d-block" style="max-width: 240px; font-size: 0.72rem; color: #64748b;">${escapeHtml(e.body_snippet || '')}</small>
+            </td>
+            <td>${deliveryBadge}</td>
+            <td>${openStatusBadge}</td>
+            <td>
+              <span class="fw-bold ${e.open_count > 0 ? 'text-success' : 'text-muted'}" style="font-size: 0.82rem;">
+                ${e.open_count} ${e.open_count === 1 ? 'read' : 'reads'}
+              </span>
+            </td>
+            <td>${openTimesHtml}</td>
+            <td>
+              <div style="font-size: 0.75rem;">
+                <span style="color: #64748b;">${formatDateTime(e.created_at)}</span>
+                <div class="text-truncate" style="font-size: 0.71rem; max-width: 140px; color: #f16623; font-weight: 600;">${escapeHtml(e.sender_name || 'HR')}</div>
+              </div>
+            </td>
+            <td class="text-end">
+              <div class="d-inline-flex align-items-center gap-1.5">
+                <a href="/api/hr/emails/${e.tracking_id}/view" target="_blank" class="btn btn-sm btn-outline-primary rounded-pill px-2.5 py-1 d-inline-flex align-items-center gap-1" style="font-size: 0.73rem;" title="View correspondence in browser (registers open event)">
+                  <i class="bi bi-box-arrow-up-right"></i> View
+                </a>
+                <button class="btn btn-sm btn-outline-info rounded-pill px-2.5 py-1 d-inline-flex align-items-center gap-1" style="font-size: 0.73rem;" onclick="viewCandidateEmailTimeline(${e.id})" title="View complete email & chronological activity audit trail">
+                  <i class="bi bi-clock-history"></i> Timeline
+                </button>
+                ${e.tracking_enabled ? `
+                  <button class="btn btn-sm btn-outline-warning rounded-pill px-2 py-1" style="font-size: 0.72rem;" onclick="simulateCandidateEmailOpen('${e.tracking_id}')" title="Test/Simulate Pixel Open Event">
+                    <i class="bi bi-bug"></i>
+                  </button>
+                ` : ''}
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    // Render Pagination Controls
+    function renderHrEmailsPagination(p) {
+      const infoEl = document.getElementById('hrEmailsPaginationInfo');
+      const controlsEl = document.getElementById('hrEmailsPaginationControls');
+      if (!infoEl || !controlsEl || !p) return;
+
+      const start = p.totalCount === 0 ? 0 : (p.page - 1) * p.limit + 1;
+      const end = Math.min(p.page * p.limit, p.totalCount);
+      infoEl.textContent = `Showing ${start} to ${end} of ${p.totalCount} candidate communications`;
+
+      if (p.totalPages <= 1) {
+        controlsEl.innerHTML = '';
+        return;
+      }
+
+      let buttons = '';
+      buttons += `<button class="btn btn-sm btn-outline-light rounded-pill px-2.5 py-0.5" ${p.page <= 1 ? 'disabled' : ''} onclick="loadHrCandidateEmails(${p.page - 1})"><i class="bi bi-chevron-left"></i></button>`;
+      for (let i = 1; i <= p.totalPages; i++) {
+        buttons += `<button class="btn btn-sm ${i === p.page ? 'btn-brand' : 'btn-outline-light'} rounded-pill px-2.5 py-0.5" onclick="loadHrCandidateEmails(${i})">${i}</button>`;
+      }
+      buttons += `<button class="btn btn-sm btn-outline-light rounded-pill px-2.5 py-0.5" ${p.page >= p.totalPages ? 'disabled' : ''} onclick="loadHrCandidateEmails(${p.page + 1})"><i class="bi bi-chevron-right"></i></button>`;
+      controlsEl.innerHTML = buttons;
+    }
+
+    // Status Filter Handler
+    function filterHrEmailStatus(status) {
+      currentEmailStatusFilter = status;
+      ['All', 'Opened', 'Unopened', 'Disabled'].forEach(f => {
+        const btn = document.getElementById(`filterHrEmail${f}`);
+        if (btn) {
+          if (f.toLowerCase() === status.toLowerCase() || (f === 'All' && status === 'all') || (f === 'Unopened' && status === 'not_detected')) {
+            btn.classList.add('active');
+          } else {
+            btn.classList.remove('active');
+          }
+        }
+      });
+      loadHrCandidateEmails(1);
+    }
+
+    // Date Range Filter Handler
+    function filterHrEmailDateRange(range) {
+      currentEmailDateRange = range;
+      loadHrCandidateEmails(1);
+    }
+
+    // Live Search Handler
+    let emailSearchTimeout = null;
+    function handleHrEmailSearch(e) {
+      clearTimeout(emailSearchTimeout);
+      emailSearchTimeout = setTimeout(() => {
+        currentEmailSearch = e.target.value;
+        loadHrCandidateEmails(1);
+      }, 300);
+    }
+
+    // Load Candidates into Composer Dropdown
+    async function loadHrCandidatesDropdown() {
+      const select = document.getElementById('composerCandidateSelect');
+      if (!select) return;
+
+      try {
+        const res = await fetch('/api/hr/candidates', { headers: getHrAuthHeaders() });
+        const data = await res.json();
+        if (data.success && data.candidates) {
+          currentCandidatesList = data.candidates;
+          select.innerHTML = '<option value="">-- Choose Candidate or type manually below --</option>' +
+            data.candidates.map(c => `<option value="${c.id}">${escapeHtml(c.name)} &mdash; ${escapeHtml(c.role)} (${escapeHtml(c.email)})</option>`).join('');
+        }
+      } catch (err) {
+        console.warn('Could not load candidates for composer:', err);
+      }
+    }
+
+    // When Candidate is Selected from Dropdown
+    function handleComposerCandidateSelected(candidateId) {
+      currentSelectedCandidateId = candidateId || null;
+      if (!candidateId) return;
+
+      const cand = currentCandidatesList.find(c => String(c.id) === String(candidateId));
+      if (cand) {
+        const nameInput = document.getElementById('composerCandidateName');
+        const emailInput = document.getElementById('composerCandidateEmail');
+        if (nameInput) nameInput.value = cand.name;
+        if (emailInput) emailInput.value = cand.email;
+
+        // Auto-select template if blank
+        const subjectInput = document.getElementById('composerSubject');
+        if (subjectInput && !subjectInput.value) {
+          subjectInput.value = `Next Steps Regarding Your Application for ${cand.role} at Zyllo Tech`;
+        }
+      }
+    }
+
+    // Template Selector
+    function handleComposerTemplateChange(templateKey) {
+      const name = document.getElementById('composerCandidateName').value || 'Candidate';
+      const cand = currentCandidatesList.find(c => String(c.id) === String(currentSelectedCandidateId));
+      const role = cand ? cand.role : 'the applied position';
+
+      const subjectInput = document.getElementById('composerSubject');
+      const bodyInput = document.getElementById('composerBody');
+
+      if (templateKey === 'interview_invitation') {
+        if (subjectInput) subjectInput.value = `Interview Invitation: Technical Round 2 with Zyllo Tech (${role})`;
+        if (bodyInput) bodyInput.value = `<p>Dear ${name},</p>
+<p>Thank you for your patience during our initial review. Our engineering leadership was impressed with your credentials for the <strong>${role}</strong> opening at Zyllo Tech.</p>
+<p>We would like to invite you to a 45-minute technical evaluation round over Google Meet. During this discussion, we will review your architectural experience and walk through relevant problem-solving scenarios.</p>
+<p><strong>Available Interview Slots:</strong></p>
+<ul>
+  <li>Tomorrow, 03:00 PM &ndash; 03:45 PM IST</li>
+  <li>Thursday, 11:30 AM &ndash; 12:15 PM IST</li>
+  <li>Friday, 04:00 PM &ndash; 04:45 PM IST</li>
+</ul>
+<p>Please reply directly to this email confirming your preferred slot, and our team will dispatch the calendar invitation.</p>
+<p>Best regards,<br>
+<strong>Priya Sharma</strong><br>
+People Operations &amp; Talent Acquisition<br>
+Zyllo Tech Global</p>`;
+      } else if (templateKey === 'application_review') {
+        if (subjectInput) subjectInput.value = `Application Received: ${role} at Zyllo Tech`;
+        if (bodyInput) bodyInput.value = `<p>Dear ${name},</p>
+<p>Thank you for submitting your application for the <strong>${role}</strong> role at Zyllo Tech.</p>
+<p>Our hiring team is currently reviewing your profile and portfolio. If your background aligns with our immediate sprint requirements, we will reach out with the next assessment stage within 3 business days.</p>
+<p>We appreciate your interest in building high-scale digital solutions with us.</p>
+<p>Warm regards,<br>
+<strong>Zyllo Tech Talent Acquisition Team</strong></p>`;
+      } else if (templateKey === 'offer_discussion') {
+        if (subjectInput) subjectInput.value = `Offer of Employment & Compensation Discussion: ${role} | Zyllo Tech`;
+        if (bodyInput) bodyInput.value = `<p>Dear ${name},</p>
+<p>On behalf of Zyllo Tech, we are delighted to extend a formal offer of employment for the <strong>${role}</strong> position based out of our Guntur Hub / Hybrid Pod!</p>
+<p>We were thoroughly impressed by your technical depth and alignment with our core engineering values. Please find the outline of your compensation structure and joining formalities attached.</p>
+<p>Let us know if you are available for a brief sync tomorrow to address any questions.</p>
+<p>Congratulations and welcome aboard!<br>
+<strong>Priya Sharma</strong><br>
+Lead People Partner, Zyllo Tech</p>`;
+      } else if (templateKey === 'assessment_invite') {
+        if (subjectInput) subjectInput.value = `Take-Home Technical Assessment: ${role} | Zyllo Tech`;
+        if (bodyInput) bodyInput.value = `<p>Dear ${name},</p>
+<p>As the next step for the <strong>${role}</strong> opportunity, we would like you to complete a brief take-home technical assessment.</p>
+<p>The assessment is designed to take roughly 2 hours and focuses on clean code structure, asynchronous error handling, and component modularity.</p>
+<p>Please review the instructions in the attached document and submit your GitHub repository link within 48 hours.</p>
+<p>Best of luck!<br>
+<strong>Zyllo Tech Engineering Pod</strong></p>`;
+      } else {
+        if (subjectInput) subjectInput.value = '';
+        if (bodyInput) bodyInput.value = '';
+      }
+    }
+
+    // Open Modal Helper
+    function openComposeCandidateEmailModal() {
+      loadHrCandidatesDropdown();
+      const modalEl = document.getElementById('composeCandidateEmailModal');
+      if (modalEl) {
+        const modal = new bootstrap.Modal(modalEl);
+        modal.show();
+      }
+    }
+
+    // Dispatch Candidate Email Form Handler
+    async function handleSendCandidateEmail(e) {
+      e.preventDefault();
+      const submitBtn = document.getElementById('composerSubmitBtn');
+      const originalText = submitBtn.innerHTML;
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span> Dispatching...';
+
+      const candidateName = document.getElementById('composerCandidateName').value.trim();
+      const candidateEmail = document.getElementById('composerCandidateEmail').value.trim();
+      const subject = document.getElementById('composerSubject').value.trim();
+      const bodyHtml = document.getElementById('composerBody').value.trim();
+      const trackingEnabled = document.getElementById('composerTrackingToggle').checked;
+      const attachmentRef = document.getElementById('composerAttachment').value.trim();
+
+      const payload = {
+        candidate_id: currentSelectedCandidateId ? parseInt(currentSelectedCandidateId, 10) : null,
+        candidate_name: candidateName,
+        candidate_email: candidateEmail,
+        subject,
+        body_html: bodyHtml,
+        tracking_enabled: trackingEnabled,
+        attachments: attachmentRef ? [{ filename: attachmentRef }] : []
+      };
+
+      try {
+        const res = await fetch('/api/hr/emails/send', {
+          method: 'POST',
+          headers: getHrAuthHeaders(),
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+
+        if (data.success) {
+          // Close modal
+          const modalEl = document.getElementById('composeCandidateEmailModal');
+          const modal = bootstrap.Modal.getInstance(modalEl);
+          if (modal) modal.hide();
+
+          // Reset form
+          document.getElementById('composeCandidateEmailForm').reset();
+          currentSelectedCandidateId = null;
+
+          // Alert & refresh
+          alert(`Email successfully sent to ${candidateEmail}! ${trackingEnabled ? 'Tracking pixel is active.' : 'Tracking is disabled.'}`);
+          loadHrCandidateEmails(1);
+          loadHrStats();
+        } else {
+          alert('Failed to send email: ' + (data.message || 'Unknown error'));
+        }
+      } catch (err) {
+        alert('Network error while dispatching email: ' + err.message);
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalText;
+      }
+    }
+
+    // View Candidate Email Details & Activity Timeline Modal
+    async function viewCandidateEmailTimeline(emailId) {
+      const modalEl = document.getElementById('viewCandidateEmailTimelineModal');
+      const contentEl = document.getElementById('timelineModalContent');
+      const titleEl = document.getElementById('timelineModalTitle');
+      const subEl = document.getElementById('timelineModalSubtitle');
+      const testWrap = document.getElementById('timelineModalTestBtnWrap');
+
+      if (!modalEl || !contentEl) return;
+      const modal = new bootstrap.Modal(modalEl);
+      modal.show();
+
+      contentEl.innerHTML = '<div class="text-center py-4 text-white-50"><span class="spinner-border spinner-border-sm me-2"></span>Loading audit trail...</div>';
+
+      try {
+        const res = await fetch(`/api/hr/emails/${emailId}/timeline`, { headers: getHrAuthHeaders() });
+        const data = await res.json();
+
+        if (!data.success || !data.email) {
+          contentEl.innerHTML = '<div class="alert alert-danger">Could not retrieve timeline data for this email.</div>';
+          return;
+        }
+
+        const email = data.email;
+        const events = data.events || [];
+
+        if (titleEl) titleEl.textContent = email.subject;
+        if (subEl) subEl.textContent = `To: ${email.candidate_name} (${email.candidate_email}) &middot; Sent: ${formatDateTime(email.created_at)}`;
+
+        // Test Open button in modal footer
+        if (testWrap) {
+          testWrap.innerHTML = `
+            <div class="d-flex align-items-center gap-2">
+              <a href="/api/hr/emails/${email.tracking_id}/view" target="_blank" class="btn btn-sm btn-primary rounded-pill px-3">
+                <i class="bi bi-box-arrow-up-right me-1"></i> Open Candidate View
+              </a>
+              ${email.tracking_enabled ? `
+                <button class="btn btn-sm btn-outline-warning rounded-pill px-3" onclick="simulateCandidateEmailOpen('${email.tracking_id}', ${email.id})">
+                  <i class="bi bi-patch-check-fill me-1"></i> Simulate Open
+                </button>
+              ` : ''}
+            </div>
+          `;
+        }
+
+        // Build Chronological Events
+        let timelineItemsHtml = '';
+        if (events.length === 0) {
+          timelineItemsHtml = '<div class="text-white-50 small p-3">No activity events recorded yet.</div>';
+        } else {
+          timelineItemsHtml = events.map((ev, idx) => {
+            let icon = 'bi-check2';
+            let iconColor = 'text-success';
+            let title = 'Activity Event';
+            let badge = '';
+
+            if (ev.event_type === 'sent') {
+              icon = 'bi-send-fill';
+              iconColor = 'text-info';
+              title = 'Email Dispatched via Mailer / SMTP';
+              badge = '<span class="badge bg-info bg-opacity-25 text-info rounded-pill px-2">Dispatched</span>';
+            } else if (ev.event_type === 'open') {
+              if (ev.is_bot_scanner === 1) {
+                icon = 'bi-shield-exclamation';
+                iconColor = 'text-warning';
+                title = 'Automated Security Scanner Inspection';
+                badge = '<span class="badge bg-primary bg-opacity-10 text-primary rounded-pill px-2">Scanner (Filtered)</span>';
+              } else {
+                icon = 'bi-eye-fill';
+                iconColor = 'text-success';
+                title = idx === 1 ? 'First Detected Open' : `Repeated Read (Hit #${idx})`;
+                badge = '<span class="badge bg-success bg-opacity-25 text-success rounded-pill px-2">Open Detected</span>';
+              }
+            }
+
+            return `
+              <div class="d-flex align-items-start gap-3 position-relative pb-3 mb-3 border-bottom border-white/5">
+                <div class="rounded-circle bg-white/5 border border-white/10 d-flex align-items-center justify-content-center flex-shrink-0" style="width: 32px; height: 32px;">
+                  <i class="bi ${icon} ${iconColor}" style="font-size: 0.85rem;"></i>
+                </div>
+                <div class="flex-grow-1">
+                  <div class="d-flex justify-content-between align-items-center mb-1">
+                    <strong class="text-white small">${title}</strong>
+                    ${badge}
+                  </div>
+                  <div class="text-white-50 small d-flex flex-wrap gap-2 mb-1" style="font-size: 0.74rem;">
+                    <span><i class="bi bi-clock me-1"></i>${formatDateTime(ev.opened_at)}</span>
+                    ${ev.ip_address ? `<span>&bull; IP: ${escapeHtml(ev.ip_address)}</span>` : ''}
+                  </div>
+                  ${ev.user_agent ? `<div class="text-white-50 font-monospace text-truncate" style="font-size: 0.68rem; max-width: 520px;" title="${escapeHtml(ev.user_agent)}">Client: ${escapeHtml(ev.user_agent)}</div>` : ''}
+                </div>
+              </div>
+            `;
+          }).join('');
+        }
+
+        contentEl.innerHTML = `
+          <!-- Summary Cards Row -->
+          <div class="row g-2 mb-4">
+            <div class="col-6 col-md-3">
+              <div class="p-2.5 rounded-3 text-center" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);">
+                <small class="text-white-50 d-block" style="font-size: 0.7rem;">Open Status</small>
+                <strong class="${email.open_status === 'Opened' ? 'text-success' : 'text-warning'} small">${email.open_status === 'Opened' ? '✓ Opened' : 'Awaiting Open'}</strong>
+              </div>
+            </div>
+            <div class="col-6 col-md-3">
+              <div class="p-2.5 rounded-3 text-center" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);">
+                <small class="text-white-50 d-block" style="font-size: 0.7rem;">Detected Opens</small>
+                <strong class="text-white small">${email.open_count} views</strong>
+              </div>
+            </div>
+            <div class="col-6 col-md-3">
+              <div class="p-2.5 rounded-3 text-center" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);">
+                <small class="text-white-50 d-block" style="font-size: 0.7rem;">Delivery</small>
+                <strong class="text-info small">${escapeHtml(email.delivery_status || 'Delivered')}</strong>
+              </div>
+            </div>
+            <div class="col-6 col-md-3">
+              <div class="p-2.5 rounded-3 text-center" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);">
+                <small class="text-white-50 d-block" style="font-size: 0.7rem;">Tracking Pixel</small>
+                <strong class="${email.tracking_enabled ? 'text-warning' : 'text-white-50'} small">${email.tracking_enabled ? 'Active 1x1 GIF' : 'Disabled'}</strong>
+              </div>
+            </div>
+          </div>
+
+          <!-- Chronological Activity Timeline -->
+          <div class="zy-card p-3 mb-4" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.07); border-radius: 12px;">
+            <h6 class="fw-bold text-white mb-3 d-flex align-items-center gap-2" style="font-size: 0.85rem;">
+              <i class="bi bi-diagram-3-fill text-warning"></i> Chronological Event Audit Trail
+            </h6>
+            ${timelineItemsHtml}
+          </div>
+
+          <!-- Sent Email Content Accordion/Preview -->
+          <div class="zy-card p-3" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.07); border-radius: 12px;">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <h6 class="fw-bold text-white mb-0" style="font-size: 0.85rem;">
+                <i class="bi bi-envelope-paper-fill text-info me-1.5"></i> Sent Message Content
+              </h6>
+              <span class="text-white-50" style="font-size: 0.72rem;">Sender: ${escapeHtml(email.sender_name)} &lt;${escapeHtml(email.sender_email)}&gt;</span>
+            </div>
+            <div class="p-3 rounded-3 bg-white text-dark" style="border-radius: 8px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 0.85rem; max-height: 280px; overflow-y: auto;">
+              ${email.body_html || `<pre>${escapeHtml(email.body_text)}</pre>`}
+            </div>
+          </div>
+        `;
+      } catch (err) {
+        contentEl.innerHTML = '<div class="alert alert-danger">Error retrieving timeline audit trail: ' + escapeHtml(err.message) + '</div>';
+      }
+    }
+
+    // Simulate Pixel Open Event (for testing/quality assurance)
+    async function simulateCandidateEmailOpen(trackingId, reloadEmailId = null) {
+      if (!confirm('Simulate a remote candidate open event for tracking ID: ' + trackingId + '?')) return;
+      try {
+        const res = await fetch(`/api/hr/emails/${trackingId}/test-open`, {
+          method: 'POST',
+          headers: getHrAuthHeaders()
+        });
+        const data = await res.json();
+        if (data.success) {
+          alert('Candidate open registered! Total recorded opens: ' + data.open_count);
+          loadHrCandidateEmails(currentEmailPage);
+          loadHrStats();
+          if (reloadEmailId) {
+            viewCandidateEmailTimeline(reloadEmailId);
+          }
+        } else {
+          alert('Simulation failed: ' + (data.message || 'Unknown error'));
+        }
+      } catch (err) {
+        alert('Network error while simulating open: ' + err.message);
+      }
+    }
+
+    // Format ISO string to readable localized date and time
+    function formatDateTime(isoStr) {
+      if (!isoStr) return '&mdash;';
+      try {
+        const d = new Date(isoStr);
+        if (isNaN(d.getTime())) return String(isoStr);
+        return d.toLocaleDateString('en-IN', { timeZone: 'Asia/Kolkata', month: 'short', day: 'numeric', year: 'numeric' }) + ' ' + d.toLocaleTimeString('en-IN', { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', hour12: true }) + ' IST';
+      } catch (e) {
+        return String(isoStr);
+      }
+    }
+
+  
+    // ==================== HR THEME CONTROLLER ====================
+    function initHrTheme() {
+      const savedTheme = localStorage.getItem('zyllotech_hr_theme') || 'light';
+      applyHrTheme(savedTheme);
+    }
+
+    function applyHrTheme(theme) {
+      const isLight = theme === 'light';
+      const body = document.body;
+      const htmlEl = document.documentElement;
+      const icon = document.getElementById('themeIcon');
+      const label = document.getElementById('themeLabel');
+
+      if (isLight) {
+        body.classList.add('theme-light');
+        body.classList.remove('theme-dark', 'bg-dark', 'text-white');
+        htmlEl.setAttribute('data-bs-theme', 'light');
+        if (icon) icon.className = 'bi bi-moon-stars-fill text-warning';
+        if (label) label.textContent = 'Dark Mode';
+      } else {
+        body.classList.remove('theme-light');
+        body.classList.add('theme-dark', 'bg-dark', 'text-white');
+        htmlEl.setAttribute('data-bs-theme', 'dark');
+        if (icon) icon.className = 'bi bi-sun-fill text-warning';
+        if (label) label.textContent = 'Light Mode';
+      }
+      localStorage.setItem('zyllotech_hr_theme', theme);
+    }
+
+    function toggleHrTheme() {
+      const current = localStorage.getItem('zyllotech_hr_theme') || 'light';
+      applyHrTheme(current === 'light' ? 'dark' : 'light');
+    }
+
+    </script>
+<script src="/assets/js/theme.js"></script>
+</body>
+</html>

@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio &amp; Case Studies | Zyllo Tech</title>
+  <meta name="description" content="Explore custom software, web, mobile, and AI projects delivered by Zyllo Tech to clients worldwide.">
+  <link rel="icon" href="/assets/images/Zyllo_Tech_Favicon_512x512.png">
+
+  <!-- GSAP 3 & ScrollTrigger -->
+  <script src="/assets/vendor/gsap.min.js"></script>
+  <script src="/assets/vendor/ScrollTrigger.min.js"></script>
+  <!-- Lenis Smooth Scrolling -->
+  <script src="/assets/vendor/lenis.min.js"></script>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body class="theme-light">
+  <div id="zy-page-loader-progress"></div>
+  <!-- ==================== FULLSCREEN PAGE TRANSITION LOADER ==================== -->
+  <div id="zy-page-loader">
+    <div class="loader-ambient-left"></div>
+    <div class="loader-ambient-right"></div>
+    
+    <!-- Floating Tech Badges Matching Screenshot -->
+    <div class="loader-floating-icon icon-cyan loader-icon-1"><i class="bi bi-tools"></i></div>
+    <div class="loader-floating-icon icon-cyan loader-icon-2"><i class="bi bi-code-slash"></i></div>
+    <div class="loader-floating-icon icon-orange loader-icon-3"><i class="bi bi-lightbulb"></i></div>
+    <div class="loader-floating-icon icon-cyan loader-icon-4"><i class="bi bi-cloud"></i></div>
+    <div class="loader-floating-icon icon-orange loader-icon-5"><i class="bi bi-stars"></i></div>
+    <div class="loader-floating-icon icon-cyan loader-icon-6"><i class="bi bi-pencil"></i></div>
+    <div class="loader-floating-icon icon-cyan loader-icon-7"><i class="bi bi-phone"></i></div>
+    <div class="loader-floating-icon icon-orange loader-icon-8"><i class="bi bi-shield-check"></i></div>
+    <div class="loader-floating-icon icon-orange loader-icon-9"><i class="bi bi-palette"></i></div>
+
+    <!-- Center Hub Spinner -->
+    <div class="loader-center-hub">
+      <div class="loader-circle-wrapper">
+        <div class="loader-circle-track"></div>
+        <div class="loader-circle-spinner"></div>
+        <div class="loader-center-disc">
+          <img src="/assets/images/zyllo-icon.png" alt="Zyllo Tech">
+        </div>
+      </div>
+      <div class="loader-brand-title">
+        <span class="brand-part-zyllo">ZYLLO</span>
+        <span class="brand-part-tech">TECH</span>
+      </div>
+      <div class="loader-dots-row">
+        <span class="loader-dot loader-dot-1"></span>
+        <span class="loader-dot loader-dot-2"></span>
+        <span class="loader-dot loader-dot-3"></span>
+      </div>
+      <div class="loader-typewriter-box">
+        <span id="loader-typewriter-text">Connecting...</span><span class="loader-cursor"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== FIXED NAVBAR ==================== -->
+  <nav class="zy-navbar navbar navbar-expand-lg">
+    <div class="container-fluid px-3 px-lg-4 px-xl-5 d-flex align-items-center justify-content-between">
+      <a class="navbar-brand d-flex align-items-center gap-2 m-0 p-0 flex-shrink-0" href="/">
+        <img src="/assets/images/zyllo-icon.png" alt="Zyllo Tech Logo" style="height: 38px; width: auto;">
+        <span class="fs-4 fw-extrabold text-uppercase">
+          <span class="text-gradient-orange">Zyllo</span> <span class="text-gradient-cyan">Tech</span>
+        </span>
+      </a>
+
+      <button class="navbar-toggler border-0 text-white" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileNavOffcanvas">
+        <i class="bi bi-list fs-2"></i>
+      </button>
+
+      <div class="collapse navbar-collapse d-none d-lg-flex justify-content-center mx-auto" id="desktopNavMenu">
+        <ul class="navbar-nav align-items-center justify-content-center mb-0 gap-1">
+          <li class="nav-item"><a class="zy-nav-link" href="/">Home</a></li>
+          <li class="nav-item"><a class="zy-nav-link" href="/about">About Us</a></li>
+          <li class="nav-item dropdown">
+            <a class="zy-nav-link dropdown-toggle" href="/services" role="button" data-bs-toggle="dropdown">Services</a>
+            <ul class="dropdown-menu zy-dropdown-menu">
+              <li><a class="zy-dropdown-item" href="/services/software-development"><i class="bi bi-code-slash me-2 text-warning"></i> Software Development</a></li>
+              <li><a class="zy-dropdown-item" href="/services/web-development"><i class="bi bi-browser-chrome me-2 text-info"></i> Web Applications</a></li>
+              <li><a class="zy-dropdown-item" href="/services/mobile-app-development"><i class="bi bi-phone me-2 text-warning"></i> Mobile Development</a></li>
+              <li><a class="zy-dropdown-item" href="/services/ai-solutions"><i class="bi bi-robot me-2 text-danger"></i> AI & Machine Learning</a></li>
+              <li><a class="zy-dropdown-item" href="/services/cloud-solutions"><i class="bi bi-cloud-arrow-up me-2 text-info"></i> Cloud & DevOps</a></li>
+              <li><a class="zy-dropdown-item" href="/services/ui-ux-design"><i class="bi bi-palette me-2 text-warning"></i> UI/UX Design</a></li>
+            </ul>
+          </li>
+          <li class="nav-item"><a class="zy-nav-link" href="/industries">Industries</a></li>
+          <li class="nav-item"><a class="zy-nav-link active" href="/portfolio">Portfolio</a></li>
+          <li class="nav-item"><a class="zy-nav-link" href="/blog">Blog</a></li>
+          <li class="nav-item"><a class="zy-nav-link" href="/careers">Careers</a></li>
+          <li class="nav-item"><a class="zy-nav-link" href="/contact">Contact Us</a></li>
+        </ul>
+
+        <div class="d-flex align-items-center gap-3">
+          <button class="nav-search-btn" data-bs-toggle="modal" data-bs-target="#searchModal">
+            <i class="bi bi-search"></i>
+            <span>Search</span>
+            <kbd>Ctrl+K</kbd>
+          </button>
+          <div id="nav-auth-container" class="d-flex align-items-center gap-2">
+            <!-- Universal Light / Dark Mode Toggle Button -->
+          <button class="zy-theme-toggle-btn me-2" onclick="toggleTheme()" title="Switch Light / Dark Theme">
+            <i class="bi bi-moon-stars-fill text-warning" id="mainThemeIcon"></i>
+            <span class="theme-label small d-none d-sm-inline">Dark Mode</span>
+          </button>
+<a href="/login" class="btn btn-brand"><i class="bi bi-box-arrow-in-right"></i> Login</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Offcanvas Menu (Matching Image 1) -->
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="mobileNavOffcanvas" aria-labelledby="mobileNavLabel">
+    <div class="offcanvas-header border-bottom border-light px-3 py-3">
+      <div class="d-flex align-items-center gap-2">
+        <img src="/assets/images/zyllo-icon.png" alt="Zyllo Tech" style="height: 32px;">
+        <span class="fs-5 fw-bold text-uppercase" style="letter-spacing: -0.02em;">
+          <span style="color: #f16623;">Zyllo</span> <span style="color: #262262;">Tech</span>
+        </span>
+      </div>
+      <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      <ul class="nav flex-column gap-1 mb-4">
+        <li class="nav-item">
+          <a class="zy-mobile-nav-link" href="/" data-bs-dismiss="offcanvas">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="zy-mobile-nav-link" href="/about" data-bs-dismiss="offcanvas">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="zy-mobile-nav-link" href="#mobileServicesDropdown" data-bs-toggle="collapse" role="button" aria-expanded="false">
+            <span>Services</span>
+            <i class="bi bi-chevron-down text-white-50 fs-6"></i>
+          </a>
+          <div class="collapse" id="mobileServicesDropdown">
+            <div class="d-flex flex-column gap-2 py-1">
+              <a href="/services/software-development" data-bs-dismiss="offcanvas">Software Development</a>
+              <a href="/services/web-development" data-bs-dismiss="offcanvas">Web Applications</a>
+              <a href="/services/mobile-app-development" data-bs-dismiss="offcanvas">Mobile Development</a>
+              <a href="/services/ai-solutions" data-bs-dismiss="offcanvas">AI Solutions</a>
+              <a href="/services/cloud-solutions" data-bs-dismiss="offcanvas">Cloud Solutions</a>
+              <a href="/services/ui-ux-design" data-bs-dismiss="offcanvas">UI/UX Design</a>
+            </div>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a class="zy-mobile-nav-link" href="/industries" data-bs-dismiss="offcanvas">Industries</a>
+        </li>
+        <li class="nav-item">
+          <a class="zy-mobile-nav-link" href="/portfolio" data-bs-dismiss="offcanvas">Portfolio</a>
+        </li>
+        <li class="nav-item">
+          <a class="zy-mobile-nav-link" href="/blog" data-bs-dismiss="offcanvas">Blog</a>
+        </li>
+      </ul>
+
+      <div class="zy-mobile-bottom-card">
+        <div class="row g-2 mb-2">
+          <div class="col-6">
+            <a href="/careers" class="zy-mobile-pill-btn" data-bs-dismiss="offcanvas">Careers</a>
+          </div>
+          <div class="col-6">
+            <a href="/contact" class="zy-mobile-pill-btn zy-contact-btn" data-bs-dismiss="offcanvas">Contact Us</a>
+          </div>
+        </div>
+        <a href="/login" class="zy-mobile-login-btn" data-bs-dismiss="offcanvas">Login</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header Hero -->
+  <header class="pt-5 mt-5 pb-4 text-center">
+    <div class="container py-5">
+      <span class="zy-badge mb-3"><i class="bi bi-award"></i> Case Studies &amp; Results</span>
+      <h1 class="display-4 fw-extrabold text-white mb-3">Our Work in Production</h1>
+      <p class="lead text-white-50 mx-auto" style="max-width: 750px;">
+        Explore real-world applications engineered by Zyllo Tech. High scalability, beautiful user experience, and measurable business growth.
+      </p>
+
+      <!-- Live Keyword Search & Filter Controls -->
+      <div class="mx-auto mt-4" style="max-width: 540px;">
+        <div class="input-group p-1 rounded-pill" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);">
+          <span class="input-group-text bg-transparent border-0 text-white-50 ps-3"><i class="bi bi-search"></i></span>
+          <input type="text" id="portfolioSearchInput" class="form-control bg-transparent border-0 text-white px-2 py-2" placeholder="Search by tech, keyword, or domain..." oninput="handlePortfolioSearch()" style="box-shadow: none;">
+          <button class="btn btn-sm btn-brand-outline rounded-pill px-3" onclick="clearPortfolioSearch()">Clear</button>
+        </div>
+      </div>
+
+      <!-- Category Filter Tabs -->
+      <div class="d-flex flex-wrap justify-content-center gap-2 mt-3">
+        <button class="portfolio-filter-btn active" data-filter="all">All Projects</button>
+        <button class="portfolio-filter-btn" data-filter="ai">AI &amp; Machine Learning</button>
+        <button class="portfolio-filter-btn" data-filter="web">Web &amp; SaaS</button>
+        <button class="portfolio-filter-btn" data-filter="mobile">Mobile Apps</button>
+        <button class="portfolio-filter-btn" data-filter="cloud">Cloud &amp; DevOps</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Projects Grid -->
+  <section class="py-4">
+    <div class="container">
+      <div class="row g-4">
+        
+        <!-- Case Study 1 -->
+        <div class="col-lg-4 col-md-6 portfolio-item" data-category="ai">
+          <div class="portfolio-card h-100 d-flex flex-column">
+            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80" alt="FinScale Risk Engine" class="portfolio-img">
+            <div class="p-4 flex-grow-1 d-flex flex-column justify-content-between">
+              <div>
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                  <span class="zy-tag-pill text-warning"><span class="tag-dot"></span>AI / FinTech</span>
+                  <small class="text-white-50">New York, USA</small>
+                </div>
+                <h3 class="h5 fw-bold text-white mb-2">FinScale Real-Time Risk &amp; Fraud Detection</h3>
+                <p class="text-white-50 small mb-3">
+                  Autonomous inference engine analyzing 120k transaction events per minute. Reduced fraudulent chargebacks by 68% within the first 90 days.
+                </p>
+                <div class="mb-3">
+                  <small class="text-white-50 d-block mb-1">Tech Stack:</small>
+                  <span class="zy-tag-pill me-1 mb-1"><span class="tag-dot"></span>Python</span>
+                  <span class="zy-tag-pill me-1 mb-1"><span class="tag-dot"></span>PyTorch</span>
+                  <span class="zy-tag-pill me-1 mb-1"><span class="tag-dot"></span>FastAPI</span>
+                  <span class="zy-tag-pill mb-1"><span class="tag-dot"></span>Kafka</span>
+                </div>
+              </div>
+              <div class="d-flex gap-2">
+                <button type="button" class="btn btn-sm btn-brand flex-grow-1" onclick="openCaseStudy('finscale')">
+                  <i class="bi bi-eye me-1"></i> View Case Study
+                </button>
+                <a href="/contact#schedule" class="btn btn-sm btn-brand-outline" title="Schedule Consultation"><i class="bi bi-calendar-event"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Case Study 2 -->
+        <div class="col-lg-4 col-md-6 portfolio-item" data-category="web">
+          <div class="portfolio-card h-100 d-flex flex-column">
+            <img src="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=800&q=80" alt="Freight Portal" class="portfolio-img">
+            <div class="p-4 flex-grow-1 d-flex flex-column justify-content-between">
+              <div>
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                  <span class="zy-tag-pill text-info"><span class="tag-dot"></span>SaaS / Logistics</span>
+                  <small class="text-white-50">Dubai, UAE</small>
+                </div>
+                <h3 class="h5 fw-bold text-white mb-2">AeroTrack Multi-Port Freight Hub</h3>
+                <p class="text-white-50 small mb-3">
+                  Centralized container dispatch management system unifying customs clearance, maritime tracking, and automated carrier dispatching across 6 Gulf nations.
+                </p>
+                <div class="mb-3">
+                  <small class="text-white-50 d-block mb-1">Tech Stack:</small>
+                  <span class="zy-tag-pill me-1 mb-1"><span class="tag-dot"></span>Next.js</span>
+                  <span class="zy-tag-pill me-1 mb-1"><span class="tag-dot"></span>Node.js</span>
+                  <span class="zy-tag-pill me-1 mb-1"><span class="tag-dot"></span>PostgreSQL</span>
+                  <span class="zy-tag-pill mb-1"><span class="tag-dot"></span>Redis</span>
+                </div>
+              </div>
+              <div class="d-flex gap-2">
+                <button type="button" class="btn btn-sm btn-brand flex-grow-1" onclick="openCaseStudy('aerotrack')">
+                  <i class="bi bi-eye me-1"></i> View Case Study
+                </button>
+                <a href="/contact#schedule" class="btn btn-sm btn-brand-outline" title="Schedule Consultation"><i class="bi bi-calendar-event"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Case Study 3 -->
+        <div class="col-lg-4 col-md-6 portfolio-item" data-category="mobile">
+          <div class="portfolio-card h-100 d-flex flex-column">
+            <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=80" alt="MedPulse Telehealth" class="portfolio-img">
+            <div class="p-4 flex-grow-1 d-flex flex-column justify-content-between">
+              <div>
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                  <span class="zy-tag-pill text-success"><span class="tag-dot"></span>Mobile / MedTech</span>
+                  <small class="text-white-50">Sydney, Australia</small>
+                </div>
+                <h3 class="h5 fw-bold text-white mb-2">MedPulse HIPAA Telehealth Platform</h3>
+                <p class="text-white-50 small mb-3">
+                  Cross-platform iOS and Android app featuring zero-lag encrypted video consultations, digital prescription fulfillment, and Bluetooth vital sensors.
+                </p>
+                <div class="mb-3">
+                  <small class="text-white-50 d-block mb-1">Tech Stack:</small>
+                  <span class="zy-tag-pill me-1 mb-1"><span class="tag-dot"></span>Flutter</span>
+                  <span class="zy-tag-pill me-1 mb-1"><span class="tag-dot"></span>WebRTC</span>
+                  <span class="zy-tag-pill me-1 mb-1"><span class="tag-dot"></span>AWS HIPAA</span>
+                  <span class="zy-tag-pill mb-1"><span class="tag-dot"></span>GraphQL</span>
+                </div>
+              </div>
+              <div class="d-flex gap-2">
+                <button type="button" class="btn btn-sm btn-brand flex-grow-1" onclick="openCaseStudy('medpulse')">
+                  <i class="bi bi-eye me-1"></i> View Case Study
+                </button>
+                <a href="/contact#schedule" class="btn btn-sm btn-brand-outline" title="Schedule Consultation"><i class="bi bi-calendar-event"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Case Study 4 -->
+        <div class="col-lg-4 col-md-6 portfolio-item" data-category="ai">
+          <div class="portfolio-card h-100 d-flex flex-column">
+            <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&q=80" alt="Legal RAG Agent" class="portfolio-img">
+            <div class="p-4 flex-grow-1 d-flex flex-column justify-content-between">
+              <div>
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                  <span class="zy-tag-pill text-warning"><span class="tag-dot"></span>AI / LLM RAG</span>
+                  <small class="text-white-50">London, UK</small>
+                </div>
+                <h3 class="h5 fw-bold text-white mb-2">JurisBrain Enterprise Legal RAG Assistant</h3>
+                <p class="text-white-50 small mb-3">
+                  Private on-prem LLM pipeline indexing over 2 million legal contracts. Delivers cited contract risk analyses in under 4 seconds with 0 data leakage.
+                </p>
+                <div class="mb-3">
+                  <small class="text-white-50 d-block mb-1">Tech Stack:</small>
+                  <span class="zy-tag-pill me-1 mb-1"><span class="tag-dot"></span>Llama 3</span>
+                  <span class="zy-tag-pill me-1 mb-1"><span class="tag-dot"></span>Qdrant Vector DB</span>
+                  <span class="zy-tag-pill me-1 mb-1"><span class="tag-dot"></span>FastAPI</span>
+                  <span class="zy-tag-pill mb-1"><span class="tag-dot"></span>Docker</span>
+                </div>
+              </div>
+              <div class="d-flex gap-2">
+                <button type="button" class="btn btn-sm btn-brand flex-grow-1" onclick="openCaseStudy('jurisbrain')">
+                  <i class="bi bi-eye me-1"></i> View Case Study
+                </button>
+                <a href="/contact#schedule" class="btn btn-sm btn-brand-outline" title="Schedule Consultation"><i class="bi bi-calendar-event"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Case Study 5 -->
+        <div class="col-lg-4 col-md-6 portfolio-item" data-category="web">
+          <div class="portfolio-card h-100 d-flex flex-column">
+            <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80" alt="Headless Commerce" class="portfolio-img">
+            <div class="p-4 flex-grow-1 d-flex flex-column justify-content-between">
+              <div>
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                  <span class="zy-tag-pill text-info"><span class="tag-dot"></span>E-Commerce</span>
+                  <small class="text-white-50">Singapore</small>
+                </div>
+                <h3 class="h5 fw-bold text-white mb-2">OmniMarket Headless E-Commerce Suite</h3>
+                <p class="text-white-50 small mb-3">
+                  High-speed storefront supporting 40,000 concurrent peak holiday shoppers with 99.99% uptime and sub-800ms page transitions.
+                </p>
+                <div class="mb-3">
+                  <small class="text-white-50 d-block mb-1">Tech Stack:</small>
+                  <span class="zy-tag-pill me-1 mb-1"><span class="tag-dot"></span>React</span>
+                  <span class="zy-tag-pill me-1 mb-1"><span class="tag-dot"></span>Shopify Headless</span>
+                  <span class="zy-tag-pill me-1 mb-1"><span class="tag-dot"></span>Tailwind</span>
+                  <span class="zy-tag-pill mb-1"><span class="tag-dot"></span>Edge CDN</span>
+                </div>
+              </div>
+              <div class="d-flex gap-2">
+                <button type="button" class="btn btn-sm btn-brand flex-grow-1" onclick="openCaseStudy('omnimarket')">
+                  <i class="bi bi-eye me-1"></i> View Case Study
+                </button>
+                <a href="/contact#schedule" class="btn btn-sm btn-brand-outline" title="Schedule Consultation"><i class="bi bi-calendar-event"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Case Study 6 -->
+        <div class="col-lg-4 col-md-6 portfolio-item" data-category="mobile">
+          <div class="portfolio-card h-100 d-flex flex-column">
+            <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=800&q=80" alt="UrbanNest PropTech" class="portfolio-img">
+            <div class="p-4 flex-grow-1 d-flex flex-column justify-content-between">
+              <div>
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                  <span class="zy-tag-pill text-success"><span class="tag-dot"></span>PropTech / Mobile</span>
+                  <small class="text-white-50">Toronto, Canada</small>
+                </div>
+                <h3 class="h5 fw-bold text-white mb-2">UrbanNest Property &amp; Tenant Hub</h3>
+                <p class="text-white-50 small mb-3">
+                  Mobile tenant self-service portal handling digital lease signing, automated maintenance tickets, and in-app debit payments.
+                </p>
+                <div class="mb-3">
+                  <small class="text-white-50 d-block mb-1">Tech Stack:</small>
+                  <span class="zy-tag-pill me-1 mb-1"><span class="tag-dot"></span>React Native</span>
+                  <span class="zy-tag-pill me-1 mb-1"><span class="tag-dot"></span>Stripe</span>
+                  <span class="zy-tag-pill me-1 mb-1"><span class="tag-dot"></span>Node.js</span>
+                  <span class="zy-tag-pill mb-1"><span class="tag-dot"></span>AWS S3</span>
+                </div>
+              </div>
+              <div class="d-flex gap-2">
+                <button type="button" class="btn btn-sm btn-brand flex-grow-1" onclick="openCaseStudy('urbannest')">
+                  <i class="bi bi-eye me-1"></i> View Case Study
+                </button>
+                <a href="/contact#schedule" class="btn btn-sm btn-brand-outline" title="Schedule Consultation"><i class="bi bi-calendar-event"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Banner -->
+  <section class="py-5">
+    <div class="container">
+      <div class="zy-card p-4 p-md-5 text-center" style="background: linear-gradient(135deg, rgba(249,103,6,0.1), rgba(38, 34, 98,0.1));">
+        <h2 class="display-6 fw-bold text-white mb-3">Ready to Build Your Success Story?</h2>
+        <p class="text-white-50 mx-auto mb-4" style="max-width: 600px;">
+          Join the high-growth companies that trust Zyllo Tech to deliver their most critical software.
+        </p>
+        <a href="/contact" class="btn btn-brand px-4 py-3">Schedule Technical Scoping Call &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+    <!-- ==================== FOOTER ==================== -->
+  <footer class="zy-footer">
+    <div class="container">
+      <div class="row g-4 mb-5">
+        
+        <!-- Brand Info -->
+        <div class="col-lg-4">
+          <a class="d-flex align-items-center gap-2 text-decoration-none mb-3" href="/">
+            <img src="/assets/images/zyllo-icon.png" alt="Zyllo Tech Logo" style="height: 38px;">
+            <span class="fs-4 fw-extrabold text-uppercase">
+              <span class="text-gradient-orange">Zyllo</span> <span class="text-gradient-cyan">Tech</span>
+            </span>
+          </a>
+          <p class="text-white-50 small mb-4" style="line-height: 1.6;">
+            Zyllo Tech Software Solutions Private Limited is a custom software, web, mobile app and AI development company in India delivering remote engineering worldwide.
+          </p>
+          <div class="d-flex gap-2">
+            <a href="https://www.linkedin.com/company/zyllo-tech/" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-brand-outline rounded-circle" style="width: 36px; height: 36px; padding: 0; display: inline-flex; align-items: center; justify-content: center;" title="LinkedIn" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+            <a href="https://wa.me/917075773680" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-brand-outline rounded-circle" style="width: 36px; height: 36px; padding: 0; display: inline-flex; align-items: center; justify-content: center;" title="WhatsApp" aria-label="WhatsApp"><i class="bi bi-whatsapp"></i></a>
+            <a href="https://x.com/ZylloS85154" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-brand-outline rounded-circle" style="width: 36px; height: 36px; padding: 0; display: inline-flex; align-items: center; justify-content: center;" title="X (Twitter)" aria-label="X (Twitter)"><i class="bi bi-twitter-x"></i></a>
+            <a href="#" class="btn btn-sm btn-brand-outline rounded-circle" style="width: 36px; height: 36px; padding: 0; display: inline-flex; align-items: center; justify-content: center;"><i class="bi bi-github"></i></a>
+          </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="col-6 col-lg-2">
+          <h5 class="fw-bold text-white small text-uppercase mb-3" style="letter-spacing: 0.05em;">Company</h5>
+          <ul class="list-unstyled">
+            <li><a href="/" class="zy-footer-link">Home</a></li>
+            <li><a href="/about" class="zy-footer-link">About Us</a></li>
+            <li><a href="/portfolio" class="zy-footer-link">Portfolio</a></li>
+            <li><a href="/blog" class="zy-footer-link">Blog & News</a></li>
+            <li><a href="/careers" class="zy-footer-link">Careers</a></li>
+            <li><a href="/login" class="zy-footer-link">Client Portal</a></li>
+          </ul>
+        </div>
+
+        <!-- Services Links -->
+        <div class="col-6 col-lg-3">
+          <h5 class="fw-bold text-white small text-uppercase mb-3" style="letter-spacing: 0.05em;">Services</h5>
+          <ul class="list-unstyled">
+            <li><a href="/services/software-development" class="zy-footer-link">Software Development</a></li>
+            <li><a href="/services/web-development" class="zy-footer-link">Web Applications</a></li>
+            <li><a href="/services/mobile-app-development" class="zy-footer-link">Mobile Apps (iOS/Android)</a></li>
+            <li><a href="/services/ai-solutions" class="zy-footer-link">AI & Machine Learning</a></li>
+            <li><a href="/services/cloud-solutions" class="zy-footer-link">Cloud & DevOps</a></li>
+            <li><a href="/services/ui-ux-design" class="zy-footer-link">UI/UX Product Design</a></li>
+          </ul>
+        </div>
+
+        <!-- Newsletter Subscription -->
+        <div class="col-lg-3">
+          <h5 class="fw-bold text-white small text-uppercase mb-3" style="letter-spacing: 0.05em;">Stay Updated</h5>
+          <p class="text-white-50 small mb-3">Subscribe to our monthly newsletter on software trends and emerging AI technologies.</p>
+          <form class="newsletter-form">
+            <div class="newsletter-input-group">
+              <input type="email" class="form-control zy-input" placeholder="Your work email..." required>
+              <button class="btn btn-brand" type="submit"><i class="bi bi-arrow-right"></i></button>
+            </div>
+          </form>
+        </div>
+
+      </div>
+
+            <!-- Interactive Particle Typography Footer Wordmark (ZYLLOTECH) -->
+      <div class="zy-footer-particle-wrap my-4 text-center">
+        <canvas id="zy-footer-particle-canvas" class="zy-footer-particle-canvas"></canvas>
+      </div>
+
+<div class="pt-4 border-top border-white/10 d-flex flex-wrap align-items-center justify-content-between gap-2 text-white-50 small">
+        <div>
+          &copy; 2026 Zyllo Tech Software Solutions Private Limited. All rights reserved.
+        </div>
+        <div class="d-flex gap-3">
+          <a href="#" class="text-white-50 text-decoration-none">Privacy Policy</a>
+          <a href="#" class="text-white-50 text-decoration-none">Terms of Service</a>
+          <a href="/login" class="text-warning text-decoration-none"><i class="bi bi-lock-fill"></i> Authorized Access</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==================== SEARCH / ASK MODAL (Image 2) ==================== -->
+  <div class="modal fade" id="searchModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 580px;">
+      <div class="modal-content zy-search-modal">
+        <div class="p-3 px-4 d-flex align-items-center justify-content-between border-bottom border-white/10">
+          <div class="d-flex align-items-center gap-2">
+            <img src="/assets/images/zyllo-icon.png" alt="Zyllo Tech" style="height: 28px; width: auto;">
+            <span class="fw-bold text-white" style="font-size: 1.05rem;">
+              Ask anything about <span style="color: #f16623;">Zyllo</span> <span style="color: #262262;">Tech</span>
+            </span>
+          </div>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="p-4 pb-3">
+          <div class="zy-search-input-pill mb-3">
+            <i class="bi bi-search text-muted fs-5 me-2"></i>
+            <input type="text" id="zy-search-input" placeholder="e.g. Do you build mobile apps?">
+            <button type="button" class="btn zy-search-ask-btn ms-2" id="zy-ask-btn">Ask</button>
+          </div>
+          <div class="mb-2">
+            <div class="text-uppercase fw-bold text-muted small mb-2" style="font-size: 0.72rem; letter-spacing: 0.08em; color: #64748b !important;">TRY ASKING</div>
+            <div class="d-flex flex-column gap-1">
+              <button type="button" class="zy-try-question">What services does Zyllo Tech offer?</button>
+              <button type="button" class="zy-try-question">Do you build mobile apps?</button>
+              <button type="button" class="zy-try-question">How do I get a quote?</button>
+            </div>
+          </div>
+          <div id="zy-search-results" class="mt-2" style="max-height: 260px; overflow-y: auto;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== CASE STUDY DEEP DIVE MODAL ==================== -->
+  <div class="modal fade" id="caseStudyDetailModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content zy-search-modal text-white">
+        <div class="modal-header border-bottom border-white/10 px-4 py-3">
+          <div class="d-flex align-items-center gap-2">
+            <span class="zy-tag-pill" id="modalProjectCategory"><span class="tag-dot"></span>Category</span>
+            <span class="text-white-50 small" id="modalProjectLocation">Location</span>
+          </div>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body p-4">
+          <h3 class="h4 fw-bold text-white mb-2" id="modalProjectTitle">Project Title</h3>
+          <p class="text-white-50 mb-4" id="modalProjectSubtitle">Subtitle / short overview</p>
+
+          <div class="row g-4 mb-4">
+            <div class="col-md-6">
+              <div class="p-3 rounded-3 h-100" style="background: rgba(239, 68, 68, 0.05); border: 1px solid rgba(239, 68, 68, 0.2);">
+                <h6 class="fw-bold text-danger mb-2"><i class="bi bi-exclamation-triangle-fill me-1"></i> Business Problem</h6>
+                <p class="text-white-50 small mb-0" id="modalProjectProblem">Description of operational challenge.</p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="p-3 rounded-3 h-100" style="background: rgba(34, 197, 94, 0.05); border: 1px solid rgba(34, 197, 94, 0.2);">
+                <h6 class="fw-bold text-success mb-2"><i class="bi bi-check-circle-fill me-1"></i> Engineered Solution</h6>
+                <p class="text-white-50 small mb-0" id="modalProjectSolution">Description of architectural solution.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <h6 class="fw-bold text-white mb-2"><i class="bi bi-cpu text-info me-1"></i> Verified Technology Stack</h6>
+            <div id="modalProjectTech" class="d-flex flex-wrap gap-1"></div>
+          </div>
+
+          <div class="mb-4 p-3 rounded-3" style="background: rgba(249, 103, 6, 0.08); border: 1px solid rgba(249, 103, 6, 0.25);">
+            <h6 class="fw-bold text-warning mb-2"><i class="bi bi-graph-up-arrow me-1"></i> Measured Production Outcomes</h6>
+            <ul class="mb-0 text-white-50 small ps-3" id="modalProjectOutcomes"></ul>
+          </div>
+
+          <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 pt-2 border-top border-white/10">
+            <span class="text-white-50 small"><i class="bi bi-shield-lock-fill text-info me-1"></i> Client NDA & Verified Architecture Compliant</span>
+            <div class="d-flex gap-2">
+              <a href="/contact#schedule" class="btn btn-sm btn-brand"><i class="bi bi-calendar-event me-1"></i> Schedule Technical Consultation</a>
+              <button type="button" class="btn btn-sm btn-brand-outline" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/assets/js/main.js"></script>
+  <script>
+    const caseStudiesData = {
+      finscale: {
+        title: 'FinScale Real-Time Risk & Fraud Detection',
+        subtitle: 'Autonomous high-throughput risk scoring and anomaly detection engine.',
+        category: 'AI & FinTech',
+        location: 'New York, USA',
+        problem: 'FinScale was suffering from high chargeback dispute fines and delayed transaction authorizations due to slow batch-processing legacy risk models.',
+        solution: 'Engineered an event-driven streaming inference pipeline with Kafka and PyTorch microservices running on AWS EKS, scoring transactions with sub-12ms p99 latency.',
+        tech: ['Python', 'PyTorch', 'FastAPI', 'Kafka', 'Redis', 'Docker', 'AWS EKS'],
+        outcomes: [
+          'Reduced fraudulent transactions and chargebacks by 68% in the first 90 days.',
+          'Scales to 120,000 real-time transaction events per minute at peak loads.',
+          'Zero downtime achieved across 12 consecutive months of 24/7 financial processing.'
+        ]
+      },
+      aerotrack: {
+        title: 'AeroTrack Multi-Port Freight Hub',
+        subtitle: 'Centralized container dispatch management and customs clearing suite.',
+        category: 'SaaS & Logistics',
+        location: 'Dubai, UAE',
+        problem: 'Logistics operators faced fragmented customs paperwork, spreadsheet-based carrier tracking, and costly container demurrage fees across 6 Gulf maritime terminals.',
+        solution: 'Built a unified multi-tenant SaaS portal with Next.js and Node.js microservices integrating live maritime AIS telemetry, EDI freight manifests, and automated carrier dispatching.',
+        tech: ['Next.js', 'Node.js', 'PostgreSQL', 'Redis', 'Docker', 'GCP Kubernetes'],
+        outcomes: [
+          'Decreased maritime port turnaround and container dwell times by 40%.',
+          'Tracks over 14,000 monthly TEUs with automated clearance status notifications.',
+          'Adopted by 48 regional freight forwarding companies across the GCC.'
+        ]
+      },
+      medpulse: {
+        title: 'MedPulse HIPAA Telehealth Platform',
+        subtitle: 'Cross-platform mobile consultations with Bluetooth vital sensor sync.',
+        category: 'Mobile & MedTech',
+        location: 'Sydney, Australia',
+        problem: 'Rural patients experienced dropouts during consultations, and clinics struggled to maintain compliance when transmitting digital prescriptions and patient vitals.',
+        solution: 'Engineered cross-platform Flutter apps for iOS and Android with WebRTC encrypted video pipelines, offline caching, and automated Bluetooth stethoscope and pulse oximeter sync.',
+        tech: ['Flutter', 'WebRTC', 'AWS HIPAA Cloud', 'GraphQL', 'Swift', 'Kotlin'],
+        outcomes: [
+          'Maintained 99.8% video consultation completion rate even on low-bandwidth 3G networks.',
+          'Achieved 100% compliance with Australian Privacy Principles and HIPAA standards.',
+          'Over 65,000 remote patient appointments conducted without a single data breach.'
+        ]
+      },
+      jurisbrain: {
+        title: 'JurisBrain Enterprise Legal RAG Assistant',
+        subtitle: 'Private on-premise LLM knowledge retrieval pipeline for high-stakes contracts.',
+        category: 'AI & Enterprise LLM',
+        location: 'London, UK',
+        problem: 'Corporate legal counsel spent an average of 14 billable hours per complex M&A contract, but strict NDAs prevented using public cloud AI services like standard ChatGPT.',
+        solution: 'Deployed an air-gapped on-premise RAG system using Llama 3 fine-tuned embeddings, Qdrant vector database, and FastAPI orchestrators with exact paragraph source citations.',
+        tech: ['Llama 3', 'Qdrant Vector DB', 'FastAPI', 'Docker', 'Python', 'NVIDIA TensorRT'],
+        outcomes: [
+          'Delivers cited contract risk assessments and clause comparisons in under 4 seconds.',
+          'Accelerated initial contract triage by 78%, saving an estimated 10 hours per agreement.',
+          'Zero external internet data leakage with all weights and vector indices hosted on private company hardware.'
+        ]
+      },
+      omnimarket: {
+        title: 'OmniMarket Headless E-Commerce Suite',
+        subtitle: 'Sub-second edge storefront for high-traffic international retail.',
+        category: 'Web Applications',
+        location: 'Singapore',
+        problem: 'Traditional monolithic storefronts suffered severe slowdowns (5+ second load times) and database connection saturation during flash sales.',
+        solution: 'Re-architected the store using React with edge SSR on Cloudflare Workers, Redis inventory caching, and headless microservices for checkout resilience.',
+        tech: ['React', 'Next.js', 'Shopify Headless', 'Tailwind', 'Cloudflare Workers', 'Redis'],
+        outcomes: [
+          'Supported 40,000 concurrent peak holiday shoppers without a single dropped cart.',
+          'Reduced global page load time to under 800ms, lifting checkout conversions by 24%.',
+          'Achieved 99.99% holiday uptime.'
+        ]
+      },
+      urbannest: {
+        title: 'UrbanNest Property & Tenant Hub',
+        subtitle: 'Smart property management mobile application with instant maintenance tickets.',
+        category: 'Mobile Applications',
+        location: 'Toronto, Canada',
+        problem: 'Tenants faced delayed repairs and property managers relied on paper checks, leading to accounting errors and tenant disputes.',
+        solution: 'Built a fluid React Native app featuring digital lease signing, photo/video maintenance ticketing, real-time push notifications, and automated debit rent collection.',
+        tech: ['React Native', 'Stripe Payments', 'Node.js', 'AWS S3', 'PostgreSQL'],
+        outcomes: [
+          '85% of tenant maintenance requests resolved within 24 hours via automated vendor dispatch.',
+          'On-time rent collections rose by 34% within the first two billing cycles.',
+          'Deployed across 3,200 residential apartment units.'
+        ]
+      }
+    };
+
+    function openCaseStudy(key) {
+      const data = caseStudiesData[key];
+      if (!data) return;
+
+      document.getElementById('modalProjectCategory').innerHTML = `<span class="tag-dot"></span>${data.category}`;
+      document.getElementById('modalProjectLocation').innerText = data.location;
+      document.getElementById('modalProjectTitle').innerText = data.title;
+      document.getElementById('modalProjectSubtitle').innerText = data.subtitle;
+      document.getElementById('modalProjectProblem').innerText = data.problem;
+      document.getElementById('modalProjectSolution').innerText = data.solution;
+
+      const techContainer = document.getElementById('modalProjectTech');
+      techContainer.innerHTML = data.tech.map(t => `<span class="zy-tag-pill me-1 mb-1"><span class="tag-dot"></span>${t}</span>`).join('');
+
+      const outcomesContainer = document.getElementById('modalProjectOutcomes');
+      outcomesContainer.innerHTML = data.outcomes.map(o => `<li class="mb-1">${o}</li>`).join('');
+
+      const modalEl = document.getElementById('caseStudyDetailModal');
+      const modal = new bootstrap.Modal(modalEl);
+      modal.show();
+    }
+
+    function handlePortfolioSearch() {
+      const query = document.getElementById('portfolioSearchInput').value.toLowerCase().trim();
+      const activeFilterBtn = document.querySelector('.portfolio-filter-btn.active');
+      const activeCategory = activeFilterBtn ? activeFilterBtn.getAttribute('data-filter') : 'all';
+
+      const items = document.querySelectorAll('.portfolio-item');
+      items.forEach(item => {
+        const itemCategory = item.getAttribute('data-category');
+        const text = item.innerText.toLowerCase();
+
+        const matchesCategory = activeCategory === 'all' || itemCategory === activeCategory;
+        const matchesQuery = query === '' || text.includes(query);
+
+        if (matchesCategory && matchesQuery) {
+          item.style.display = 'block';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+    }
+
+    function clearPortfolioSearch() {
+      document.getElementById('portfolioSearchInput').value = '';
+      handlePortfolioSearch();
+    }
+
+    // Attach click listeners to filter buttons
+    document.querySelectorAll('.portfolio-filter-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.portfolio-filter-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        handlePortfolioSearch();
+      });
+    });
+  </script>
+<script src="/assets/js/theme.js"></script>
+</body>
+</html>

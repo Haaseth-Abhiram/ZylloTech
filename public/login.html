@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login | Zyllo Tech</title>
+  <link rel="icon" href="/assets/images/Zyllo_Tech_Favicon_512x512.png">
+  
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="/assets/css/style.css?v=2.6">
+  
+  <style>
+    body {
+      background-color: #0b0e17;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .login-hero-bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+    .login-hero-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.95;
+      filter: saturate(1.15) contrast(1.12) brightness(1.05);
+    }
+    .login-radial-overlay {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 85% 85% at 50% 50%, rgba(11,14,23,0.05) 0%, rgba(11,14,23,0.25) 50%, rgba(11,14,23,0.65) 100%);
+    }
+  </style>
+</head>
+<body class="position-relative theme-light">
+  <!-- ==================== FULLSCREEN PAGE TRANSITION LOADER ==================== -->
+  <div id="zy-page-loader">
+    <div class="loader-ambient-left"></div>
+    <div class="loader-ambient-right"></div>
+    
+    <!-- Floating Tech Badges Matching Screenshot -->
+    <div class="loader-floating-icon icon-cyan loader-icon-1"><i class="bi bi-tools"></i></div>
+    <div class="loader-floating-icon icon-cyan loader-icon-2"><i class="bi bi-code-slash"></i></div>
+    <div class="loader-floating-icon icon-orange loader-icon-3"><i class="bi bi-lightbulb"></i></div>
+    <div class="loader-floating-icon icon-cyan loader-icon-4"><i class="bi bi-cloud"></i></div>
+    <div class="loader-floating-icon icon-orange loader-icon-5"><i class="bi bi-stars"></i></div>
+    <div class="loader-floating-icon icon-cyan loader-icon-6"><i class="bi bi-pencil"></i></div>
+    <div class="loader-floating-icon icon-cyan loader-icon-7"><i class="bi bi-phone"></i></div>
+    <div class="loader-floating-icon icon-orange loader-icon-8"><i class="bi bi-shield-check"></i></div>
+    <div class="loader-floating-icon icon-orange loader-icon-9"><i class="bi bi-palette"></i></div>
+
+    <!-- Center Hub Spinner -->
+    <div class="loader-center-hub">
+      <div class="loader-circle-wrapper">
+        <div class="loader-circle-track"></div>
+        <div class="loader-circle-spinner"></div>
+        <div class="loader-center-disc">
+          <img src="/assets/images/zyllo-icon.png" alt="Zyllo Tech">
+        </div>
+      </div>
+      <div class="loader-brand-title">
+        <span class="brand-part-zyllo">ZYLLO</span>
+        <span class="brand-part-tech">TECH</span>
+      </div>
+      <div class="loader-dots-row">
+        <span class="loader-dot loader-dot-1"></span>
+        <span class="loader-dot loader-dot-2"></span>
+        <span class="loader-dot loader-dot-3"></span>
+      </div>
+      <div class="loader-typewriter-box">
+        <span id="loader-typewriter-text">Connecting...</span><span class="loader-cursor"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Background Image with Overlay -->
+  <div class="login-hero-bg" aria-hidden="true">
+    <img src="/assets/images/robo.jpg" alt="Zyllo Tech AI Background">
+    <div class="login-radial-overlay"></div>
+  </div>
+
+  
+  <!-- Floating Theme Switcher on Login Page -->
+  <button class="zy-theme-toggle-btn position-fixed top-0 end-0 m-4 z-3 shadow-sm" onclick="toggleTheme()" title="Switch Light / Dark Theme">
+    <i class="bi bi-moon-stars-fill text-warning"></i>
+    <span class="theme-label small">Dark Mode</span>
+  </button>
+
+  <!-- Back to Home Floating Pill -->
+  <a href="/" class="btn-brand-outline position-fixed top-0 start-0 m-4 z-3 text-white text-decoration-none" style="border-radius: 9999px; padding: 0.5rem 1.25rem;">
+    <i class="bi bi-arrow-left me-1"></i> Back to Home
+  </a>
+
+  <!-- Main Login Container -->
+  <div class="container d-flex align-items-center justify-content-center flex-grow-1 py-5 position-relative z-1" style="min-height: 100vh;">
+    <div class="w-100" style="max-width: 460px;">
+      
+      <!-- Brand Header -->
+      <div class="text-center mb-4">
+        <a href="/" class="d-inline-flex align-items-center gap-2 text-decoration-none mb-3">
+          <img src="/assets/images/zyllo-icon.png" alt="Zyllo Tech Logo" style="height: 44px; width: auto; filter: drop-shadow(0 2px 14px rgba(0,0,0,0.6));">
+          <span class="fs-2 fw-extrabold text-uppercase tracking-tight" style="letter-spacing: -0.02em;">
+            <span class="text-gradient-orange fw-bold">Zyllo</span>
+            <span class="text-gradient-cyan fw-bold">Tech</span>
+          </span>
+        </a>
+        <div class="d-block">
+          <span class="zy-badge">
+            <i class="bi bi-stars"></i> AI-Driven Software Delivery
+          </span>
+        </div>
+      </div>
+
+      <!-- Gradient Border Wrapper -->
+      <div class="login-card-border">
+        <div class="login-card-inner">
+          
+          <!-- Glowing Ambient Orbs inside card -->
+          <div style="position: absolute; top: -50px; right: -50px; width: 140px; height: 140px; background: rgba(249, 103, 6, 0.2); filter: blur(50px); pointer-events: none;"></div>
+          <div style="position: absolute; bottom: -50px; left: -50px; width: 140px; height: 140px; background: rgba(38, 34, 98, 0.2); filter: blur(50px); pointer-events: none;"></div>
+
+          <!-- Tab Pill Switcher -->
+          <div class="login-tab-pill mb-4 position-relative z-1">
+            <button type="button" class="login-tab-btn active" id="tab-signin-btn" onclick="switchTab('signin')">
+              Sign In
+            </button>
+            <button type="button" class="login-tab-btn" id="tab-signup-btn" onclick="switchTab('signup')">
+              Sign Up
+            </button>
+          </div>
+
+          <!-- Alert Notification Box -->
+          <div id="authAlert" class="alert d-none py-2 px-3 small rounded-3 mb-3" role="alert"></div>
+
+          <!-- ==================== SIGN IN FORM ==================== -->
+          <div id="signin-section">
+            <h1 class="h4 fw-bold text-white text-center mb-1">Welcome back</h1>
+            <p class="text-white-50 text-center small mb-4">Sign in to your Zyllo Tech account</p>
+
+            <form id="signInForm">
+              <!-- Email input -->
+              <div class="mb-3">
+                <label for="signin-email" class="form-label text-white-50 small mb-1">Email</label>
+                <div class="position-relative">
+                  <span class="position-absolute top-50 start-0 translate-middle-y ps-3 text-white-50">
+                    <i class="bi bi-envelope"></i>
+                  </span>
+                  <input type="email" id="signin-email" class="form-control zy-input ps-5" placeholder="name@company.com" required>
+                </div>
+              </div>
+
+              <!-- Password input -->
+              <div class="mb-3">
+                <label for="signin-password" class="form-label text-white-50 small mb-1">Password</label>
+                <div class="position-relative">
+                  <span class="position-absolute top-50 start-0 translate-middle-y ps-3 text-white-50">
+                    <i class="bi bi-lock"></i>
+                  </span>
+                  <input type="password" id="signin-password" class="form-control zy-input ps-5 pe-5" placeholder="Enter your password" required>
+                  <button type="button" class="btn border-0 position-absolute top-50 end-0 translate-middle-y pe-3 text-white-50" onclick="togglePasswordVisibility('signin-password', this)">
+                    <i class="bi bi-eye"></i>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Submit button -->
+              <button type="submit" id="signin-submit-btn" class="btn btn-brand w-100 py-2.5 justify-content-center">
+                Sign In
+              </button>
+            </form>
+          </div>
+
+          <!-- ==================== SIGN UP SECTION (RESTRICTED ACCESS MATCHING IMAGE 1) ==================== -->
+          <div id="signup-section" class="d-none text-center py-2">
+            <!-- User Group Icon matching Image 1 -->
+            <div class="d-flex justify-content-center mb-3">
+              <div class="d-flex align-items-center justify-content-center rounded-circle" style="width: 52px; height: 52px; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.15); color: #cbd5e1;">
+                <i class="bi bi-people-fill fs-4"></i>
+              </div>
+            </div>
+
+            <h2 class="h4 fw-bold text-white mb-2">Request access</h2>
+            <p class="text-white-50 small mb-4 px-3" style="line-height: 1.6;">
+              Zyllo Tech accounts are provisioned by our team &mdash; there's no public self sign-up. Reach out and we'll set one up for you.
+            </p>
+
+            <div class="mb-2">
+              <a href="/contact" class="btn btn-brand px-4 py-2.5 d-inline-flex align-items-center justify-content-center gap-2 fw-semibold shadow-sm text-decoration-none">
+                Contact Us <i class="bi bi-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- Feature items below divider -->
+          <div class="row pt-4 mt-4 text-center border-top border-white-10">
+            <div class="col-4">
+              <i class="bi bi-speedometer2 text-gradient-orange fs-5 d-block mb-1"></i>
+              <span class="text-white-50" style="font-size: 10px; font-weight: 500;">Real-time visibility</span>
+            </div>
+            <div class="col-4">
+              <i class="bi bi-people-fill text-gradient-cyan fs-5 d-block mb-1"></i>
+              <span class="text-white-50" style="font-size: 10px; font-weight: 500;">Unified workspace</span>
+            </div>
+            <div class="col-4">
+              <i class="bi bi-shield-lock-fill text-warning fs-5 d-block mb-1"></i>
+              <span class="text-white-50" style="font-size: 10px; font-weight: 500;">Permissioned access</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Security Notice -->
+      <p class="mt-4 text-center text-white-50 small d-flex align-items-center justify-content-center gap-1">
+        <i class="bi bi-lock-fill text-warning"></i> Access is restricted to authorized Zyllo Tech accounts
+      </p>
+
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Custom JS -->
+  <script src="/assets/js/main.js"></script>
+
+  <script>
+    function switchTab(mode) {
+      const signinBtn = document.getElementById('tab-signin-btn');
+      const signupBtn = document.getElementById('tab-signup-btn');
+      const signinSection = document.getElementById('signin-section');
+      const signupSection = document.getElementById('signup-section');
+      const alertBox = document.getElementById('authAlert');
+      
+      alertBox.className = 'alert d-none';
+
+      if (mode === 'signin') {
+        signinBtn.classList.add('active');
+        signupBtn.classList.remove('active');
+        signinSection.classList.remove('d-none');
+        signupSection.classList.add('d-none');
+      } else {
+        signupBtn.classList.add('active');
+        signinBtn.classList.remove('active');
+        signupSection.classList.remove('d-none');
+        signinSection.classList.add('d-none');
+      }
+    }
+
+    function togglePasswordVisibility(inputId, btn) {
+      const input = document.getElementById(inputId);
+      const icon = btn.querySelector('i');
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.className = 'bi bi-eye-slash';
+      } else {
+        input.type = 'password';
+        icon.className = 'bi bi-eye';
+      }
+    }
+
+    function fillDemoCredentials(role) {
+      if (role === 'admin') {
+        document.getElementById('signin-email').value = 'admin@zyllotech.com';
+        document.getElementById('signin-password').value = 'admin123';
+      } else if (role === 'hr') {
+        document.getElementById('signin-email').value = 'hr@zyllotech.com';
+        document.getElementById('signin-password').value = 'hr123';
+      } else if (role === 'employee') {
+        document.getElementById('signin-email').value = 'user@zyllotech.com';
+        document.getElementById('signin-password').value = 'user123';
+      } else {
+        document.getElementById('signin-email').value = 'user@zyllotech.com';
+        document.getElementById('signin-password').value = 'user123';
+      }
+    }
+
+    // Handle Sign In Submit
+    document.getElementById('signInForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('signin-email').value;
+      const password = document.getElementById('signin-password').value;
+      const submitBtn = document.getElementById('signin-submit-btn');
+      const alertBox = document.getElementById('authAlert');
+
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = `<span class="spinner-border spinner-border-sm me-2"></span> Signing in...`;
+
+      try {
+        const res = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password })
+        });
+        const data = await res.json();
+
+        if (data.success) {
+          localStorage.setItem('zyllotech_token', data.token);
+          localStorage.setItem('zyllotech_user', JSON.stringify(data.user));
+          
+          let redirectUrl = '/portal';
+          let destName = 'Client Portal';
+          if (data.user.role === 'admin') {
+            redirectUrl = '/dashboard';
+            destName = 'Admin Dashboard';
+          } else if (data.user.role === 'hr') {
+            redirectUrl = '/hr';
+            destName = 'HR Operations Portal';
+          } else if (data.user.role === 'employee') {
+            redirectUrl = '/employee';
+            destName = 'Employee Workspace';
+          }
+
+          alertBox.className = 'alert alert-success d-block py-2 px-3 small';
+          alertBox.innerHTML = `<i class="bi bi-check-circle-fill me-1"></i> Success! Redirecting to ${destName}...`;
+
+          setTimeout(() => {
+            window.location.href = redirectUrl;
+          }, 700);
+        } else {
+          alertBox.className = 'alert alert-danger d-block py-2 px-3 small';
+          alertBox.innerHTML = `<i class="bi bi-exclamation-triangle-fill me-1"></i> ${data.message || 'Invalid email or password'}`;
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = 'Sign In';
+        }
+      } catch (err) {
+        alertBox.className = 'alert alert-danger d-block py-2 px-3 small';
+        alertBox.innerHTML = '<i class="bi bi-exclamation-triangle-fill me-1"></i> Connection failed. Please ensure the server is running.';
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = 'Sign In';
+      }
+    });
+
+    // Handle Sign Up Submit if form is present
+    const signUpFormEl = document.getElementById('signUpForm');
+    if (signUpFormEl) {
+      signUpFormEl.addEventListener('submit', async (e) => {
+        e.preventDefault();
+      });
+    }
+  </script>
+<script src="/assets/js/theme.js"></script>
+</body>
+</html>

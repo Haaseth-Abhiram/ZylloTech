@@ -1,0 +1,3459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin & Client Control Portal | Zyllo Tech</title>
+  <link rel="icon" href="/assets/images/Zyllo_Tech_Favicon_512x512.png">
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="/assets/css/style.css?v=2.8">
+  <style>
+    .nav-pills .nav-link {
+      color: #94a3b8;
+      border: 1px solid transparent;
+      transition: all 0.2s ease;
+      font-weight: 500;
+      font-size: 0.92rem;
+    }
+    .nav-pills .nav-link:hover {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.05);
+    }
+    .nav-pills .nav-link.active {
+      background: linear-gradient(135deg, #f16623 0%, #16133d 100%) !important;
+      color: #ffffff !important;
+      box-shadow: 0 4px 14px rgba(249, 103, 6, 0.35);
+      border-color: transparent !important;
+    }
+    #site-preloader,
+    #zy-page-loader {
+      display: none !important;
+    }
+    .zy-admin-main-pane .zy-card,
+    .zy-admin-main-pane .zy-reveal,
+    .zy-admin-main-pane [class*="zy-card"] {
+      opacity: 1 !important;
+      transform: none !important;
+      visibility: visible !important;
+    }
+    .table > :not(caption) > * > * {
+      padding: 0.85rem 0.85rem;
+    }
+  
+    /* Light Mode Complete Contrast Enhancements */
+    .theme-light .zy-admin-main-pane {
+      background: #f8fafc !important;
+      color: #0f172a !important;
+    }
+    .theme-light .zy-card {
+      background: #ffffff !important;
+      border-color: #e2e8f0 !important;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05) !important;
+      color: #0f172a !important;
+    }
+    .theme-light .zy-card h1,
+    .theme-light .zy-card h2,
+    .theme-light .zy-card h3,
+    .theme-light .zy-card h4,
+    .theme-light .zy-card h5,
+    .theme-light .zy-card h6,
+    .theme-light .zy-card .text-white,
+    .theme-light #emailsTabSection .text-white,
+    .theme-light #blogsTabSection .text-white,
+    .theme-light #jobsTabSection .text-white,
+    .theme-light #inquiriesTabSection .text-white,
+    .theme-light #applicationsTabSection .text-white {
+      color: #0f172a !important;
+    }
+    .theme-light .zy-card .text-white-50,
+    .theme-light #emailsTabSection .text-white-50,
+    .theme-light #blogsTabSection .text-white-50,
+    .theme-light #jobsTabSection .text-white-50,
+    .theme-light #inquiriesTabSection .text-white-50,
+    .theme-light #applicationsTabSection .text-white-50 {
+      color: #64748b !important;
+    }
+    .theme-light .zy-card .text-white-75,
+    .theme-light #emailsTabSection .text-white-75,
+    .theme-light #blogsTabSection .text-white-75,
+    .theme-light #jobsTabSection .text-white-75,
+    .theme-light #inquiriesTabSection .text-white-75,
+    .theme-light #applicationsTabSection .text-white-75 {
+      color: #334155 !important;
+    }
+    .theme-light .border-white\/10,
+    .theme-light .border-white-10 {
+      border-color: #e2e8f0 !important;
+    }
+    .theme-light .table-dark {
+      background-color: transparent !important;
+      color: #0f172a !important;
+    }
+    .theme-light .table thead th,
+    .theme-light .table-dark thead th {
+      color: #475569 !important;
+      background: #f1f5f9 !important;
+      font-weight: 700 !important;
+      border-bottom: 2px solid #e2e8f0 !important;
+    }
+    .theme-light .table tbody tr,
+    .theme-light .table-dark tbody tr {
+      background: #ffffff !important;
+      border-bottom: 1px solid #f1f5f9 !important;
+    }
+    .theme-light .table tbody tr:hover td,
+    .theme-light .table-dark tbody tr:hover td {
+      background-color: #f8fafc !important;
+    }
+    .theme-light .table tbody td,
+    .theme-light .table-dark tbody td {
+      color: #1e293b !important;
+      background: transparent !important;
+    }
+    .theme-light .table tbody td .text-white,
+    .theme-light .table tbody td strong {
+      color: #0f172a !important;
+    }
+    .theme-light .table tbody td .text-white-50 {
+      color: #64748b !important;
+    }
+    .theme-light .zy-input {
+      background: #ffffff !important;
+      border-color: #cbd5e1 !important;
+      color: #0f172a !important;
+    }
+    .theme-light .zy-input:focus {
+      border-color: #f16623 !important;
+      box-shadow: 0 0 0 3px rgba(241, 102, 35, 0.15) !important;
+    }
+    .theme-light [style*="background: rgba(255, 255, 255, 0.02)"],
+    .theme-light [style*="background: rgba(255, 255, 255, 0.03)"] {
+      background: #f8fafc !important;
+      border-color: #e2e8f0 !important;
+    }
+  </style>
+</head>
+<body class="theme-light">
+  <!-- ==================== FULLSCREEN PAGE TRANSITION LOADER ==================== -->
+  <div id="zy-page-loader">
+    <div class="loader-ambient-left"></div>
+    <div class="loader-ambient-right"></div>
+    
+    <!-- Floating Tech Badges Matching Screenshot -->
+    <div class="loader-floating-icon icon-cyan loader-icon-1"><i class="bi bi-tools"></i></div>
+    <div class="loader-floating-icon icon-cyan loader-icon-2"><i class="bi bi-code-slash"></i></div>
+    <div class="loader-floating-icon icon-orange loader-icon-3"><i class="bi bi-lightbulb"></i></div>
+    <div class="loader-floating-icon icon-cyan loader-icon-4"><i class="bi bi-cloud"></i></div>
+    <div class="loader-floating-icon icon-orange loader-icon-5"><i class="bi bi-stars"></i></div>
+    <div class="loader-floating-icon icon-cyan loader-icon-6"><i class="bi bi-pencil"></i></div>
+    <div class="loader-floating-icon icon-cyan loader-icon-7"><i class="bi bi-phone"></i></div>
+    <div class="loader-floating-icon icon-orange loader-icon-8"><i class="bi bi-shield-check"></i></div>
+    <div class="loader-floating-icon icon-orange loader-icon-9"><i class="bi bi-palette"></i></div>
+
+    <!-- Center Hub Spinner -->
+    <div class="loader-center-hub">
+      <div class="loader-circle-wrapper">
+        <div class="loader-circle-track"></div>
+        <div class="loader-circle-spinner"></div>
+        <div class="loader-center-disc">
+          <img src="/assets/images/zyllo-icon.png" alt="Zyllo Tech">
+        </div>
+      </div>
+      <div class="loader-brand-title">
+        <span class="brand-part-zyllo">ZYLLO</span>
+        <span class="brand-part-tech">TECH</span>
+      </div>
+      <div class="loader-dots-row">
+        <span class="loader-dot loader-dot-1"></span>
+        <span class="loader-dot loader-dot-2"></span>
+        <span class="loader-dot loader-dot-3"></span>
+      </div>
+      <div class="loader-typewriter-box">
+        <span id="loader-typewriter-text">Connecting...</span><span class="loader-cursor"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== ADMIN DASHBOARD LAYOUT (IMAGE 5 REFERENCE) ==================== -->
+  <div class="zy-admin-wrapper">
+    <!-- Left Sidebar Matching Image 5 -->
+    <aside class="zy-admin-sidebar" id="adminSidebar">
+      <!-- Sidebar Brand Header -->
+      <div class="zy-admin-sidebar-header">
+        <div class="zy-admin-logo-box">
+          <img src="/assets/images/zyllo-icon.png" alt="Zyllo Tech">
+        </div>
+        <div class="overflow-hidden">
+          <div class="zy-admin-brand-title">
+            <span class="zy-brand-zyllo" style="color: #f16623;">ZYLLO</span> <span class="zy-brand-tech" style="color: #262262;">TECH</span>
+          </div>
+          <div class="zy-admin-brand-sub">SERVICES LLC · ADMIN</div>
+        </div>
+        <button class="btn btn-sm btn-link text-white-50 d-lg-none ms-auto p-0" onclick="toggleAdminSidebar()" aria-label="Close Sidebar">
+          <i class="bi bi-x-lg fs-5"></i>
+        </button>
+      </div>
+
+      <!-- WORKSPACE Navigation Group -->
+      <div class="zy-sidebar-group-label">WORKSPACE</div>
+
+      <button type="button" class="zy-sidebar-nav-item active" id="sidebar-nav-overview" onclick="switchDashboardTab('overview')">
+        <span class="zy-sidebar-nav-left"><i class="bi bi-grid-fill"></i><span>Overview</span></span>
+      </button>
+
+      <button type="button" class="zy-sidebar-nav-item" id="sidebar-nav-inquiries" onclick="switchDashboardTab('inquiries')">
+        <span class="zy-sidebar-nav-left"><i class="bi bi-envelope-fill"></i><span>Enquiries</span></span>
+        <span class="zy-sidebar-counter-badge" id="sidebar-badge-inquiries">00</span>
+      </button>
+
+      <button type="button" class="zy-sidebar-nav-item" id="sidebar-nav-jobs" onclick="switchDashboardTab('jobs')">
+        <span class="zy-sidebar-nav-left"><i class="bi bi-suit-diamond-fill"></i><span>Services</span></span>
+        <span class="zy-sidebar-counter-badge" id="sidebar-badge-jobs">00</span>
+      </button>
+
+      <button type="button" class="zy-sidebar-nav-item" id="sidebar-nav-projects" onclick="switchDashboardTab('projects')">
+        <span class="zy-sidebar-nav-left"><i class="bi bi-slash-square-fill"></i><span>Projects</span></span>
+      </button>
+
+      <button type="button" class="zy-sidebar-nav-item" id="sidebar-nav-blogs" onclick="switchDashboardTab('blogs')">
+        <span class="zy-sidebar-nav-left"><i class="bi bi-newspaper"></i><span>Blog & Content</span></span>
+        <span class="zy-sidebar-counter-badge" id="sidebar-badge-blogs">07</span>
+      </button>
+
+      <button type="button" class="zy-sidebar-nav-item" id="sidebar-nav-emails" onclick="switchDashboardTab('emails')">
+        <span class="zy-sidebar-nav-left"><i class="bi bi-envelope-check-fill"></i><span>Email Tracking & SMTP</span></span>
+        <span class="zy-sidebar-counter-badge" id="sidebar-badge-emails">00</span>
+      </button>
+
+      <button type="button" class="zy-sidebar-nav-item" id="sidebar-nav-applications" onclick="switchDashboardTab('applications')">
+        <span class="zy-sidebar-nav-left"><i class="bi bi-person-badge-fill"></i><span>Careers</span></span>
+        <span class="zy-sidebar-counter-badge" id="sidebar-badge-applications">00</span>
+      </button>
+
+      <button type="button" class="zy-sidebar-nav-item" id="sidebar-nav-leaves" onclick="switchDashboardTab('leaves')">
+        <span class="zy-sidebar-nav-left"><i class="bi bi-calendar2-check-fill text-warning"></i><span>Leave Requests</span></span>
+        <span class="zy-sidebar-counter-badge" id="sidebar-badge-leaves">00</span>
+      </button>
+
+      <button type="button" class="zy-sidebar-nav-item" id="sidebar-nav-attendance" onclick="switchDashboardTab('attendance')">
+        <span class="zy-sidebar-nav-left"><i class="bi bi-clock-history text-info"></i><span>Attendance</span></span>
+        <span class="zy-sidebar-counter-badge" id="sidebar-badge-attendance">00</span>
+      </button>
+
+      <!-- MANAGEMENT Navigation Group -->
+      <div class="zy-sidebar-group-label mt-3">MANAGEMENT</div>
+
+      <a href="/portal" class="zy-sidebar-nav-item text-decoration-none" title="Client Project Portal">
+        <span class="zy-sidebar-nav-left"><i class="bi bi-people-fill"></i><span>Customers & Users</span></span>
+        <i class="bi bi-box-arrow-up-right small text-white-50"></i>
+      </a>
+
+      <a href="https://mail.zoho.com" target="_blank" rel="noopener noreferrer" class="zy-sidebar-nav-item text-decoration-none" title="Open Zoho Mail in new tab">
+        <span class="zy-sidebar-nav-left"><i class="bi bi-envelope-at-fill text-warning"></i><span>Zoho Mail</span></span>
+        <i class="bi bi-box-arrow-up-right small text-white-50"></i>
+      </a>
+
+      <a href="/employee" class="zy-sidebar-nav-item text-decoration-none" title="Staff & Employee Workspace">
+        <span class="zy-sidebar-nav-left"><i class="bi bi-person-workspace text-info"></i><span>Employee Portal</span></span>
+        <i class="bi bi-box-arrow-up-right small text-white-50"></i>
+      </a>
+
+      <a href="/hr" class="zy-sidebar-nav-item text-decoration-none" title="HR People Operations Portal">
+        <span class="zy-sidebar-nav-left"><i class="bi bi-person-badge-fill text-warning"></i><span>HR Portal</span></span>
+        <i class="bi bi-box-arrow-up-right small text-white-50"></i>
+      </a>
+
+      <a href="/" target="_blank" class="zy-sidebar-nav-item text-decoration-none" title="Public Website">
+        <span class="zy-sidebar-nav-left"><i class="bi bi-gear-fill"></i><span>Website Settings</span></span>
+        <i class="bi bi-box-arrow-up-right small text-white-50"></i>
+      </a>
+
+      <button type="button" class="zy-sidebar-nav-item text-danger border-0 bg-transparent mt-2" onclick="handleLogout()" title="Log out">
+        <span class="zy-sidebar-nav-left"><i class="bi bi-box-arrow-right text-danger"></i><span class="text-danger fw-semibold">Log Out</span></span>
+      </button>
+
+      <!-- User Mini Profile at bottom of sidebar -->
+      <div class="mt-auto pt-3 border-top border-white/10 d-flex align-items-center gap-2">
+        <div class="rounded-circle d-flex align-items-center justify-content-center text-white fw-bold" style="width: 36px; height: 36px; min-width: 36px; background: #f16623; font-size: 0.85rem;">
+          <span id="sidebarUserInitials">ZT</span>
+        </div>
+        <div class="overflow-hidden" style="line-height: 1.2;">
+          <div class="text-white small fw-bold text-truncate" id="sidebarUserName">Admin</div>
+          <small class="text-white-50 text-truncate d-block" style="font-size: 0.72rem;" id="sidebarUserEmail">admin@zyllotech.com</small>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Mobile Offcanvas Backdrop -->
+    <div class="zy-sidebar-backdrop" id="sidebarBackdrop" onclick="toggleAdminSidebar()"></div>
+
+    <!-- Main Workspace Pane -->
+    <main class="zy-admin-main-pane">
+      <!-- Topbar Header -->
+      <header class="zy-admin-topbar d-flex align-items-center justify-content-between gap-3">
+        <div class="d-flex align-items-center gap-3">
+          <button class="btn btn-sm btn-brand-outline d-lg-none py-1.5 px-2.5" onclick="toggleAdminSidebar()" aria-label="Toggle Sidebar">
+            <i class="bi bi-list fs-5"></i>
+          </button>
+          <a href="/" class="d-flex align-items-center gap-2 text-decoration-none me-2">
+            <div class="zy-admin-logo-box" style="width: 36px !important; height: 36px !important; padding: 2px !important;">
+              <img src="/assets/images/zyllo-icon.png" alt="Zyllo Tech" style="height: 24px !important; width: 24px !important;">
+            </div>
+            <div class="d-none d-sm-block">
+              <div class="zy-admin-brand-title" style="font-size: 0.95rem !important; margin: 0;">
+                <span class="zy-brand-zyllo" style="color: #f16623;">ZYLLO</span> <span class="zy-brand-tech" style="color: #262262;">TECH</span>
+              </div>
+            </div>
+          </a>
+          <div>
+            <div class="d-flex align-items-center gap-2">
+              <span class="badge bg-secondary bg-opacity-25 border border-white-10 text-white-50 small">Workspace</span>
+              <span class="text-white-50 small">/</span>
+              <span class="text-dark small fw-semibold" id="topbarCurrentTab">Overview</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="d-flex align-items-center gap-2">
+          
+          <!-- Universal Light / Dark Mode Toggle Button -->
+          <button class="zy-theme-toggle-btn shadow-sm" onclick="toggleTheme()" title="Switch Light / Dark Theme">
+            <i class="bi bi-moon-stars-fill text-warning"></i>
+            <span class="theme-label d-none d-sm-inline">Dark Mode</span>
+          </button>
+
+          <!-- Quick Post Job Button -->
+          <button class="btn btn-sm btn-brand py-1.5 px-3 d-none d-md-inline-flex align-items-center gap-1" onclick="openNewJobModal()">
+            <i class="bi bi-briefcase-fill"></i> <span>Post Job</span>
+          </button>
+
+          <!-- Quick New Lead Button -->
+          <button class="btn btn-sm btn-brand-outline py-1.5 px-3 d-none d-sm-inline-flex align-items-center gap-1" data-bs-toggle="modal" data-bs-target="#newInquiryModal">
+            <i class="bi bi-plus-lg"></i> <span>New Lead</span>
+          </button>
+
+          <!-- Application Alerts Notification Bell -->
+          <div class="position-relative" id="adminAlertsWrapper">
+            <button class="btn btn-brand-outline py-1.5 px-2.5 position-relative" type="button" id="adminAlertsBtn" onclick="toggleAdminAlertsPanel(event)" title="Job Application Alerts">
+              <i class="bi bi-bell-fill" style="pointer-events: none;"></i>
+              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger d-none" id="adminAlertsBadge" style="font-size: 0.68rem; padding: 0.25em 0.5em; pointer-events: none;">0</span>
+            </button>
+            
+            <!-- Dedicated Floating Notification Panel -->
+            <div id="adminAlertsMenu" style="display: none; position: absolute; top: calc(100% + 12px); right: 0; width: 380px; max-width: 90vw; border-radius: 14px; border-radius: 14px;  z-index: 99999; overflow: hidden;">
+              <div class="d-flex justify-content-between align-items-center p-3 border-bottom border-white/10" style="background: rgba(255,255,255,0.03);">
+                <span class="fw-bold text-white small"><i class="bi bi-bell-fill text-warning me-1"></i> Job Application Alerts</span>
+                <div class="d-flex align-items-center gap-2">
+                  <button class="btn btn-sm text-info p-0 small text-decoration-none" onclick="markAllAlertsRead(event)">Mark All Read</button>
+                  <button type="button" class="btn-close btn-close-white btn-sm ms-1" style="font-size: 0.65rem;" onclick="closeAdminAlertsPanel(event)" aria-label="Close"></button>
+                </div>
+              </div>
+              <div id="adminAlertsList" style="max-height: 360px; overflow-y: auto; background: #ffffff;">
+                <div class="text-center py-4 text-white-50 small">Loading alerts...</div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Public Website Link -->
+          <a href="/" target="_blank" class="btn btn-sm btn-brand-outline py-1.5 px-2.5 d-none d-md-inline-flex" title="Open Public Website">
+            <i class="bi bi-globe me-1"></i> Public Site
+          </a>
+
+          <!-- User Menu Dropdown -->
+          <div class="dropdown">
+            <button class="btn btn-sm btn-brand py-1.5 px-3 dropdown-toggle" type="button" data-bs-toggle="dropdown" id="userMenuBtn">
+              <i class="bi bi-person-circle me-1"></i> Admin
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end zy-dropdown-menu">
+              <li class="px-3 py-2 border-bottom border-white/10">
+                <small class="text-white-50 d-block">Logged in as</small>
+                <span id="userDropdownEmail" class="fw-bold text-white">...</span>
+              </li>
+              <li>
+                <a class="zy-dropdown-item mt-1" href="/" target="_blank"><i class="bi bi-box-arrow-up-right me-2 text-info"></i> Open Public Site</a>
+              </li>
+              <li><hr class="dropdown-divider border-white/10 my-1"></li>
+              <li>
+                <button class="zy-dropdown-item text-danger border-0 bg-transparent w-100 text-start" onclick="handleLogout()">
+                  <i class="bi bi-box-arrow-right me-2"></i> Log Out
+                </button>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Direct Logout Pill -->
+          <button class="btn btn-sm btn-outline-danger py-1.5 px-3 rounded-pill d-inline-flex align-items-center gap-1 shadow-sm" onclick="handleLogout()" title="Log out">
+            <i class="bi bi-box-arrow-right"></i> <span class="d-none d-sm-inline">Log Out</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Main Workspace Scroll Area -->
+      <div class="p-3 p-md-4 p-xl-4">
+        
+        <!-- ==================== TAB 0: OVERVIEW SECTION ==================== -->
+        <div id="overviewTabSection">
+          <!-- Welcome Banner -->
+          <div class="row align-items-center mb-4">
+            <div class="col-md-7">
+              <div class="d-flex align-items-center gap-2 mb-2">
+                <span class="zy-badge"><i class="bi bi-shield-check"></i> Connected to SQLite Database</span>
+              </div>
+              <h1 class="h3 fw-bold mb-1 text-white">
+                Hello, <span id="welcomeUserName" class="text-gradient-brand">User</span>
+              </h1>
+              <p class="text-white-50 mb-0 small" id="welcomeCompany">Zyllo Tech Unified Workspace · Admin Control</p>
+            </div>
+            <div class="col-md-5 text-md-end mt-3 mt-md-0 d-flex flex-wrap gap-2 justify-content-md-end">
+              <button class="btn btn-sm btn-brand" onclick="openNewJobModal()">
+                <i class="bi bi-briefcase-fill me-1"></i> Post New Job
+              </button>
+              <button class="btn btn-sm btn-brand-outline" data-bs-toggle="modal" data-bs-target="#newInquiryModal">
+                <i class="bi bi-plus-lg me-1"></i> New Project Lead
+              </button>
+            </div>
+          </div>
+
+          <!-- Metric Stat Cards -->
+          <div class="row g-3 mb-4">
+            <div class="col-sm-6 col-lg-3">
+              <div class="zy-card p-3 d-flex align-items-center gap-3">
+                <div class="service-icon-wrapper mb-0" style="width: 48px; height: 48px;">
+                  <i class="bi bi-inbox-fill fs-5"></i>
+                </div>
+                <div>
+                  <span class="text-white-50 small d-block">Total Inquiries</span>
+                  <span class="fs-4 fw-bold text-white" id="stat-total-inquiries">0</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-6 col-lg-3">
+              <div class="zy-card p-3 d-flex align-items-center gap-3">
+                <div class="service-icon-wrapper mb-0" style="width: 48px; height: 48px; background: rgba(38, 34, 98,0.2); color: #262262;">
+                  <i class="bi bi-lightning-charge-fill fs-5"></i>
+                </div>
+                <div>
+                  <span class="text-white-50 small d-block">New Leads</span>
+                  <span class="fs-4 fw-bold text-white" id="stat-new-inquiries">0</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-6 col-lg-3">
+              <div class="zy-card p-3 d-flex align-items-center gap-3">
+                <div class="service-icon-wrapper mb-0" style="width: 48px; height: 48px; background: rgba(249,103,6,0.18); color: #f16623;">
+                  <i class="bi bi-briefcase-fill fs-5"></i>
+                </div>
+                <div>
+                  <span class="text-white-50 small d-block">Active Job Roles</span>
+                  <span class="fs-4 fw-bold text-white" id="stat-total-jobs">0</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-6 col-lg-3">
+              <div class="zy-card p-3 d-flex align-items-center gap-3">
+                <div class="service-icon-wrapper mb-0" style="width: 48px; height: 48px; background: rgba(34,197,94,0.15); color: #22c55e;">
+                  <i class="bi bi-file-earmark-person-fill fs-5"></i>
+                </div>
+                <div>
+                  <span class="text-white-50 small d-block">Resumes Received</span>
+                  <span class="fs-4 fw-bold text-white" id="stat-total-applications">0</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Candidate Confirmation Email Tracking Card -->
+            <div class="col-12">
+              <div class="zy-card p-3 d-flex flex-wrap align-items-center justify-content-between gap-3" style="background: linear-gradient(135deg, rgba(249,103,6,0.08) 0%, rgba(38, 34, 98,0.08) 100%); border: 1px solid rgba(249,103,6,0.25);">
+                <div class="d-flex align-items-center gap-3">
+                  <div class="service-icon-wrapper mb-0" style="width: 48px; height: 48px; background: rgba(249,103,6,0.2); color: #f16623;">
+                    <i class="bi bi-envelope-open-fill fs-4"></i>
+                  </div>
+                  <div>
+                    <div class="d-flex align-items-center gap-2">
+                      <span class="fw-bold text-white fs-6">Candidate Confirmation Email Tracking</span>
+                      <span class="badge bg-secondary bg-opacity-25 border border-white-10 text-white-50">From: haasethabhiram@gmail.com</span>
+                    </div>
+                    <small class="text-white-50">Real-time open tracking pixel detects when jobseekers view their confirmation email</small>
+                  </div>
+                </div>
+                <div class="d-flex align-items-center gap-4 flex-wrap">
+                  <div class="text-center">
+                    <span class="text-white-50 small d-block" style="font-size: 0.72rem;">Emails Dispatched</span>
+                    <strong class="text-white fs-5" id="stat-emails-dispatched">0</strong>
+                  </div>
+                  <div class="text-center">
+                    <span class="text-white-50 small d-block" style="font-size: 0.72rem;">Unique Opened</span>
+                    <strong class="text-success fs-5" id="stat-emails-opened">0</strong>
+                  </div>
+                  <div class="text-center">
+                    <span class="text-white-50 small d-block" style="font-size: 0.72rem;">Open / Seen Rate</span>
+                    <strong class="text-info fs-5" id="stat-email-open-rate">0%</strong>
+                  </div>
+                  <button class="btn btn-sm btn-brand px-3" onclick="switchDashboardTab('emails')">
+                    <i class="bi bi-eye-fill me-1"></i> View Outbox & Seen Data
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Employee Leaves & Attendance Live Banner -->
+            <div class="col-12">
+              <div class="zy-card p-3 d-flex flex-wrap align-items-center justify-content-between gap-3" style="background: linear-gradient(135deg, rgba(234, 179, 8, 0.08) 0%, rgba(241, 102, 35, 0.08) 100%); border: 1px solid rgba(234, 179, 8, 0.25);">
+                <div class="d-flex align-items-center gap-3">
+                  <div class="service-icon-wrapper mb-0" style="width: 48px; height: 48px; background: rgba(234, 179, 8, 0.2); color: #eab308;">
+                    <i class="bi bi-person-workspace fs-4"></i>
+                  </div>
+                  <div>
+                    <div class="d-flex align-items-center gap-2">
+                      <span class="fw-bold text-white fs-6">Employee Operations &amp; HR Center</span>
+                      <span class="badge bg-warning bg-opacity-25 border border-warning text-warning">Staff Self-Service</span>
+                    </div>
+                    <small class="text-white-50">Review employee leave requests and monitor engineering pod attendance in real time</small>
+                  </div>
+                </div>
+                <div class="d-flex align-items-center gap-4 flex-wrap">
+                  <div class="text-center">
+                    <span class="text-white-50 small d-block" style="font-size: 0.72rem;">Pending Leaves</span>
+                    <strong class="text-warning fs-5" id="stat-pending-leaves">0</strong>
+                  </div>
+                  <div class="text-center">
+                    <span class="text-white-50 small d-block" style="font-size: 0.72rem;">Present Today</span>
+                    <strong class="text-success fs-5" id="stat-today-attendance">0</strong>
+                  </div>
+                  <div class="d-flex gap-2">
+                    <button class="btn btn-sm btn-brand px-3" onclick="switchDashboardTab('leaves')">
+                      <i class="bi bi-calendar2-check-fill me-1"></i> Review Leaves
+                    </button>
+                    <button class="btn btn-sm btn-brand-outline px-3" onclick="switchDashboardTab('attendance')">
+                      <i class="bi bi-clock-history me-1"></i> Attendance
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Quick Preview Grid -->
+          <div class="row g-4 mb-4">
+            <!-- Recent Enquiries Preview -->
+            <div class="col-lg-6">
+              <div class="zy-card p-3 h-100">
+                <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom border-white/10">
+                  <div class="d-flex align-items-center gap-2">
+                    <i class="bi bi-envelope-fill text-warning"></i>
+                    <h6 class="fw-bold text-white mb-0">Recent Enquiries</h6>
+                  </div>
+                  <button class="btn btn-sm text-info p-0 small text-decoration-none" onclick="switchDashboardTab('inquiries')">
+                    View All <i class="bi bi-arrow-right"></i>
+                  </button>
+                </div>
+                <div class="table-responsive">
+                  <table class="table  table-hover align-middle mb-0" style="background: transparent;">
+                    <tbody id="overviewRecentInquiries">
+                      <tr><td class="text-center py-3 text-white-50 small">Loading recent enquiries...</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <!-- Recent Applications Preview -->
+            <div class="col-lg-6">
+              <div class="zy-card p-3 h-100">
+                <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom border-white/10">
+                  <div class="d-flex align-items-center gap-2">
+                    <i class="bi bi-person-badge-fill text-info"></i>
+                    <h6 class="fw-bold text-white mb-0">Recent Applications</h6>
+                  </div>
+                  <button class="btn btn-sm text-info p-0 small text-decoration-none" onclick="switchDashboardTab('applications')">
+                    View All <i class="bi bi-arrow-right"></i>
+                  </button>
+                </div>
+                <div class="table-responsive">
+                  <table class="table  table-hover align-middle mb-0" style="background: transparent;">
+                    <tbody id="overviewRecentApplications">
+                      <tr><td class="text-center py-3 text-white-50 small">Loading recent applications...</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- ==================== TAB 1: INQUIRIES SECTION ==================== -->
+        <div class="zy-card p-4 mb-4 d-none" id="inquiriesTabSection">
+          <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3 pb-2 border-bottom border-white/10">
+            <div>
+              <h2 class="h5 fw-bold text-white mb-0">Client Inquiries & Project Requests</h2>
+              <small class="text-white-50">Stored dynamically in local SQLite database (`zyllotech.db`)</small>
+            </div>
+            <button class="btn btn-sm btn-brand-outline" onclick="loadInquiries()">
+              <i class="bi bi-arrow-clockwise me-1"></i> Refresh
+            </button>
+          </div>
+
+          <div class="table-responsive">
+            <table class="table  table-hover align-middle mb-0" style="background: transparent;">
+              <thead class="text-white-50 border-bottom border-white/10 small text-uppercase">
+                <tr>
+                  <th scope="col">ID</th>
+                  <th scope="col">Client</th>
+                  <th scope="col">Service</th>
+                  <th scope="col">Budget</th>
+                  <th scope="col">Date</th>
+                  <th scope="col">Status</th>
+                  <th scope="col" class="text-end">Action</th>
+                </tr>
+              </thead>
+              <tbody id="inquiriesTableBody">
+                <tr>
+                  <td colspan="7" class="text-center py-4 text-white-50">
+                    <span class="spinner-border spinner-border-sm me-2"></span> Loading inquiries from database...
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ==================== TAB 6: EMPLOYEE LEAVE REQUESTS ==================== -->
+        <div class="zy-card p-4 mb-4 d-none" id="leavesTabSection">
+          <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-3 pb-2 border-bottom border-white/10">
+            <div>
+              <h2 class="h5 fw-bold text-white mb-0">
+                <i class="bi bi-calendar2-check-fill text-warning me-2"></i>Employee Leave Applications &amp; Approvals
+              </h2>
+              <small class="text-white-50">Review, accept, or reject time-off applications submitted from the Employee Portal.</small>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+              <button class="btn btn-sm btn-brand-outline" onclick="loadAdminLeaves()">
+                <i class="bi bi-arrow-clockwise me-1"></i> Refresh
+              </button>
+            </div>
+          </div>
+
+          <!-- Leave Summary KPI Pills -->
+          <div class="row g-3 mb-4">
+            <div class="col-6 col-md-3">
+              <div class="p-3 rounded-3 border border-white-10 text-center" style="background: rgba(255, 255, 255, 0.02);">
+                <span class="text-white-50 small d-block">Pending Approval</span>
+                <strong class="text-warning fs-4" id="adminLeavePendingCount">0</strong>
+              </div>
+            </div>
+            <div class="col-6 col-md-3">
+              <div class="p-3 rounded-3 border border-white-10 text-center" style="background: rgba(255, 255, 255, 0.02);">
+                <span class="text-white-50 small d-block">Approved Leaves</span>
+                <strong class="text-success fs-4" id="adminLeaveApprovedCount">0</strong>
+              </div>
+            </div>
+            <div class="col-6 col-md-3">
+              <div class="p-3 rounded-3 border border-white-10 text-center" style="background: rgba(255, 255, 255, 0.02);">
+                <span class="text-white-50 small d-block">Rejected Requests</span>
+                <strong class="text-danger fs-4" id="adminLeaveRejectedCount">0</strong>
+              </div>
+            </div>
+            <div class="col-6 col-md-3">
+              <div class="p-3 rounded-3 border border-white-10 text-center" style="background: rgba(255, 255, 255, 0.02);">
+                <span class="text-white-50 small d-block">Total Requests</span>
+                <strong class="text-info fs-4" id="adminLeaveTotalCount">0</strong>
+              </div>
+            </div>
+          </div>
+
+          <!-- Filters Row -->
+          <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3">
+            <div class="btn-group btn-group-sm" role="group">
+              <button type="button" class="btn btn-outline-light active" id="filterLeaveAll" onclick="filterLeavesTable('all')">All Requests</button>
+              <button type="button" class="btn btn-outline-light" id="filterLeavePending" onclick="filterLeavesTable('Pending')">Pending</button>
+              <button type="button" class="btn btn-outline-light" id="filterLeaveApproved" onclick="filterLeavesTable('Approved')">Approved</button>
+              <button type="button" class="btn btn-outline-light" id="filterLeaveRejected" onclick="filterLeavesTable('Rejected')">Rejected</button>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+              <input type="text" id="searchLeavesInput" class="form-control form-control-sm zy-input" placeholder="Search by name, ID, or reason..." onkeyup="filterLeavesBySearch()" style="max-width: 260px;">
+            </div>
+          </div>
+
+          <!-- Leaves Table -->
+          <div class="table-responsive">
+            <table class="table  table-hover mb-0 align-middle">
+              <thead class=" text-white-50 small text-uppercase" style="background: rgba(255,255,255,0.03);">
+                <tr>
+                  <th>Employee</th>
+                  <th>Leave Type</th>
+                  <th>Date Range</th>
+                  <th>Duration</th>
+                  <th>Reason</th>
+                  <th>Applied On</th>
+                  <th>Status</th>
+                  <th class="text-end">Action</th>
+                </tr>
+              </thead>
+              <tbody id="adminLeavesTableBody">
+                <tr><td colspan="8" class="text-center py-4 text-white-50">Loading leave requests...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ==================== TAB 7: EMPLOYEE ATTENDANCE ==================== -->
+        <div class="zy-card p-4 mb-4 d-none" id="attendanceTabSection">
+          <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-3 pb-2 border-bottom border-white/10">
+            <div>
+              <h2 class="h5 fw-bold text-white mb-0">
+                <i class="bi bi-clock-history text-info me-2"></i>Employee Attendance &amp; Shift Monitor
+              </h2>
+              <small class="text-white-50">Daily punch logs, shift hours, and biometric/web attendance across engineering pods.</small>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+              <button class="btn btn-sm btn-brand-outline" onclick="loadAdminAttendance()">
+                <i class="bi bi-arrow-clockwise me-1"></i> Refresh
+              </button>
+            </div>
+          </div>
+
+          <!-- Attendance Metrics Row -->
+          <div class="row g-3 mb-4">
+            <div class="col-sm-6 col-lg-3">
+              <div class="p-3 rounded-3 border border-white-10 text-center" style="background: rgba(255, 255, 255, 0.02);">
+                <span class="text-white-50 small d-block">Total Logs Tracked</span>
+                <strong class="text-white fs-4" id="adminAttTotalLogs">0</strong>
+              </div>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+              <div class="p-3 rounded-3 border border-white-10 text-center" style="background: rgba(255, 255, 255, 0.02);">
+                <span class="text-white-50 small d-block">Present In-Office</span>
+                <strong class="text-success fs-4" id="adminAttPresentCount">0</strong>
+              </div>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+              <div class="p-3 rounded-3 border border-white-10 text-center" style="background: rgba(255, 255, 255, 0.02);">
+                <span class="text-white-50 small d-block">Work From Home (WFH)</span>
+                <strong class="text-info fs-4" id="adminAttWfhCount">0</strong>
+              </div>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+              <div class="p-3 rounded-3 border border-white-10 text-center" style="background: rgba(255, 255, 255, 0.02);">
+                <span class="text-white-50 small d-block">Shift Schedule</span>
+                <strong class="text-warning fs-4" style="font-size: 1.1rem !important;">09:30 – 18:30</strong>
+              </div>
+            </div>
+          </div>
+
+          <!-- Filters Row -->
+          <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3">
+            <div class="btn-group btn-group-sm" role="group">
+              <button type="button" class="btn btn-outline-light active" id="filterAttAll" onclick="filterAttendanceTable('all')">All Records</button>
+              <button type="button" class="btn btn-outline-light" id="filterAttPresent" onclick="filterAttendanceTable('Present')">Present</button>
+              <button type="button" class="btn btn-outline-light" id="filterAttWfh" onclick="filterAttendanceTable('Work From Home')">WFH</button>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+              <input type="text" id="searchAttendanceInput" class="form-control form-control-sm zy-input" placeholder="Search by date, employee or shift..." onkeyup="filterAttendanceBySearch()" style="max-width: 260px;">
+            </div>
+          </div>
+
+          <!-- Attendance Table -->
+          <div class="table-responsive">
+            <table class="table  table-hover mb-0 align-middle">
+              <thead class=" text-white-50 small text-uppercase" style="background: rgba(255,255,255,0.03);">
+                <tr>
+                  <th>Employee</th>
+                  <th>Date</th>
+                  <th>Shift Timing</th>
+                  <th>Punch In</th>
+                  <th>Punch Out</th>
+                  <th>Total Hours</th>
+                  <th class="text-end">Status</th>
+                </tr>
+              </thead>
+              <tbody id="adminAttendanceTableBody">
+                <tr><td colspan="7" class="text-center py-4 text-white-50">Loading employee attendance records...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+
+        <!-- ==================== TAB 2: JOB OPENINGS / SERVICES SECTION ==================== -->
+        <div class="zy-card p-4 mb-4 d-none" id="jobsTabSection">
+          <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3 pb-2 border-bottom border-white/10">
+            <div>
+              <h2 class="h5 fw-bold text-white mb-0">Careers & Services Roles Management</h2>
+              <small class="text-white-50">Add or manage job cards displayed on the public Careers page</small>
+            </div>
+            <div class="d-flex gap-2">
+              <button class="btn btn-sm btn-brand-outline" onclick="loadJobs()">
+                <i class="bi bi-arrow-clockwise me-1"></i> Refresh
+              </button>
+              <button class="btn btn-sm btn-brand" onclick="openNewJobModal()">
+                <i class="bi bi-plus-lg me-1"></i> Post New Job
+              </button>
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table class="table  table-hover align-middle mb-0" style="background: transparent;">
+              <thead class="text-white-50 border-bottom border-white/10 small text-uppercase">
+                <tr>
+                  <th scope="col">ID</th>
+                  <th scope="col">Role Title & Dept</th>
+                  <th scope="col">Location</th>
+                  <th scope="col">Type</th>
+                  <th scope="col">Openings</th>
+                  <th scope="col">Accent / Badge</th>
+                  <th scope="col">Status</th>
+                  <th scope="col" class="text-end">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="jobsTableBody">
+                <tr>
+                  <td colspan="8" class="text-center py-4 text-white-50">
+                    <span class="spinner-border spinner-border-sm me-2"></span> Loading jobs from database...
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ==================== TAB 3: RESUMES & APPLICATIONS ==================== -->
+        <div class="zy-card p-4 mb-4 d-none" id="applicationsTabSection">
+          <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3 pb-2 border-bottom border-white/10">
+            <div>
+              <h2 class="h5 fw-bold text-white mb-0">Candidate Applications & Uploaded Resumes</h2>
+              <small class="text-white-50">Review candidate submissions and download uploaded resume files</small>
+            </div>
+            <button class="btn btn-sm btn-brand-outline" onclick="loadApplications()">
+              <i class="bi bi-arrow-clockwise me-1"></i> Refresh
+            </button>
+          </div>
+
+          <div class="table-responsive">
+            <table class="table  table-hover align-middle mb-0" style="background: transparent;">
+              <thead class="text-white-50 border-bottom border-white/10 small text-uppercase">
+                <tr>
+                  <th scope="col">ID</th>
+                  <th scope="col">Candidate</th>
+                  <th scope="col">Position Applied</th>
+                  <th scope="col">Experience</th>
+                  <th scope="col">Date Applied</th>
+                  <th scope="col">Uploaded Resume</th>
+                  <th scope="col">Email Seen Status</th>
+                  <th scope="col">Status</th>
+                  <th scope="col" class="text-end">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="applicationsTableBody">
+                <tr>
+                  <td colspan="9" class="text-center py-4 text-white-50">
+                    <span class="spinner-border spinner-border-sm me-2"></span> Loading applications from database...
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ==================== TAB 4: PROJECTS TRACKER ==================== -->
+        <div class="zy-card p-4 mb-4 d-none" id="projectsTabSection">
+          <h2 class="h5 fw-bold text-white mb-3">Enterprise Project Delivery Milestones</h2>
+          <div class="row g-3" id="projectsContainer">
+            <!-- Rendered via JS -->
+          </div>
+        </div>
+
+        <!-- ==================== TAB: BLOG & CONTENT MANAGEMENT ==================== -->
+        <div class="zy-card p-4 mb-4 d-none" id="blogsTabSection">
+          <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4 pb-3 border-bottom border-white/10">
+            <div>
+              <div class="d-flex align-items-center gap-2 mb-1">
+                <span class="badge rounded-pill px-2.5 py-1" style="background: rgba(241,102,35,0.18); color: #f16623; border: 1px solid rgba(241,102,35,0.35); font-size: 0.78rem;">
+                  <i class="bi bi-newspaper me-1"></i> Editorial CMS
+                </span>
+                <h2 class="h5 fw-bold text-white mb-0">Blog & Content Management</h2>
+              </div>
+              <small class="text-white-50">Publish technical insights, curate engineering publications, and manage articles visible on the public Zyllo Tech Blog.</small>
+            </div>
+            <div class="d-flex flex-wrap align-items-center gap-2">
+              <a href="/blog" target="_blank" class="btn btn-sm btn-outline-info rounded-pill px-3 py-1.5 d-inline-flex align-items-center gap-1.5 fw-semibold text-decoration-none" title="Open Public Blog in new tab">
+                <i class="bi bi-box-arrow-up-right"></i> View Public Blog
+              </a>
+              <button class="btn btn-sm btn-brand-outline rounded-pill px-3 py-1.5" onclick="loadBlogArticles()">
+                <i class="bi bi-arrow-clockwise me-1"></i> Refresh
+              </button>
+              <button class="btn btn-sm btn-brand rounded-pill px-3 py-1.5 fw-semibold" onclick="openNewBlogModal()">
+                <i class="bi bi-plus-circle me-1"></i> New Article
+              </button>
+            </div>
+          </div>
+
+          <!-- Stats Cards -->
+          <div class="row g-3 mb-4">
+            <div class="col-sm-6 col-lg-3">
+              <div class="p-3 rounded-3" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08);">
+                <div class="d-flex align-items-center justify-content-between mb-2">
+                  <span class="text-white-50 small">Total Published</span>
+                  <div class="rounded-circle d-flex align-items-center justify-content-center" style="width: 30px; height: 30px; background: rgba(241,102,35,0.18); color: #f16623;">
+                    <i class="bi bi-journal-check"></i>
+                  </div>
+                </div>
+                <h4 class="fw-bold text-white mb-0" id="blogStatTotal">0</h4>
+                <small class="text-success small"><i class="bi bi-check2-circle me-1"></i>Active on /blog</small>
+              </div>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+              <div class="p-3 rounded-3" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08);">
+                <div class="d-flex align-items-center justify-content-between mb-2">
+                  <span class="text-white-50 small">Total Readers</span>
+                  <div class="rounded-circle d-flex align-items-center justify-content-center" style="width: 30px; height: 30px; background: rgba(38,34,98,0.5); color: #f16623;">
+                    <i class="bi bi-eye"></i>
+                  </div>
+                </div>
+                <h4 class="fw-bold text-white mb-0" id="blogStatViews">0</h4>
+                <small class="text-info small"><i class="bi bi-graph-up-arrow me-1"></i>Engaged reads</small>
+              </div>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+              <div class="p-3 rounded-3" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08);">
+                <div class="d-flex align-items-center justify-content-between mb-2">
+                  <span class="text-white-50 small">Categories</span>
+                  <div class="rounded-circle d-flex align-items-center justify-content-center" style="width: 30px; height: 30px; background: rgba(16,185,129,0.18); color: #10b981;">
+                    <i class="bi bi-tag"></i>
+                  </div>
+                </div>
+                <h4 class="fw-bold text-white mb-0" id="blogStatCategories">0</h4>
+                <small class="text-white-50 small">AI, Cloud, Performance</small>
+              </div>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+              <div class="p-3 rounded-3" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08);">
+                <div class="d-flex align-items-center justify-content-between mb-2">
+                  <span class="text-white-50 small">Avg Reading Time</span>
+                  <div class="rounded-circle d-flex align-items-center justify-content-center" style="width: 30px; height: 30px; background: rgba(245,158,11,0.18); color: #f59e0b;">
+                    <i class="bi bi-clock-history"></i>
+                  </div>
+                </div>
+                <h4 class="fw-bold text-white mb-0" id="blogStatAvgTime">6.5 min</h4>
+                <small class="text-white-50 small">Deep technical depth</small>
+              </div>
+            </div>
+          </div>
+
+          <!-- Search & Filter Controls -->
+          <div class="row g-2 mb-3 align-items-center">
+            <div class="col-md-7">
+              <div class="input-group">
+                <span class="input-group-text bg-transparent border-white/10 text-white-50"><i class="bi bi-search"></i></span>
+                <input type="text" id="blogSearchInput" class="form-control zy-input form-control-sm" placeholder="Search publications by title, category, author..." onkeyup="filterBlogArticles()">
+              </div>
+            </div>
+            <div class="col-md-5">
+              <select id="blogCategoryFilter" class="form-select zy-input form-control-sm" onchange="filterBlogArticles()">
+                <option value="All">All Categories</option>
+                <option value="AI Systems">AI Systems</option>
+                <option value="Web Performance">Web Performance</option>
+                <option value="Cloud DevOps">Cloud DevOps</option>
+                <option value="AI Engineering">AI Engineering</option>
+                <option value="Mobile Engineering">Mobile Engineering</option>
+                <option value="Security Architecture">Security Architecture</option>
+                <option value="Product Architecture">Product Architecture</option>
+                <option value="Featured Publication">Featured Publication</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Articles Table -->
+          <div class="table-responsive">
+            <table class="table table-dark table-hover align-middle mb-0" style="background: transparent;">
+              <thead>
+                <tr class="text-white-50 small text-uppercase" style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+                  <th style="width: 70px;">Cover</th>
+                  <th>Article & Summary</th>
+                  <th>Category</th>
+                  <th>Author</th>
+                  <th>Date & Time</th>
+                  <th>Status</th>
+                  <th class="text-end">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="blogArticlesTableBody">
+                <tr><td colspan="7" class="text-center py-4 text-white-50"><span class="spinner-border spinner-border-sm me-2"></span>Loading articles...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ==================== TAB 5: EMAIL TRACKING & OUTBOX ==================== -->
+        <div class="zy-card p-4 mb-4 d-none" id="emailsTabSection">
+          <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3 pb-2 border-bottom border-white/10">
+            <div>
+              <h2 class="h5 fw-bold text-white mb-0"><i class="bi bi-envelope-check text-gradient-orange me-2"></i>Email Delivery & Open Tracking (haasethabhiram@gmail.com)</h2>
+              <small class="text-white-50">Live audit log of all candidate confirmation emails and admin alerts with real-time open timestamps</small>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+              <a href="https://mail.zoho.com" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline-info rounded-pill px-3 py-1 d-inline-flex align-items-center gap-1.5 fw-semibold text-decoration-none" title="Launch Zoho Mail Web Client in new tab">
+                <i class="bi bi-envelope-at-fill"></i> Zoho Mail
+                <i class="bi bi-box-arrow-up-right ms-0.5" style="font-size: 0.65rem; opacity: 0.7;"></i>
+              </a>
+              <button class="btn btn-sm btn-brand-outline rounded-pill px-3 py-1" onclick="loadEmailLogs()">
+                <i class="bi bi-arrow-clockwise me-1"></i> Refresh Logs
+              </button>
+            </div>
+          </div>
+
+          <!-- SMTP Live Email Delivery Configuration Card -->
+          <div class="p-3.5 rounded-3 mb-4" style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(249, 103, 6, 0.35); padding: 1.25rem;">
+            <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+              <div class="d-flex align-items-center gap-2">
+                <i class="bi bi-gear-wide-connected fs-4 text-gradient-orange"></i>
+                <div>
+                  <h6 class="fw-bold text-white mb-0">Outgoing SMTP Server Settings (Real Inbox Delivery)</h6>
+                  <small class="text-white-50">To deliver live confirmation emails to actual recipient inboxes (Gmail Primary tab), configure your SMTP credentials.</small>
+                </div>
+              </div>
+              <div id="smtpStatusBadge">
+                <span class="badge bg-secondary p-2"><span class="spinner-border spinner-border-sm me-1"></span> Checking SMTP...</span>
+              </div>
+            </div>
+
+            <!-- Presets Buttons -->
+            <div class="d-flex flex-wrap align-items-center gap-2 mb-3">
+              <small class="text-white-50 me-1">Fast Presets:</small>
+              <button type="button" class="btn btn-sm btn-outline-info py-0.5 px-2.5" onclick="fillSmtpPreset('gmail')">
+                <i class="bi bi-google me-1"></i> Gmail / Workspace
+              </button>
+              <button type="button" class="btn btn-sm btn-outline-info py-0.5 px-2.5" onclick="fillSmtpPreset('cpanel')">
+                <i class="bi bi-hdd-network me-1"></i> cPanel / Hostinger (mail.zyllotech.com)
+              </button>
+              <button type="button" class="btn btn-sm btn-outline-info py-0.5 px-2.5" onclick="fillSmtpPreset('zoho')">
+                <i class="bi bi-envelope-at me-1"></i> Zoho Mail
+              </button>
+              <button type="button" class="btn btn-sm btn-outline-info py-0.5 px-2.5" onclick="fillSmtpPreset('brevo')">
+                <i class="bi bi-send-check me-1"></i> Brevo (Sendinblue)
+              </button>
+            </div>
+
+            <form id="smtpSettingsForm">
+              <div class="row g-2 mb-3">
+                <div class="col-md-3">
+                  <label class="form-label text-white-50 small mb-1">SMTP Host</label>
+                  <input type="text" id="smtpHostInput" class="form-control zy-input form-control-sm" placeholder="e.g. smtp.gmail.com" value="smtp.gmail.com" required>
+                </div>
+                <div class="col-md-2">
+                  <label class="form-label text-white-50 small mb-1">Port</label>
+                  <input type="number" id="smtpPortInput" class="form-control zy-input form-control-sm" placeholder="465" value="465" required>
+                </div>
+                <div class="col-md-2 d-flex align-items-center pt-3">
+                  <div class="form-check form-switch mt-2">
+                    <input class="form-check-input" type="checkbox" id="smtpSecureInput" checked>
+                    <label class="form-check-label text-white small" for="smtpSecureInput">SSL / TLS</label>
+                  </div>
+                </div>
+                <div class="col-md-5">
+                  <label class="form-label text-white-50 small mb-1">Sender Address (From)</label>
+                  <input type="email" id="smtpFromInput" class="form-control zy-input form-control-sm" placeholder="haasethabhiram@gmail.com" value="haasethabhiram@gmail.com">
+                </div>
+
+                <div class="col-md-6">
+                  <label class="form-label text-white-50 small mb-1">SMTP Username / Email</label>
+                  <input type="text" id="smtpUserInput" class="form-control zy-input form-control-sm" placeholder="haasethabhiram@gmail.com" value="haasethabhiram@gmail.com" required>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label text-white-50 small mb-1">SMTP Password / App Password</label>
+                  <input type="password" id="smtpPassInput" class="form-control zy-input form-control-sm" placeholder="Enter 16-character Google App Password">
+                </div>
+              </div>
+
+              <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 pt-2 border-top border-white/10">
+                <button type="submit" id="saveSmtpBtn" class="btn btn-sm btn-brand px-3">
+                  <i class="bi bi-save me-1"></i> Save & Connect SMTP
+                </button>
+
+                <!-- Test Delivery Box -->
+                <div class="d-flex align-items-center gap-2">
+                  <input type="email" id="smtpTestRecipientInput" class="form-control zy-input form-control-sm" placeholder="Enter your email to test..." style="width: 220px;">
+                  <button type="button" id="sendTestEmailBtn" class="btn btn-sm btn-brand-outline px-3" onclick="sendLiveTestEmail()">
+                    <i class="bi bi-send-fill me-1"></i> Send Test to My Inbox
+                  </button>
+                </div>
+              </div>
+            </form>
+
+            <div id="smtpAlertBox" class="alert d-none py-2 px-3 small rounded-3 mt-3 mb-0"></div>
+
+            <div class="mt-2 text-white-50 small" style="font-size: 0.76rem;">
+              <i class="bi bi-lightbulb text-warning me-1"></i> <strong>Gmail Primary Inbox Setup:</strong> In your Google Account &rarr; Security &rarr; 2-Step Verification &rarr; App passwords &rarr; Create 16-character App password, and paste it here. All candidate emails will land directly in their <strong>Primary</strong> inbox tab!
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table class="table  table-hover align-middle mb-0" style="background: transparent;">
+              <thead class="text-white-50 border-bottom border-white/10 small text-uppercase">
+                <tr>
+                  <th scope="col">Tracking ID</th>
+                  <th scope="col">Type</th>
+                  <th scope="col">Recipient</th>
+                  <th scope="col">Subject</th>
+                  <th scope="col">Sent From</th>
+                  <th scope="col">Watched Status</th>
+                  <th scope="col">Opened / Seen Time (IST)</th>
+                  <th scope="col" class="text-end">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="emailLogsTableBody">
+                <tr>
+                  <td colspan="8" class="text-center py-4 text-white-50">
+                    <span class="spinner-border spinner-border-sm me-2"></span> Loading email logs...
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- Modal: View Inquiry Details -->
+  <div class="modal fade" id="inquiryDetailModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content zy-modal">
+        <div class="modal-header border-bottom border-white/10">
+          <h5 class="modal-title fw-bold text-white"><i class="bi bi-file-text me-2 text-warning"></i> Inquiry Details</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <span class="text-white-50 small d-block">Client Name & Organization</span>
+            <div id="modalClientName" class="fw-bold fs-5 text-white">...</div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-6">
+              <span class="text-white-50 small d-block">Email</span>
+              <a href="#" id="modalClientEmail" class="text-info text-decoration-none">...</a>
+            </div>
+            <div class="col-6">
+              <span class="text-white-50 small d-block">Phone</span>
+              <div id="modalClientPhone" class="text-white">...</div>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-6">
+              <span class="text-white-50 small d-block">Service Required</span>
+              <div id="modalClientService" class="text-warning">...</div>
+            </div>
+            <div class="col-6">
+              <span class="text-white-50 small d-block">Budget Range</span>
+              <div id="modalClientBudget" class="text-success">...</div>
+            </div>
+          </div>
+          <div class="mb-3">
+            <span class="text-white-50 small d-block">Message / Project Description</span>
+            <div id="modalClientMessage" class="p-3 rounded-3 border border-white-10 text-white mt-1" style="background: rgba(255, 255, 255, 0.04); white-space: pre-wrap;">...</div>
+          </div>
+          <div>
+            <label class="text-white-50 small d-block mb-1">Update Status</label>
+            <select id="modalStatusSelect" class="form-select zy-input">
+              <option value="New">New</option>
+              <option value="In Review">In Review</option>
+              <option value="Contacted">Contacted</option>
+              <option value="Closed">Closed</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer border-top border-white/10">
+          <button type="button" class="btn btn-brand-outline" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-brand" id="saveStatusBtn" onclick="updateInquiryStatus()">Save Changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Create / Edit Job Opening (Issue 5) -->
+  <div class="modal fade" id="jobModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content zy-modal">
+        <div class="modal-header border-bottom border-white/10">
+          <h5 class="modal-title fw-bold text-white" id="jobModalHeading">
+            <i class="bi bi-briefcase me-2 text-warning"></i> Post New Job Opening
+          </h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form id="jobForm" onsubmit="handleSaveJob(event)">
+          <input type="hidden" id="jobFormId" value="">
+          <div class="modal-body">
+            <div class="row g-3">
+              <div class="col-md-7">
+                <label class="form-label text-white-50 small mb-1">Job Title *</label>
+                <input type="text" id="jobFormTitle" class="form-control zy-input" placeholder="e.g. Cloud DevOps Engineer" required>
+              </div>
+              <div class="col-md-5">
+                <label class="form-label text-white-50 small mb-1">Department / Category *</label>
+                <input type="text" id="jobFormCategory" class="form-control zy-input" placeholder="e.g. ENGINEERING or IT" required>
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label text-white-50 small mb-1">Location *</label>
+                <input type="text" id="jobFormLocation" class="form-control zy-input" placeholder="e.g. Guntur Office or Hybrid / India" required>
+              </div>
+              <div class="col-md-3">
+                <label class="form-label text-white-50 small mb-1">Employment Type</label>
+                <select id="jobFormType" class="form-select zy-input">
+                  <option value="Full-time">Full-time</option>
+                  <option value="Part-time">Part-time</option>
+                  <option value="Contract">Contract</option>
+                  <option value="Internship">Internship</option>
+                </select>
+              </div>
+              <div class="col-md-3">
+                <label class="form-label text-white-50 small mb-1">Openings Count</label>
+                <input type="number" id="jobFormOpenings" class="form-control zy-input" min="1" value="2" required>
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label text-white-50 small mb-1">Accent Border Stripe</label>
+                <select id="jobFormAccent" class="form-select zy-input">
+                  <option value="blue">Cyan / Blue Accent</option>
+                  <option value="orange">Brand Orange Accent</option>
+                </select>
+              </div>
+              <div class="col-md-3">
+                <label class="form-label text-white-50 small mb-1">Status</label>
+                <select id="jobFormStatus" class="form-select zy-input">
+                  <option value="Active">Active (Visible)</option>
+                  <option value="Closed">Closed</option>
+                </select>
+              </div>
+              <div class="col-md-3 d-flex align-items-center pt-3">
+                <div class="form-check form-switch mt-2">
+                  <input class="form-check-input" type="checkbox" id="jobFormFeatured">
+                  <label class="form-check-label text-white small" for="jobFormFeatured">Mark Featured</label>
+                </div>
+              </div>
+
+              <div class="col-12">
+                <label class="form-label text-white-50 small mb-1">Job Description *</label>
+                <textarea id="jobFormDesc" rows="3" class="form-control zy-input" placeholder="Brief summary of the role and responsibilities..." required></textarea>
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label text-white-50 small mb-1">Key Requirements (Optional)</label>
+                <textarea id="jobFormRequirements" rows="3" class="form-control zy-input" placeholder="Technical stack, skills, years of experience..."></textarea>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label text-white-50 small mb-1">Responsibilities (Optional)</label>
+                <textarea id="jobFormResponsibilities" rows="3" class="form-control zy-input" placeholder="Day-to-day work, architecture, team collaboration..."></textarea>
+              </div>
+            </div>
+
+          </div>
+          <div class="modal-footer border-top border-white/10">
+            <button type="button" class="btn btn-brand-outline" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-brand" id="jobFormSubmitBtn">Save Job Opening</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: View Application Details & Download Resume (Issue 3) -->
+  <div class="modal fade" id="applicationDetailModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content zy-modal">
+        <div class="modal-header border-bottom border-white/10">
+          <h5 class="modal-title fw-bold text-white">
+            <i class="bi bi-file-earmark-person me-2 text-warning"></i> Candidate Application Profile
+          </h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap gap-2 pb-2 border-bottom border-white/10">
+            <div>
+              <h4 class="h5 fw-bold text-white mb-0" id="appModalCandidateName">...</h4>
+              <span class="text-warning small" id="appModalRole">...</span>
+            </div>
+            <div id="appModalResumeBadge"></div>
+          </div>
+
+          <div class="row g-3 mb-3 p-3 rounded-3" style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08);">
+            <div class="col-12 col-md-5">
+              <span class="text-white-50 small d-block mb-1"><i class="bi bi-envelope-fill me-1 text-info"></i> Candidate Email</span>
+              <a href="#" id="appModalEmail" class="text-info text-decoration-none fw-semibold d-inline-block" style="word-break: break-all; overflow-wrap: anywhere; font-size: 0.92rem;">...</a>
+            </div>
+            <div class="col-6 col-md-4">
+              <span class="text-white-50 small d-block mb-1"><i class="bi bi-telephone-fill me-1 text-warning"></i> Phone Number</span>
+              <div id="appModalPhone" class="text-white fw-semibold" style="font-size: 0.92rem; word-break: break-word;">...</div>
+            </div>
+            <div class="col-6 col-md-3">
+              <span class="text-white-50 small d-block mb-1"><i class="bi bi-briefcase-fill me-1 text-success"></i> Experience</span>
+              <div id="appModalExperience" class="text-white fw-bold" style="font-size: 0.92rem;">...</div>
+            </div>
+          </div>
+
+          <!-- Uploaded Resume File Action Box & In-Site Viewer -->
+          <div class="p-3 rounded-3 mb-3" style="background: rgba(56, 189, 248, 0.08); border: 1px solid rgba(56, 189, 248, 0.25);">
+            <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-2">
+              <div class="d-flex align-items-center gap-2">
+                <i class="bi bi-file-earmark-pdf fs-3 text-warning"></i>
+                <div>
+                  <div class="fw-bold text-white small" id="appModalResumeFileName">Resume Document</div>
+                  <small class="text-white-50" id="appModalResumeNote">Direct file stored on server ready to view in site or download</small>
+                </div>
+              </div>
+              <div id="appModalResumeActionBtnContainer" class="d-flex flex-wrap gap-2">
+                <!-- Action buttons dynamically generated here -->
+              </div>
+            </div>
+            
+            <!-- Inline Collapsible Resume Viewer -->
+            <div id="appModalInlineResumeContainer" class="mt-2 d-none pt-2 border-top border-white-10">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <small class="text-info fw-semibold"><i class="bi bi-display me-1"></i> In-Site PDF Viewer</small>
+                <button type="button" class="btn btn-sm btn-link text-white-50 p-0 text-decoration-none small" onclick="toggleInlineResumePreview()">
+                  <i class="bi bi-x-lg me-1"></i> Close Preview
+                </button>
+              </div>
+              <iframe id="appModalInlineResumeIframe" src="" style="width: 100%; height: 480px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.15); background: #ffffff;"></iframe>
+            </div>
+          </div>
+
+          <!-- Candidate Confirmation Email & Seen Status Box -->
+          <div class="p-3 rounded-3 mb-3" style="background: rgba(249, 103, 6, 0.08); border: 1px solid rgba(249, 103, 6, 0.25);">
+            <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-2">
+              <div class="d-flex align-items-center gap-2">
+                <i class="bi bi-envelope-paper-heart fs-3 text-gradient-orange"></i>
+                <div>
+                  <div class="fw-bold text-white small">Confirmation Email &amp; Seen Tracking</div>
+                  <small class="text-white-50">Dispatched from <strong class="text-white">haasethabhiram@gmail.com</strong> upon candidate submission</small>
+                </div>
+              </div>
+              <div id="appModalEmailSeenBadge"></div>
+            </div>
+            <div class="row g-2 pt-2 border-top border-white-10 small">
+              <div class="col-sm-6">
+                <span class="text-white-50 d-block">First Watched / Opened:</span>
+                <strong class="text-white" id="appModalFirstOpened">N/A</strong>
+              </div>
+              <div class="col-sm-6">
+                <span class="text-white-50 d-block">Total Times Watched / Opened:</span>
+                <strong class="text-white" id="appModalOpenCount">0 times</strong>
+              </div>
+            </div>
+            <div class="d-flex flex-wrap gap-2 mt-3 pt-2 border-top border-white-10">
+              <a href="#" id="appModalPreviewEmailBtn" target="_blank" class="btn btn-sm btn-brand py-1 px-3">
+                <i class="bi bi-box-arrow-up-right me-1"></i> Preview Sent Confirmation Email
+              </a>
+              <button type="button" id="appModalResendEmailBtn" class="btn btn-sm btn-outline-info py-1 px-3" onclick="resendCandidateEmail(selectedApplicationId)">
+                <i class="bi bi-send-fill me-1"></i> Resend Email to Candidate
+              </button>
+              <button type="button" id="appModalSimulateOpenBtn" class="btn btn-sm btn-brand-outline py-1 px-3">
+                <i class="bi bi-eye me-1"></i> Simulate Candidate Opening Email (Test)
+              </button>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <span class="text-white-50 small d-block mb-1">Cover Note / Why they're a good fit</span>
+            <div id="appModalCoverNote" class="p-3 rounded-3 border border-white-10 text-white small" style="background: rgba(255, 255, 255, 0.04); white-space: pre-wrap; line-height: 1.6;">...</div>
+          </div>
+
+          <!-- Update Application Status & Candidate Email Notification -->
+          <div class="p-3 rounded-3 mt-3" style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08);">
+            <div class="row align-items-center g-3">
+              <div class="col-md-6">
+                <label class="text-white small fw-bold d-block mb-1">
+                  <i class="bi bi-pencil-square me-1 text-warning"></i> Update Application Status
+                </label>
+                <select id="appModalStatusSelect" class="form-select zy-input">
+                  <option value="Pending Review">Pending Review</option>
+                  <option value="In Review">In Review</option>
+                  <option value="Shortlisted">Shortlisted</option>
+                  <option value="Interview Scheduled">Interview Scheduled</option>
+                  <option value="Hired">Hired</option>
+                  <option value="Rejected">Rejected</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <div class="form-check pt-3">
+                  <input class="form-check-input" type="checkbox" id="appModalSendEmailCheck" checked>
+                  <label class="form-check-label text-white small fw-semibold" for="appModalSendEmailCheck">
+                    <i class="bi bi-envelope-check me-1 text-success"></i> Email Status Notification to Candidate
+                  </label>
+                  <small class="text-white-50 d-block" style="font-size: 0.72rem;">Delivered from <strong class="text-white">haasethabhiram@gmail.com</strong></small>
+                </div>
+              </div>
+              <div class="col-12">
+                <label class="text-white-50 small d-block mb-1">
+                  Optional Note / Interview Instructions (Included in candidate notification email):
+                </label>
+                <textarea id="appModalStatusNote" class="form-control zy-input" rows="2" placeholder="e.g. Please let us know your availability for a 45-minute technical discussion this week on Google Meet..."></textarea>
+              </div>
+              <div class="col-12 text-end">
+                <button type="button" class="btn btn-brand px-4 py-2" id="appModalSaveStatusBtn" onclick="saveApplicationStatus()">
+                  <i class="bi bi-send-check-fill me-1"></i> Update Candidate Status &amp; Send Email
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <div class="modal-footer border-top border-white/10">
+          <button type="button" class="btn btn-brand-outline" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: In-Site Fullscreen Resume Document Viewer -->
+  <div class="modal fade" id="inSiteResumeModal" tabindex="-1" aria-hidden="true" style="z-index: 1065;">
+    <div class="modal-dialog modal-dialog-centered modal-xl" style="max-width: 92vw;">
+      <div class="modal-content zy-modal" style="height: 88vh; display: flex; flex-direction: column;">
+        <div class="modal-header py-2.5 px-3 border-bottom border-white/10 d-flex justify-content-between align-items-center">
+          <div class="d-flex align-items-center gap-2">
+            <i class="bi bi-file-earmark-pdf-fill fs-4 text-warning"></i>
+            <div>
+              <h5 class="modal-title fw-bold text-white fs-6 mb-0" id="inSiteResumeModalTitle">Candidate Resume Document</h5>
+              <small class="text-white-50" id="inSiteResumeModalSubtitle">View resume document directly inside Zyllo Tech</small>
+            </div>
+          </div>
+          <div class="d-flex align-items-center gap-2">
+            <a href="#" id="inSiteResumeModalDownloadBtn" download class="btn btn-sm btn-brand py-1 px-3">
+              <i class="bi bi-download me-1"></i> Download
+            </a>
+            <a href="#" id="inSiteResumeModalNewTabBtn" target="_blank" class="btn btn-sm btn-brand-outline py-1 px-2.5">
+              <i class="bi bi-box-arrow-up-right me-1"></i> New Tab
+            </a>
+            <button type="button" class="btn-close btn-close-white ms-2" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+        </div>
+        <div class="modal-body p-0 flex-grow-1" style="background: #1e293b; overflow: hidden; position: relative;">
+          <iframe id="inSiteResumeModalIframe" src="" style="width: 100%; height: 100%; border: none; background: #ffffff;"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <!-- Modal: Create New Inquiry from Dashboard -->
+  <div class="modal fade" id="newInquiryModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content zy-modal">
+        <div class="modal-header border-bottom border-white/10">
+          <h5 class="modal-title fw-bold text-white"><i class="bi bi-plus-circle me-2 text-warning"></i> Add Project Inquiry</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form id="quickInquiryForm">
+          <div class="modal-body">
+            <div class="mb-3">
+              <label class="form-label text-white-50 small">Contact Name</label>
+              <input type="text" name="name" class="form-control zy-input" placeholder="e.g. Rachel Adams" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label text-white-50 small">Email Address</label>
+              <input type="email" name="email" class="form-control zy-input" placeholder="rachel@company.com" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label text-white-50 small">Phone</label>
+              <input type="text" name="phone" class="form-control zy-input" placeholder="+1 (555) 000-0000">
+            </div>
+            <div class="mb-3">
+              <label class="form-label text-white-50 small">Service</label>
+              <select name="service" class="form-select zy-input">
+                <option value="Custom Software Development">Custom Software Development</option>
+                <option value="Web Application Development">Web Application Development</option>
+                <option value="Mobile App Development">Mobile App Development</option>
+                <option value="AI & Machine Learning">AI & Machine Learning</option>
+                <option value="Cloud Architecture & DevOps">Cloud Architecture & DevOps</option>
+                <option value="UI/UX & Product Design">UI/UX & Product Design</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label class="form-label text-white-50 small">Budget</label>
+              <select name="budget" class="form-select zy-input">
+                <option value="₹5,00,000 - ₹15,00,000">₹5,00,000 - ₹15,00,000</option>
+                <option value="₹15,00,000 - ₹35,00,000">₹15,00,000 - ₹35,00,000</option>
+                <option value="₹35,00,000+">₹35,00,000+</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label class="form-label text-white-50 small">Project Scope & Requirements</label>
+              <textarea name="message" rows="3" class="form-control zy-input" placeholder="Describe the project..." required></textarea>
+            </div>
+          </div>
+          <div class="modal-footer border-top border-white/10">
+            <button type="button" class="btn btn-brand-outline" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-brand">Save to Database</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Create / Edit Blog Article -->
+  <div class="modal fade" id="blogArticleModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content zy-modal">
+        <div class="modal-header border-bottom border-white/10">
+          <h5 class="modal-title fw-bold text-white" id="blogArticleModalHeading">
+            <i class="bi bi-newspaper me-2 text-gradient-orange"></i> Publish New Blog Article
+          </h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form id="blogArticleForm" onsubmit="handleSaveBlogArticle(event)">
+          <input type="hidden" id="blogArticleId" value="">
+          <div class="modal-body">
+            <div class="row g-3">
+              <div class="col-md-8">
+                <label class="form-label text-white-50 small mb-1">Article Title *</label>
+                <input type="text" id="blogFormTitle" class="form-control zy-input form-control-sm" placeholder="e.g. Architecting Distributed AI Agents" required oninput="autoGenerateBlogSlug()">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label text-white-50 small mb-1">Slug / URL Key *</label>
+                <input type="text" id="blogFormSlug" class="form-control zy-input form-control-sm" placeholder="e.g. distributed-ai-agents" required>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label text-white-50 small mb-1">Category *</label>
+                <select id="blogFormCategory" class="form-select zy-input form-control-sm" required>
+                  <option value="AI Systems">AI Systems</option>
+                  <option value="Web Performance">Web Performance</option>
+                  <option value="Cloud DevOps">Cloud DevOps</option>
+                  <option value="AI Engineering">AI Engineering</option>
+                  <option value="Mobile Engineering">Mobile Engineering</option>
+                  <option value="Security Architecture">Security Architecture</option>
+                  <option value="Product Architecture">Product Architecture</option>
+                  <option value="Featured Publication">Featured Publication</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label text-white-50 small mb-1">Publish Date</label>
+                <input type="text" id="blogFormDate" class="form-control zy-input form-control-sm" placeholder="e.g. October 2026">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label text-white-50 small mb-1">Reading Time</label>
+                <input type="text" id="blogFormReadTime" class="form-control zy-input form-control-sm" placeholder="e.g. 7 min read">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label text-white-50 small mb-1">Author Name / Pod</label>
+                <input type="text" id="blogFormAuthor" class="form-control zy-input form-control-sm" placeholder="e.g. Zyllo AI Research Lab">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label text-white-50 small mb-1">Status</label>
+                <select id="blogFormStatus" class="form-select zy-input form-control-sm">
+                  <option value="Published">Published (Live on Website)</option>
+                  <option value="Draft">Draft (Internal Only)</option>
+                </select>
+              </div>
+              <div class="col-12">
+                <label class="form-label text-white-50 small mb-1">Cover Image URL</label>
+                <input type="url" id="blogFormImage" class="form-control zy-input form-control-sm" placeholder="https://images.unsplash.com/..." value="https://images.unsplash.com/photo-1518770660439-4636190af475?w=1200&q=80">
+              </div>
+              <div class="col-12">
+                <label class="form-label text-white-50 small mb-1">Short Excerpt / Lead Paragraph</label>
+                <textarea id="blogFormExcerpt" class="form-control zy-input form-control-sm" rows="2" placeholder="Brief 1-2 sentence teaser for cards and search snippets..."></textarea>
+              </div>
+              <div class="col-12">
+                <div class="d-flex justify-content-between align-items-center mb-1">
+                  <label class="form-label text-white-50 small mb-0">Full Article Content (HTML allowed) *</label>
+                  <div class="d-flex gap-1">
+                    <button type="button" class="btn btn-sm btn-outline-secondary py-0 px-1.5" style="font-size:0.7rem;" onclick="insertBlogSnippet('h3')">&lt;h3&gt;</button>
+                    <button type="button" class="btn btn-sm btn-outline-secondary py-0 px-1.5" style="font-size:0.7rem;" onclick="insertBlogSnippet('lead')">&lt;lead&gt;</button>
+                    <button type="button" class="btn btn-sm btn-outline-secondary py-0 px-1.5" style="font-size:0.7rem;" onclick="insertBlogSnippet('callout')">Callout</button>
+                    <button type="button" class="btn btn-sm btn-outline-secondary py-0 px-1.5" style="font-size:0.7rem;" onclick="insertBlogSnippet('ul')">List</button>
+                  </div>
+                </div>
+                <textarea id="blogFormContent" class="form-control zy-input form-control-sm font-monospace" rows="8" placeholder="<p class='lead'>Article introduction...</p><h3>1. First Heading</h3><p>Detailed analysis...</p>" required></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer border-top border-white/10">
+            <button type="button" class="btn btn-brand-outline" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-brand" id="blogFormSubmitBtn">Save & Publish</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Read / Preview Full Blog Article -->
+  <div class="modal fade" id="blogPreviewModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+      <div class="modal-content zy-modal">
+        <div class="modal-header border-bottom border-white/10">
+          <div class="d-flex align-items-center gap-2">
+            <span class="badge rounded-pill px-2.5 py-1" style="background: rgba(241,102,35,0.18); color: #f16623; border: 1px solid rgba(241,102,35,0.35);" id="previewBlogCategory">Category</span>
+            <span class="text-white-50 small" id="previewBlogMeta"><i class="bi bi-clock me-1"></i> 5 min read</span>
+          </div>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body p-4">
+          <h3 class="h4 fw-bold text-white mb-2" id="previewBlogTitle">Title</h3>
+          <div class="d-flex align-items-center gap-3 text-white-50 small mb-3 pb-3 border-bottom border-white/10">
+            <span id="previewBlogAuthor"><i class="bi bi-person me-1"></i> Author</span>
+            <span id="previewBlogDate"><i class="bi bi-calendar3 me-1"></i> Date</span>
+          </div>
+          <div class="mb-4 text-center">
+            <img id="previewBlogImage" src="" alt="Cover" class="img-fluid rounded-3 border border-white/10" style="max-height: 320px; width: 100%; object-fit: cover;">
+          </div>
+          <div id="previewBlogBody" class="text-white-75" style="line-height: 1.8;">
+            <!-- Rendered content -->
+          </div>
+        </div>
+        <div class="modal-footer border-top border-white/10">
+          <button type="button" class="btn btn-brand-outline" data-bs-dismiss="modal">Close</button>
+          <a href="/blog" target="_blank" class="btn btn-brand"><i class="bi bi-box-arrow-up-right me-1"></i> Open on Website</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/assets/js/main.js"></script>
+  <script>
+    let currentInquiries = [];
+    let currentJobs = [];
+    let currentApplications = [];
+    let selectedInquiryId = null;
+    let selectedApplicationId = null;
+
+    // Check Auth on load
+    document.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('dev_auto_admin') === '1') {
+        localStorage.setItem('zyllotech_token', 'dev_admin_token');
+        localStorage.setItem('zyllotech_user', JSON.stringify({ id: 1, name: 'Zyllo Administrator', email: 'admin@zyllotech.com', role: 'admin', company: 'Zyllo Tech Software Solutions' }));
+      }
+
+      const token = localStorage.getItem('zyllotech_token');
+      const userJson = localStorage.getItem('zyllotech_user');
+
+      if (!token || !userJson) {
+        window.location.href = '/login';
+        return;
+      }
+
+      const user = JSON.parse(userJson);
+
+      // Protect Admin Control: redirect clients to Client Portal
+      if (user.role !== 'admin') {
+        window.location.href = '/portal';
+        return;
+      }
+
+      document.getElementById('welcomeUserName').textContent = user.name;
+      document.getElementById('welcomeCompany').textContent = `${user.company || 'Enterprise Workspace'} · Role: ${user.role.toUpperCase()}`;
+      document.getElementById('userMenuBtn').innerHTML = `<i class="bi bi-person-circle me-1"></i> ${user.name.split(' ')[0]}`;
+      document.getElementById('userDropdownEmail').textContent = user.email;
+
+      // Update sidebar profile card
+      const sidebarInitials = document.getElementById('sidebarUserInitials');
+      if (sidebarInitials) {
+        const parts = (user.name || 'Admin').trim().split(' ');
+        sidebarInitials.textContent = parts.length > 1 ? (parts[0][0] + parts[1][0]).toUpperCase() : parts[0].substring(0, 2).toUpperCase();
+      }
+      const sidebarName = document.getElementById('sidebarUserName');
+      if (sidebarName) sidebarName.textContent = user.name || 'Admin';
+      const sidebarEmail = document.getElementById('sidebarUserEmail');
+      if (sidebarEmail) sidebarEmail.textContent = user.email || 'admin@zyllotech.com';
+
+      loadStats();
+      loadInquiries();
+      loadJobs();
+      loadApplications();
+      loadBlogArticles();
+      loadAlerts();
+      loadSmtpSettings();
+      loadEmailLogs();
+      loadAdminLeaves();
+      loadAdminAttendance();
+
+      // Deep linking to tab via query parameter ?tab=blogs or ?tab=emails
+      const initialTab = urlParams.get('tab');
+      if (initialTab) {
+        switchDashboardTab(initialTab);
+      }
+
+      // Dedicated dropdown toggle for user menu
+      setupDropdownToggle('userMenuBtn', document.querySelector('#userMenuBtn + .zy-dropdown-menu'));
+
+      // Real-time automatic polling every 4 seconds to sync email opens and applications
+      setInterval(() => {
+        loadStats();
+        loadApplications();
+        loadEmailLogs();
+        loadAlerts();
+        loadAdminLeaves();
+      }, 4000);
+    });
+
+    // Mobile Sidebar Toggle
+    function toggleAdminSidebar() {
+      const sidebar = document.getElementById('adminSidebar');
+      const backdrop = document.getElementById('sidebarBackdrop');
+      if (sidebar) sidebar.classList.toggle('show');
+      if (backdrop) backdrop.classList.toggle('show');
+    }
+
+    // 100% Reliable Direct Toggle for Admin Notifications Panel
+    function toggleAdminAlertsPanel(e) {
+      if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+      const panel = document.getElementById('adminAlertsMenu');
+      if (!panel) return;
+      if (panel.style.display === 'none' || panel.style.display === '') {
+        panel.style.display = 'block';
+        loadAlerts();
+      } else {
+        panel.style.display = 'none';
+      }
+    }
+
+    function closeAdminAlertsPanel(e) {
+      if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+      const panel = document.getElementById('adminAlertsMenu');
+      if (panel) panel.style.display = 'none';
+    }
+
+    // Global click listener to close alerts panel and dropdowns when clicking outside
+    document.addEventListener('click', (e) => {
+      const alertsWrapper = document.getElementById('adminAlertsWrapper');
+      const alertsPanel = document.getElementById('adminAlertsMenu');
+      if (alertsPanel && alertsPanel.style.display === 'block') {
+        if (alertsWrapper && !alertsWrapper.contains(e.target)) {
+          alertsPanel.style.display = 'none';
+        }
+      }
+
+      if (!e.target.closest('.dropdown')) {
+        document.querySelectorAll('.zy-dropdown-menu.show').forEach(m => m.classList.remove('show'));
+        document.querySelectorAll('[data-bs-toggle="dropdown"]').forEach(b => b.setAttribute('aria-expanded', 'false'));
+      }
+    });
+
+    // Dedicated dropdown toggle helper ensuring user profile menu opens/closes
+    function setupDropdownToggle(trigger, menuTarget) {
+      const btn = typeof trigger === 'string' ? document.getElementById(trigger) : trigger;
+      const menu = typeof menuTarget === 'string' ? document.getElementById(menuTarget) : menuTarget;
+      if (!btn || !menu) return;
+
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const isOpen = menu.classList.contains('show');
+        document.querySelectorAll('.zy-dropdown-menu.show').forEach(m => m.classList.remove('show'));
+        document.querySelectorAll('[data-bs-toggle="dropdown"]').forEach(b => b.setAttribute('aria-expanded', 'false'));
+
+        if (!isOpen) {
+          menu.classList.add('show');
+          btn.setAttribute('aria-expanded', 'true');
+        }
+      });
+    }
+
+    function switchDashboardTab(tabName) {
+      const sections = {
+        overview: document.getElementById('overviewTabSection'),
+        inquiries: document.getElementById('inquiriesTabSection'),
+        jobs: document.getElementById('jobsTabSection'),
+        applications: document.getElementById('applicationsTabSection'),
+        projects: document.getElementById('projectsTabSection'),
+        blogs: document.getElementById('blogsTabSection'),
+        emails: document.getElementById('emailsTabSection'),
+        leaves: document.getElementById('leavesTabSection'),
+        attendance: document.getElementById('attendanceTabSection')
+      };
+
+      const sidebarButtons = {
+        overview: document.getElementById('sidebar-nav-overview'),
+        inquiries: document.getElementById('sidebar-nav-inquiries'),
+        jobs: document.getElementById('sidebar-nav-jobs'),
+        applications: document.getElementById('sidebar-nav-applications'),
+        projects: document.getElementById('sidebar-nav-projects'),
+        blogs: document.getElementById('sidebar-nav-blogs'),
+        emails: document.getElementById('sidebar-nav-emails'),
+        leaves: document.getElementById('sidebar-nav-leaves'),
+        attendance: document.getElementById('sidebar-nav-attendance')
+      };
+
+      const titles = {
+        overview: 'Overview',
+        inquiries: 'Enquiries',
+        jobs: 'Services',
+        projects: 'Projects',
+        blogs: 'Blog & Content',
+        emails: 'Email Delivery & Open Tracking',
+        applications: 'Careers',
+        leaves: 'Leave Requests & Approvals',
+        attendance: 'Employee Attendance'
+      };
+
+      const topbarTab = document.getElementById('topbarCurrentTab');
+      if (topbarTab && titles[tabName]) {
+        topbarTab.textContent = titles[tabName];
+      }
+
+      Object.keys(sections).forEach(key => {
+        if (sections[key]) {
+          if (key === tabName) {
+            sections[key].classList.remove('d-none');
+          } else {
+            sections[key].classList.add('d-none');
+          }
+        }
+        if (sidebarButtons[key]) {
+          if (key === tabName) {
+            sidebarButtons[key].classList.add('active');
+          } else {
+            sidebarButtons[key].classList.remove('active');
+          }
+        }
+      });
+
+      // Close mobile offcanvas sidebar if open
+      const sidebar = document.getElementById('adminSidebar');
+      const backdrop = document.getElementById('sidebarBackdrop');
+      if (sidebar && backdrop && window.innerWidth < 992) {
+        sidebar.classList.remove('show');
+        backdrop.classList.remove('show');
+      }
+
+      if (tabName === 'blogs') {
+        loadBlogArticles();
+      }
+      if (tabName === 'emails') {
+        loadEmailLogs();
+      }
+      if (tabName === 'leaves') {
+        loadAdminLeaves();
+      }
+      if (tabName === 'attendance') {
+        loadAdminAttendance();
+      }
+
+      // Smoothly scroll the main pane to top on tab switch
+      const mainPane = document.querySelector('.zy-admin-main-pane');
+      if (mainPane) {
+        mainPane.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }
+
+    async function loadStats() {
+      try {
+        const res = await fetch('/api/stats');
+        const data = await res.json();
+        if (data.success && data.stats) {
+          document.getElementById('stat-total-inquiries').textContent = data.stats.totalInquiries;
+          document.getElementById('stat-new-inquiries').textContent = data.stats.newInquiries;
+          if (document.getElementById('stat-total-jobs')) {
+            document.getElementById('stat-total-jobs').textContent = data.stats.totalJobs || 0;
+          }
+          if (document.getElementById('stat-total-applications')) {
+            document.getElementById('stat-total-applications').textContent = data.stats.totalApplications || 0;
+          }
+
+          if (document.getElementById('stat-emails-dispatched')) {
+            document.getElementById('stat-emails-dispatched').textContent = data.stats.totalEmailsSent || 0;
+          }
+          if (document.getElementById('stat-emails-opened')) {
+            document.getElementById('stat-emails-opened').textContent = data.stats.totalEmailsOpened || 0;
+          }
+          if (document.getElementById('stat-email-open-rate')) {
+            document.getElementById('stat-email-open-rate').textContent = (data.stats.emailOpenRate || 0) + '%';
+          }
+
+          // Format Image 5 style badges: 02, 07, 14
+          const totalInq = data.stats.totalInquiries || 0;
+          const totalJobs = data.stats.totalJobs || 0;
+          const totalApps = data.stats.totalApplications || 0;
+          const totalEmails = data.stats.totalEmailsSent || 0;
+
+          const bInq = document.getElementById('sidebar-badge-inquiries');
+          if (bInq) bInq.textContent = totalInq < 10 ? `0${totalInq}` : totalInq;
+          const bJobs = document.getElementById('sidebar-badge-jobs');
+          if (bJobs) bJobs.textContent = totalJobs < 10 ? `0${totalJobs}` : totalJobs;
+          const bApps = document.getElementById('sidebar-badge-applications');
+          if (bApps) bApps.textContent = totalApps < 10 ? `0${totalApps}` : totalApps;
+          const bEmails = document.getElementById('sidebar-badge-emails');
+          if (bEmails) bEmails.textContent = totalEmails < 10 ? `0${totalEmails}` : totalEmails;
+
+          const pendingLeaves = data.stats.pendingLeaves || 0;
+          const todayAtt = data.stats.todayAttendance || 0;
+
+          const bLeaves = document.getElementById('sidebar-badge-leaves');
+          if (bLeaves) bLeaves.textContent = pendingLeaves < 10 ? `0${pendingLeaves}` : pendingLeaves;
+
+          const bAtt = document.getElementById('sidebar-badge-attendance');
+          if (bAtt) bAtt.textContent = todayAtt < 10 ? `0${todayAtt}` : todayAtt;
+
+          if (document.getElementById('stat-pending-leaves')) {
+            document.getElementById('stat-pending-leaves').textContent = pendingLeaves;
+          }
+          if (document.getElementById('stat-today-attendance')) {
+            document.getElementById('stat-today-attendance').textContent = todayAtt;
+          }
+
+          const badge = document.getElementById('adminAlertsBadge');
+          if (badge) {
+            if (data.stats.unreadAlerts && data.stats.unreadAlerts > 0) {
+              badge.textContent = data.stats.unreadAlerts;
+              badge.classList.remove('d-none');
+            } else {
+              badge.classList.add('d-none');
+            }
+          }
+
+          const projContainer = document.getElementById('projectsContainer');
+          if (data.stats.recentProjects && data.stats.recentProjects.length > 0) {
+            projContainer.innerHTML = data.stats.recentProjects.map(p => `
+              <div class="col-md-4">
+                <div class="p-3 rounded-3" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);">
+                  <div class="d-flex justify-content-between align-items-center mb-1">
+                    <span class="badge bg-secondary bg-opacity-25 text-white-50 border border-white-10">${escapeHtml(p.category)}</span>
+                    <span class="badge ${p.status === 'Testing' ? 'bg-warning text-dark' : 'bg-info bg-opacity-25 text-info'}">${escapeHtml(p.status)}</span>
+                  </div>
+                  <h6 class="fw-bold text-white mb-1">${escapeHtml(p.title)}</h6>
+                  <small class="text-white-50 d-block mb-2">${escapeHtml(p.client)}</small>
+                  <div class="progress" style="height: 6px; background: rgba(255,255,255,0.1);">
+                    <div class="progress-bar bg-gradient-brand" role="progressbar" style="width: ${p.progress}%; background: linear-gradient(90deg, #f16623, #262262);" aria-valuenow="${p.progress}" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                  <div class="d-flex justify-content-between align-items-center mt-1">
+                    <small class="text-white-50" style="font-size: 0.72rem;">Progress</small>
+                    <small class="text-white-50" style="font-size: 0.72rem;">${p.progress}%</small>
+                  </div>
+                </div>
+              </div>
+            `).join('');
+          }
+        }
+      } catch (err) {
+        console.error('Error loading stats', err);
+      }
+    }
+
+    // ==================== INQUIRIES LOGIC ====================
+    async function loadInquiries() {
+      const tbody = document.getElementById('inquiriesTableBody');
+      try {
+        const res = await fetch('/api/inquiries');
+        const data = await res.json();
+
+        if (data.success) {
+          currentInquiries = data.inquiries;
+          if (currentInquiries.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="7" class="text-center py-4 text-white-50">No inquiries in database yet.</td></tr>`;
+            return;
+          }
+
+          tbody.innerHTML = currentInquiries.map(inq => {
+            let statusBadge = 'bg-secondary';
+            if (inq.status === 'New') statusBadge = 'bg-danger';
+            else if (inq.status === 'In Review') statusBadge = 'bg-warning text-dark';
+            else if (inq.status === 'Contacted') statusBadge = 'bg-info text-dark';
+            else if (inq.status === 'Closed') statusBadge = 'bg-success';
+
+            return `
+              <tr>
+                <td class="text-white-50">#${inq.id}</td>
+                <td>
+                  <div class="fw-bold text-white">${escapeHtml(inq.name)}</div>
+                  <small class="text-white-50">${escapeHtml(inq.email)}</small>
+                </td>
+                <td><span class="text-white">${escapeHtml(inq.service)}</span></td>
+                <td><span class="badge bg-secondary bg-opacity-25 border border-white-10 text-white-50">${escapeHtml(inq.budget || 'Flexible')}</span></td>
+                <td class="text-white-50 small">${formatIST(inq.created_at, false)}</td>
+                <td><span class="badge ${statusBadge}">${escapeHtml(inq.status)}</span></td>
+                <td class="text-end">
+                  <button class="btn btn-sm btn-brand-outline py-0.5 px-2" onclick="openInquiryModal(${inq.id})">
+                    <i class="bi bi-eye"></i> View
+                  </button>
+                </td>
+              </tr>
+            `;
+          }).join('');
+
+          // Populate Overview Quick Preview
+          const overviewInq = document.getElementById('overviewRecentInquiries');
+          if (overviewInq) {
+            overviewInq.innerHTML = currentInquiries.slice(0, 5).map(inq => {
+              let statusBadge = 'bg-secondary';
+              if (inq.status === 'New') statusBadge = 'bg-danger';
+              else if (inq.status === 'In Review') statusBadge = 'bg-warning text-dark';
+              else if (inq.status === 'Contacted') statusBadge = 'bg-info text-dark';
+              else if (inq.status === 'Closed') statusBadge = 'bg-success';
+
+              return `
+                <tr>
+                  <td>
+                    <div class="fw-bold text-white small">${escapeHtml(inq.name)}</div>
+                    <small class="text-white-50" style="font-size: 0.72rem;">${escapeHtml(inq.service)}</small>
+                  </td>
+                  <td class="text-white-50 small">${escapeHtml(inq.budget || 'Flexible')}</td>
+                  <td><span class="badge ${statusBadge}" style="font-size: 0.7rem;">${escapeHtml(inq.status)}</span></td>
+                  <td class="text-end">
+                    <button class="btn btn-sm btn-brand-outline py-0.5 px-2" style="font-size: 0.72rem;" onclick="openInquiryModal(${inq.id})">
+                      <i class="bi bi-eye"></i>
+                    </button>
+                  </td>
+                </tr>
+              `;
+            }).join('');
+          }
+        }
+      } catch (err) {
+        tbody.innerHTML = `<tr><td colspan="7" class="text-center py-4 text-danger">Failed to fetch data from database.</td></tr>`;
+      }
+    }
+
+    function openInquiryModal(id) {
+      const inq = currentInquiries.find(item => item.id === id);
+      if (!inq) return;
+
+      selectedInquiryId = id;
+      document.getElementById('modalClientName').textContent = inq.name;
+      document.getElementById('modalClientEmail').textContent = inq.email;
+      document.getElementById('modalClientEmail').href = `mailto:${inq.email}`;
+      document.getElementById('modalClientPhone').textContent = inq.phone || 'None provided';
+      document.getElementById('modalClientService').textContent = inq.service;
+      document.getElementById('modalClientBudget').textContent = inq.budget || 'Not specified';
+      document.getElementById('modalClientMessage').textContent = inq.message;
+      document.getElementById('modalStatusSelect').value = inq.status || 'New';
+
+      const modal = new bootstrap.Modal(document.getElementById('inquiryDetailModal'));
+      modal.show();
+    }
+
+    async function updateInquiryStatus() {
+      if (!selectedInquiryId) return;
+      const newStatus = document.getElementById('modalStatusSelect').value;
+      const saveBtn = document.getElementById('saveStatusBtn');
+
+      saveBtn.disabled = true;
+      saveBtn.textContent = 'Saving...';
+
+      try {
+        const res = await fetch(`/api/inquiries/${selectedInquiryId}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ status: newStatus })
+        });
+        const data = await res.json();
+        if (data.success) {
+          bootstrap.Modal.getInstance(document.getElementById('inquiryDetailModal')).hide();
+          loadInquiries();
+          loadStats();
+        } else {
+          alert('Failed to update status');
+        }
+      } catch (err) {
+        alert('Network error while updating status');
+      } finally {
+        saveBtn.disabled = false;
+        saveBtn.textContent = 'Save Changes';
+      }
+    }
+
+    // ==================== JOBS MANAGEMENT LOGIC (Issue 5) ====================
+    async function loadJobs() {
+      const tbody = document.getElementById('jobsTableBody');
+      try {
+        const res = await fetch('/api/jobs');
+        const data = await res.json();
+
+        if (data.success) {
+          currentJobs = data.jobs;
+          if (currentJobs.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="8" class="text-center py-4 text-white-50">No jobs posted yet. Click "+ Post New Job" above to add one.</td></tr>`;
+            return;
+          }
+
+          tbody.innerHTML = currentJobs.map(job => {
+            const isFeatured = job.featured === 1 || job.featured === true;
+            return `
+              <tr>
+                <td class="text-white-50">#${job.id}</td>
+                <td>
+                  <div class="fw-bold text-white">${escapeHtml(job.title)}</div>
+                  <span class="badge bg-primary bg-opacity-25 text-info border border-primary px-2 py-0.5" style="font-size: 0.72rem;">${escapeHtml(job.category)}</span>
+                </td>
+                <td class="text-white-50 small"><i class="bi bi-geo-alt text-info me-1"></i>${escapeHtml(job.location)}</td>
+                <td class="text-white small">${escapeHtml(job.job_type || 'Full-time')}</td>
+                <td><span class="badge bg-secondary bg-opacity-25 border border-white-10 text-white">${job.openings} openings</span></td>
+                <td>
+                  <span class="badge ${job.accent === 'orange' ? 'bg-warning text-dark' : 'bg-info text-dark'} me-1">${job.accent}</span>
+                  ${isFeatured ? '<span class="badge bg-primary">FEATURED</span>' : ''}
+                </td>
+                <td>
+                  <span class="badge ${job.status === 'Active' ? 'bg-success' : 'bg-secondary'}">${escapeHtml(job.status || 'Active')}</span>
+                </td>
+                <td class="text-end">
+                  <button class="btn btn-sm btn-brand-outline py-0.5 px-2 me-1" onclick="openEditJobModal(${job.id})">
+                    <i class="bi bi-pencil"></i> Edit
+                  </button>
+                  <button class="btn btn-sm btn-outline-danger py-0.5 px-2" onclick="deleteJob(${job.id})">
+                    <i class="bi bi-trash"></i>
+                  </button>
+                </td>
+              </tr>
+            `;
+          }).join('');
+        }
+      } catch (err) {
+        tbody.innerHTML = `<tr><td colspan="8" class="text-center py-4 text-danger">Failed to fetch jobs data.</td></tr>`;
+      }
+    }
+
+    function openNewJobModal() {
+      document.getElementById('jobModalHeading').innerHTML = '<i class="bi bi-briefcase me-2 text-warning"></i> Post New Job Opening';
+      document.getElementById('jobFormId').value = '';
+      document.getElementById('jobFormTitle').value = '';
+      document.getElementById('jobFormCategory').value = 'ENGINEERING';
+      document.getElementById('jobFormLocation').value = 'Guntur Office';
+      document.getElementById('jobFormType').value = 'Full-time';
+      document.getElementById('jobFormOpenings').value = '2';
+      document.getElementById('jobFormAccent').value = 'blue';
+      document.getElementById('jobFormFeatured').checked = false;
+      document.getElementById('jobFormDesc').value = '';
+      document.getElementById('jobFormRequirements').value = '';
+      document.getElementById('jobFormResponsibilities').value = '';
+      document.getElementById('jobFormStatus').value = 'Active';
+
+      const modal = new bootstrap.Modal(document.getElementById('jobModal'));
+      modal.show();
+    }
+
+    function openEditJobModal(jobId) {
+      const job = currentJobs.find(j => j.id === jobId);
+      if (!job) return;
+
+      document.getElementById('jobModalHeading').innerHTML = '<i class="bi bi-pencil-square me-2 text-warning"></i> Edit Job Opening';
+      document.getElementById('jobFormId').value = job.id;
+      document.getElementById('jobFormTitle').value = job.title;
+      document.getElementById('jobFormCategory').value = job.category;
+      document.getElementById('jobFormLocation').value = job.location;
+      document.getElementById('jobFormType').value = job.job_type || 'Full-time';
+      document.getElementById('jobFormOpenings').value = job.openings || 1;
+      document.getElementById('jobFormAccent').value = job.accent || 'blue';
+      document.getElementById('jobFormFeatured').checked = (job.featured === 1 || job.featured === true);
+      document.getElementById('jobFormDesc').value = job.description || '';
+      document.getElementById('jobFormRequirements').value = job.requirements || '';
+      document.getElementById('jobFormResponsibilities').value = job.responsibilities || '';
+      document.getElementById('jobFormStatus').value = job.status || 'Active';
+
+      const modal = new bootstrap.Modal(document.getElementById('jobModal'));
+      modal.show();
+    }
+
+    async function handleSaveJob(e) {
+      e.preventDefault();
+      const jobId = document.getElementById('jobFormId').value;
+      const isEdit = Boolean(jobId);
+
+      const payload = {
+        title: document.getElementById('jobFormTitle').value,
+        category: document.getElementById('jobFormCategory').value,
+        location: document.getElementById('jobFormLocation').value,
+        job_type: document.getElementById('jobFormType').value,
+        openings: parseInt(document.getElementById('jobFormOpenings').value, 10) || 1,
+        accent: document.getElementById('jobFormAccent').value,
+        featured: document.getElementById('jobFormFeatured').checked,
+        description: document.getElementById('jobFormDesc').value,
+        requirements: document.getElementById('jobFormRequirements').value,
+        responsibilities: document.getElementById('jobFormResponsibilities').value,
+        status: document.getElementById('jobFormStatus').value
+      };
+
+      const submitBtn = document.getElementById('jobFormSubmitBtn');
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span> Saving...';
+
+      try {
+        const url = isEdit ? `/api/jobs/${jobId}` : '/api/jobs';
+        const method = isEdit ? 'PUT' : 'POST';
+
+        const res = await fetch(url, {
+          method,
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+
+        if (data.success) {
+          bootstrap.Modal.getInstance(document.getElementById('jobModal')).hide();
+          loadJobs();
+          loadStats();
+          alert(isEdit ? 'Job opening updated successfully!' : 'Job opening posted successfully!');
+        } else {
+          alert(data.message || 'Error saving job');
+        }
+      } catch (err) {
+        alert('Network error while saving job');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Save Job Opening';
+      }
+    }
+
+    async function deleteJob(jobId) {
+      if (!confirm('Are you sure you want to delete this job opening? It will be removed from the public careers page.')) {
+        return;
+      }
+
+      try {
+        const res = await fetch(`/api/jobs/${jobId}`, { method: 'DELETE' });
+        const data = await res.json();
+        if (data.success) {
+          loadJobs();
+          loadStats();
+        } else {
+          alert('Failed to delete job');
+        }
+      } catch (err) {
+        alert('Network error');
+      }
+    }
+
+    // ==================== APPLICATIONS & RESUMES LOGIC (Issue 3) ====================
+    async function loadApplications() {
+      const tbody = document.getElementById('applicationsTableBody');
+      try {
+        const res = await fetch('/api/careers/applications');
+        const data = await res.json();
+
+        if (data.success) {
+          currentApplications = data.applications;
+          if (currentApplications.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="9" class="text-center py-4 text-white-50">No candidate applications received yet.</td></tr>`;
+            return;
+          }
+
+          tbody.innerHTML = currentApplications.map(app => {
+            let statusBadge = 'bg-secondary';
+            if (app.status === 'Pending Review') statusBadge = 'bg-warning text-dark';
+            else if (app.status === 'Shortlisted') statusBadge = 'bg-info text-dark';
+            else if (app.status === 'Interview Scheduled') statusBadge = 'bg-primary';
+            else if (app.status === 'Hired') statusBadge = 'bg-success';
+            else if (app.status === 'Rejected') statusBadge = 'bg-danger';
+
+            const hasResume = app.resume_link && app.resume_link.trim().length > 0;
+            const isFile = hasResume && (app.resume_link.startsWith('/') || app.resume_link.startsWith('http'));
+
+            return `
+              <tr>
+                <td style="color: #64748b; font-weight: 600;">#${app.id}</td>
+                <td>
+                  <div class="fw-bold" style="color: #0f172a; font-size: 0.92rem;">${escapeHtml(app.name)}</div>
+                  <small><a href="mailto:${escapeHtml(app.email)}" class="text-primary text-decoration-none" style="font-size: 0.76rem;">${escapeHtml(app.email)}</a></small>
+                </td>
+                <td><span class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25 rounded-pill px-2.5 py-1">${escapeHtml(app.role)}</span></td>
+                <td class="small" style="color: #475569;">${escapeHtml(app.experience || 'Not specified')}</td>
+                <td class="small" style="color: #64748b;">${formatIST(app.created_at, false)}</td>
+                <td>
+                  ${isFile ? `
+                    <div class="d-flex align-items-center gap-1">
+                      <button type="button" class="btn btn-sm btn-outline-primary rounded-pill py-0.5 px-2.5 fw-semibold" onclick="viewResumeInSite('${app.resume_link}', '${escapeHtml(app.name)}')" title="View resume directly on site" style="font-size: 0.78rem;">
+                        <i class="bi bi-eye-fill me-1"></i>View
+                      </button>
+                      <a href="${app.resume_link}" target="_blank" download class="btn btn-sm btn-brand rounded-pill py-0.5 px-2 text-white" title="Download Resume File" style="font-size: 0.78rem;">
+                        <i class="bi bi-download"></i>
+                      </a>
+                    </div>
+                  ` : `
+                    <span class="badge bg-secondary bg-opacity-25 text-muted rounded-pill px-2.5 py-1">${escapeHtml(app.resume_link || 'No file')}</span>
+                  `}
+                </td>
+                <td>
+                  ${app.email_opened ? `
+                    <span class="badge bg-success bg-opacity-15 text-success border border-success border-opacity-40 rounded-pill px-2.5 py-1" style="font-weight: 600;" title="Watched ${app.email_open_count} times · First: ${formatIST(app.email_first_opened_at)} · Last: ${formatIST(app.email_last_opened_at || app.email_first_opened_at)}">
+                      <i class="bi bi-eye-fill me-1"></i> Watched (${app.email_open_count}x)
+                    </span>
+                  ` : app.email_sent ? `
+                    <span class="badge bg-warning bg-opacity-15 text-warning border border-warning border-opacity-40 rounded-pill px-2.5 py-1" style="font-weight: 600;" title="Confirmation email dispatched · Awaiting candidate open">
+                      <i class="bi bi-hourglass-split me-1"></i> Awaiting Open
+                    </span>
+                  ` : `
+                    <span class="badge bg-secondary bg-opacity-20 text-muted rounded-pill px-2.5 py-1">Not Sent</span>
+                  `}
+                </td>
+                <td><span class="badge ${statusBadge} rounded-pill px-2.5 py-1">${escapeHtml(app.status || 'Pending Review')}</span></td>
+                <td class="text-end">
+                  <div class="d-inline-flex align-items-center gap-1">
+                    ${app.email_tracking_id ? `
+                      <a href="/api/emails/${app.email_tracking_id}/preview" target="_blank" class="btn btn-sm btn-outline-primary rounded-pill py-0.5 px-2.5" title="View Confirmation Email Sent to Candidate" style="font-size: 0.75rem;">
+                        <i class="bi bi-envelope-paper me-1"></i> View Email
+                      </a>
+                      <button class="btn btn-sm btn-outline-warning rounded-pill py-0.5 px-2" onclick="simulateCandidateOpen('${app.email_tracking_id}', ${app.id})" title="Simulate Candidate Open Event" style="font-size: 0.75rem;">
+                        <i class="bi bi-bug"></i>
+                      </button>
+                    ` : ''}
+                    <button class="btn btn-sm btn-brand-outline rounded-pill py-0.5 px-2" onclick="openApplicationModal(${app.id})" style="font-size: 0.75rem;">
+                      <i class="bi bi-eye"></i> Details
+                    </button>
+                    <button class="btn btn-sm btn-outline-danger rounded-pill py-0.5 px-2" onclick="deleteApplication(${app.id})" style="font-size: 0.75rem;">
+                      <i class="bi bi-trash"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            `;
+          }).join('');
+
+          // Populate Overview Quick Preview for Applications
+          const overviewApps = document.getElementById('overviewRecentApplications');
+          if (overviewApps) {
+            overviewApps.innerHTML = currentApplications.slice(0, 5).map(app => {
+              let statusBadge = 'bg-secondary';
+              if (app.status === 'Pending Review' || app.status === 'New') statusBadge = 'bg-warning text-dark';
+              else if (app.status === 'Shortlisted') statusBadge = 'bg-info text-dark';
+              else if (app.status === 'Interview Scheduled') statusBadge = 'bg-primary';
+              else if (app.status === 'Hired' || app.status === 'Accepted') statusBadge = 'bg-success';
+              else if (app.status === 'Rejected') statusBadge = 'bg-danger';
+
+              return `
+                <tr>
+                  <td>
+                    <div class="fw-bold text-white small">${escapeHtml(app.name || app.full_name || 'Candidate')}</div>
+                    <small class="text-white-50" style="font-size: 0.72rem;">${escapeHtml(app.role || app.position_title || 'Role')}</small>
+                  </td>
+                  <td><span class="badge ${statusBadge}" style="font-size: 0.7rem;">${escapeHtml(app.status || 'Received')}</span></td>
+                  <td class="text-end">
+                    <button class="btn btn-sm btn-brand-outline py-0.5 px-2" style="font-size: 0.72rem;" onclick="openApplicationModal(${app.id})">
+                      <i class="bi bi-eye"></i>
+                    </button>
+                  </td>
+                </tr>
+              `;
+            }).join('');
+          }
+        }
+      } catch (err) {
+        tbody.innerHTML = `<tr><td colspan="9" class="text-center py-4 text-danger">Failed to fetch applications from database.</td></tr>`;
+      }
+    }
+
+    function openApplicationModal(appId) {
+      const app = currentApplications.find(a => a.id === appId);
+      if (!app) return;
+
+      selectedApplicationId = appId;
+      document.getElementById('appModalCandidateName').textContent = app.name;
+      document.getElementById('appModalRole').textContent = `Applied for: ${app.role}`;
+      document.getElementById('appModalEmail').textContent = app.email;
+      document.getElementById('appModalEmail').href = `mailto:${app.email}`;
+      document.getElementById('appModalPhone').textContent = app.phone || 'None provided';
+      document.getElementById('appModalExperience').textContent = app.experience || 'Not specified';
+      document.getElementById('appModalCoverNote').textContent = app.cover_note || 'No cover note provided by candidate.';
+      document.getElementById('appModalStatusSelect').value = app.status || 'Pending Review';
+      
+      const noteInput = document.getElementById('appModalStatusNote');
+      if (noteInput) noteInput.value = '';
+
+      const inlineContainer = document.getElementById('appModalInlineResumeContainer');
+      const inlineIframe = document.getElementById('appModalInlineResumeIframe');
+      if (inlineContainer) inlineContainer.classList.add('d-none');
+      if (inlineIframe) inlineIframe.src = '';
+
+      const resumeContainer = document.getElementById('appModalResumeActionBtnContainer');
+      const hasResume = app.resume_link && app.resume_link.trim().length > 0;
+      const isFile = hasResume && (app.resume_link.startsWith('/') || app.resume_link.startsWith('http'));
+
+      if (isFile) {
+        document.getElementById('appModalResumeFileName').textContent = app.resume_link.split('/').pop();
+        document.getElementById('appModalResumeNote').textContent = 'Direct file stored on server ready to view in site or download';
+        resumeContainer.innerHTML = `
+          <button type="button" class="btn btn-info btn-sm px-3 text-white fw-semibold" onclick="viewResumeInSite('${app.resume_link}', '${escapeHtml(app.name)}')">
+            <i class="bi bi-eye-fill me-1"></i> View Resume in Site
+          </button>
+          <button type="button" class="btn btn-brand-outline btn-sm px-2.5 text-white" onclick="toggleInlineResumePreview('${app.resume_link}')" title="Preview resume inline below">
+            <i class="bi bi-layout-sidebar-inset me-1"></i> Inline Preview
+          </button>
+          <a href="${app.resume_link}" target="_blank" download class="btn btn-brand btn-sm px-2.5 text-white" title="Download resume file">
+            <i class="bi bi-download me-1"></i> Download
+          </a>
+        `;
+      } else {
+        document.getElementById('appModalResumeFileName').textContent = app.resume_link || 'No resume file uploaded';
+        document.getElementById('appModalResumeNote').textContent = 'Candidate did not attach a downloadable PDF file';
+        resumeContainer.innerHTML = `<span class="badge bg-secondary p-2">No file available</span>`;
+      }
+
+      // Populate Candidate Email Seen Tracking in Modal
+      const emailBadge = document.getElementById('appModalEmailSeenBadge');
+      const firstOpenedEl = document.getElementById('appModalFirstOpened');
+      const openCountEl = document.getElementById('appModalOpenCount');
+      const previewEmailBtn = document.getElementById('appModalPreviewEmailBtn');
+      const simulateOpenBtn = document.getElementById('appModalSimulateOpenBtn');
+
+      if (app.email_opened) {
+        emailBadge.innerHTML = `<span class="badge bg-success px-3 py-1.5"><i class="bi bi-eye-fill me-1"></i> Watched / Seen (${app.email_open_count} times)</span>`;
+        firstOpenedEl.textContent = app.email_first_opened_at ? formatIST(app.email_first_opened_at) : 'Just now';
+        openCountEl.innerHTML = `<span class="text-success fw-bold">${app.email_open_count} times</span> ${app.email_last_opened_at ? `(Last watched: ${formatIST(app.email_last_opened_at)})` : ''}`;
+      } else if (app.email_sent) {
+        emailBadge.innerHTML = `<span class="badge bg-warning text-dark px-3 py-1.5"><i class="bi bi-envelope-fill me-1"></i> Confirmation Sent (Unopened)</span>`;
+        firstOpenedEl.textContent = 'Awaiting candidate to open email';
+        openCountEl.textContent = '0 times';
+      } else {
+        emailBadge.innerHTML = `<span class="badge bg-secondary px-3 py-1.5">No email dispatched</span>`;
+        firstOpenedEl.textContent = 'N/A';
+        openCountEl.textContent = '0 times';
+      }
+
+      if (app.email_tracking_id) {
+        previewEmailBtn.classList.remove('d-none');
+        previewEmailBtn.href = `/api/emails/${app.email_tracking_id}/preview`;
+        simulateOpenBtn.classList.remove('d-none');
+        simulateOpenBtn.onclick = () => simulateCandidateOpen(app.email_tracking_id, appId);
+      } else {
+        previewEmailBtn.classList.add('d-none');
+        simulateOpenBtn.classList.add('d-none');
+      }
+
+      const modal = new bootstrap.Modal(document.getElementById('applicationDetailModal'));
+      modal.show();
+    }
+
+    function viewResumeInSite(resumeUrl, candidateName) {
+      if (!resumeUrl) return;
+      const iframe = document.getElementById('inSiteResumeModalIframe');
+      const title = document.getElementById('inSiteResumeModalTitle');
+      const downloadBtn = document.getElementById('inSiteResumeModalDownloadBtn');
+      const newTabBtn = document.getElementById('inSiteResumeModalNewTabBtn');
+
+      if (title) title.textContent = `${candidateName || 'Candidate'} - Resume Document`;
+      if (downloadBtn) downloadBtn.href = resumeUrl;
+      if (newTabBtn) newTabBtn.href = resumeUrl;
+      if (iframe) iframe.src = resumeUrl;
+
+      const modal = bootstrap.Modal.getOrCreateInstance(document.getElementById('inSiteResumeModal'));
+      modal.show();
+    }
+
+    function toggleInlineResumePreview(resumeUrl) {
+      const container = document.getElementById('appModalInlineResumeContainer');
+      const iframe = document.getElementById('appModalInlineResumeIframe');
+      if (!container || !iframe) return;
+
+      if (container.classList.contains('d-none')) {
+        if (resumeUrl) iframe.src = resumeUrl;
+        container.classList.remove('d-none');
+      } else {
+        container.classList.add('d-none');
+      }
+    }
+
+    async function saveApplicationStatus() {
+      if (!selectedApplicationId) return;
+      const newStatus = document.getElementById('appModalStatusSelect').value;
+      const note = document.getElementById('appModalStatusNote') ? document.getElementById('appModalStatusNote').value.trim() : '';
+      const sendEmail = document.getElementById('appModalSendEmailCheck') ? document.getElementById('appModalSendEmailCheck').checked : true;
+      const saveBtn = document.getElementById('appModalSaveStatusBtn');
+
+      saveBtn.disabled = true;
+      saveBtn.innerHTML = `<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span> Updating & Dispatching Email...`;
+
+      try {
+        const res = await fetch(`/api/careers/applications/${selectedApplicationId}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ status: newStatus, note, sendEmail })
+        });
+        const data = await res.json();
+        if (data.success) {
+          alert(`✅ ${data.message}`);
+          bootstrap.Modal.getInstance(document.getElementById('applicationDetailModal')).hide();
+          loadApplications();
+          loadStats();
+          if (typeof loadEmailLogs === 'function') loadEmailLogs();
+          if (typeof loadAlerts === 'function') loadAlerts();
+        } else {
+          alert('Failed to update status: ' + (data.message || 'Unknown error'));
+        }
+      } catch (err) {
+        alert('Network error while updating candidate status.');
+      } finally {
+        saveBtn.disabled = false;
+        saveBtn.innerHTML = `<i class="bi bi-send-check-fill me-1"></i> Update Candidate Status &amp; Send Email`;
+      }
+    }
+
+    async function deleteApplication(appId) {
+      if (!confirm('Are you sure you want to remove this application record?')) {
+        return;
+      }
+
+      try {
+        const res = await fetch(`/api/careers/applications/${appId}`, { method: 'DELETE' });
+        const data = await res.json();
+        if (data.success) {
+          loadApplications();
+          loadStats();
+        } else {
+          alert('Failed to delete application');
+        }
+      } catch (err) {
+        alert('Network error');
+      }
+    }
+
+    // Handle Quick Inquiry Submit from Dashboard
+    document.getElementById('quickInquiryForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const form = e.target;
+      const formData = {
+        name: form.name.value,
+        email: form.email.value,
+        phone: form.phone.value,
+        service: form.service.value,
+        budget: form.budget.value,
+        message: form.message.value
+      };
+
+      try {
+        const res = await fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(formData)
+        });
+        const data = await res.json();
+        if (data.success) {
+          bootstrap.Modal.getInstance(document.getElementById('newInquiryModal')).hide();
+          form.reset();
+          loadInquiries();
+          loadStats();
+          alert('Inquiry successfully recorded into database!');
+        } else {
+          alert(data.message || 'Error creating inquiry');
+        }
+      } catch (err) {
+        alert('Failed to submit');
+      }
+    });
+
+    async function simulateCandidateOpen(trackingId, appId) {
+      if (!trackingId) return;
+      try {
+        const res = await fetch(`/api/emails/${trackingId}/simulate-open`, { method: 'POST' });
+        const data = await res.json();
+        if (data.success) {
+          alert('Email open pixel event triggered! Candidate open count: ' + data.open_count);
+          await loadApplications();
+          loadStats();
+          if (selectedApplicationId === appId) {
+            openApplicationModal(appId);
+          }
+        } else {
+          alert(data.message || 'Failed to simulate email open');
+        }
+      } catch (err) {
+        alert('Failed to simulate email open');
+      }
+    }
+
+    async function resendCandidateEmail(appId) {
+      if (!appId) return;
+      if (!confirm('Resend confirmation email to this candidate?')) return;
+
+      try {
+        const res = await fetch(`/api/careers/applications/${appId}/resend-confirmation`, { method: 'POST' });
+        const data = await res.json();
+
+        if (data.success) {
+          alert(data.message);
+          loadApplications();
+          loadStats();
+          loadEmailLogs();
+          if (selectedApplicationId === appId) {
+            openApplicationModal(appId);
+          }
+        } else {
+          alert(data.message || 'Failed to dispatch email. Please verify SMTP credentials.');
+        }
+      } catch (err) {
+        alert('Network error communicating with server.');
+      }
+    }
+
+    async function loadAlerts() {
+      try {
+        const res = await fetch('/api/admin/alerts');
+        const data = await res.json();
+        if (data.success && data.alerts) {
+          const unread = data.alerts.filter(a => !a.is_read);
+          const badge = document.getElementById('adminAlertsBadge');
+          if (badge) {
+            if (unread.length > 0) {
+              badge.textContent = unread.length;
+              badge.classList.remove('d-none');
+            } else {
+              badge.classList.add('d-none');
+            }
+          }
+
+          const list = document.getElementById('adminAlertsList');
+          if (list) {
+            if (data.alerts.length === 0) {
+              list.innerHTML = `
+                <div class="text-center py-4 text-muted small" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px;">
+                  <i class="bi bi-bell-slash d-block fs-3 mb-2 text-white-50"></i>
+                  No new application alerts
+                </div>
+              `;
+            } else {
+              list.innerHTML = data.alerts.map(a => `
+                <div class="p-3 border-bottom border-white/10" 
+                     style="cursor: pointer; background: ${a.is_read ? 'rgba(13, 18, 32, 0.65)' : 'rgba(249, 103, 6, 0.12)'}; border-left: 3px solid ${a.is_read ? 'transparent' : '#f16623'}; transition: all 0.2s ease;" 
+                     onmouseenter="this.style.background='rgba(249, 103, 6, 0.22)'" 
+                     onmouseleave="this.style.background='${a.is_read ? 'rgba(13, 18, 32, 0.65)' : 'rgba(249, 103, 6, 0.12)'}'" 
+                     onclick="markAlertRead(${a.id}, ${a.reference_id || 'null'})">
+                  <div class="d-flex justify-content-between align-items-center mb-1.5">
+                    <div class="d-flex align-items-center gap-2 text-truncate pe-2">
+                      <span class="d-inline-flex align-items-center justify-content-center rounded-2" style="width: 26px; height: 26px; background: rgba(249, 103, 6, 0.25); color: #f16623; font-size: 0.85rem; flex-shrink: 0;">
+                        <i class="bi bi-briefcase-fill"></i>
+                      </span>
+                      <strong class="text-white text-truncate" style="font-size: 0.88rem; font-weight: 600;">${escapeHtml(a.title)}</strong>
+                    </div>
+                    <div class="d-flex align-items-center gap-1.5 flex-shrink-0 ms-2">
+                      ${!a.is_read ? '<span style="width: 7px; height: 7px; border-radius: 50%; background: #f16623; box-shadow: 0 0 8px rgba(249,103,6,0.9); display: inline-block;"></span>' : ''}
+                      <small style="color: #94a3b8; font-size: 0.72rem; white-space: nowrap;"><i class="bi bi-clock me-1"></i>${formatIST(a.created_at)}</small>
+                    </div>
+                  </div>
+                  <p class="mb-1" style="color: #cbd5e1; font-size: 0.82rem; line-height: 1.45; padding-left: 34px;">${escapeHtml(a.message)}</p>
+                  <div class="d-flex justify-content-end" style="padding-left: 34px;">
+                    <span style="color: #9f9cb8; font-size: 0.74rem; font-weight: 500;">Review Candidate &rarr;</span>
+                  </div>
+                </div>
+              `).join('');
+            }
+          }
+        }
+      } catch (err) {
+        console.error('Error loading alerts', err);
+      }
+    }
+
+    async function markAlertRead(alertId, referenceId) {
+      try {
+        await fetch(`/api/admin/alerts/${alertId}/read`, { method: 'PATCH' });
+        loadAlerts();
+        loadStats();
+        closeAdminAlertsPanel();
+        switchDashboardTab('applications');
+        if (referenceId) {
+          setTimeout(() => {
+            if (typeof openApplicationModal === 'function') {
+              openApplicationModal(referenceId);
+            }
+          }, 350);
+        }
+      } catch (err) {
+        console.error('Error marking alert read', err);
+      }
+    }
+
+    async function markAllAlertsRead(e) {
+      if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+      try {
+        await fetch('/api/admin/alerts/mark-all-read', { method: 'PATCH' });
+        loadAlerts();
+        loadStats();
+      } catch (err) {
+        console.error('Error marking all alerts read', err);
+      }
+    }
+
+    async function loadEmailLogs() {
+      const tbody = document.getElementById('emailLogsTableBody');
+      try {
+        const res = await fetch('/api/email-tracker/logs');
+        const data = await res.json();
+        if (data.success) {
+          const logs = data.logs || [];
+          if (logs.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="8" class="text-center py-4 text-white-50">No emails have been sent yet.</td></tr>`;
+            return;
+          }
+
+          tbody.innerHTML = logs.map(l => {
+            const isOpened = l.status === 'Opened';
+            return `
+              <tr>
+                <td><code class="small" style="font-weight: 600; color: #f16623;">${l.tracking_id.substring(0, 10)}...</code></td>
+                <td><span class="badge ${l.type === 'job_confirmation' ? 'bg-primary' : 'bg-warning text-dark'} bg-opacity-25 border border-primary border-opacity-40 rounded-pill px-2.5 py-1 text-white">${l.type === 'job_confirmation' ? 'Candidate Confirmation' : 'Admin Alert'}</span></td>
+                <td>
+                  <div class="fw-bold small text-white">${escapeHtml(l.recipient_name || l.recipient)}</div>
+                  <small class="text-white-50" style="font-size: 0.74rem;">${escapeHtml(l.recipient)}</small>
+                </td>
+                <td class="small text-white-75" style="font-weight: 500;">${escapeHtml(l.subject)}</td>
+                <td><span class="badge bg-secondary bg-opacity-25 text-white-75 rounded-pill px-2.5 py-1">${escapeHtml(l.sender)}</span></td>
+                <td>
+                  ${isOpened ? `
+                    <span class="badge bg-success bg-opacity-20 text-success border border-success border-opacity-40 rounded-pill px-2.5 py-1" style="font-weight: 600;">
+                      <i class="bi bi-eye-fill me-1"></i> Watched (${l.open_count}x)
+                    </span>
+                  ` : `
+                    <span class="badge bg-warning bg-opacity-20 text-warning border border-warning border-opacity-40 rounded-pill px-2.5 py-1" style="font-weight: 600;">
+                      <i class="bi bi-hourglass-split me-1"></i> Awaiting Open
+                    </span>
+                  `}
+                </td>
+                <td>
+                  ${l.first_opened_at ? `
+                    <div class="small fw-semibold text-white"><i class="bi bi-clock-history text-success me-1"></i>${formatIST(l.first_opened_at)}</div>
+                    ${l.last_opened_at && l.last_opened_at !== l.first_opened_at ? `<small class="d-block mt-0.5 text-white-50" style="font-size:0.72rem;">Last seen: ${formatIST(l.last_opened_at)}</small>` : ''}
+                  ` : '<span class="small text-white-50">Awaiting open</span>'}
+                </td>
+                <td class="text-end">
+                  <div class="d-inline-flex align-items-center gap-1">
+                    <a href="/api/emails/${l.tracking_id}/preview" target="_blank" class="btn btn-sm btn-outline-info rounded-pill py-0.5 px-2.5" title="Preview Email" style="font-size: 0.75rem;">
+                      <i class="bi bi-box-arrow-up-right me-1"></i> View
+                    </a>
+                    <button class="btn btn-sm btn-outline-warning rounded-pill py-0.5 px-2" onclick="simulateCandidateOpen('${l.tracking_id}', null)" title="Test Open Event" style="font-size: 0.75rem;">
+                      <i class="bi bi-broadcast"></i> Test Open
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            `;
+          }).join('');
+        }
+      } catch (err) {
+        tbody.innerHTML = `<tr><td colspan="8" class="text-center py-4 text-danger">Failed to load email tracking logs.</td></tr>`;
+      }
+    }
+
+    // ==================== SMTP MANAGEMENT & TEST ====================
+    async function loadSmtpSettings() {
+      try {
+        const res = await fetch('/api/settings/smtp');
+        const data = await res.json();
+        if (data.success && data.smtp) {
+          const s = data.smtp;
+          if (document.getElementById('smtpHostInput')) {
+            document.getElementById('smtpHostInput').value = s.host || '';
+            document.getElementById('smtpPortInput').value = s.port || 465;
+            document.getElementById('smtpSecureInput').checked = s.secure;
+            document.getElementById('smtpUserInput').value = s.user || 'haasethabhiram@gmail.com';
+            document.getElementById('smtpFromInput').value = s.from_email || 'haasethabhiram@gmail.com';
+          }
+
+          const badge = document.getElementById('smtpStatusBadge');
+          if (badge) {
+            if (s.isLiveSmtp) {
+              badge.innerHTML = `<span class="badge bg-success p-2"><i class="bi bi-check-circle-fill me-1"></i> Live SMTP Connected (${escapeHtml(s.host)})</span>`;
+            } else {
+              badge.innerHTML = `<span class="badge bg-warning text-dark p-2" title="${escapeHtml(s.lastError || 'No live SMTP configured')}"><i class="bi bi-exclamation-triangle-fill me-1"></i> Local Simulator Mode (Add SMTP to reach real inboxes)</span>`;
+            }
+          }
+        }
+      } catch (err) {
+        console.error('Failed to load SMTP settings', err);
+      }
+    }
+
+    function fillSmtpPreset(type) {
+      if (type === 'gmail') {
+        document.getElementById('smtpHostInput').value = 'smtp.gmail.com';
+        document.getElementById('smtpPortInput').value = '465';
+        document.getElementById('smtpSecureInput').checked = true;
+        document.getElementById('smtpFromInput').value = 'haasethabhiram@gmail.com';
+        document.getElementById('smtpUserInput').value = 'haasethabhiram@gmail.com';
+        alert('Preset applied for Gmail (haasethabhiram@gmail.com)!\n\nNow enter your 16-character Google App Password in the password field.');
+      } else if (type === 'cpanel') {
+        document.getElementById('smtpHostInput').value = 'mail.zyllotech.com';
+        document.getElementById('smtpPortInput').value = '465';
+        document.getElementById('smtpSecureInput').checked = true;
+        document.getElementById('smtpFromInput').value = 'info@zyllotech.com';
+        document.getElementById('smtpUserInput').value = 'info@zyllotech.com';
+      } else if (type === 'zoho') {
+        document.getElementById('smtpHostInput').value = 'smtp.zoho.com';
+        document.getElementById('smtpPortInput').value = '465';
+        document.getElementById('smtpSecureInput').checked = true;
+      } else if (type === 'brevo') {
+        document.getElementById('smtpHostInput').value = 'smtp-relay.brevo.com';
+        document.getElementById('smtpPortInput').value = '587';
+        document.getElementById('smtpSecureInput').checked = false;
+      }
+    }
+
+    if (document.getElementById('smtpSettingsForm')) {
+      document.getElementById('smtpSettingsForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const saveBtn = document.getElementById('saveSmtpBtn');
+        const alertBox = document.getElementById('smtpAlertBox');
+
+        saveBtn.disabled = true;
+        saveBtn.innerHTML = `<span class="spinner-border spinner-border-sm me-1"></span> Verifying & Connecting...`;
+        alertBox.className = 'alert d-none';
+
+        const payload = {
+          host: document.getElementById('smtpHostInput').value,
+          port: document.getElementById('smtpPortInput').value,
+          secure: document.getElementById('smtpSecureInput').checked,
+          from_email: document.getElementById('smtpFromInput').value,
+          user: document.getElementById('smtpUserInput').value,
+          pass: document.getElementById('smtpPassInput').value
+        };
+
+        try {
+          const res = await fetch('/api/settings/smtp', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+          const data = await res.json();
+
+          if (data.success) {
+            alertBox.className = 'alert alert-success d-block py-2 px-3 small rounded-3 mt-3 mb-0';
+            alertBox.innerHTML = `<i class="bi bi-check-circle-fill me-1"></i> ${escapeHtml(data.message)}`;
+            loadSmtpSettings();
+            alert('SMTP Connected Successfully! Live delivery is now active.');
+          } else {
+            alertBox.className = 'alert alert-danger d-block py-2 px-3 small rounded-3 mt-3 mb-0';
+            alertBox.innerHTML = `<i class="bi bi-exclamation-triangle-fill me-1"></i> ${escapeHtml(data.message || 'SMTP Connection failed')}`;
+          }
+        } catch (err) {
+          alertBox.className = 'alert alert-danger d-block py-2 px-3 small rounded-3 mt-3 mb-0';
+          alertBox.innerHTML = '<i class="bi bi-exclamation-triangle-fill me-1"></i> Network error connecting to server';
+        } finally {
+          saveBtn.disabled = false;
+          saveBtn.innerHTML = `<i class="bi bi-save me-1"></i> Save & Connect SMTP`;
+        }
+      });
+    }
+
+    async function sendLiveTestEmail() {
+      const recipientInput = document.getElementById('smtpTestRecipientInput');
+      const testEmail = recipientInput.value.trim();
+      const testBtn = document.getElementById('sendTestEmailBtn');
+      const alertBox = document.getElementById('smtpAlertBox');
+
+      if (!testEmail || !testEmail.includes('@')) {
+        alert('Please enter a valid email address to send the test email.');
+        recipientInput.focus();
+        return;
+      }
+
+      testBtn.disabled = true;
+      testBtn.innerHTML = `<span class="spinner-border spinner-border-sm me-1"></span> Sending...`;
+
+      try {
+        const res = await fetch('/api/settings/smtp/test', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: testEmail })
+        });
+        const data = await res.json();
+
+        if (data.success) {
+          alertBox.className = 'alert alert-success d-block py-2 px-3 small rounded-3 mt-3 mb-0';
+          alertBox.innerHTML = `<i class="bi bi-check-circle-fill me-1"></i> ${escapeHtml(data.message)}`;
+          alert(data.message);
+        } else {
+          alertBox.className = 'alert alert-danger d-block py-2 px-3 small rounded-3 mt-3 mb-0';
+          alertBox.innerHTML = `<i class="bi bi-exclamation-triangle-fill me-1"></i> ${escapeHtml(data.message)}`;
+          alert('Test email error: ' + data.message);
+        }
+      } catch (err) {
+        alert('Failed to send test email: ' + err.message);
+      } finally {
+        testBtn.disabled = false;
+        testBtn.innerHTML = `<i class="bi bi-send-fill me-1"></i> Send Test to My Inbox`;
+      }
+    }
+
+    function handleLogout() {
+      if (confirm('Are you sure you want to log out of the Admin Control Portal?')) {
+        localStorage.removeItem('zyllotech_token');
+        localStorage.removeItem('zyllotech_user');
+        window.location.href = '/login';
+      }
+    }
+
+    // Formats dates and timestamps into Indian Standard Time (IST)
+    function formatIST(dateStr, includeTime = true) {
+      if (!dateStr) return 'Not opened yet';
+      let isoStr = String(dateStr).trim();
+      if (!isoStr.includes('T') && !isoStr.endsWith('Z')) {
+        isoStr = isoStr.replace(' ', 'T') + 'Z';
+      }
+      const dateObj = new Date(isoStr);
+      if (isNaN(dateObj.getTime())) return String(dateStr);
+
+      const options = {
+        timeZone: 'Asia/Kolkata',
+        day: '2-digit',
+        month: 'short',
+        year: 'numeric'
+      };
+
+      if (includeTime) {
+        options.hour = '2-digit';
+        options.minute = '2-digit';
+        options.second = '2-digit';
+        options.hour12 = true;
+      }
+
+      return dateObj.toLocaleString('en-IN', options) + ' IST';
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+  
+    // ==================== ADMIN: EMPLOYEE LEAVES MANAGEMENT ====================
+    let adminLeavesData = [];
+    let currentLeaveFilter = 'all';
+
+    async function loadAdminLeaves() {
+      const tbody = document.getElementById('adminLeavesTableBody');
+      try {
+        const res = await fetch('/api/admin/employee-leaves');
+        const data = await res.json();
+        if (data.success) {
+          adminLeavesData = data.leaves || [];
+          
+          if (data.counts) {
+            const pEl = document.getElementById('adminLeavePendingCount');
+            const aEl = document.getElementById('adminLeaveApprovedCount');
+            const rEl = document.getElementById('adminLeaveRejectedCount');
+            const tEl = document.getElementById('adminLeaveTotalCount');
+
+            if (pEl) pEl.textContent = data.counts.pending;
+            if (aEl) aEl.textContent = data.counts.approved;
+            if (rEl) rEl.textContent = data.counts.rejected;
+            if (tEl) tEl.textContent = data.counts.total;
+
+            const bLeaves = document.getElementById('sidebar-badge-leaves');
+            if (bLeaves) {
+              bLeaves.textContent = data.counts.pending < 10 ? `0${data.counts.pending}` : data.counts.pending;
+            }
+          }
+
+          renderAdminLeavesTable();
+        }
+      } catch (e) {
+        if (tbody) tbody.innerHTML = '<tr><td colspan="8" class="text-center py-4 text-danger">Failed to load employee leave requests.</td></tr>';
+      }
+    }
+
+    function renderAdminLeavesTable() {
+      const tbody = document.getElementById('adminLeavesTableBody');
+      if (!tbody) return;
+
+      const searchInput = document.getElementById('searchLeavesInput');
+      const searchVal = (searchInput ? searchInput.value : '').toLowerCase().trim();
+
+      let filtered = adminLeavesData.filter(l => {
+        if (currentLeaveFilter !== 'all' && l.status !== currentLeaveFilter) return false;
+        if (searchVal) {
+          const matchName = (l.full_name || '').toLowerCase().includes(searchVal);
+          const matchEmail = (l.email || '').toLowerCase().includes(searchVal);
+          const matchType = (l.leave_type || '').toLowerCase().includes(searchVal);
+          const matchReason = (l.reason || '').toLowerCase().includes(searchVal);
+          const matchEmpId = (l.emp_id || '').toLowerCase().includes(searchVal);
+          return matchName || matchEmail || matchType || matchReason || matchEmpId;
+        }
+        return true;
+      });
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="8" class="text-center py-4 text-white-50"><i class="bi bi-inbox me-2"></i>No leave requests found matching filter.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(l => {
+        let statusBadge = '<span class="badge bg-warning text-dark px-2.5 py-1">Pending Approval</span>';
+        if (l.status === 'Approved') {
+          statusBadge = '<span class="badge bg-success bg-opacity-25 text-success border border-success px-2.5 py-1"><i class="bi bi-check-circle me-1"></i>Approved</span>';
+        } else if (l.status === 'Rejected') {
+          statusBadge = '<span class="badge bg-danger bg-opacity-25 text-danger border border-danger px-2.5 py-1"><i class="bi bi-x-circle me-1"></i>Rejected</span>';
+        }
+
+        let actionHtml = '';
+        if (l.status === 'Pending') {
+          actionHtml = `
+            <div class="d-flex justify-content-end gap-2">
+              <button class="btn btn-sm btn-success d-inline-flex align-items-center gap-1 py-1 px-2.5 shadow-sm" onclick="handleLeaveDecision(${l.id}, 'approve')" title="Accept / Approve Leave">
+                <i class="bi bi-check-lg"></i> Accept
+              </button>
+              <button class="btn btn-sm btn-outline-danger d-inline-flex align-items-center gap-1 py-1 px-2.5" onclick="handleLeaveDecision(${l.id}, 'reject')" title="Reject Leave">
+                <i class="bi bi-x-lg"></i> Reject
+              </button>
+            </div>
+          `;
+        } else {
+          actionHtml = `<span class="badge bg-secondary bg-opacity-25 border border-white-10 text-white-50">Decision Logged</span>`;
+        }
+
+        const dateRangeStr = (l.start_date === l.end_date) ? l.start_date : `${l.start_date} – ${l.end_date}`;
+
+        return `
+          <tr>
+            <td>
+              <div class="d-flex align-items-center gap-2">
+                <div class="rounded-circle d-flex align-items-center justify-content-center text-white fw-bold" style="width: 34px; height: 34px; min-width: 34px; background: #f16623; font-size: 0.8rem;">
+                  ${(l.full_name || 'EM').split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase()}
+                </div>
+                <div>
+                  <strong class="text-white d-block">${escapeHtml(l.full_name || 'Employee')}</strong>
+                  <small class="text-white-50" style="font-size: 0.74rem;">${escapeHtml(l.emp_id || '')} · ${escapeHtml(l.designation || 'Staff')}</small>
+                </div>
+              </div>
+            </td>
+            <td><span class="badge bg-secondary bg-opacity-25 border border-white-10 text-white">${escapeHtml(l.leave_type)}</span></td>
+            <td><span class="text-white">${escapeHtml(dateRangeStr)}</span></td>
+            <td><span class="badge bg-info bg-opacity-25 text-info border border-info">${l.days} Day${l.days > 1 ? 's' : ''}</span></td>
+            <td><span class="text-white-50 small" title="${escapeHtml(l.reason)}">${escapeHtml(l.reason.length > 40 ? l.reason.substring(0, 37) + '...' : l.reason)}</span></td>
+            <td><small class="text-white-50">${l.created_at ? l.created_at.substring(0, 10) : 'Recent'}</small></td>
+            <td>${statusBadge}</td>
+            <td class="text-end">${actionHtml}</td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function filterLeavesTable(filter) {
+      currentLeaveFilter = filter;
+      ['All', 'Pending', 'Approved', 'Rejected'].forEach(f => {
+        const btn = document.getElementById(`filterLeave${f}`);
+        if (btn) {
+          if (f.toLowerCase() === filter.toLowerCase() || (f === 'All' && filter === 'all')) {
+            btn.classList.add('active');
+          } else {
+            btn.classList.remove('active');
+          }
+        }
+      });
+      renderAdminLeavesTable();
+    }
+
+    function filterLeavesBySearch() {
+      renderAdminLeavesTable();
+    }
+
+    async function handleLeaveDecision(leaveId, action) {
+      const actionVerb = action === 'approve' ? 'Accept / Approve' : 'Reject';
+      if (!confirm(`Are you sure you want to ${actionVerb} this employee leave request?`)) {
+        return;
+      }
+
+      try {
+        const res = await fetch(`/api/admin/employee-leaves/${leaveId}/action`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action })
+        });
+        const data = await res.json();
+        if (data.success) {
+          alert(data.message || `Leave request successfully updated!`);
+          loadAdminLeaves();
+          loadStats();
+        } else {
+          alert(data.message || 'Error updating leave request.');
+        }
+      } catch (e) {
+        alert('Network error while processing leave decision.');
+      }
+    }
+
+
+    // ==================== ADMIN: EMPLOYEE ATTENDANCE MONITOR ====================
+    let adminAttendanceData = [];
+    let currentAttFilter = 'all';
+
+    async function loadAdminAttendance() {
+      const tbody = document.getElementById('adminAttendanceTableBody');
+      try {
+        const res = await fetch('/api/admin/employee-attendance');
+        const data = await res.json();
+        if (data.success) {
+          adminAttendanceData = data.attendance || [];
+          
+          if (data.summary) {
+            const totEl = document.getElementById('adminAttTotalLogs');
+            const presEl = document.getElementById('adminAttPresentCount');
+            const wfhEl = document.getElementById('adminAttWfhCount');
+
+            if (totEl) totEl.textContent = data.summary.total;
+            if (presEl) presEl.textContent = data.summary.present;
+            if (wfhEl) wfhEl.textContent = data.summary.wfh;
+
+            const bAtt = document.getElementById('sidebar-badge-attendance');
+            if (bAtt) {
+              bAtt.textContent = data.summary.present < 10 ? `0${data.summary.present}` : data.summary.present;
+            }
+          }
+
+          renderAdminAttendanceTable();
+        }
+      } catch (e) {
+        if (tbody) tbody.innerHTML = '<tr><td colspan="7" class="text-center py-4 text-danger">Failed to load employee attendance records.</td></tr>';
+      }
+    }
+
+    function renderAdminAttendanceTable() {
+      const tbody = document.getElementById('adminAttendanceTableBody');
+      if (!tbody) return;
+
+      const searchInput = document.getElementById('searchAttendanceInput');
+      const searchVal = (searchInput ? searchInput.value : '').toLowerCase().trim();
+
+      let filtered = adminAttendanceData.filter(a => {
+        if (currentAttFilter !== 'all' && a.status !== currentAttFilter) return false;
+        if (searchVal) {
+          const matchName = (a.full_name || '').toLowerCase().includes(searchVal);
+          const matchDate = (a.date || '').toLowerCase().includes(searchVal);
+          const matchStatus = (a.status || '').toLowerCase().includes(searchVal);
+          const matchEmpId = (a.emp_id || '').toLowerCase().includes(searchVal);
+          return matchName || matchDate || matchStatus || matchEmpId;
+        }
+        return true;
+      });
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="7" class="text-center py-4 text-white-50"><i class="bi bi-clock me-2"></i>No attendance logs found matching filter.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(a => {
+        let statusBadge = '<span class="badge bg-success">Present</span>';
+        if (a.status === 'Work From Home') {
+          statusBadge = '<span class="badge bg-info text-dark">Work From Home</span>';
+        } else if (a.status === 'Late') {
+          statusBadge = '<span class="badge bg-warning text-dark">Late</span>';
+        }
+
+        return `
+          <tr>
+            <td>
+              <div class="d-flex align-items-center gap-2">
+                <div class="rounded-circle d-flex align-items-center justify-content-center text-white fw-bold" style="width: 32px; height: 32px; min-width: 32px; background: #262262; font-size: 0.78rem;">
+                  ${(a.full_name || 'EM').split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase()}
+                </div>
+                <div>
+                  <strong class="text-white d-block">${escapeHtml(a.full_name || 'Employee')}</strong>
+                  <small class="text-white-50" style="font-size: 0.72rem;">${escapeHtml(a.emp_id || '')} · ${escapeHtml(a.department || 'Engineering')}</small>
+                </div>
+              </div>
+            </td>
+            <td><strong class="text-white">${escapeHtml(a.date)}</strong></td>
+            <td><span class="badge bg-secondary bg-opacity-25 border border-white-10 text-white-50">09:30 AM – 06:30 PM IST</span></td>
+            <td><span class="text-success fw-bold">${escapeHtml(a.punch_in)}</span></td>
+            <td><span class="text-white-50">${escapeHtml(a.punch_out || '--:--')}</span></td>
+            <td><span class="badge bg-secondary">${escapeHtml(a.work_hours || 'In Progress')}</span></td>
+            <td class="text-end">${statusBadge}</td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function filterAttendanceTable(filter) {
+      currentAttFilter = filter;
+      ['All', 'Present', 'Wfh'].forEach(f => {
+        const btn = document.getElementById(`filterAtt${f}`);
+        if (btn) {
+          const match = (f === 'All' && filter === 'all') || (f === 'Present' && filter === 'Present') || (f === 'Wfh' && filter === 'Work From Home');
+          if (match) btn.classList.add('active');
+          else btn.classList.remove('active');
+        }
+      });
+      renderAdminAttendanceTable();
+    }
+
+    function filterAttendanceBySearch() {
+      renderAdminAttendanceTable();
+    }
+
+    // ==================== BLOG & CONTENT MANAGEMENT ====================
+    let allBlogArticles = [];
+
+    async function loadBlogArticles() {
+      const tbody = document.getElementById('blogArticlesTableBody');
+      try {
+        const res = await fetch('/api/blog/posts');
+        const data = await res.json();
+        if (data.success && Array.isArray(data.articles)) {
+          allBlogArticles = data.articles;
+          
+          // Update counters
+          const totalEl = document.getElementById('blogStatTotal');
+          if (totalEl) totalEl.textContent = allBlogArticles.length;
+
+          const totalViews = allBlogArticles.reduce((acc, a) => acc + (a.views || 0), 0);
+          const viewsEl = document.getElementById('blogStatViews');
+          if (viewsEl) viewsEl.textContent = totalViews.toLocaleString();
+
+          const categoriesSet = new Set(allBlogArticles.map(a => a.category));
+          const catEl = document.getElementById('blogStatCategories');
+          if (catEl) catEl.textContent = categoriesSet.size;
+
+          const badgeEl = document.getElementById('sidebar-badge-blogs');
+          if (badgeEl) {
+            badgeEl.textContent = allBlogArticles.length < 10 ? `0${allBlogArticles.length}` : allBlogArticles.length;
+          }
+
+          renderBlogArticlesTable();
+        }
+      } catch (err) {
+        if (tbody) tbody.innerHTML = '<tr><td colspan="7" class="text-center py-4 text-danger">Failed to load articles from database.</td></tr>';
+      }
+    }
+
+    function renderBlogArticlesTable() {
+      const tbody = document.getElementById('blogArticlesTableBody');
+      if (!tbody) return;
+
+      const searchVal = (document.getElementById('blogSearchInput')?.value || '').toLowerCase().trim();
+      const catVal = document.getElementById('blogCategoryFilter')?.value || 'All';
+
+      let filtered = allBlogArticles.filter(art => {
+        if (catVal !== 'All' && !art.category.toLowerCase().includes(catVal.toLowerCase())) return false;
+        if (searchVal) {
+          const matchTitle = (art.title || '').toLowerCase().includes(searchVal);
+          const matchAuthor = (art.author || '').toLowerCase().includes(searchVal);
+          const matchCat = (art.category || '').toLowerCase().includes(searchVal);
+          const matchExcerpt = (art.excerpt || '').toLowerCase().includes(searchVal);
+          return matchTitle || matchAuthor || matchCat || matchExcerpt;
+        }
+        return true;
+      });
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="7" class="text-center py-4 text-white-50"><i class="bi bi-journal-x me-2"></i>No articles found matching filters.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(a => {
+        const coverImg = a.image || 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=200&q=80';
+        const isPublished = a.status === 'Published';
+        return `
+          <tr>
+            <td>
+              <img src="${escapeHtml(coverImg)}" alt="Cover" class="rounded-2 border border-white/10" style="width: 54px; height: 38px; object-fit: cover;">
+            </td>
+            <td>
+              <div class="fw-bold text-white small" style="max-width: 380px;">${escapeHtml(a.title)}</div>
+              <small class="text-white-50 d-block text-truncate" style="max-width: 380px; font-size: 0.73rem;">${escapeHtml(a.excerpt || '')}</small>
+              <code class="small" style="font-size: 0.7rem; color: #f16623;">slug: /${escapeHtml(a.slug)}</code>
+            </td>
+            <td>
+              <span class="badge rounded-pill px-2.5 py-1 text-white border border-white-10" style="background: rgba(38,34,98,0.6); font-size: 0.72rem;">
+                ${escapeHtml(a.category)}
+              </span>
+            </td>
+            <td>
+              <div class="small text-white-75">${escapeHtml(a.author || 'Zyllo Tech')}</div>
+              <small class="text-white-50" style="font-size: 0.7rem;"><i class="bi bi-eye me-1"></i>${(a.views || 0).toLocaleString()} views</small>
+            </td>
+            <td>
+              <div class="small text-white-75"><i class="bi bi-calendar3 me-1"></i>${escapeHtml(a.date)}</div>
+              <small class="text-white-50" style="font-size: 0.7rem;"><i class="bi bi-clock me-1"></i>${escapeHtml(a.read_time)}</small>
+            </td>
+            <td>
+              <span class="badge ${isPublished ? 'bg-success bg-opacity-20 text-success border border-success border-opacity-40' : 'bg-warning bg-opacity-20 text-warning border border-warning border-opacity-40'} rounded-pill px-2 py-0.5" style="font-size: 0.73rem;">
+                ${isPublished ? '● Published' : '○ Draft'}
+              </span>
+            </td>
+            <td class="text-end">
+              <div class="d-inline-flex align-items-center gap-1">
+                <button class="btn btn-sm btn-outline-info rounded-pill py-0.5 px-2" onclick="previewAdminBlogArticle(${a.id})" title="Preview Full Article" style="font-size: 0.75rem;">
+                  <i class="bi bi-eye"></i> Read
+                </button>
+                <button class="btn btn-sm btn-brand-outline rounded-pill py-0.5 px-2" onclick="editAdminBlogArticle(${a.id})" title="Edit Article" style="font-size: 0.75rem;">
+                  <i class="bi bi-pencil"></i>
+                </button>
+                <button class="btn btn-sm btn-outline-danger rounded-pill py-0.5 px-2" onclick="deleteAdminBlogArticle(${a.id})" title="Delete Article" style="font-size: 0.75rem;">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function filterBlogArticles() {
+      renderBlogArticlesTable();
+    }
+
+    function openNewBlogModal() {
+      document.getElementById('blogArticleId').value = '';
+      document.getElementById('blogArticleModalHeading').innerHTML = '<i class="bi bi-newspaper me-2 text-gradient-orange"></i> Publish New Blog Article';
+      document.getElementById('blogFormSubmitBtn').textContent = 'Save & Publish';
+      document.getElementById('blogArticleForm').reset();
+      
+      const now = new Date();
+      const monthYear = now.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+      document.getElementById('blogFormDate').value = monthYear;
+      document.getElementById('blogFormReadTime').value = '6 min read';
+      document.getElementById('blogFormAuthor').value = 'Zyllo Tech Engineering Team';
+      document.getElementById('blogFormImage').value = 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=1200&q=80';
+      document.getElementById('blogFormStatus').value = 'Published';
+
+      const modalEl = document.getElementById('blogArticleModal');
+      const modal = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
+      modal.show();
+    }
+
+    function autoGenerateBlogSlug() {
+      const id = document.getElementById('blogArticleId').value;
+      if (id) return; // Don't overwrite slug when editing
+      const title = document.getElementById('blogFormTitle').value;
+      const slugInput = document.getElementById('blogFormSlug');
+      if (slugInput) {
+        slugInput.value = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+      }
+    }
+
+    function insertBlogSnippet(type) {
+      const textarea = document.getElementById('blogFormContent');
+      if (!textarea) return;
+      let snippet = '';
+      if (type === 'h3') snippet = '\n<h3>Section Heading</h3>\n<p>Explain key insight here...</p>\n';
+      else if (type === 'lead') snippet = '<p class="lead">Primary summary or thesis of the article...</p>\n';
+      else if (type === 'callout') snippet = '\n<div class="blog-callout">\n  <strong>Key Architecture Rule:</strong> Core principle statement here.\n</div>\n';
+      else if (type === 'ul') snippet = '\n<ul>\n  <li><strong>Point 1:</strong> Description here.</li>\n  <li><strong>Point 2:</strong> Description here.</li>\n</ul>\n';
+
+      const start = textarea.selectionStart;
+      const end = textarea.selectionEnd;
+      const text = textarea.value;
+      textarea.value = text.substring(0, start) + snippet + text.substring(end);
+      textarea.focus();
+      textarea.selectionStart = textarea.selectionEnd = start + snippet.length;
+    }
+
+    function editAdminBlogArticle(id) {
+      const art = allBlogArticles.find(a => a.id === id);
+      if (!art) return;
+
+      document.getElementById('blogArticleId').value = art.id;
+      document.getElementById('blogArticleModalHeading').innerHTML = '<i class="bi bi-pencil-square me-2 text-gradient-orange"></i> Edit Blog Article';
+      document.getElementById('blogFormSubmitBtn').textContent = 'Update Article';
+
+      document.getElementById('blogFormTitle').value = art.title || '';
+      document.getElementById('blogFormSlug').value = art.slug || '';
+      document.getElementById('blogFormCategory').value = art.category || 'AI Systems';
+      document.getElementById('blogFormDate').value = art.date || '';
+      document.getElementById('blogFormReadTime').value = art.read_time || '';
+      document.getElementById('blogFormAuthor').value = art.author || '';
+      document.getElementById('blogFormStatus').value = art.status || 'Published';
+      document.getElementById('blogFormImage').value = art.image || '';
+      document.getElementById('blogFormExcerpt').value = art.excerpt || '';
+      document.getElementById('blogFormContent').value = art.content || '';
+
+      const modalEl = document.getElementById('blogArticleModal');
+      const modal = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
+      modal.show();
+    }
+
+    async function handleSaveBlogArticle(e) {
+      e.preventDefault();
+      const id = document.getElementById('blogArticleId').value;
+      const payload = {
+        title: document.getElementById('blogFormTitle').value,
+        slug: document.getElementById('blogFormSlug').value,
+        category: document.getElementById('blogFormCategory').value,
+        date: document.getElementById('blogFormDate').value,
+        read_time: document.getElementById('blogFormReadTime').value,
+        author: document.getElementById('blogFormAuthor').value,
+        status: document.getElementById('blogFormStatus').value,
+        image: document.getElementById('blogFormImage').value,
+        excerpt: document.getElementById('blogFormExcerpt').value,
+        content: document.getElementById('blogFormContent').value
+      };
+
+      const btn = document.getElementById('blogFormSubmitBtn');
+      const originalText = btn.textContent;
+      btn.disabled = true;
+      btn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span> Saving...';
+
+      try {
+        const url = id ? `/api/blog/posts/${id}` : '/api/blog/posts';
+        const method = id ? 'PUT' : 'POST';
+        const res = await fetch(url, {
+          method,
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        if (data.success) {
+          bootstrap.Modal.getInstance(document.getElementById('blogArticleModal')).hide();
+          await loadBlogArticles();
+          alert(data.message || 'Article successfully saved!');
+        } else {
+          alert(data.message || 'Error saving blog article');
+        }
+      } catch (err) {
+        alert('Network error while saving article');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = originalText;
+      }
+    }
+
+    async function deleteAdminBlogArticle(id) {
+      const art = allBlogArticles.find(a => a.id === id);
+      const title = art ? `"${art.title}"` : 'this article';
+      if (!confirm(`Are you sure you want to permanently delete ${title}?`)) return;
+
+      try {
+        const res = await fetch(`/api/blog/posts/${id}`, { method: 'DELETE' });
+        const data = await res.json();
+        if (data.success) {
+          await loadBlogArticles();
+          alert('Article deleted successfully.');
+        } else {
+          alert(data.message || 'Failed to delete article');
+        }
+      } catch (e) {
+        alert('Network error while deleting article');
+      }
+    }
+
+    function previewAdminBlogArticle(id) {
+      const art = allBlogArticles.find(a => a.id === id);
+      if (!art) return;
+
+      document.getElementById('previewBlogCategory').textContent = art.category;
+      document.getElementById('previewBlogMeta').innerHTML = `<i class="bi bi-clock me-1"></i> ${art.read_time}`;
+      document.getElementById('previewBlogTitle').textContent = art.title;
+      document.getElementById('previewBlogAuthor').innerHTML = `<i class="bi bi-person me-1"></i> ${art.author || 'Zyllo Tech'}`;
+      document.getElementById('previewBlogDate').innerHTML = `<i class="bi bi-calendar3 me-1"></i> ${art.date}`;
+      
+      const img = document.getElementById('previewBlogImage');
+      if (img) {
+        img.src = art.image || 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=1200&q=80';
+        img.alt = art.title;
+      }
+      document.getElementById('previewBlogBody').innerHTML = art.content || '<p class="text-white-50">No content available.</p>';
+
+      const modalEl = document.getElementById('blogPreviewModal');
+      const modal = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
+      modal.show();
+    }
+
+  </script>
+<script src="/assets/js/theme.js"></script>
+</body>
+</html>

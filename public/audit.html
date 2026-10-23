@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free Website SEO &amp; Technical Audit Tool | Zyllo Tech</title>
+  <meta name="description" content="Audit your website technical health, heading hierarchy, meta tags, Open Graph data, canonical URLs, robots.txt, and sitemap with Zyllo Tech's SSRF-safe tool.">
+  <link rel="canonical" href="https://zyllotech.com/audit">
+  <link rel="icon" href="/assets/images/Zyllo_Tech_Favicon_512x512.png">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Website Technical SEO Audit Tool | Zyllo Tech">
+  <meta property="og:description" content="Instant real-time website audit analyzing titles, meta descriptions, image alts, robots, and sitemaps with actionable remediation tips.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://zyllotech.com/audit">
+  <meta property="og:image" content="https://zyllotech.com/assets/images/zyllo-logo.png">
+
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Zyllo Tech Website Technical SEO Auditor",
+    "url": "https://zyllotech.com/audit",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "All",
+    "browserRequirements": "Requires JavaScript. Requires HTML5.",
+    "provider": {
+      "@type": "Organization",
+      "name": "Zyllo Tech Software Solutions Private Limited",
+      "url": "https://zyllotech.com",
+      "logo": "https://zyllotech.com/assets/images/zyllo-logo.png"
+    }
+  }
+  </script>
+
+  <!-- GSAP 3 & ScrollTrigger -->
+  <script src="/assets/vendor/gsap.min.js"></script>
+  <script src="/assets/vendor/ScrollTrigger.min.js"></script>
+  <!-- Lenis Smooth Scrolling -->
+  <script src="/assets/vendor/lenis.min.js"></script>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <style>
+    .audit-score-circle {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto;
+      border: 6px solid #22c55e;
+      background: rgba(34, 197, 94, 0.05);
+      box-shadow: 0 0 30px rgba(34, 197, 94, 0.25);
+      transition: all 0.4s ease;
+    }
+    .audit-score-circle.warning {
+      border-color: #f59e0b;
+      background: rgba(245, 158, 11, 0.05);
+      box-shadow: 0 0 30px rgba(245, 158, 11, 0.25);
+    }
+    .audit-score-circle.danger {
+      border-color: #ef4444;
+      background: rgba(239, 68, 68, 0.05);
+      box-shadow: 0 0 30px rgba(239, 68, 68, 0.25);
+    }
+    .audit-finding-item {
+      background: #0d1220;
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 12px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 0.75rem;
+    }
+    .audit-finding-item.critical {
+      border-left: 4px solid #ef4444;
+    }
+    .audit-finding-item.warning {
+      border-left: 4px solid #f59e0b;
+    }
+    .audit-finding-item.passed {
+      border-left: 4px solid #22c55e;
+    }
+  </style>
+</head>
+<body class="theme-light">
+  <!-- ==================== FULLSCREEN PAGE TRANSITION LOADER ==================== -->
+  <div id="zy-page-loader">
+    <div class="loader-ambient-left"></div>
+    <div class="loader-ambient-right"></div>
+    <div class="loader-center-hub">
+      <div class="loader-circle-wrapper">
+        <div class="loader-circle-track"></div>
+        <div class="loader-circle-spinner"></div>
+        <div class="loader-center-disc">
+          <img src="/assets/images/zyllo-icon.png" alt="Zyllo Tech">
+        </div>
+      </div>
+      <div class="loader-brand-title">
+        <span class="brand-part-zyllo">ZYLLO</span>
+        <span class="brand-part-tech">TECH</span>
+      </div>
+      <div class="loader-dots-row">
+        <span class="loader-dot loader-dot-1"></span>
+        <span class="loader-dot loader-dot-2"></span>
+        <span class="loader-dot loader-dot-3"></span>
+      </div>
+      <div class="loader-typewriter-box">
+        <span id="loader-typewriter-text">Loading Audit Engine...</span><span class="loader-cursor"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== FIXED NAVBAR ==================== -->
+  <nav class="zy-navbar navbar navbar-expand-lg">
+    <div class="container-fluid px-3 px-lg-4 px-xl-5 d-flex align-items-center justify-content-between">
+      <a class="navbar-brand d-flex align-items-center gap-2 m-0 p-0 flex-shrink-0" href="/">
+        <img src="/assets/images/zyllo-icon.png" alt="Zyllo Tech Logo" style="height: 38px; width: auto;">
+        <span class="fs-4 fw-extrabold text-uppercase">
+          <span class="text-gradient-orange">Zyllo</span> <span class="text-gradient-cyan">Tech</span>
+        </span>
+      </a>
+
+      <button class="navbar-toggler border-0 text-white" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileNavOffcanvas">
+        <i class="bi bi-list fs-2"></i>
+      </button>
+
+      <div class="collapse navbar-collapse d-none d-lg-flex justify-content-center mx-auto" id="desktopNavMenu">
+        <ul class="navbar-nav align-items-center justify-content-center mb-0 gap-1">
+          <li class="nav-item"><a class="zy-nav-link" href="/">Home</a></li>
+          <li class="nav-item"><a class="zy-nav-link" href="/about">About Us</a></li>
+          <li class="nav-item dropdown">
+            <a class="zy-nav-link dropdown-toggle" href="/services" role="button" data-bs-toggle="dropdown">Services</a>
+            <ul class="dropdown-menu zy-dropdown-menu">
+              <li><a class="zy-dropdown-item" href="/services/software-development"><i class="bi bi-code-slash me-2 text-warning"></i> Software Development</a></li>
+              <li><a class="zy-dropdown-item" href="/services/web-development"><i class="bi bi-browser-chrome me-2 text-info"></i> Web Applications</a></li>
+              <li><a class="zy-dropdown-item" href="/services/mobile-app-development"><i class="bi bi-phone me-2 text-warning"></i> Mobile Development</a></li>
+              <li><a class="zy-dropdown-item" href="/services/ai-solutions"><i class="bi bi-robot me-2 text-danger"></i> AI & Machine Learning</a></li>
+              <li><a class="zy-dropdown-item" href="/services/cloud-solutions"><i class="bi bi-cloud-arrow-up me-2 text-info"></i> Cloud & DevOps</a></li>
+              <li><a class="zy-dropdown-item" href="/services/ui-ux-design"><i class="bi bi-palette me-2 text-warning"></i> UI/UX Design</a></li>
+            </ul>
+          </li>
+          <li class="nav-item"><a class="zy-nav-link" href="/industries">Industries</a></li>
+          <li class="nav-item"><a class="zy-nav-link" href="/portfolio">Portfolio</a></li>
+          <li class="nav-item"><a class="zy-nav-link active" href="/audit"><i class="bi bi-speedometer2 text-info me-1"></i> SEO Audit</a></li>
+          <li class="nav-item"><a class="zy-nav-link" href="/estimator"><i class="bi bi-calculator text-warning me-1"></i> Estimator</a></li>
+          <li class="nav-item"><a class="zy-nav-link" href="/contact">Contact</a></li>
+        </ul>
+
+        <div class="d-flex align-items-center gap-3">
+          <button class="nav-search-btn" data-bs-toggle="modal" data-bs-target="#searchModal">
+            <i class="bi bi-search"></i>
+            <span>Search</span>
+            <kbd>Ctrl+K</kbd>
+          </button>
+          <div id="nav-auth-container" class="d-flex align-items-center gap-2">
+            <!-- Universal Light / Dark Mode Toggle Button -->
+          <button class="zy-theme-toggle-btn me-2" onclick="toggleTheme()" title="Switch Light / Dark Theme">
+            <i class="bi bi-moon-stars-fill text-warning" id="mainThemeIcon"></i>
+            <span class="theme-label small d-none d-sm-inline">Dark Mode</span>
+          </button>
+<a href="/login" class="btn btn-brand"><i class="bi bi-box-arrow-in-right"></i> Login</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Offcanvas Menu -->
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="mobileNavOffcanvas">
+    <div class="offcanvas-header border-bottom border-light px-3 py-3">
+      <div class="d-flex align-items-center gap-2">
+        <img src="/assets/images/zyllo-icon.png" alt="Zyllo Tech" style="height: 32px;">
+        <span class="fs-5 fw-bold text-uppercase">
+          <span style="color: #f16623;">Zyllo</span> <span style="color: #262262;">Tech</span>
+        </span>
+      </div>
+      <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body">
+      <ul class="nav flex-column gap-1 mb-4">
+        <li class="nav-item"><a class="zy-mobile-nav-link" href="/">Home</a></li>
+        <li class="nav-item"><a class="zy-mobile-nav-link" href="/services">Services</a></li>
+        <li class="nav-item"><a class="zy-mobile-nav-link" href="/portfolio">Portfolio</a></li>
+        <li class="nav-item"><a class="zy-mobile-nav-link" href="/audit">SEO Audit Tool</a></li>
+        <li class="nav-item"><a class="zy-mobile-nav-link" href="/estimator">Cost Estimator</a></li>
+        <li class="nav-item"><a class="zy-mobile-nav-link" href="/contact">Contact Us</a></li>
+      </ul>
+      <a href="/login" class="zy-mobile-login-btn">Client Portal Login</a>
+    </div>
+  </div>
+
+  <!-- Header Hero -->
+  <header class="pt-5 mt-5 pb-4 text-center">
+    <div class="container py-5">
+      <span class="zy-badge mb-3"><i class="bi bi-shield-check"></i> SSRF-Protected Technical Engine</span>
+      <h1 class="display-4 fw-extrabold text-white mb-3">Website SEO &amp; Technical Audit Tool</h1>
+      <p class="lead text-white-50 mx-auto" style="max-width: 750px;">
+        Analyze live HTTP response headers, heading hierarchy, meta tags, Open Graph previews, image accessibility, and indexing readiness in seconds.
+      </p>
+
+      <!-- URL Input Form -->
+      <div class="mx-auto mt-4" style="max-width: 680px;">
+        <form id="seoAuditForm" onsubmit="runAudit(event)" class="d-flex flex-column flex-sm-row gap-2 p-2 rounded-4" style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.12);">
+          <div class="input-group flex-grow-1 border-0">
+            <span class="input-group-text bg-transparent border-0 text-white-50 ps-3"><i class="bi bi-globe fs-5"></i></span>
+            <input type="text" class="form-control bg-transparent border-0 text-white px-2 py-3" id="auditUrlInput" placeholder="https://yourwebsite.com" required style="box-shadow: none;">
+          </div>
+          <button type="submit" class="btn btn-brand px-4 py-3 rounded-3 fw-bold" id="auditSubmitBtn">
+            <i class="bi bi-search me-1"></i> Run Free Audit
+          </button>
+        </form>
+        <div class="d-flex justify-content-between align-items-center mt-2 px-2 text-white-50 small">
+          <span><i class="bi bi-check-circle-fill text-success me-1"></i> Live crawler execution</span>
+          <span><i class="bi bi-shield-lock-fill text-info me-1"></i> Private IP & SSRF protected</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Progress Bar & Spinner State -->
+  <div id="auditLoadingState" class="container text-center py-5 d-none">
+    <div class="spinner-border text-warning mb-3" style="width: 3.5rem; height: 3.5rem;" role="status"></div>
+    <h4 class="text-white fw-bold">Analyzing Remote Website...</h4>
+    <p class="text-white-50 small mx-auto" style="max-width: 500px;">
+      Checking HTTP status, resolving DNS, inspecting heading hierarchy, testing robots.txt, and calculating technical health score...
+    </p>
+  </div>
+
+  <!-- Error Message Alert -->
+  <div class="container" style="max-width: 800px;">
+    <div id="auditErrorAlert" class="alert alert-danger border-danger d-none my-4"></div>
+  </div>
+
+  <!-- Audit Results Section -->
+  <section id="auditResultsSection" class="pb-5 d-none">
+    <div class="container" style="max-width: 1000px;">
+      
+      <!-- Top Score Header Card -->
+      <div class="zy-card p-4 p-md-5 mb-4">
+        <div class="row align-items-center g-4 text-center text-md-start">
+          <div class="col-md-3 text-center">
+            <div class="audit-score-circle" id="auditScoreCircle">
+              <span class="display-5 fw-extrabold text-white" id="auditScoreValue">88</span>
+              <small class="text-white-50" style="font-size: 0.75rem;">HEALTH SCORE</small>
+            </div>
+            <div class="mt-2 fw-bold" id="auditScoreBadge">Good Optimization</div>
+          </div>
+          <div class="col-md-9">
+            <div class="d-flex flex-wrap align-items-center gap-2 mb-2">
+              <span class="badge bg-secondary bg-opacity-25 border border-white-10 text-white-50" id="auditTargetUrl">https://example.com</span>
+              <span class="badge bg-success bg-opacity-25 text-success border border-success" id="auditResponseLatency"><i class="bi bi-lightning-charge"></i> 240ms</span>
+            </div>
+            <h3 class="fw-bold text-white mb-2" id="auditPageTitle">Page Title Sample</h3>
+            <p class="text-white-50 small mb-3" id="auditMetaDescription">Meta description text extracted from page...</p>
+
+            <!-- Metrics Quick Grid -->
+            <div class="row g-2 text-center small">
+              <div class="col-sm-3 col-6">
+                <div class="p-2 rounded" style="background: rgba(255,255,255,0.03);">
+                  <div class="text-white-50" style="font-size: 0.75rem;">H1 HEADINGS</div>
+                  <strong class="text-white" id="stat-h1">1 Found</strong>
+                </div>
+              </div>
+              <div class="col-sm-3 col-6">
+                <div class="p-2 rounded" style="background: rgba(255,255,255,0.03);">
+                  <div class="text-white-50" style="font-size: 0.75rem;">IMAGES AUDITED</div>
+                  <strong class="text-white" id="stat-images">12 Images</strong>
+                </div>
+              </div>
+              <div class="col-sm-3 col-6">
+                <div class="p-2 rounded" style="background: rgba(255,255,255,0.03);">
+                  <div class="text-white-50" style="font-size: 0.75rem;">ROBOTS.TXT</div>
+                  <strong class="text-success" id="stat-robots">Detected</strong>
+                </div>
+              </div>
+              <div class="col-sm-3 col-6">
+                <div class="p-2 rounded" style="background: rgba(255,255,255,0.03);">
+                  <div class="text-white-50" style="font-size: 0.75rem;">SITEMAP.XML</div>
+                  <strong class="text-success" id="stat-sitemap">Available</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Findings Category Tabs -->
+      <div class="d-flex flex-wrap gap-2 mb-4">
+        <button class="btn btn-sm btn-brand px-3 active" id="tab-btn-critical" onclick="switchAuditTab('critical')">
+          <i class="bi bi-x-circle-fill text-danger me-1"></i> Critical Issues (<span id="count-critical">0</span>)
+        </button>
+        <button class="btn btn-sm btn-brand-outline px-3" id="tab-btn-warnings" onclick="switchAuditTab('warnings')">
+          <i class="bi bi-exclamation-triangle-fill text-warning me-1"></i> Warnings (<span id="count-warnings">0</span>)
+        </button>
+        <button class="btn btn-sm btn-brand-outline px-3" id="tab-btn-passed" onclick="switchAuditTab('passed')">
+          <i class="bi bi-check-circle-fill text-success me-1"></i> Passed Checks (<span id="count-passed">0</span>)
+        </button>
+        <button class="btn btn-sm btn-brand-outline px-3" id="tab-btn-recs" onclick="switchAuditTab('recs')">
+          <i class="bi bi-tools text-info me-1"></i> Actionable Roadmap (<span id="count-recs">0</span>)
+        </button>
+      </div>
+
+      <!-- Tab Content Containers -->
+      <div id="auditTabContent-critical" class="mb-4">
+        <div id="criticalFindingsList"></div>
+      </div>
+
+      <div id="auditTabContent-warnings" class="mb-4 d-none">
+        <div id="warningsFindingsList"></div>
+      </div>
+
+      <div id="auditTabContent-passed" class="mb-4 d-none">
+        <div id="passedFindingsList"></div>
+      </div>
+
+      <div id="auditTabContent-recs" class="mb-4 d-none">
+        <div class="zy-card p-4">
+          <h5 class="fw-bold text-white mb-3"><i class="bi bi-wrench-adjustable-circle text-gradient-orange me-2"></i>Remediation Checklist</h5>
+          <div id="recommendationsList" class="d-flex flex-column gap-2"></div>
+        </div>
+      </div>
+
+      <!-- Action Footer Banner -->
+      <div class="zy-card p-4 text-center mt-5" style="background: linear-gradient(135deg, rgba(249,103,6,0.1), rgba(38, 34, 98,0.1));">
+        <h4 class="fw-bold text-white mb-2">Need Help Resolving Technical SEO Bottlenecks?</h4>
+        <p class="text-white-50 small mx-auto mb-3" style="max-width: 650px;">
+          Zyllo Tech engineers optimize website architecture, Core Web Vitals, headless CMS rendering, and semantic structured data for enterprises worldwide.
+        </p>
+        <div class="d-flex justify-content-center gap-2">
+          <a href="/contact#schedule" class="btn btn-brand px-4 py-2"><i class="bi bi-calendar-event me-1"></i> Book Technical Consultation</a>
+          <a href="https://wa.me/917075773680?text=Hello%20Zyllo%20Tech%2C%20I%20would%20like%20assistance%20resolving%20SEO%20and%20performance%20issues." class="btn btn-outline-success px-4 py-2" target="_blank">
+            <i class="bi bi-whatsapp me-1"></i> Chat on WhatsApp
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="zy-footer pt-5 pb-4 border-top border-white/10 mt-5">
+    <div class="container">
+      <div class="row g-4 mb-5">
+        <div class="col-lg-4">
+          <div class="d-flex align-items-center gap-2 mb-3">
+            <img src="/assets/images/zyllo-icon.png" alt="Zyllo Tech Logo" style="height: 34px;">
+            <span class="fs-4 fw-extrabold text-uppercase">
+              <span class="text-gradient-orange">Zyllo</span> <span class="text-gradient-cyan">Tech</span>
+            </span>
+          </div>
+          <p class="text-white-50 small mb-3">
+            Enterprise software development, modern web applications, mobile platforms, and practical AI engineering. Based in Guntur, India, delivering globally.
+          </p>
+        </div>
+        <div class="col-lg-2 col-6">
+          <h5 class="fw-bold text-white small text-uppercase mb-3">Tools &amp; Portals</h5>
+          <ul class="list-unstyled d-flex flex-column gap-2 small">
+            <li><a href="/audit" class="zy-footer-link">SEO Audit Tool</a></li>
+            <li><a href="/estimator" class="zy-footer-link">Cost Estimator</a></li>
+            <li><a href="/portfolio" class="zy-footer-link">Case Studies</a></li>
+            <li><a href="/portal" class="zy-footer-link">Client Portal</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-3 col-6">
+          <h5 class="fw-bold text-white small text-uppercase mb-3">Services</h5>
+          <ul class="list-unstyled d-flex flex-column gap-2 small">
+            <li><a href="/services/software-development" class="zy-footer-link">Custom Software</a></li>
+            <li><a href="/services/web-development" class="zy-footer-link">Web Applications</a></li>
+            <li><a href="/services/ai-solutions" class="zy-footer-link">AI &amp; Machine Learning</a></li>
+            <li><a href="/services/cloud-solutions" class="zy-footer-link">Cloud &amp; DevOps</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-3">
+          <h5 class="fw-bold text-white small text-uppercase mb-3">Stay Updated</h5>
+          <p class="text-white-50 small mb-3">Subscribe to our monthly newsletter on software trends and emerging AI technologies.</p>
+          <form class="newsletter-form">
+            <div class="newsletter-input-group">
+              <input type="email" class="form-control zy-input" placeholder="Your work email..." required>
+              <button class="btn btn-brand" type="submit"><i class="bi bi-arrow-right"></i></button>
+            </div>
+          </form>
+        </div>
+      </div>
+            <!-- Interactive Particle Typography Footer Wordmark (ZYLLOTECH) -->
+      <div class="zy-footer-particle-wrap my-4 text-center">
+        <canvas id="zy-footer-particle-canvas" class="zy-footer-particle-canvas"></canvas>
+      </div>
+
+<div class="pt-4 border-top border-white/10 d-flex flex-wrap align-items-center justify-content-between gap-2 text-white-50 small">
+        <div>&copy; 2026 Zyllo Tech Software Solutions Private Limited. All rights reserved.</div>
+        <div class="d-flex gap-3">
+          <a href="#" class="text-white-50 text-decoration-none">Privacy Policy</a>
+          <a href="#" class="text-white-50 text-decoration-none">Terms of Service</a>
+          <a href="/login" class="text-warning text-decoration-none"><i class="bi bi-lock-fill"></i> Client Portal</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/assets/js/main.js"></script>
+  <script>
+    let activeAuditData = null;
+
+    async function runAudit(e) {
+      e.preventDefault();
+      const urlInput = document.getElementById('auditUrlInput');
+      const submitBtn = document.getElementById('auditSubmitBtn');
+      const loading = document.getElementById('auditLoadingState');
+      const errorAlert = document.getElementById('auditErrorAlert');
+      const resultsSection = document.getElementById('auditResultsSection');
+
+      let url = urlInput.value.trim();
+      if (!url) return;
+
+      if (!/^https?:\/\//i.test(url)) {
+        url = 'https://' + url;
+        urlInput.value = url;
+      }
+
+      errorAlert.classList.add('d-none');
+      resultsSection.classList.add('d-none');
+      loading.classList.remove('d-none');
+      submitBtn.disabled = true;
+
+      try {
+        const response = await fetch('/api/audit/analyze', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ url })
+        });
+
+        const data = await response.json();
+        if (!response.ok || !data.success) {
+          throw new Error(data.message || 'Audit analysis failed. Check the website URL and try again.');
+        }
+
+        activeAuditData = data.data;
+        renderAuditResults(data.data);
+      } catch (err) {
+        errorAlert.innerHTML = `<i class="bi bi-exclamation-triangle-fill me-2"></i> ${err.message}`;
+        errorAlert.classList.remove('d-none');
+      } finally {
+        loading.classList.add('d-none');
+        submitBtn.disabled = false;
+      }
+    }
+
+    function renderAuditResults(d) {
+      const resultsSection = document.getElementById('auditResultsSection');
+      resultsSection.classList.remove('d-none');
+
+      // Score circle
+      const scoreCircle = document.getElementById('auditScoreCircle');
+      const scoreVal = document.getElementById('auditScoreValue');
+      const scoreBadge = document.getElementById('auditScoreBadge');
+
+      scoreVal.innerText = d.score;
+      scoreCircle.className = 'audit-score-circle';
+
+      if (d.score >= 85) {
+        scoreCircle.classList.add('success');
+        scoreBadge.innerHTML = '<span class="text-success"><i class="bi bi-check-circle-fill me-1"></i> Excellent Technical Health</span>';
+      } else if (d.score >= 65) {
+        scoreCircle.classList.add('warning');
+        scoreBadge.innerHTML = '<span class="text-warning"><i class="bi bi-exclamation-triangle-fill me-1"></i> Moderate Health — Action Recommended</span>';
+      } else {
+        scoreCircle.classList.add('danger');
+        scoreBadge.innerHTML = '<span class="text-danger"><i class="bi bi-x-circle-fill me-1"></i> Critical Issues Detected</span>';
+      }
+
+      // Metadata Overview
+      document.getElementById('auditTargetUrl').innerText = d.url;
+      document.getElementById('auditResponseLatency').innerHTML = `<i class="bi bi-lightning-charge"></i> ${d.responseTimeMs}ms`;
+      document.getElementById('auditPageTitle').innerText = d.overview.title || 'No Title Tag Found';
+      document.getElementById('auditMetaDescription').innerText = d.overview.metaDescription || 'No Meta Description Tag Present';
+
+      document.getElementById('stat-h1').innerText = `${d.overview.headings.h1Count} Found`;
+      document.getElementById('stat-images').innerText = `${d.overview.imagesTotal} (${d.overview.imagesMissingAlt} missing alt)`;
+      document.getElementById('stat-robots').innerText = d.overview.robotsFound ? 'Detected' : 'Not Found';
+      document.getElementById('stat-robots').className = d.overview.robotsFound ? 'text-success' : 'text-warning';
+      document.getElementById('stat-sitemap').innerText = d.overview.sitemapFound ? 'Available' : 'Not Detected';
+      document.getElementById('stat-sitemap').className = d.overview.sitemapFound ? 'text-success' : 'text-warning';
+
+      // Counts
+      document.getElementById('count-critical').innerText = d.findings.critical.length;
+      document.getElementById('count-warnings').innerText = d.findings.warnings.length;
+      document.getElementById('count-passed').innerText = d.findings.passed.length;
+      document.getElementById('count-recs').innerText = d.recommendations.length;
+
+      // Populate Critical
+      const critContainer = document.getElementById('criticalFindingsList');
+      if (d.findings.critical.length === 0) {
+        critContainer.innerHTML = '<div class="alert alert-success border-success"><i class="bi bi-check-circle-fill me-2"></i> Outstanding! No critical SEO blockers were detected on this page.</div>';
+      } else {
+        critContainer.innerHTML = d.findings.critical.map(c => `
+          <div class="audit-finding-item critical">
+            <div class="d-flex align-items-center gap-2 mb-1">
+              <i class="bi bi-x-circle-fill text-danger fs-5"></i>
+              <strong class="text-white">${c.item}</strong>
+              <span class="badge bg-danger bg-opacity-25 text-danger ms-auto">High Priority</span>
+            </div>
+            <p class="text-white-50 small mb-0">${c.detail}</p>
+          </div>
+        `).join('');
+      }
+
+      // Populate Warnings
+      const warnContainer = document.getElementById('warningsFindingsList');
+      if (d.findings.warnings.length === 0) {
+        warnContainer.innerHTML = '<div class="alert alert-success border-success"><i class="bi bi-check-circle-fill me-2"></i> No secondary warnings detected!</div>';
+      } else {
+        warnContainer.innerHTML = d.findings.warnings.map(w => `
+          <div class="audit-finding-item warning">
+            <div class="d-flex align-items-center gap-2 mb-1">
+              <i class="bi bi-exclamation-triangle-fill text-warning fs-5"></i>
+              <strong class="text-white">${w.item}</strong>
+              <span class="badge bg-warning bg-opacity-25 text-warning ms-auto">Medium Priority</span>
+            </div>
+            <p class="text-white-50 small mb-0">${w.detail}</p>
+          </div>
+        `).join('');
+      }
+
+      // Populate Passed
+      const passContainer = document.getElementById('passedFindingsList');
+      passContainer.innerHTML = d.findings.passed.map(p => `
+        <div class="audit-finding-item passed">
+          <div class="d-flex align-items-center gap-2 mb-1">
+            <i class="bi bi-check-circle-fill text-success fs-5"></i>
+            <strong class="text-white">${p.item}</strong>
+            <span class="badge bg-success bg-opacity-25 text-success ms-auto">Passed</span>
+          </div>
+          <p class="text-white-50 small mb-0">${p.detail}</p>
+        </div>
+      `).join('');
+
+      // Populate Recommendations
+      const recContainer = document.getElementById('recommendationsList');
+      if (d.recommendations.length === 0) {
+        recContainer.innerHTML = '<p class="text-success small mb-0"><i class="bi bi-check-all me-1"></i> Your page satisfies all core technical on-page standards!</p>';
+      } else {
+        recContainer.innerHTML = d.recommendations.map((r, idx) => `
+          <div class="d-flex align-items-start gap-2 p-2 rounded" style="background: rgba(255,255,255,0.03);">
+            <span class="badge bg-primary text-white rounded-pill px-2 py-1">${idx + 1}</span>
+            <div class="text-white-50 small flex-grow-1">${r}</div>
+          </div>
+        `).join('');
+      }
+
+      // Default active tab to critical if exists, else passed
+      if (d.findings.critical.length > 0) {
+        switchAuditTab('critical');
+      } else if (d.findings.warnings.length > 0) {
+        switchAuditTab('warnings');
+      } else {
+        switchAuditTab('passed');
+      }
+
+      resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function switchAuditTab(tabKey) {
+      ['critical', 'warnings', 'passed', 'recs'].forEach(k => {
+        const btn = document.getElementById(`tab-btn-${k}`);
+        const view = document.getElementById(`auditTabContent-${k}`);
+        if (k === tabKey) {
+          btn.className = 'btn btn-sm btn-brand px-3 active';
+          view.classList.remove('d-none');
+        } else {
+          btn.className = 'btn btn-sm btn-brand-outline px-3';
+          view.classList.add('d-none');
+        }
+      });
+    }
+  </script>
+<script src="/assets/js/theme.js"></script>
+</body>
+</html>

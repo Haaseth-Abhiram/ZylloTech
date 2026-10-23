@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Project Cost Estimator | Zyllo Tech Software Solutions</title>
+  <meta name="description" content="Calculate indicative development costs and sprint timelines for web applications, mobile apps, enterprise software, and AI solutions with Zyllo Tech.">
+  <link rel="canonical" href="https://zyllotech.com/estimator">
+  <link rel="icon" href="/assets/images/Zyllo_Tech_Favicon_512x512.png">
+
+  <!-- Open Graph / Social Sharing -->
+  <meta property="og:title" content="Smart Project Cost Estimator | Zyllo Tech">
+  <meta property="og:description" content="Configure scope, platform, complexity, and integrations to get indicative pricing and development roadmaps for your software.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://zyllotech.com/estimator">
+  <meta property="og:image" content="https://zyllotech.com/assets/images/zyllo-logo.png">
+
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Zyllo Tech Project Cost Estimator",
+    "url": "https://zyllotech.com/estimator",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "All",
+    "browserRequirements": "Requires JavaScript. Requires HTML5.",
+    "provider": {
+      "@type": "Organization",
+      "name": "Zyllo Tech Software Solutions Private Limited",
+      "url": "https://zyllotech.com",
+      "logo": "https://zyllotech.com/assets/images/zyllo-logo.png",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Guntur",
+        "addressRegion": "Andhra Pradesh",
+        "addressCountry": "IN"
+      }
+    }
+  }
+  </script>
+
+  <!-- GSAP 3 & ScrollTrigger -->
+  <script src="/assets/vendor/gsap.min.js"></script>
+  <script src="/assets/vendor/ScrollTrigger.min.js"></script>
+  <!-- Lenis Smooth Scrolling -->
+  <script src="/assets/vendor/lenis.min.js"></script>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <style>
+    .estimator-step-pill {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.95rem;
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      color: #64748b;
+      transition: all 0.3s ease;
+    }
+    .estimator-step-item.active .estimator-step-pill {
+      background: #f16623;
+      border-color: #f16623;
+      color: #ffffff;
+      box-shadow: 0 4px 14px rgba(241, 102, 35, 0.3);
+    }
+    .estimator-step-item.completed .estimator-step-pill {
+      background: #dcfce7;
+      border-color: #86efac;
+      color: #15803d;
+    }
+    .estimator-option-card {
+      background: #ffffff;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 14px;
+      padding: 1.25rem;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      height: 100%;
+      user-select: none;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+      color: #0f172a;
+    }
+    .estimator-option-card:hover {
+      border-color: #ff9c68;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(241, 102, 35, 0.1);
+    }
+    .estimator-option-card.selected {
+      border-color: #f16623;
+      background: #fef4ee;
+      box-shadow: 0 6px 20px rgba(241, 102, 35, 0.15);
+    }
+    .estimator-option-card .fw-bold,
+    .estimator-option-card .text-white {
+      color: #0f172a !important;
+    }
+    .estimator-option-card p,
+    .estimator-option-card .text-white-50 {
+      color: #475569 !important;
+    }
+    .price-display-box {
+      background: #fef4ee;
+      border: 1.5px solid #bfdbfe;
+      border-radius: 16px;
+      padding: 1.5rem;
+      color: #0f172a;
+    }
+    body.theme-dark .estimator-option-card {
+      background: #0d1220 !important;
+      border-color: rgba(255, 255, 255, 0.08) !important;
+      color: #ffffff !important;
+    }
+    body.theme-dark .price-display-box {
+      background: linear-gradient(135deg, rgba(241, 102, 35, 0.15), rgba(38, 34, 98, 0.15)) !important;
+      border-color: rgba(241, 102, 35, 0.3) !important;
+    }
+  </style>
+</head>
+<body class="theme-light">
+  <!-- ==================== FULLSCREEN PAGE TRANSITION LOADER ==================== -->
+  <div id="zy-page-loader">
+    <div class="loader-ambient-left"></div>
+    <div class="loader-ambient-right"></div>
+    <div class="loader-center-hub">
+      <div class="loader-circle-wrapper">
+        <div class="loader-circle-track"></div>
+        <div class="loader-circle-spinner"></div>
+        <div class="loader-center-disc">
+          <img src="/assets/images/zyllo-icon.png" alt="Zyllo Tech">
+        </div>
+      </div>
+      <div class="loader-brand-title">
+        <span class="brand-part-zyllo">ZYLLO</span>
+        <span class="brand-part-tech">TECH</span>
+      </div>
+      <div class="loader-dots-row">
+        <span class="loader-dot loader-dot-1"></span>
+        <span class="loader-dot loader-dot-2"></span>
+        <span class="loader-dot loader-dot-3"></span>
+      </div>
+      <div class="loader-typewriter-box">
+        <span id="loader-typewriter-text">Loading Estimator...</span><span class="loader-cursor"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== FIXED NAVBAR ==================== -->
+  <nav class="zy-navbar navbar navbar-expand-lg">
+    <div class="container-fluid px-3 px-lg-4 px-xl-5 d-flex align-items-center justify-content-between">
+      <a class="navbar-brand d-flex align-items-center gap-2 m-0 p-0 flex-shrink-0" href="/">
+        <img src="/assets/images/zyllo-icon.png" alt="Zyllo Tech Logo" style="height: 38px; width: auto;">
+        <span class="fs-4 fw-extrabold text-uppercase">
+          <span class="text-gradient-orange">Zyllo</span> <span class="text-gradient-cyan">Tech</span>
+        </span>
+      </a>
+
+      <button class="navbar-toggler border-0 text-white" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileNavOffcanvas">
+        <i class="bi bi-list fs-2"></i>
+      </button>
+
+      <div class="collapse navbar-collapse d-none d-lg-flex justify-content-center mx-auto" id="desktopNavMenu">
+        <ul class="navbar-nav align-items-center justify-content-center mb-0 gap-1">
+          <li class="nav-item"><a class="zy-nav-link" href="/">Home</a></li>
+          <li class="nav-item"><a class="zy-nav-link" href="/about">About Us</a></li>
+          <li class="nav-item dropdown">
+            <a class="zy-nav-link dropdown-toggle" href="/services" role="button" data-bs-toggle="dropdown">Services</a>
+            <ul class="dropdown-menu zy-dropdown-menu">
+              <li><a class="zy-dropdown-item" href="/services/software-development"><i class="bi bi-code-slash me-2 text-warning"></i> Software Development</a></li>
+              <li><a class="zy-dropdown-item" href="/services/web-development"><i class="bi bi-browser-chrome me-2 text-info"></i> Web Applications</a></li>
+              <li><a class="zy-dropdown-item" href="/services/mobile-app-development"><i class="bi bi-phone me-2 text-warning"></i> Mobile Development</a></li>
+              <li><a class="zy-dropdown-item" href="/services/ai-solutions"><i class="bi bi-robot me-2 text-danger"></i> AI & Machine Learning</a></li>
+              <li><a class="zy-dropdown-item" href="/services/cloud-solutions"><i class="bi bi-cloud-arrow-up me-2 text-info"></i> Cloud & DevOps</a></li>
+              <li><a class="zy-dropdown-item" href="/services/ui-ux-design"><i class="bi bi-palette me-2 text-warning"></i> UI/UX Design</a></li>
+            </ul>
+          </li>
+          <li class="nav-item"><a class="zy-nav-link" href="/industries">Industries</a></li>
+          <li class="nav-item"><a class="zy-nav-link" href="/portfolio">Portfolio</a></li>
+          <li class="nav-item"><a class="zy-nav-link" href="/audit"><i class="bi bi-speedometer2 text-info me-1"></i> SEO Audit</a></li>
+          <li class="nav-item"><a class="zy-nav-link active" href="/estimator"><i class="bi bi-calculator text-warning me-1"></i> Estimator</a></li>
+          <li class="nav-item"><a class="zy-nav-link" href="/contact">Contact</a></li>
+        </ul>
+
+        <div class="d-flex align-items-center gap-3">
+          <button class="nav-search-btn" data-bs-toggle="modal" data-bs-target="#searchModal">
+            <i class="bi bi-search"></i>
+            <span>Search</span>
+            <kbd>Ctrl+K</kbd>
+          </button>
+          <div id="nav-auth-container" class="d-flex align-items-center gap-2">
+            <!-- Universal Light / Dark Mode Toggle Button -->
+          <button class="zy-theme-toggle-btn me-2" onclick="toggleTheme()" title="Switch Light / Dark Theme">
+            <i class="bi bi-moon-stars-fill text-warning" id="mainThemeIcon"></i>
+            <span class="theme-label small d-none d-sm-inline">Dark Mode</span>
+          </button>
+<a href="/login" class="btn btn-brand"><i class="bi bi-box-arrow-in-right"></i> Login</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Offcanvas Menu -->
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="mobileNavOffcanvas">
+    <div class="offcanvas-header border-bottom border-light px-3 py-3">
+      <div class="d-flex align-items-center gap-2">
+        <img src="/assets/images/zyllo-icon.png" alt="Zyllo Tech" style="height: 32px;">
+        <span class="fs-5 fw-bold text-uppercase">
+          <span style="color: #f16623;">Zyllo</span> <span style="color: #262262;">Tech</span>
+        </span>
+      </div>
+      <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body">
+      <ul class="nav flex-column gap-1 mb-4">
+        <li class="nav-item"><a class="zy-mobile-nav-link" href="/">Home</a></li>
+        <li class="nav-item"><a class="zy-mobile-nav-link" href="/services">Services</a></li>
+        <li class="nav-item"><a class="zy-mobile-nav-link" href="/portfolio">Portfolio</a></li>
+        <li class="nav-item"><a class="zy-mobile-nav-link" href="/estimator">Cost Estimator</a></li>
+        <li class="nav-item"><a class="zy-mobile-nav-link" href="/audit">SEO Audit Tool</a></li>
+        <li class="nav-item"><a class="zy-mobile-nav-link" href="/careers">Careers</a></li>
+        <li class="nav-item"><a class="zy-mobile-nav-link" href="/contact">Contact Us</a></li>
+      </ul>
+      <a href="/login" class="zy-mobile-login-btn">Client Portal Login</a>
+    </div>
+  </div>
+
+  <!-- Header Hero -->
+  <header class="pt-5 mt-5 pb-4 text-center">
+    <div class="container py-5">
+      <span class="zy-badge mb-3"><i class="bi bi-calculator"></i> Interactive Scope & Budget Engine</span>
+      <h1 class="display-4 fw-extrabold text-white mb-3">Smart Project Cost Estimator</h1>
+      <p class="lead text-white-50 mx-auto" style="max-width: 750px;">
+        Model your software engineering investment in real-time. Select your product archetype, required architecture scale, core integrations, and launch window.
+      </p>
+
+      <!-- Currency Switcher -->
+      <div class="d-inline-flex align-items-center gap-2 p-1 rounded-pill mt-3" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);">
+        <button class="btn btn-sm rounded-pill px-3 py-1 btn-brand" id="currency-inr" onclick="setCurrency('INR')">₹ INR</button>
+        <button class="btn btn-sm rounded-pill px-3 py-1 text-white-50" id="currency-usd" onclick="setCurrency('USD')">$ USD</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Estimator Interactive Wizard -->
+  <section class="pb-5">
+    <div class="container">
+      <div class="zy-card p-4 p-md-5 mx-auto" style="max-width: 960px;">
+        
+        <!-- Step Progress Breadcrumb -->
+        <div class="d-flex justify-content-between align-items-center mb-5 pb-3 border-bottom border-white/10 overflow-x-auto gap-2">
+          <div class="estimator-step-item active d-flex align-items-center gap-2" id="step-nav-1">
+            <span class="estimator-step-pill">1</span>
+            <span class="small fw-bold text-white d-none d-sm-inline">Archetype</span>
+          </div>
+          <div class="text-white-50"><i class="bi bi-chevron-right"></i></div>
+          <div class="estimator-step-item d-flex align-items-center gap-2" id="step-nav-2">
+            <span class="estimator-step-pill">2</span>
+            <span class="small fw-bold text-white-50 d-none d-sm-inline">Scale</span>
+          </div>
+          <div class="text-white-50"><i class="bi bi-chevron-right"></i></div>
+          <div class="estimator-step-item d-flex align-items-center gap-2" id="step-nav-3">
+            <span class="estimator-step-pill">3</span>
+            <span class="small fw-bold text-white-50 d-none d-sm-inline">Features</span>
+          </div>
+          <div class="text-white-50"><i class="bi bi-chevron-right"></i></div>
+          <div class="estimator-step-item d-flex align-items-center gap-2" id="step-nav-4">
+            <span class="estimator-step-pill">4</span>
+            <span class="small fw-bold text-white-50 d-none d-sm-inline">Timeline</span>
+          </div>
+          <div class="text-white-50"><i class="bi bi-chevron-right"></i></div>
+          <div class="estimator-step-item d-flex align-items-center gap-2" id="step-nav-5">
+            <span class="estimator-step-pill">5</span>
+            <span class="small fw-bold text-white-50 d-none d-sm-inline">Summary</span>
+          </div>
+        </div>
+
+        <!-- STEP 1: Product Archetype -->
+        <div id="estimator-step-1">
+          <div class="mb-4">
+            <h4 class="fw-bold text-white mb-1">Step 1: What type of product are you building?</h4>
+            <p class="text-white-50 small">Select the primary platform that best describes your technical vision.</p>
+          </div>
+
+          <div class="row g-3 mb-4">
+            <div class="col-md-4">
+              <div class="estimator-option-card selected" onclick="selectArchetype('Web Application / SaaS', 15000, this)">
+                <i class="bi bi-browser-chrome fs-3 text-info mb-2 d-block"></i>
+                <div class="fw-bold text-white mb-1">Web Application / SaaS</div>
+                <p class="text-white-50 small mb-0">Multi-tenant cloud platforms, responsive portals, Next.js/React frontends with microservices.</p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="estimator-option-card" onclick="selectArchetype('Mobile Application', 16000, this)">
+                <i class="bi bi-phone fs-3 text-warning mb-2 d-block"></i>
+                <div class="fw-bold text-white mb-1">Mobile App (iOS & Android)</div>
+                <p class="text-white-50 small mb-0">Native or Flutter cross-platform apps with offline sync and hardware sensor integration.</p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="estimator-option-card" onclick="selectArchetype('AI / Machine Learning Solution', 22000, this)">
+                <i class="bi bi-robot fs-3 text-danger mb-2 d-block"></i>
+                <div class="fw-bold text-white mb-1">AI & Machine Learning</div>
+                <p class="text-white-50 small mb-0">Custom LLM RAG pipelines, vector search, predictive analytics, and workflow automation.</p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="estimator-option-card" onclick="selectArchetype('Enterprise ERP / Custom Software', 28000, this)">
+                <i class="bi bi-building-gear fs-3 text-primary mb-2 d-block"></i>
+                <div class="fw-bold text-white mb-1">Custom Enterprise Software</div>
+                <p class="text-white-50 small mb-0">Bespoke internal ERPs, supply-chain automation, back-office workflows, and database migration.</p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="estimator-option-card" onclick="selectArchetype('Cloud & DevOps Platform', 12000, this)">
+                <i class="bi bi-cloud-arrow-up fs-3 text-success mb-2 d-block"></i>
+                <div class="fw-bold text-white mb-1">Cloud Infrastructure & DevOps</div>
+                <p class="text-white-50 small mb-0">AWS/GCP architecture, Kubernetes containerization, CI/CD pipelines, and high-availability SLA.</p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="estimator-option-card" onclick="selectArchetype('UI/UX System & Prototype', 8000, this)">
+                <i class="bi bi-palette fs-3 text-warning mb-2 d-block"></i>
+                <div class="fw-bold text-white mb-1">UI/UX & Interactive Prototype</div>
+                <p class="text-white-50 small mb-0">Design research, full design system, interactive clickable Figma prototype, and usability tests.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="text-end">
+            <button class="btn btn-brand px-4" onclick="goToStep(2)">Next: Product Scale &rarr;</button>
+          </div>
+        </div>
+
+        <!-- STEP 2: Complexity & Scale -->
+        <div id="estimator-step-2" class="d-none">
+          <div class="mb-4">
+            <h4 class="fw-bold text-white mb-1">Step 2: What is the scale and target complexity?</h4>
+            <p class="text-white-50 small">Engineering depth influences testing harnesses, failover redundancy, and architectural scaffolding.</p>
+          </div>
+
+          <div class="row g-3 mb-4">
+            <div class="col-md-4">
+              <div class="estimator-option-card selected" onclick="selectScale('MVP / Proof of Concept', 1.0, this)">
+                <span class="badge bg-info bg-opacity-25 text-info mb-2">Fast Launch</span>
+                <div class="fw-bold text-white mb-1">MVP / Initial Prototype</div>
+                <p class="text-white-50 small mb-0">Focuses on core differentiator features, lean database, and validating product-market fit fast.</p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="estimator-option-card" onclick="selectScale('Growth / Commercial Product', 1.35, this)">
+                <span class="badge bg-warning bg-opacity-25 text-warning mb-2">Scale Ready</span>
+                <div class="fw-bold text-white mb-1">Commercial Production Suite</div>
+                <p class="text-white-50 small mb-0">Multi-role permissions, high test coverage, automated CI/CD, analytics, and CRM integrations.</p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="estimator-option-card" onclick="selectScale('High-Throughput Enterprise', 1.8, this)">
+                <span class="badge bg-danger bg-opacity-25 text-danger mb-2">Enterprise SLA</span>
+                <div class="fw-bold text-white mb-1">High-Throughput Enterprise</div>
+                <p class="text-white-50 small mb-0">Zero-downtime clustering, microservices, SOC2/HIPAA compliance, and 99.99% uptime guarantees.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-between">
+            <button class="btn btn-brand-outline px-4" onclick="goToStep(1)">&larr; Back</button>
+            <button class="btn btn-brand px-4" onclick="goToStep(3)">Next: Core Features &rarr;</button>
+          </div>
+        </div>
+
+        <!-- STEP 3: Features & Integrations -->
+        <div id="estimator-step-3" class="d-none">
+          <div class="mb-4">
+            <h4 class="fw-bold text-white mb-1">Step 3: Which key integrations and modules are required?</h4>
+            <p class="text-white-50 small">Select all components that apply to your system requirements.</p>
+          </div>
+
+          <div class="row g-3 mb-4">
+            <div class="col-md-4">
+              <div class="estimator-option-card selected" onclick="toggleFeature('User Authentication & RBAC', 1200, this)">
+                <div class="d-flex justify-content-between align-items-center mb-1">
+                  <span class="fw-bold text-white">Auth & RBAC</span>
+                  <i class="bi bi-check-circle-fill text-success"></i>
+                </div>
+                <p class="text-white-50 small mb-0">JWT, multi-factor authentication, OAuth (Google/GitHub/SAML), and granular permissions.</p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="estimator-option-card" onclick="toggleFeature('Payment Gateways & Subscriptions', 1800, this)">
+                <div class="d-flex justify-content-between align-items-center mb-1">
+                  <span class="fw-bold text-white">Payment & Billing</span>
+                  <i class="bi bi-circle text-white-50"></i>
+                </div>
+                <p class="text-white-50 small mb-0">Stripe, Razorpay, subscription tiers, invoicing, webhooks, and automatic receipt emails.</p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="estimator-option-card" onclick="toggleFeature('AI Copilot & Vector Search', 3500, this)">
+                <div class="d-flex justify-content-between align-items-center mb-1">
+                  <span class="fw-bold text-white">AI Copilot / RAG</span>
+                  <i class="bi bi-circle text-white-50"></i>
+                </div>
+                <p class="text-white-50 small mb-0">In-app LLM assistant, Qdrant/Pinecone embeddings, semantic document search, and summaries.</p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="estimator-option-card" onclick="toggleFeature('Real-time WebSockets & Notifications', 1500, this)">
+                <div class="d-flex justify-content-between align-items-center mb-1">
+                  <span class="fw-bold text-white">Real-time WebSockets</span>
+                  <i class="bi bi-circle text-white-50"></i>
+                </div>
+                <p class="text-white-50 small mb-0">Live dashboards, instant messaging, notification badges, and real-time state synchronization.</p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="estimator-option-card" onclick="toggleFeature('Third-Party API & ERP Connectors', 2200, this)">
+                <div class="d-flex justify-content-between align-items-center mb-1">
+                  <span class="fw-bold text-white">API & ERP Connectors</span>
+                  <i class="bi bi-circle text-white-50"></i>
+                </div>
+                <p class="text-white-50 small mb-0">HubSpot, Salesforce, SAP, QuickBooks, or custom external enterprise REST/SOAP endpoints.</p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="estimator-option-card" onclick="toggleFeature('Administrative CMS & Analytics', 2000, this)">
+                <div class="d-flex justify-content-between align-items-center mb-1">
+                  <span class="fw-bold text-white">Admin CMS & Reports</span>
+                  <i class="bi bi-circle text-white-50"></i>
+                </div>
+                <p class="text-white-50 small mb-0">Full back-office dashboard, user audits, exportable CSV/PDF metrics, and system telemetry.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-between">
+            <button class="btn btn-brand-outline px-4" onclick="goToStep(2)">&larr; Back</button>
+            <button class="btn btn-brand px-4" onclick="goToStep(4)">Next: Timeline &rarr;</button>
+          </div>
+        </div>
+
+        <!-- STEP 4: Target Timeline -->
+        <div id="estimator-step-4" class="d-none">
+          <div class="mb-4">
+            <h4 class="fw-bold text-white mb-1">Step 4: What is your target deployment timeline?</h4>
+            <p class="text-white-50 small">Sprint velocity is aligned with your go-to-market milestones.</p>
+          </div>
+
+          <div class="row g-3 mb-4">
+            <div class="col-md-4">
+              <div class="estimator-option-card" onclick="selectTimeline('Expedited Sprint (4-6 Weeks)', 1.2, '4-6 Weeks', this)">
+                <span class="badge bg-danger bg-opacity-25 text-danger mb-2">High Velocity</span>
+                <div class="fw-bold text-white mb-1">Expedited (4–6 Weeks)</div>
+                <p class="text-white-50 small mb-0">Dedicated high-capacity engineering pod delivering rapid weekly iterations for tight deadlines.</p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="estimator-option-card selected" onclick="selectTimeline('Standard Sprints (2-3 Months)', 1.0, '2-3 Months', this)">
+                <span class="badge bg-success bg-opacity-25 text-success mb-2">Recommended</span>
+                <div class="fw-bold text-white mb-1">Standard (2–3 Months)</div>
+                <p class="text-white-50 small mb-0">Optimal balance of iterative architecture design, bi-weekly reviews, and thorough QA testing.</p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="estimator-option-card" onclick="selectTimeline('Phased Strategic Rollout (4-6 Months)', 0.95, '4-6 Months', this)">
+                <span class="badge bg-info bg-opacity-25 text-info mb-2">Enterprise Phasing</span>
+                <div class="fw-bold text-white mb-1">Phased (4–6 Months)</div>
+                <p class="text-white-50 small mb-0">Staged enterprise rollout with pilot user testing, regulatory reviews, and phased migrations.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-between">
+            <button class="btn btn-brand-outline px-4" onclick="goToStep(3)">&larr; Back</button>
+            <button class="btn btn-brand px-4" onclick="goToStep(5)">Calculate Estimate &rarr;</button>
+          </div>
+        </div>
+
+        <!-- STEP 5: Final Summary & Project Inquiry -->
+        <div id="estimator-step-5" class="d-none">
+          <div class="mb-4 text-center">
+            <span class="zy-badge mb-2"><i class="bi bi-check2-circle text-success"></i> Indicative Calculation Complete</span>
+            <h3 class="fw-bold text-white mb-1">Your Project Estimate Summary</h3>
+            <p class="text-white-50 small">Based on your configuration, here is the indicative investment range and sprint roadmap.</p>
+          </div>
+
+          <!-- Price & Timeline Display -->
+          <div class="price-display-box mb-4 text-center">
+            <div class="row align-items-center g-3">
+              <div class="col-md-6 border-end-md border-white/10">
+                <span class="text-white-50 small text-uppercase fw-bold" style="letter-spacing: 0.05em;">Indicative Investment Range</span>
+                <div class="display-6 fw-extrabold text-white my-1" id="summary-price-display">
+                  ₹13,50,000 - ₹20,50,000
+                </div>
+                <small class="text-warning"><i class="bi bi-info-circle"></i> Subject to detailed scoping</small>
+              </div>
+              <div class="col-md-6">
+                <span class="text-white-50 small text-uppercase fw-bold" style="letter-spacing: 0.05em;">Estimated Development Roadmap</span>
+                <div class="h3 fw-bold text-gradient-cyan my-1" id="summary-timeline-display">
+                  2–3 Months (4-6 Sprints)
+                </div>
+                <small class="text-white-50">Bi-weekly deliverables & staging demos</small>
+              </div>
+            </div>
+          </div>
+
+          <!-- Selected Scope Pills -->
+          <div class="p-3 rounded-3 mb-4" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);">
+            <div class="row g-2 small">
+              <div class="col-sm-6">
+                <strong class="text-white-50">Archetype:</strong> <span class="text-white" id="summary-archetype">Web Application / SaaS</span>
+              </div>
+              <div class="col-sm-6">
+                <strong class="text-white-50">Scale:</strong> <span class="text-white" id="summary-scale">MVP / Proof of Concept</span>
+              </div>
+              <div class="col-12">
+                <strong class="text-white-50">Included Modules:</strong> <span class="text-white" id="summary-features">Auth & RBAC</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Inquiry Form -->
+          <div class="card p-4 border-0" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08) !important; border-radius: 14px;">
+            <h5 class="fw-bold text-white mb-3"><i class="bi bi-file-earmark-text text-gradient-orange me-2"></i>Receive Detailed Architecture Proposal</h5>
+            <form id="estimatorInquiryForm" onsubmit="submitEstimate(event)">
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label text-white-50 small">Your Full Name *</label>
+                  <input type="text" class="form-control zy-input" id="est-name" placeholder="Alex Morgan" required>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label text-white-50 small">Work Email *</label>
+                  <input type="email" class="form-control zy-input" id="est-email" placeholder="alex@company.com" required>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label text-white-50 small">Company / Organization</label>
+                  <input type="text" class="form-control zy-input" id="est-company" placeholder="HyperCloud Solutions">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label text-white-50 small">Phone / WhatsApp</label>
+                  <input type="tel" class="form-control zy-input" id="est-phone" placeholder="+91 70757 73680">
+                </div>
+                <div class="col-12">
+                  <label class="form-label text-white-50 small">Specific Technical Requirements / Notes</label>
+                  <textarea class="form-control zy-input" id="est-message" rows="2" placeholder="Tell us about existing databases, third-party systems, or launch constraints..."></textarea>
+                </div>
+              </div>
+
+              <!-- Mandatory Transparent Disclaimer -->
+              <div class="alert alert-dark border border-white-10 mt-3 mb-3 p-3 text-white-50 small">
+                <i class="bi bi-shield-check text-info me-1"></i>
+                <strong class="text-white">Indicative Scoping Disclaimer:</strong> The calculated estimates are indicative guidelines derived from typical engineering sprint hours and do not constitute a fixed price contract. Formal pricing and delivery schedules are finalized following our collaborative technical discovery session.
+              </div>
+
+              <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+                <button type="button" class="btn btn-brand-outline px-4" onclick="goToStep(4)">&larr; Adjust Parameters</button>
+                <button type="submit" class="btn btn-brand px-4 py-2" id="est-submit-btn">
+                  <i class="bi bi-send-fill me-1"></i> Submit Inquiry &amp; Request Technical Call
+                </button>
+              </div>
+            </form>
+
+            <div id="est-feedback" class="mt-3 d-none"></div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="zy-footer pt-5 pb-4 border-top border-white/10 mt-5">
+    <div class="container">
+      <div class="row g-4 mb-5">
+        <div class="col-lg-4">
+          <div class="d-flex align-items-center gap-2 mb-3">
+            <img src="/assets/images/zyllo-icon.png" alt="Zyllo Tech Logo" style="height: 34px;">
+            <span class="fs-4 fw-extrabold text-uppercase">
+              <span class="text-gradient-orange">Zyllo</span> <span class="text-gradient-cyan">Tech</span>
+            </span>
+          </div>
+          <p class="text-white-50 small mb-3">
+            Enterprise software development, modern web applications, mobile platforms, and practical AI engineering. Based in Guntur, India, delivering globally.
+          </p>
+          <div class="d-flex gap-2">
+            <a href="https://wa.me/917075773680" target="_blank" class="btn btn-sm btn-outline-success"><i class="bi bi-whatsapp me-1"></i> WhatsApp</a>
+            <a href="mailto:contact@zyllotech.com" class="btn btn-sm btn-brand-outline"><i class="bi bi-envelope me-1"></i> Email Us</a>
+          </div>
+        </div>
+        <div class="col-lg-2 col-6">
+          <h5 class="fw-bold text-white small text-uppercase mb-3">Tools &amp; Portals</h5>
+          <ul class="list-unstyled d-flex flex-column gap-2 small">
+            <li><a href="/estimator" class="zy-footer-link">Cost Estimator</a></li>
+            <li><a href="/audit" class="zy-footer-link">SEO Audit Tool</a></li>
+            <li><a href="/contact#discovery" class="zy-footer-link">Discovery Wizard</a></li>
+            <li><a href="/portfolio" class="zy-footer-link">Case Studies</a></li>
+            <li><a href="/portal" class="zy-footer-link">Client Portal</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-3 col-6">
+          <h5 class="fw-bold text-white small text-uppercase mb-3">Engineering Services</h5>
+          <ul class="list-unstyled d-flex flex-column gap-2 small">
+            <li><a href="/services/software-development" class="zy-footer-link">Custom Software</a></li>
+            <li><a href="/services/web-development" class="zy-footer-link">Web Applications</a></li>
+            <li><a href="/services/mobile-app-development" class="zy-footer-link">Mobile Development</a></li>
+            <li><a href="/services/ai-solutions" class="zy-footer-link">AI &amp; Machine Learning</a></li>
+            <li><a href="/services/cloud-solutions" class="zy-footer-link">Cloud &amp; DevOps</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-3">
+          <h5 class="fw-bold text-white small text-uppercase mb-3">Stay Updated</h5>
+          <p class="text-white-50 small mb-3">Subscribe to our monthly newsletter on software trends and emerging AI technologies.</p>
+          <form class="newsletter-form">
+            <div class="newsletter-input-group">
+              <input type="email" class="form-control zy-input" placeholder="Your work email..." required>
+              <button class="btn btn-brand" type="submit"><i class="bi bi-arrow-right"></i></button>
+            </div>
+          </form>
+        </div>
+      </div>
+            <!-- Interactive Particle Typography Footer Wordmark (ZYLLOTECH) -->
+      <div class="zy-footer-particle-wrap my-4 text-center">
+        <canvas id="zy-footer-particle-canvas" class="zy-footer-particle-canvas"></canvas>
+      </div>
+
+<div class="pt-4 border-top border-white/10 d-flex flex-wrap align-items-center justify-content-between gap-2 text-white-50 small">
+        <div>&copy; 2026 Zyllo Tech Software Solutions Private Limited. All rights reserved.</div>
+        <div class="d-flex gap-3">
+          <a href="#" class="text-white-50 text-decoration-none">Privacy Policy</a>
+          <a href="#" class="text-white-50 text-decoration-none">Terms of Service</a>
+          <a href="/login" class="text-warning text-decoration-none"><i class="bi bi-lock-fill"></i> Client Portal</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Search Modal -->
+  <div class="modal fade" id="searchModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 580px;">
+      <div class="modal-content zy-search-modal">
+        <div class="p-3 px-4 d-flex align-items-center justify-content-between border-bottom border-white/10">
+          <div class="d-flex align-items-center gap-2">
+            <img src="/assets/images/zyllo-icon.png" alt="Zyllo Tech" style="height: 28px;">
+            <span class="fw-bold text-white" style="font-size: 1.05rem;">
+              Ask anything about <span style="color: #f16623;">Zyllo</span> <span style="color: #262262;">Tech</span>
+            </span>
+          </div>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="p-4 pb-3">
+          <div class="zy-search-input-pill mb-3">
+            <i class="bi bi-search text-muted fs-5 me-2"></i>
+            <input type="text" id="zy-search-input" placeholder="e.g. Do you build mobile apps?">
+            <button type="button" class="btn zy-search-ask-btn ms-2" id="zy-ask-btn">Ask</button>
+          </div>
+          <div id="zy-search-results" class="mt-2" style="max-height: 260px; overflow-y: auto;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/assets/js/main.js"></script>
+  <script>
+    // State management for estimator
+    let currentCurrency = 'INR';
+    const exchangeRate = 83.5; // 1 USD = 83.5 INR
+
+    let state = {
+      archetype: 'Web Application / SaaS',
+      archetypeBase: 15000,
+      scale: 'MVP / Proof of Concept',
+      scaleMultiplier: 1.0,
+      features: ['User Authentication & RBAC'],
+      featureAddons: 1200,
+      timeline: 'Standard Sprints (2-3 Months)',
+      timelineMultiplier: 1.0,
+      timelineText: '2–3 Months (4-6 Sprints)'
+    };
+
+    function setCurrency(curr) {
+      currentCurrency = curr;
+      document.getElementById('currency-usd').className = curr === 'USD' ? 'btn btn-sm rounded-pill px-3 py-1 btn-brand' : 'btn btn-sm rounded-pill px-3 py-1 text-white-50';
+      document.getElementById('currency-inr').className = curr === 'INR' ? 'btn btn-sm rounded-pill px-3 py-1 btn-brand' : 'btn btn-sm rounded-pill px-3 py-1 text-white-50';
+      recalculateEstimate();
+    }
+
+    function selectArchetype(name, basePrice, el) {
+      state.archetype = name;
+      state.archetypeBase = basePrice;
+      document.querySelectorAll('#estimator-step-1 .estimator-option-card').forEach(c => c.classList.remove('selected'));
+      el.classList.add('selected');
+    }
+
+    function selectScale(name, multiplier, el) {
+      state.scale = name;
+      state.scaleMultiplier = multiplier;
+      document.querySelectorAll('#estimator-step-2 .estimator-option-card').forEach(c => c.classList.remove('selected'));
+      el.classList.add('selected');
+    }
+
+    function toggleFeature(name, cost, el) {
+      const idx = state.features.indexOf(name);
+      const icon = el.querySelector('i');
+      if (idx > -1) {
+        state.features.splice(idx, 1);
+        state.featureAddons -= cost;
+        el.classList.remove('selected');
+        if (icon) icon.className = 'bi bi-circle text-white-50';
+      } else {
+        state.features.push(name);
+        state.featureAddons += cost;
+        el.classList.add('selected');
+        if (icon) icon.className = 'bi bi-check-circle-fill text-success';
+      }
+    }
+
+    function selectTimeline(name, multiplier, text, el) {
+      state.timeline = name;
+      state.timelineMultiplier = multiplier;
+      state.timelineText = text;
+      document.querySelectorAll('#estimator-step-4 .estimator-option-card').forEach(c => c.classList.remove('selected'));
+      el.classList.add('selected');
+    }
+
+    function recalculateEstimate() {
+      const baseSubtotal = (state.archetypeBase + state.featureAddons) * state.scaleMultiplier;
+      const minUsd = Math.round((baseSubtotal * state.timelineMultiplier * 0.9) / 500) * 500;
+      const maxUsd = Math.round((baseSubtotal * state.timelineMultiplier * 1.3) / 500) * 500;
+
+      let displayStr = '';
+      if (currentCurrency === 'USD') {
+        displayStr = `$${minUsd.toLocaleString()} - $${maxUsd.toLocaleString()}`;
+      } else {
+        const minInr = Math.round((minUsd * exchangeRate) / 10000) * 10000;
+        const maxInr = Math.round((maxUsd * exchangeRate) / 10000) * 10000;
+        displayStr = `₹${minInr.toLocaleString('en-IN')} - ₹${maxInr.toLocaleString('en-IN')}`;
+      }
+
+      const priceElem = document.getElementById('summary-price-display');
+      if (priceElem) priceElem.innerText = displayStr;
+
+      const timelineElem = document.getElementById('summary-timeline-display');
+      if (timelineElem) timelineElem.innerText = state.timelineText;
+
+      const archElem = document.getElementById('summary-archetype');
+      if (archElem) archElem.innerText = state.archetype;
+
+      const scaleElem = document.getElementById('summary-scale');
+      if (scaleElem) scaleElem.innerText = state.scale;
+
+      const featElem = document.getElementById('summary-features');
+      if (featElem) featElem.innerText = state.features.length > 0 ? state.features.join(', ') : 'Standard Core Foundation';
+
+      return { minUsd, maxUsd };
+    }
+
+    function goToStep(stepNum) {
+      for (let i = 1; i <= 5; i++) {
+        const stepView = document.getElementById(`estimator-step-${i}`);
+        const navPill = document.getElementById(`step-nav-${i}`);
+        if (stepView) {
+          if (i === stepNum) {
+            stepView.classList.remove('d-none');
+          } else {
+            stepView.classList.add('d-none');
+          }
+        }
+        if (navPill) {
+          navPill.classList.remove('active', 'completed');
+          if (i === stepNum) {
+            navPill.classList.add('active');
+          } else if (i < stepNum) {
+            navPill.classList.add('completed');
+          }
+        }
+      }
+
+      if (stepNum === 5) {
+        recalculateEstimate();
+      }
+
+      window.scrollTo({ top: 320, behavior: 'smooth' });
+    }
+
+    async function submitEstimate(e) {
+      e.preventDefault();
+      const submitBtn = document.getElementById('est-submit-btn');
+      const feedback = document.getElementById('est-feedback');
+
+      const name = document.getElementById('est-name').value.trim();
+      const email = document.getElementById('est-email').value.trim();
+      const company = document.getElementById('est-company').value.trim();
+      const phone = document.getElementById('est-phone').value.trim();
+      const message = document.getElementById('est-message').value.trim();
+
+      const { minUsd, maxUsd } = recalculateEstimate();
+
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span> Submitting Inquiry...';
+      feedback.classList.add('d-none');
+
+      try {
+        const res = await fetch('/api/estimator/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            projectType: state.archetype,
+            scale: state.scale,
+            features: state.features,
+            timeline: state.timeline,
+            estimatedMin: currentCurrency === 'USD' ? minUsd : Math.round(minUsd * exchangeRate),
+            estimatedMax: currentCurrency === 'USD' ? maxUsd : Math.round(maxUsd * exchangeRate),
+            currency: currentCurrency,
+            name,
+            email,
+            phone,
+            company,
+            message
+          })
+        });
+
+        const data = await res.json();
+        if (data.success) {
+          feedback.className = 'alert alert-success border-success mt-3';
+          feedback.innerHTML = `
+            <div class="d-flex align-items-center gap-2 mb-2">
+              <i class="bi bi-check-circle-fill fs-4 text-success"></i>
+              <strong class="text-white">Estimate Logged Successfully!</strong>
+            </div>
+            <p class="small text-white-50 mb-2">${data.message}</p>
+            <div class="d-flex gap-2">
+              <a href="https://wa.me/917075773680?text=Hello%20Zyllo%20Tech%2C%20I%20just%20submitted%20an%20estimator%20inquiry%20for%20${encodeURIComponent(state.archetype)}" class="btn btn-sm btn-success" target="_blank">
+                <i class="bi bi-whatsapp me-1"></i> Fast-Track on WhatsApp
+              </a>
+              <a href="/contact#schedule" class="btn btn-sm btn-brand-outline">
+                <i class="bi bi-calendar-event me-1"></i> Schedule Discovery Call
+              </a>
+            </div>
+          `;
+          feedback.classList.remove('d-none');
+          document.getElementById('estimatorInquiryForm').reset();
+        } else {
+          throw new Error(data.message || 'Submission error');
+        }
+      } catch (err) {
+        feedback.className = 'alert alert-danger border-danger mt-3';
+        feedback.innerHTML = `<i class="bi bi-exclamation-triangle me-1"></i> ${err.message}`;
+        feedback.classList.remove('d-none');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<i class="bi bi-send-fill me-1"></i> Submit Inquiry &amp; Request Technical Call';
+      }
+    }
+  </script>
+<script src="/assets/js/theme.js"></script>
+</body>
+</html>
