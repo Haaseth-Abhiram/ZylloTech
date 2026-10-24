@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zyllo Tech | Enterprise Cover Page & Corporate Profile</title>
+  <link rel="icon" type="image/png" href="/assets/images/zyllo-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --palette-indigo: #262262;
+      --palette-indigo-dark: #16133d;
+      --palette-indigo-void: #0d0a21;
+      --palette-orange: #f16623;
+      --palette-orange-light: #ff7d3b;
+      --palette-cyan-accent: #3c368c;
+      --text-main: #ffffff;
+      --text-muted: #9ba1c2;
+      --border-subtle: rgba(255, 255, 255, 0.12);
+      --card-bg: rgba(22, 19, 61, 0.72);
+      --glow: rgba(241, 102, 35, 0.28);
+    }
+
+    body.light-theme {
+      --palette-indigo-void: #f4f5fc;
+      --palette-indigo-dark: #e8ebf8;
+      --text-main: #16133d;
+      --text-muted: #535875;
+      --border-subtle: rgba(38, 34, 98, 0.15);
+      --card-bg: rgba(255, 255, 255, 0.92);
+      --glow: rgba(241, 102, 35, 0.18);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--palette-indigo-void);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 16px;
+      position: relative;
+      overflow-x: hidden;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    /* Subtle background grid & glow */
+    .bg-mesh {
+      position: fixed;
+      inset: 0;
+      background-image: 
+        radial-gradient(circle at 15% 20%, rgba(241, 102, 35, 0.14) 0%, transparent 45%),
+        radial-gradient(circle at 85% 75%, rgba(38, 34, 98, 0.45) 0%, transparent 55%),
+        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 48px 48px, 48px 48px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    body.light-theme .bg-mesh {
+      background-image: 
+        radial-gradient(circle at 15% 20%, rgba(241, 102, 35, 0.08) 0%, transparent 45%),
+        radial-gradient(circle at 85% 75%, rgba(38, 34, 98, 0.12) 0%, transparent 55%),
+        linear-gradient(rgba(38, 34, 98, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(38, 34, 98, 0.04) 1px, transparent 1px);
+    }
+
+    /* Top Action Bar (hidden in print) */
+    .toolbar {
+      width: 100%;
+      max-width: 960px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      z-index: 10;
+    }
+
+    .toolbar-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: 0.5px;
+    }
+
+    .toolbar-actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      border-radius: 9999px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      border: 1px solid var(--border-subtle);
+      background: var(--card-bg);
+      color: var(--text-main);
+      backdrop-filter: blur(10px);
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      border-color: var(--palette-orange);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--palette-orange) 0%, #d84e0e 100%);
+      color: #ffffff;
+      border: none;
+      box-shadow: 0 4px 16px rgba(241, 102, 35, 0.35);
+    }
+
+    .btn-primary:hover {
+      box-shadow: 0 6px 22px rgba(241, 102, 35, 0.5);
+    }
+
+    /* ==================== A4 COVER SHEET CONTAINER ==================== */
+    .cover-container {
+      position: relative;
+      width: 100%;
+      max-width: 920px;
+      aspect-ratio: 1 / 1.414; /* A4 international ratio standard */
+      min-height: 1100px;
+      background: var(--card-bg);
+      border: 1px solid var(--border-subtle);
+      border-radius: 24px;
+      padding: 64px 72px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      backdrop-filter: blur(24px);
+      box-shadow: 0 32px 80px rgba(10, 8, 30, 0.6);
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    body.light-theme .cover-container {
+      box-shadow: 0 24px 60px rgba(38, 34, 98, 0.12);
+      border-color: rgba(38, 34, 98, 0.12);
+    }
+
+    /* Decorative geometric elements on cover */
+    .geometric-accent {
+      position: absolute;
+      top: -120px;
+      right: -120px;
+      width: 440px;
+      height: 440px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(241, 102, 35, 0.25) 0%, rgba(38, 34, 98, 0.18) 60%, transparent 80%);
+      filter: blur(30px);
+      pointer-events: none;
+    }
+
+    .geometric-lines {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 380px;
+      height: 380px;
+      opacity: 0.12;
+      pointer-events: none;
+      background: repeating-linear-gradient(45deg, var(--palette-orange), var(--palette-orange) 2px, transparent 2px, transparent 18px);
+    }
+
+    .diagonal-flare {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 6px;
+      height: 100%;
+      background: linear-gradient(180deg, var(--palette-orange) 0%, var(--palette-indigo) 70%, transparent 100%);
+    }
+
+    /* Header Section */
+    .cover-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 32px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .brand-logo-img {
+      height: 52px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .brand-text-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, #ffffff 30%, var(--palette-orange) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    body.light-theme .brand-title {
+      background: linear-gradient(135deg, var(--palette-indigo) 30%, var(--palette-orange) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .brand-subtitle {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--palette-orange);
+    }
+
+    .doc-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      background: rgba(241, 102, 35, 0.12);
+      border: 1px solid rgba(241, 102, 35, 0.3);
+      color: var(--palette-orange);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .doc-badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--palette-orange);
+      box-shadow: 0 0 8px var(--palette-orange);
+    }
+
+    /* Main Body / Title Block */
+    .cover-body {
+      padding: 48px 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    .category-tag {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--palette-orange);
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .category-tag::before {
+      content: '';
+      display: inline-block;
+      width: 28px;
+      height: 2px;
+      background: var(--palette-orange);
+    }
+
+    .main-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 54px;
+      font-weight: 800;
+      line-height: 1.08;
+      letter-spacing: -1.5px;
+      margin-bottom: 24px;
+      max-width: 780px;
+    }
+
+    .gradient-word {
+      background: linear-gradient(120deg, var(--palette-orange) 0%, #ff955c 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .lead-summary {
+      font-size: 17px;
+      line-height: 1.65;
+      color: var(--text-muted);
+      max-width: 680px;
+      margin-bottom: 40px;
+      font-weight: 400;
+    }
+
+    /* Core Capabilities Grid */
+    .capabilities-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .cap-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      padding: 16px;
+      transition: all 0.2s ease;
+    }
+
+    body.light-theme .cap-card {
+      background: rgba(38, 34, 98, 0.03);
+    }
+
+    .cap-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--palette-orange);
+      margin-bottom: 8px;
+    }
+
+    .cap-title {
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 4px;
+      line-height: 1.3;
+    }
+
+    .cap-desc {
+      font-size: 11px;
+      color: var(--text-muted);
+      line-height: 1.45;
+    }
+
+    /* Cover Footer */
+    .cover-footer {
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      position: relative;
+      z-index: 2;
+    }
+
+    .meta-group {
+      display: flex;
+      gap: 40px;
+    }
+
+    .meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .meta-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--palette-orange);
+    }
+
+    .meta-value {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .meta-sub {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .badge-stamp {
+      text-align: right;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 6px;
+    }
+
+    .security-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 6px;
+      background: rgba(38, 34, 98, 0.6);
+      border: 1px solid var(--border-subtle);
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    body.light-theme .security-badge {
+      background: rgba(232, 235, 248, 0.9);
+    }
+
+    .url-stamp {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--palette-orange);
+      letter-spacing: 0.5px;
+    }
+
+    /* Print Formatting */
+    @media print {
+      body {
+        background: #ffffff !important;
+        color: #16133d !important;
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+      .toolbar, .bg-mesh {
+        display: none !important;
+      }
+      .cover-container {
+        width: 100% !important;
+        max-width: 100% !important;
+        height: 100vh !important;
+        min-height: 100vh !important;
+        border: none !important;
+        box-shadow: none !important;
+        border-radius: 0 !important;
+        padding: 40mm 25mm !important;
+        background: #ffffff !important;
+      }
+      .brand-title {
+        color: #16133d !important;
+        -webkit-text-fill-color: #16133d !important;
+      }
+      .gradient-word {
+        color: #f16623 !important;
+        -webkit-text-fill-color: #f16623 !important;
+      }
+      .lead-summary {
+        color: #535875 !important;
+      }
+      .cap-card {
+        background: #f7f8fd !important;
+        border: 1px solid #e2e4f0 !important;
+      }
+      .security-badge {
+        background: #eef0f8 !important;
+      }
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .cover-container {
+        padding: 40px 24px;
+        min-height: auto;
+      }
+      .main-title {
+        font-size: 34px;
+      }
+      .capabilities-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .cover-footer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 24px;
+      }
+      .badge-stamp {
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-mesh"></div>
+
+  <!-- Interactive Controls Bar (Screen Only) -->
+  <div class="toolbar">
+    <div class="toolbar-brand">
+      <span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#f16623;"></span>
+      <span>Zyllo Tech Presentation Suite</span>
+    </div>
+    <div class="toolbar-actions">
+      <!-- Preset switcher -->
+      <button class="btn" onclick="setPreset('profile')">Profile</button>
+      <button class="btn" onclick="setPreset('proposal')">Proposal</button>
+      <button class="btn" onclick="setPreset('tech')">Architecture</button>
+      <!-- Theme switch -->
+      <button class="btn" onclick="toggleTheme()" id="themeBtn">☀️ Light Mode</button>
+      <!-- Print/Save PDF -->
+      <button class="btn btn-primary" onclick="window.print()">
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9V2h12v7M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2m-8 0v4h8v-4H8z"/></svg>
+        Save / Print PDF
+      </button>
+    </div>
+  </div>
+
+  <!-- A4 Cover Sheet -->
+  <div class="cover-container" id="coverContainer">
+    <div class="diagonal-flare"></div>
+    <div class="geometric-accent"></div>
+    <div class="geometric-lines"></div>
+
+    <!-- Header Section -->
+    <div class="cover-header">
+      <div class="brand-group">
+        <img src="/assets/images/zyllo-logo.png" alt="Zyllo Tech Logo" class="brand-logo-img" onerror="this.style.display='none'">
+        <div class="brand-text-group">
+          <div class="brand-title">ZYLLO TECH</div>
+          <div class="brand-subtitle">SOFTWARE SOLUTIONS</div>
+        </div>
+      </div>
+      <div class="doc-badge" id="docBadge">
+        <span class="doc-badge-dot"></span>
+        <span id="badgeText">Corporate Capabilities Profile</span>
+      </div>
+    </div>
+
+    <!-- Main Title Block -->
+    <div class="cover-body">
+      <div class="category-tag" id="categoryTag">Global Engineering & Technology Services</div>
+      <h1 class="main-title" id="mainTitle">
+        Engineering Scalable <span class="gradient-word">Digital Realities</span> & Enterprise Intelligence.
+      </h1>
+      <p class="lead-summary" id="leadSummary">
+        Comprehensive enterprise solutions across full-stack cloud ecosystems, multi-agent AI pipelines, high-throughput backend microservices, and cross-platform native mobility.
+      </p>
+
+      <!-- 4 Core Pillars Grid -->
+      <div class="capabilities-grid">
+        <div class="cap-card">
+          <div class="cap-num">01 / CLOUD & DEVOPS</div>
+          <div class="cap-title">Resilient Architecture</div>
+          <div class="cap-desc">Kubernetes, zero-downtime database pipelines, and automated multi-region CI/CD.</div>
+        </div>
+        <div class="cap-card">
+          <div class="cap-num">02 / ARTIFICIAL INTELLIGENCE</div>
+          <div class="cap-title">Agentic AI & RAG</div>
+          <div class="cap-desc">Deterministic multi-agent workflows, vector retrieval, and enterprise process automation.</div>
+        </div>
+        <div class="cap-card">
+          <div class="cap-num">03 / WEB APPLICATIONS</div>
+          <div class="cap-title">High-Scale SaaS</div>
+          <div class="cap-desc">Next.js, Node.js microservices, sub-second latency, and hardened session security.</div>
+        </div>
+        <div class="cap-card">
+          <div class="cap-num">04 / MOBILE SYSTEMS</div>
+          <div class="cap-title">Native & Flutter</div>
+          <div class="cap-desc">Impeller-accelerated 60fps cross-platform mobile apps with offline-first synchronization.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cover Footer -->
+    <div class="cover-footer">
+      <div class="meta-group">
+        <div class="meta-item">
+          <span class="meta-label">PREPARED BY</span>
+          <span class="meta-value">Zyllo Tech Solutions</span>
+          <span class="meta-sub">Engineering & Leadership Pod</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">HEADQUARTERS</span>
+          <span class="meta-value">Guntur, Andhra Pradesh</span>
+          <span class="meta-sub">Delivering to US • UK • UAE • AUS</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">EDITION & DATE</span>
+          <span class="meta-value" id="editionDate">October 2026</span>
+          <span class="meta-sub">Release v2.4 (Enterprise)</span>
+        </div>
+      </div>
+
+      <div class="badge-stamp">
+        <div class="security-badge">
+          <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Enterprise Confidential
+        </div>
+        <div class="url-stamp">zyllotech.com</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const presets = {
+      profile: {
+        badge: 'Corporate Capabilities Profile',
+        category: 'Global Engineering & Technology Services',
+        title: 'Engineering Scalable <span class="gradient-word">Digital Realities</span> & Enterprise Intelligence.',
+        summary: 'Comprehensive enterprise solutions across full-stack cloud ecosystems, multi-agent AI pipelines, high-throughput backend microservices, and cross-platform native mobility.'
+      },
+      proposal: {
+        badge: 'Enterprise Project Proposal',
+        category: 'Client Solutions & Technical Roadmap',
+        title: 'Transforming Vision into <span class="gradient-word">High-Velocity</span> Production Software.',
+        summary: 'Dedicated proposal detailing project scope, architectural blueprints, milestones, deliverables, and service-level commitments for enterprise client deployment.'
+      },
+      tech: {
+        badge: 'Technical Architecture Whitepaper',
+        category: 'Systems Design & Infrastructure Benchmark',
+        title: 'Next-Generation <span class="gradient-word">Microservices</span> & AI Copilot Ecosystems.',
+        summary: 'In-depth architectural review analyzing sub-second latency optimization, zero-downtime schema migrations, and enterprise-grade multi-agent governance.'
+      }
+    };
+
+    function setPreset(key) {
+      const p = presets[key];
+      if (!p) return;
+      document.getElementById('badgeText').textContent = p.badge;
+      document.getElementById('categoryTag').textContent = p.category;
+      document.getElementById('mainTitle').innerHTML = p.title;
+      document.getElementById('leadSummary').innerHTML = p.summary;
+    }
+
+    function toggleTheme() {
+      const isLight = document.body.classList.toggle('light-theme');
+      const btn = document.getElementById('themeBtn');
+      btn.textContent = isLight ? '🌙 Dark Mode' : '☀️ Light Mode';
+    }
+  </script>
+</body>
+</html>

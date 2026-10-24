@@ -3,5 +3,7 @@ node_modules
 cloudflared.exe
 cloudflared.log
 *.log
+*.pdf
+cover_preview.png
 .DS_Store
 Thumbs.db
