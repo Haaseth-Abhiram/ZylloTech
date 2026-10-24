@@ -31,11 +31,16 @@ function getBaseUrl(req) {
   return `${protocol}://${host}`;
 }
 
+// Resolves public static files directory across local and serverless execution environments
+const PUBLIC_DIR = fs.existsSync(path.join(__dirname, 'public'))
+  ? path.join(__dirname, 'public')
+  : (fs.existsSync(path.join(process.cwd(), 'public')) ? path.join(process.cwd(), 'public') : path.join(__dirname, '..', 'public'));
+
 // Middleware
 app.use(cors());
 app.use(express.json({ limit: '20mb' }));
 app.use(express.urlencoded({ extended: true, limit: '20mb' }));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(PUBLIC_DIR));
 
 // Authentication middleware helper
 function authenticateToken(req, res, next) {
@@ -2866,15 +2871,15 @@ app.post('/api/settings/smtp/test', async (req, res) => {
 
 // ==================== INDIVIDUAL CLEAN PAGE ROUTES ====================
 app.get('/login', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'login.html'));
+  res.sendFile(path.join(PUBLIC_DIR, 'login.html'));
 });
 
 app.get('/dashboard', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'dashboard.html'));
+  res.sendFile(path.join(PUBLIC_DIR, 'dashboard.html'));
 });
 
 app.get('/portal', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'portal.html'));
+  res.sendFile(path.join(PUBLIC_DIR, 'portal.html'));
 });
 
 app.get('/client-portal', (req, res) => {
@@ -2882,7 +2887,7 @@ app.get('/client-portal', (req, res) => {
 });
 
 app.get('/employee', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'employee.html'));
+  res.sendFile(path.join(PUBLIC_DIR, 'employee.html'));
 });
 
 app.get('/employee-portal', (req, res) => {
@@ -2894,47 +2899,47 @@ app.get('/employee/dashboard', (req, res) => {
 });
 
 app.get(['/hr', '/hr-portal', '/hr/dashboard'], (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'hr.html'));
+  res.sendFile(path.join(PUBLIC_DIR, 'hr.html'));
 });
 
 app.get('/about', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'about.html'));
+  res.sendFile(path.join(PUBLIC_DIR, 'about.html'));
 });
 
 app.get('/services', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'services.html'));
+  res.sendFile(path.join(PUBLIC_DIR, 'services.html'));
 });
 
 app.get('/services/:slug', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'service-detail.html'));
+  res.sendFile(path.join(PUBLIC_DIR, 'service-detail.html'));
 });
 
 app.get('/industries', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'industries.html'));
+  res.sendFile(path.join(PUBLIC_DIR, 'industries.html'));
 });
 
 app.get('/portfolio', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'portfolio.html'));
+  res.sendFile(path.join(PUBLIC_DIR, 'portfolio.html'));
 });
 
 app.get('/blog', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'blog.html'));
+  res.sendFile(path.join(PUBLIC_DIR, 'blog.html'));
 });
 
 app.get('/careers', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'careers.html'));
+  res.sendFile(path.join(PUBLIC_DIR, 'careers.html'));
 });
 
 app.get('/contact', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'contact.html'));
+  res.sendFile(path.join(PUBLIC_DIR, 'contact.html'));
 });
 
 app.get('/estimator', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'estimator.html'));
+  res.sendFile(path.join(PUBLIC_DIR, 'estimator.html'));
 });
 
 app.get('/audit', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'audit.html'));
+  res.sendFile(path.join(PUBLIC_DIR, 'audit.html'));
 });
 
 app.get('/discovery', (req, res) => {
@@ -2947,17 +2952,17 @@ app.get('/schedule', (req, res) => {
 
 app.get('/sitemap.xml', (req, res) => {
   res.type('application/xml');
-  res.sendFile(path.join(__dirname, 'public', 'sitemap.xml'));
+  res.sendFile(path.join(PUBLIC_DIR, 'sitemap.xml'));
 });
 
 app.get('/robots.txt', (req, res) => {
   res.type('text/plain');
-  res.sendFile(path.join(__dirname, 'public', 'robots.txt'));
+  res.sendFile(path.join(PUBLIC_DIR, 'robots.txt'));
 });
 
 // Fallback for HTML5 pushState or index
 app.use((req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  res.sendFile(path.join(PUBLIC_DIR, 'index.html'));
 });
 
 // Start local listener only if not running in serverless / Vercel

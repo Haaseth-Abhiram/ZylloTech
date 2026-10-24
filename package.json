@@ -1,10 +1,11 @@
 {
   "name": "zyllotech",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "node server.js"
+    "dev": "node server.js",
+    "build": "npm rebuild sqlite3"
   },
   "keywords": [],
   "author": "",
