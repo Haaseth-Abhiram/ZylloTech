@@ -1,15 +1,47 @@
-const sqlite3 = require('sqlite3').verbose();
+const os = require('os');
+const fs = require('fs');
 const path = require('path');
 const bcrypt = require('bcryptjs');
+const sqlite3 = require('sqlite3').verbose();
 
-const dbPath = path.resolve(__dirname, 'zyllotech.db');
-const db = new sqlite3.Database(dbPath, (err) => {
-  if (err) {
-    console.error('Error connecting to SQLite database:', err.message);
-  } else {
-    console.log('Connected to SQLite database at:', dbPath);
+// Determine database path: On Vercel / AWS Lambda, use os.tmpdir() (the only writable directory in serverless)
+const isVercel = Boolean(process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME);
+let dbPath;
+
+if (isVercel) {
+  const tmpDir = os.tmpdir();
+  if (!fs.existsSync(tmpDir)) {
+    try {
+      fs.mkdirSync(tmpDir, { recursive: true });
+    } catch (e) {}
   }
-});
+  dbPath = path.join(tmpDir, 'zyllotech.db');
+  const sourceDbPath = path.resolve(__dirname, 'zyllotech.db');
+  try {
+    if (!fs.existsSync(dbPath) && fs.existsSync(sourceDbPath)) {
+      fs.copyFileSync(sourceDbPath, dbPath);
+      console.log('Copied bundled zyllotech.db to', dbPath);
+    }
+  } catch (err) {
+    console.error('Failed to copy database to tmp directory:', err.message);
+  }
+} else {
+  dbPath = path.resolve(__dirname, 'zyllotech.db');
+}
+
+let db;
+try {
+  db = new sqlite3.Database(dbPath, (err) => {
+    if (err) {
+      console.error('Error connecting to SQLite database:', err.message);
+    } else {
+      console.log('Connected to SQLite database at:', dbPath);
+    }
+  });
+} catch (err) {
+  console.error('Failed to initialize SQLite database:', err.message);
+  db = new sqlite3.Database(':memory:');
+}
 
 // Initialize tables and seed demo data
 db.serialize(() => {

@@ -2960,11 +2960,16 @@ app.use((req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-app.listen(PORT, () => {
-  console.log(`=======================================================`);
-  console.log(`🚀 Zyllo Tech Server is running at http://localhost:${PORT}`);
-  console.log(`📁 Database: SQLite (zyllotech.db)`);
-  console.log(`🔑 Admin Login: admin@zyllotech.com / admin123`);
-  console.log(`👤 Client Login: user@zyllotech.com / user123`);
-  console.log(`=======================================================`);
-});
+// Start local listener only if not running in serverless / Vercel
+if (!process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`=======================================================`);
+    console.log(`🚀 Zyllo Tech Server is running at http://localhost:${PORT}`);
+    console.log(`📁 Database: SQLite (zyllotech.db)`);
+    console.log(`🔑 Admin Login: admin@zyllotech.com / admin123`);
+    console.log(`👤 Client Login: user@zyllotech.com / user123`);
+    console.log(`=======================================================`);
+  });
+}
+
+module.exports = app;
