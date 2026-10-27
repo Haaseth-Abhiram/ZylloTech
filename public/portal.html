@@ -72,168 +72,63 @@
 
   <!-- ==================== CLIENT PORTAL WORKSPACE LAYOUT ==================== -->
   <div class="zy-admin-wrapper">
-    <!-- Left Sidebar Navigation Matching Image 5 -->
-    <aside class="zy-admin-sidebar" id="clientSidebar">
-      <!-- Sidebar Header -->
-      <div class="zy-admin-sidebar-header">
-        <div class="zy-admin-logo-box">
-          <img src="/assets/images/zyllo-icon.png" alt="Zyllo Tech">
-        </div>
-        <div class="overflow-hidden">
-          <div class="zy-admin-brand-title">
-            <span class="zy-brand-zyllo" style="color: #f16623;">ZYLLO</span> <span class="zy-brand-tech" style="color: #262262;">TECH</span>
-          </div>
-          <div class="zy-admin-brand-sub">CLIENT PORTAL · ENTERPRISE</div>
-        </div>
-        <button class="btn btn-sm btn-link text-white-50 d-lg-none ms-auto p-0" onclick="toggleClientSidebar()" aria-label="Close Sidebar">
-          <i class="bi bi-x-lg fs-5"></i>
-        </button>
-      </div>
-
-      <!-- WORKSPACE Navigation Group -->
-      <div class="zy-sidebar-group-label">WORKSPACE</div>
-
-      <button type="button" class="zy-sidebar-nav-item active" id="sidebar-client-overview" onclick="switchClientTab('overview')">
-        <span class="zy-sidebar-nav-left"><i class="bi bi-grid-fill"></i><span>Overview</span></span>
-      </button>
-
-      <button type="button" class="zy-sidebar-nav-item" id="sidebar-client-projects" onclick="switchClientTab('projects')">
-        <span class="zy-sidebar-nav-left"><i class="bi bi-kanban-fill"></i><span>Active Projects</span></span>
-        <span class="zy-sidebar-counter-badge" id="client-badge-projects">03</span>
-      </button>
-
-      <button type="button" class="zy-sidebar-nav-item" id="sidebar-client-milestones" onclick="switchClientTab('milestones')">
-        <span class="zy-sidebar-nav-left"><i class="bi bi-flag-fill"></i><span>Sprints &amp; Milestones</span></span>
-      </button>
-
-      <button type="button" class="zy-sidebar-nav-item" id="sidebar-client-deliverables" onclick="switchClientTab('deliverables')">
-        <span class="zy-sidebar-nav-left"><i class="bi bi-box-seam-fill"></i><span>Shared Deliverables</span></span>
-      </button>
-
-      <button type="button" class="zy-sidebar-nav-item" id="sidebar-client-notes" onclick="switchClientTab('notes')">
-        <span class="zy-sidebar-nav-left"><i class="bi bi-journal-text"></i><span>Meeting Notes</span></span>
-      </button>
-
-      <button type="button" class="zy-sidebar-nav-item" id="sidebar-client-tickets" onclick="switchClientTab('tickets')">
-        <span class="zy-sidebar-nav-left"><i class="bi bi-headset"></i><span>Support &amp; Tickets</span></span>
-        <span class="zy-sidebar-counter-badge" id="client-badge-tickets">00</span>
-      </button>
-
-      <button type="button" class="zy-sidebar-nav-item" id="sidebar-client-inquiries" onclick="switchClientTab('inquiries')">
-        <span class="zy-sidebar-nav-left"><i class="bi bi-envelope-paper-fill"></i><span>My Requests</span></span>
-        <span class="zy-sidebar-counter-badge" id="client-badge-inquiries">00</span>
-      </button>
-
-      <button type="button" class="zy-sidebar-nav-item" id="sidebar-client-services" onclick="switchClientTab('services')">
-        <span class="zy-sidebar-nav-left"><i class="bi bi-grid-3x3-gap-fill"></i><span>Services Catalog</span></span>
-      </button>
-
-      <button type="button" class="zy-sidebar-nav-item" id="sidebar-client-team" onclick="switchClientTab('team')">
-        <span class="zy-sidebar-nav-left"><i class="bi bi-person-badge-fill"></i><span>Tech Lead &amp; SLA</span></span>
-      </button>
-
-      <!-- MANAGEMENT / QUICK ACTIONS -->
-      <div class="zy-sidebar-group-label mt-3">QUICK ACTIONS</div>
-
-      <button type="button" class="zy-sidebar-nav-item border-0 bg-transparent text-start" data-bs-toggle="modal" data-bs-target="#requestProjectModal">
-        <span class="zy-sidebar-nav-left"><i class="bi bi-plus-circle-fill text-warning"></i><span class="text-white">Request Project</span></span>
-      </button>
-
-      <a href="/employee" class="zy-sidebar-nav-item text-decoration-none" title="Staff & Employee Workspace">
-        <span class="zy-sidebar-nav-left"><i class="bi bi-person-workspace text-info"></i><span>Employee Portal</span></span>
-        <i class="bi bi-box-arrow-up-right small text-white-50"></i>
-      </a>
-
-      <a href="/" target="_blank" class="zy-sidebar-nav-item text-decoration-none" title="Visit Public Website">
-        <span class="zy-sidebar-nav-left"><i class="bi bi-globe"></i><span>Public Website</span></span>
-        <i class="bi bi-box-arrow-up-right small text-white-50"></i>
-      </a>
-
-      <button type="button" class="zy-sidebar-nav-item text-danger border-0 bg-transparent mt-2" onclick="handleLogout()" title="Log out">
-        <span class="zy-sidebar-nav-left"><i class="bi bi-box-arrow-right text-danger"></i><span class="text-danger fw-semibold">Log Out</span></span>
-      </button>
-
-      <!-- Client Profile Footer in Sidebar -->
-      <div class="mt-auto pt-3 border-top border-white/10 d-flex align-items-center gap-2">
-        <div class="rounded-circle d-flex align-items-center justify-content-center text-white fw-bold" style="width: 36px; height: 36px; min-width: 36px; background: #f16623; font-size: 0.85rem;">
-          <span id="clientSidebarInitials">CL</span>
-        </div>
-        <div class="overflow-hidden" style="line-height: 1.2;">
-          <div class="text-white small fw-bold text-truncate" id="clientSidebarName">Client</div>
-          <small class="text-white-50 text-truncate d-block" style="font-size: 0.72rem;" id="clientSidebarEmail">client@zyllotech.com</small>
-        </div>
-      </div>
-    </aside>
-
-    <!-- Mobile Offcanvas Backdrop -->
-    <div class="zy-sidebar-backdrop" id="clientSidebarBackdrop" onclick="toggleClientSidebar()"></div>
-
-    <!-- Main Workspace Pane -->
-    <main class="zy-admin-main-pane">
-      <!-- Topbar Header -->
-      <header class="zy-admin-topbar d-flex align-items-center justify-content-between gap-3">
+    <!-- Top Sticky Header Container with Brand Row + Horizontal Nav Bar -->
+    <header class="zy-admin-top-header" id="clientSidebar">
+      <!-- Row 1: Brand & Control Actions -->
+      <div class="zy-topbar-row d-flex align-items-center justify-content-between px-3 py-2 border-bottom">
         <div class="d-flex align-items-center gap-3">
-          <button class="btn btn-sm btn-brand-outline d-lg-none py-1.5 px-2.5" onclick="toggleClientSidebar()" aria-label="Toggle Sidebar">
-            <i class="bi bi-list fs-5"></i>
-          </button>
-          <a href="/" class="d-flex align-items-center gap-2 text-decoration-none me-2">
-            <div class="zy-admin-logo-box" style="width: 36px !important; height: 36px !important; padding: 2px !important;">
-              <img src="/assets/images/zyllo-icon.png" alt="Zyllo Tech" style="height: 24px !important; width: 24px !important;">
+          <a href="/dashboard/client" class="d-flex align-items-center gap-2 text-decoration-none">
+            <div class="zy-admin-logo-box" style="width: 36px; height: 36px; border-radius: 9px; display: flex; align-items: center; justify-content: center; background: rgba(241, 102, 35, 0.1); border: 1px solid rgba(241, 102, 35, 0.25);">
+              <img src="/assets/images/zyllo-icon.png" alt="Zyllo Tech" style="height: 24px; width: 24px; object-fit: contain;">
             </div>
-            <div class="d-none d-sm-block">
-              <div class="zy-admin-brand-title" style="font-size: 0.95rem !important; margin: 0;">
+            <div>
+              <div class="zy-admin-brand-title" style="font-weight: 800; font-size: 1rem; line-height: 1.1; margin: 0;">
                 <span class="zy-brand-zyllo" style="color: #f16623;">ZYLLO</span> <span class="zy-brand-tech" style="color: #262262;">TECH</span>
               </div>
+              <div class="zy-admin-brand-sub" style="font-size: 0.65rem; font-weight: 700; letter-spacing: 1px; color: #f16623;">CLIENT PORTAL · ENTERPRISE</div>
             </div>
           </a>
-          <div>
-            <div class="d-flex align-items-center gap-2">
-              <span class="badge bg-secondary bg-opacity-25 border border-white-10 text-white-50 small">Client Workspace</span>
-              <span class="text-white-50 small">/</span>
-              <span class="text-dark small fw-semibold" id="topbarCurrentTab">Overview</span>
-            </div>
+          <div class="vr mx-2 d-none d-md-block opacity-25" style="height: 24px;"></div>
+          <div class="d-none d-md-flex align-items-center gap-2">
+            <span class="badge bg-secondary bg-opacity-25 border border-white-10 text-white-50 small">Client Workspace</span>
+            <span class="text-white-50 small">/</span>
+            <span class="small fw-semibold" id="topbarCurrentTab">Overview</span>
           </div>
         </div>
 
         <div class="d-flex align-items-center gap-2">
-          <!-- Switch to Admin Dashboard if admin -->
-          <div id="adminSwitchBtnContainer"></div>
-
           <!-- Quick Request Project Button -->
-          <button class="btn btn-sm btn-brand py-1.5 px-3 d-none d-sm-inline-flex align-items-center gap-1" data-bs-toggle="modal" data-bs-target="#requestProjectModal">
+          <button class="btn btn-sm btn-brand py-1 px-3 d-none d-sm-inline-flex align-items-center gap-1 shadow-sm" data-bs-toggle="modal" data-bs-target="#requestProjectModal">
             <i class="bi bi-plus-circle-fill"></i> <span>Request Project</span>
           </button>
 
           <!-- Quick Support Ticket Button -->
-          <button class="btn btn-sm btn-brand-outline py-1.5 px-3 d-none d-md-inline-flex align-items-center gap-1" data-bs-toggle="modal" data-bs-target="#newTicketModal">
+          <button class="btn btn-sm btn-brand-outline py-1 px-3 d-none d-md-inline-flex align-items-center gap-1" data-bs-toggle="modal" data-bs-target="#newTicketModal">
             <i class="bi bi-headset"></i> <span>Support Ticket</span>
           </button>
 
-          <!-- Public Website Link -->
-          <a href="/" target="_blank" class="btn btn-sm btn-brand-outline py-1.5 px-2.5 d-none d-md-inline-flex" title="View Public Website">
-            <i class="bi bi-globe me-1"></i> Public Site
-          </a>
-
-          
           <!-- Universal Light / Dark Mode Toggle Button -->
-          <button class="zy-theme-toggle-btn shadow-sm" onclick="toggleTheme()" title="Switch Light / Dark Theme">
+          <button class="zy-theme-toggle-btn shadow-sm py-1 px-2.5" onclick="toggleTheme()" title="Switch Light / Dark Theme">
             <i class="bi bi-moon-stars-fill text-warning"></i>
             <span class="theme-label d-none d-sm-inline">Dark Mode</span>
           </button>
 
           <!-- User Menu Dropdown -->
           <div class="dropdown">
-            <button class="btn btn-sm btn-brand py-1.5 px-3 dropdown-toggle" type="button" data-bs-toggle="dropdown" id="userMenuBtn">
-              <i class="bi bi-person-circle me-1"></i> Client
+            <button class="btn btn-sm btn-brand py-1 px-2.5 dropdown-toggle d-flex align-items-center gap-1.5" type="button" data-bs-toggle="dropdown" id="userMenuBtn">
+              <div class="rounded-circle d-flex align-items-center justify-content-center text-white fw-bold shadow-sm" style="width: 24px; height: 24px; background: rgba(255,255,255,0.2); font-size: 0.72rem;">
+                <span id="clientSidebarInitials">CL</span>
+              </div>
+              <span id="clientSidebarName" class="d-none d-sm-inline">Client</span>
             </button>
             <ul class="dropdown-menu dropdown-menu-end zy-dropdown-menu">
               <li class="px-3 py-2 border-bottom border-white/10">
                 <small class="text-white-50 d-block">Signed in as Client</small>
-                <span id="userDropdownEmail" class="fw-bold text-white">...</span>
+                <span id="userDropdownEmail" class="fw-bold text-white">client@zyllotech.com</span>
               </li>
-              <li>
-                <a class="zy-dropdown-item mt-1" href="/" target="_blank"><i class="bi bi-box-arrow-up-right me-2 text-info"></i> Open Public Site</a>
-              </li>
+              <li><a class="zy-dropdown-item mt-1" href="/dashboard"><i class="bi bi-speedometer2 me-2 text-warning"></i> Admin Dashboard</a></li>
+              <li><a class="zy-dropdown-item" href="/dashboard/hr"><i class="bi bi-person-badge-fill me-2 text-warning"></i> HR Portal</a></li>
+              <li><a class="zy-dropdown-item" href="/dashboard/employee"><i class="bi bi-person-workspace me-2 text-info"></i> Employee Portal</a></li>
               <li><hr class="dropdown-divider border-white/10 my-1"></li>
               <li>
                 <button class="zy-dropdown-item text-danger border-0 bg-transparent w-100 text-start" onclick="handleLogout()">
@@ -244,11 +139,90 @@
           </div>
 
           <!-- Direct Logout Pill -->
-          <button class="btn btn-sm btn-outline-danger py-1.5 px-3 rounded-pill d-inline-flex align-items-center gap-1 shadow-sm" onclick="handleLogout()" title="Log out">
-            <i class="bi bi-box-arrow-right"></i> <span class="d-none d-lg-inline">Log Out</span>
+          <button class="btn btn-sm btn-outline-danger py-1 px-2.5 rounded-pill d-inline-flex align-items-center gap-1 shadow-sm" onclick="handleLogout()" title="Log out">
+            <i class="bi bi-box-arrow-right"></i> <span class="d-none d-xl-inline">Log Out</span>
           </button>
         </div>
-      </header>
+      </div>
+
+      <!-- Row 2: Horizontal Navigation Line (Scrollable) -->
+      <nav class="zy-horizontal-nav-bar" id="clientHorizontalNav">
+        <!-- Back to Admin Dashboard -->
+        <a href="/dashboard" class="zy-hnav-item fw-bold" style="background: rgba(241, 102, 35, 0.15); border-color: rgba(241, 102, 35, 0.35); color: #f16623;" title="Return to Admin Dashboard (/dashboard)">
+          <i class="bi bi-arrow-left"></i> <span>Admin Dashboard</span>
+        </a>
+
+        <div class="zy-hnav-divider"></div>
+
+        <!-- 1. Overview -->
+        <button type="button" class="zy-hnav-item active" id="sidebar-client-overview" onclick="switchClientTab('overview')">
+          <i class="bi bi-grid-fill"></i> <span>Overview</span>
+        </button>
+
+        <!-- 2. Active Projects -->
+        <button type="button" class="zy-hnav-item" id="sidebar-client-projects" onclick="switchClientTab('projects')">
+          <i class="bi bi-kanban-fill"></i> <span>Active Projects</span>
+          <span class="zy-hnav-badge" id="client-badge-projects">03</span>
+        </button>
+
+        <!-- 3. Milestones -->
+        <button type="button" class="zy-hnav-item" id="sidebar-client-milestones" onclick="switchClientTab('milestones')">
+          <i class="bi bi-flag-fill"></i> <span>Milestones</span>
+        </button>
+
+        <!-- 4. Deliverables -->
+        <button type="button" class="zy-hnav-item" id="sidebar-client-deliverables" onclick="switchClientTab('deliverables')">
+          <i class="bi bi-box-seam-fill"></i> <span>Deliverables</span>
+        </button>
+
+        <!-- 5. Meeting Notes -->
+        <button type="button" class="zy-hnav-item" id="sidebar-client-notes" onclick="switchClientTab('notes')">
+          <i class="bi bi-journal-text"></i> <span>Meeting Notes</span>
+        </button>
+
+        <!-- 6. Support & Tickets -->
+        <button type="button" class="zy-hnav-item" id="sidebar-client-tickets" onclick="switchClientTab('tickets')">
+          <i class="bi bi-headset"></i> <span>Support &amp; Tickets</span>
+          <span class="zy-hnav-badge" id="client-badge-tickets">00</span>
+        </button>
+
+        <!-- 7. Inquiries / Requests -->
+        <button type="button" class="zy-hnav-item" id="sidebar-client-inquiries" onclick="switchClientTab('inquiries')">
+          <i class="bi bi-envelope-paper-fill"></i> <span>My Requests</span>
+          <span class="zy-hnav-badge" id="client-badge-inquiries">00</span>
+        </button>
+
+        <!-- 8. Services Catalog -->
+        <button type="button" class="zy-hnav-item" id="sidebar-client-services" onclick="switchClientTab('services')">
+          <i class="bi bi-grid-3x3-gap-fill"></i> <span>Services Catalog</span>
+        </button>
+
+        <!-- 9. Team & SLA -->
+        <button type="button" class="zy-hnav-item" id="sidebar-client-team" onclick="switchClientTab('team')">
+          <i class="bi bi-person-badge-fill"></i> <span>Tech Lead &amp; SLA</span>
+        </button>
+
+        <div class="zy-hnav-divider"></div>
+
+        <!-- Portals: HR & Employee -->
+        <a href="/dashboard/hr" class="zy-hnav-item zy-hnav-portal" title="Open HR Portal (/dashboard/hr)">
+          <i class="bi bi-person-badge-fill text-warning"></i> <span>HR Portal</span>
+          <i class="bi bi-arrow-up-right small text-white-50"></i>
+        </a>
+
+        <a href="/dashboard/employee" class="zy-hnav-item zy-hnav-portal" title="Open Employee Workspace (/dashboard/employee)">
+          <i class="bi bi-person-workspace text-success"></i> <span>Employee Portal</span>
+          <i class="bi bi-arrow-up-right small text-white-50"></i>
+        </a>
+
+        <a href="/" target="_blank" class="zy-hnav-item" title="Visit Public Website">
+          <i class="bi bi-globe"></i> <span>Website</span>
+        </a>
+      </nav>
+    </header>
+
+    <!-- Main Workspace Pane (Full Screen Width) -->
+    <main class="zy-admin-main-pane">
 
       <!-- Main Workspace Scroll Area -->
       <div class="p-3 p-md-4 p-xl-4">
