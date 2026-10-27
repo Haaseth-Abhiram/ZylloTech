@@ -611,7 +611,25 @@ function initServicesMarquee() {
 
 /* ==================== PAGE TRANSITION & FULLSCREEN LOADER ==================== */
 function initPageLoader() {
+  const currentPath = window.location.pathname.toLowerCase();
+  const isWorkspace = (
+    currentPath.startsWith('/dashboard') ||
+    currentPath.startsWith('/portal') ||
+    currentPath.startsWith('/employee') ||
+    currentPath.startsWith('/hr') ||
+    document.querySelector('.zy-admin-wrapper') !== null ||
+    document.body.classList.contains('zy-admin-body')
+  );
+
   let loader = document.getElementById('zy-page-loader');
+
+  // Completely disable and remove full-screen loading page on admin, employee, client, and HR workspaces
+  if (isWorkspace) {
+    if (loader) loader.remove();
+    const progress = document.getElementById('zy-page-loader-progress');
+    if (progress) progress.remove();
+    return;
+  }
 
   // If loader doesn't exist in markup, dynamically inject it into <body>
   if (!loader) {
@@ -756,6 +774,21 @@ function initPageLoader() {
         // If clicking exact same page URL with pure hash anchor, do not trigger loader
         if (targetUrl.pathname === window.location.pathname && targetUrl.search === window.location.search && targetUrl.hash) {
           return;
+        }
+
+        // Never trigger loading page when switching between admin, hr, employee, or client portals
+        const destPath = targetUrl.pathname.toLowerCase();
+        if (
+          link.closest('.zy-admin-sidebar') ||
+          link.closest('.zy-admin-wrapper') ||
+          link.closest('.zy-horizontal-nav-bar') ||
+          destPath.startsWith('/dashboard') ||
+          destPath.startsWith('/portal') ||
+          destPath.startsWith('/employee') ||
+          destPath.startsWith('/hr') ||
+          link.hasAttribute('data-no-loader')
+        ) {
+          return; // Let standard instant browser navigation take place without any loading overlay
         }
 
         e.preventDefault();

@@ -5295,14 +5295,14 @@ body:not(.theme-dark) .zy-nav-link.active,
   background: #fef4ee !important;
 }
 
-body:not(.theme-dark) .zy-sidebar-nav-item:hover,
-.theme-light .zy-sidebar-nav-item:hover {
+body:not(.theme-dark) aside:not(.zy-admin-sidebar) .zy-sidebar-nav-item:hover,
+.theme-light aside:not(.zy-admin-sidebar) .zy-sidebar-nav-item:hover {
   color: #0f172a !important;
   background: #f1f5f9 !important;
 }
 
-body:not(.theme-dark) .zy-sidebar-nav-item.active,
-.theme-light .zy-sidebar-nav-item.active {
+body:not(.theme-dark) aside:not(.zy-admin-sidebar) .zy-sidebar-nav-item.active,
+.theme-light aside:not(.zy-admin-sidebar) .zy-sidebar-nav-item.active {
   color: #f16623 !important;
   background: #fef4ee !important;
 }
@@ -6751,7 +6751,9 @@ body.theme-dark .zy-admin-wrapper {
   color: #ffffff !important;
 }
 
-.zy-admin-sidebar .zy-sidebar-nav-item.active {
+.zy-admin-sidebar .zy-sidebar-nav-item.active,
+body.theme-light .zy-admin-sidebar .zy-sidebar-nav-item.active,
+body:not(.theme-dark) .zy-admin-sidebar .zy-sidebar-nav-item.active {
   background: linear-gradient(90deg, #f7941e 0%, #f96706 100%) !important;
   color: #ffffff !important;
   font-weight: 700 !important;
@@ -6759,8 +6761,17 @@ body.theme-dark .zy-admin-wrapper {
   border-radius: 12px !important;
 }
 
-.zy-admin-sidebar .zy-sidebar-nav-item.active i {
+.zy-admin-sidebar .zy-sidebar-nav-item.active i,
+.zy-admin-sidebar .zy-sidebar-nav-item.active span,
+.zy-admin-sidebar .zy-sidebar-nav-item.active .zy-sidebar-nav-left i,
+body.theme-light .zy-admin-sidebar .zy-sidebar-nav-item.active i,
+body.theme-light .zy-admin-sidebar .zy-sidebar-nav-item.active span,
+body.theme-light .zy-admin-sidebar .zy-sidebar-nav-item.active .zy-sidebar-nav-left i,
+body:not(.theme-dark) .zy-admin-sidebar .zy-sidebar-nav-item.active i,
+body:not(.theme-dark) .zy-admin-sidebar .zy-sidebar-nav-item.active span,
+body:not(.theme-dark) .zy-admin-sidebar .zy-sidebar-nav-item.active .zy-sidebar-nav-left i {
   color: #ffffff !important;
+  display: inline-flex !important;
 }
 
 .zy-admin-sidebar .zy-sidebar-nav-left {
@@ -6773,10 +6784,44 @@ body.theme-dark .zy-admin-wrapper {
   font-size: 1.05rem !important;
   color: rgba(255, 255, 255, 0.6);
   transition: color 0.2s ease;
+  display: inline-flex !important;
 }
 
 .zy-admin-sidebar .zy-sidebar-nav-item:hover .zy-sidebar-nav-left i {
   color: #ffb15c !important;
+}
+
+/* Sidebar Footer & Labels Permanent Light Text */
+.zy-admin-sidebar #sidebarAdminName,
+.zy-admin-sidebar .text-truncate,
+body.theme-light .zy-admin-sidebar #sidebarAdminName,
+body.theme-light .zy-admin-sidebar .text-truncate {
+  color: #ffffff !important;
+}
+
+.zy-admin-sidebar #sidebarAdminEmail,
+body.theme-light .zy-admin-sidebar #sidebarAdminEmail,
+.zy-admin-sidebar small.text-white-50,
+body.theme-light .zy-admin-sidebar small.text-white-50 {
+  color: rgba(255, 255, 255, 0.65) !important;
+}
+
+.zy-admin-sidebar .zy-sidebar-group-label,
+body.theme-light .zy-admin-sidebar .zy-sidebar-group-label {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+
+/* Permanent suppression of full-screen page loaders across workspaces */
+body[class*="dashboard"] #zy-page-loader,
+body[class*="portal"] #zy-page-loader,
+body[class*="employee"] #zy-page-loader,
+body[class*="hr"] #zy-page-loader,
+.zy-admin-wrapper #zy-page-loader,
+.zy-admin-wrapper ~ #zy-page-loader {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
 }
 
 /* Full Width Main Pane alongside Sidebar */
