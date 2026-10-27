@@ -177,38 +177,127 @@
   </div>
 
   <!-- ==================== ADMIN DASHBOARD LAYOUT (IMAGE 5 REFERENCE) ==================== -->
-  <!-- ==================== UNIFIED HORIZONTAL ADMIN DASHBOARD LAYOUT ==================== -->
+  <!-- ==================== UNIFIED ADMIN SHELL WRAPPER (MATCHING IMAGE 1 & 2) ==================== -->
   <div class="zy-admin-wrapper">
-    <!-- Top Sticky Header Container with Brand Row + Horizontal Nav Bar -->
-    <header class="zy-admin-top-header" id="adminSidebar">
-      <!-- Row 1: Brand & Control Actions -->
-      <div class="zy-topbar-row d-flex align-items-center justify-content-between px-3 py-2 border-bottom">
+    <!-- Left Admin Sidebar Matching Image 1 & 2 -->
+    <aside class="zy-admin-sidebar" id="adminSidebar">
+      <!-- Sidebar Brand Header -->
+      <div class="zy-admin-sidebar-header">
+        <a href="/dashboard" class="d-flex align-items-center gap-2.5 text-decoration-none">
+          <div class="zy-admin-logo-box">
+            <img src="/assets/images/zyllo-icon.png" alt="Zyllo Tech">
+          </div>
+          <div class="overflow-hidden">
+            <div class="zy-admin-brand-title">
+              <span class="zy-brand-zyllo" style="color: #f16623;">ZYLLO</span> <span class="zy-brand-tech" style="color: #262262;">TECH</span>
+            </div>
+            <div class="zy-admin-brand-sub" style="font-size: 0.62rem; font-weight: 700; letter-spacing: 0.1em; color: rgba(255,255,255,0.6);">SOFTWARE SOLUTIONS PVT LTD</div>
+          </div>
+        </a>
+      </div>
+
+      <!-- OVERVIEW Navigation Group -->
+      <div class="zy-sidebar-group-label">OVERVIEW</div>
+      <a href="/dashboard" class="zy-sidebar-nav-item active text-decoration-none" title="Admin Overview Dashboard" onclick="switchDashboardTab('overview')">
+        <span class="zy-sidebar-nav-left"><i class="bi bi-grid-fill"></i><span>Dashboard</span></span>
+      </a>
+
+      <!-- CONTENT Navigation Group -->
+      <div class="zy-sidebar-group-label">CONTENT</div>
+      <a href="#inquiries" class="zy-sidebar-nav-item text-decoration-none" title="Review Inquiries & Contact Submissions" onclick="switchDashboardTab('inquiries')">
+        <span class="zy-sidebar-nav-left"><i class="bi bi-envelope-fill"></i><span>Contact Submissions</span></span>
+      </a>
+      <a href="#blogs" class="zy-sidebar-nav-item text-decoration-none" title="Blog Posts & Editorial" onclick="switchDashboardTab('blogs')">
+        <span class="zy-sidebar-nav-left"><i class="bi bi-newspaper"></i><span>Blog Posts</span></span>
+      </a>
+      <a href="#projects" class="zy-sidebar-nav-item text-decoration-none" title="Portfolio & Services Showcase" onclick="switchDashboardTab('projects')">
+        <span class="zy-sidebar-nav-left"><i class="bi bi-folder-fill"></i><span>Portfolio</span></span>
+      </a>
+
+      <!-- HIRING Navigation Group -->
+      <div class="zy-sidebar-group-label">HIRING</div>
+      <a href="#jobs" class="zy-sidebar-nav-item text-decoration-none" title="Job Roles & Openings" onclick="switchDashboardTab('jobs')">
+        <span class="zy-sidebar-nav-left"><i class="bi bi-briefcase-fill"></i><span>Careers</span></span>
+      </a>
+      <a href="#applications" class="zy-sidebar-nav-item text-decoration-none" title="Candidate Resumes & Applications" onclick="switchDashboardTab('applications')">
+        <span class="zy-sidebar-nav-left"><i class="bi bi-people-fill"></i><span>Job Applications</span></span>
+      </a>
+
+      <!-- GROWTH Navigation Group -->
+      <div class="zy-sidebar-group-label">GROWTH</div>
+      <a href="#seo" class="zy-sidebar-nav-item text-decoration-none" title="Search Engine Optimization" onclick="switchDashboardTab('overview')">
+        <span class="zy-sidebar-nav-left"><i class="bi bi-search"></i><span>SEO</span></span>
+      </a>
+      <a href="#search-console" class="zy-sidebar-nav-item text-decoration-none" title="Google Search Console Telemetry" onclick="switchDashboardTab('overview')">
+        <span class="zy-sidebar-nav-left"><i class="bi bi-bar-chart-line-fill"></i><span>Search Console</span></span>
+      </a>
+      <a href="#index-coverage" class="zy-sidebar-nav-item text-decoration-none" title="URL Index Coverage & Sitemap" onclick="switchDashboardTab('overview')">
+        <span class="zy-sidebar-nav-left"><i class="bi bi-globe"></i><span>Index Coverage</span></span>
+      </a>
+
+      <!-- WORKSPACES Navigation Group (Image 1 & 2 Reference) -->
+      <div class="zy-sidebar-group-label">WORKSPACES</div>
+      <a href="/dashboard/hr" class="zy-sidebar-nav-item text-decoration-none" title="HR Talent & People Operations">
+        <span class="zy-sidebar-nav-left"><i class="bi bi-person-badge-fill"></i><span>HR Operations</span></span>
+      </a>
+      <a href="/dashboard/client" class="zy-sidebar-nav-item text-decoration-none" title="Client Sprint & Deliverables Workspace">
+        <span class="zy-sidebar-nav-left"><i class="bi bi-briefcase-fill"></i><span>Client Workspace</span></span>
+      </a>
+      <a href="/dashboard/employee" class="zy-sidebar-nav-item text-decoration-none" title="Employee Self-Service Desk">
+        <span class="zy-sidebar-nav-left"><i class="bi bi-clock-fill"></i><span>Employee Portal</span></span>
+      </a>
+
+      <!-- Admin Command Footer Matching Image 1 & 2 -->
+      <div class="mt-auto pt-3 border-top border-white/10 d-flex align-items-center justify-content-between">
+        <div class="d-flex align-items-center gap-2 overflow-hidden">
+          <div class="rounded-circle d-flex align-items-center justify-content-center text-white fw-bold shadow-sm" style="width: 34px; height: 34px; min-width: 34px; background: linear-gradient(135deg, #f7941e 0%, #3089a6 100%); font-size: 0.85rem;">
+            A
+          </div>
+          <div class="overflow-hidden" style="line-height: 1.2;">
+            <div class="text-white small fw-bold text-truncate" id="sidebarAdminName">Admin Command</div>
+            <small class="text-white-50 text-truncate d-block" style="font-size: 0.72rem;" id="sidebarAdminEmail">admin@zyllotech.com</small>
+          </div>
+        </div>
+        <button type="button" class="btn btn-sm btn-link text-white-50 p-1" onclick="handleLogout()" title="Log out">
+          <i class="bi bi-box-arrow-right fs-5"></i>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Mobile Offcanvas Backdrop -->
+    <div class="zy-sidebar-backdrop" id="adminSidebarBackdrop" onclick="toggleAdminSidebarMobile()"></div>
+
+    <!-- Main Workspace Pane (Alongside Sidebar) -->
+    <main class="zy-admin-main-pane">
+      <!-- Topbar Header Matching Image 2 -->
+      <header class="zy-admin-topbar-modern">
         <div class="d-flex align-items-center gap-3">
-          <a href="/dashboard" class="d-flex align-items-center gap-2 text-decoration-none">
-            <div class="zy-admin-logo-box" style="width: 36px; height: 36px; border-radius: 9px; display: flex; align-items: center; justify-content: center; background: rgba(241, 102, 35, 0.1); border: 1px solid rgba(241, 102, 35, 0.25);">
-              <img src="/assets/images/zyllo-icon.png" alt="Zyllo Tech" style="height: 24px; width: 24px; object-fit: contain;">
-            </div>
-            <div>
-              <div class="zy-admin-brand-title" style="font-weight: 800; font-size: 1rem; line-height: 1.1; margin: 0;">
-                <span class="zy-brand-zyllo" style="color: #f16623;">ZYLLO</span> <span class="zy-brand-tech" style="color: #262262;">TECH</span>
-              </div>
-              <div class="zy-admin-brand-sub" style="font-size: 0.65rem; font-weight: 700; letter-spacing: 1px; color: #f16623;">ADMIN CONTROL</div>
-            </div>
-          </a>
-          <div class="vr mx-2 d-none d-md-block opacity-25" style="height: 24px;"></div>
-          <div class="d-none d-md-flex align-items-center gap-2">
-            <span class="badge bg-secondary bg-opacity-25 border border-white-10 text-white-50 small">Workspace</span>
-            <span class="text-white-50 small">/</span>
-            <span class="small fw-semibold" id="topbarCurrentTab">Overview</span>
+          <button class="btn btn-sm btn-brand-outline d-lg-none py-1.5 px-2.5" onclick="toggleAdminSidebarMobile()" aria-label="Open Sidebar">
+            <i class="bi bi-list fs-5"></i>
+          </button>
+          <div class="rounded-3 p-2 text-white shadow-sm d-flex align-items-center justify-content-center" style="background: linear-gradient(135deg, #f7941e 0%, #f96706 100%); width: 42px; height: 42px;">
+            <i class="bi bi-grid-fill fs-5"></i>
+          </div>
+          <div>
+            <nav aria-label="Breadcrumb" class="small text-muted" style="font-size: 0.75rem;">
+              <span>Admin</span> <span class="mx-1 text-muted">/</span> <span id="topbarCurrentTab">Overview</span>
+            </nav>
+            <h2 class="h5 fw-bold mb-0 text-dark" style="letter-spacing: -0.02em;">Dashboard Control</h2>
           </div>
         </div>
 
+        <!-- Center Search Bar Matching Image 2 -->
+        <div class="position-relative d-none d-md-block" style="width: 340px;">
+          <i class="bi bi-search position-absolute top-50 start-0 translate-middle-y ms-3 text-muted"></i>
+          <input type="text" class="form-control form-control-sm rounded-pill ps-5 pe-5 py-2 border-secondary border-opacity-25 shadow-sm" placeholder="Search contacts, applicants, posts..." style="font-size: 0.82rem; background: #ffffff;">
+          <span class="position-absolute top-50 end-0 translate-middle-y me-2 badge bg-light text-secondary border small">ctrl K</span>
+        </div>
+
         <div class="d-flex align-items-center gap-2">
-          <!-- Universal Light / Dark Mode Toggle Button -->
-          <button class="zy-theme-toggle-btn shadow-sm" onclick="toggleTheme()" title="Switch Light / Dark Theme">
-            <i class="bi bi-moon-stars-fill text-warning"></i>
-            <span class="theme-label d-none d-sm-inline">Dark Mode</span>
-          </button>
+          <!-- View Site Button Matching Image 2 -->
+          <a href="/" target="_blank" class="btn btn-sm btn-outline-secondary rounded-pill px-3 py-1.5 d-none d-sm-inline-flex align-items-center gap-1.5 shadow-sm" title="View Public Website">
+            <i class="bi bi-box-arrow-up-right"></i> <span>View site</span>
+          </a>
 
           <!-- Quick Post Job Button -->
           <button class="btn btn-sm btn-brand py-1 px-3 d-none d-md-inline-flex align-items-center gap-1" onclick="openNewJobModal()">
@@ -241,23 +330,27 @@
             </div>
           </div>
 
-          <!-- Public Site Link -->
-          <a href="/" target="_blank" class="btn btn-sm btn-brand-outline py-1 px-2.5 d-none d-md-inline-flex" title="Open Public Website">
-            <i class="bi bi-globe me-1"></i> Public Site
-          </a>
+          <!-- Theme Toggle Switcher Button -->
+          <button class="btn btn-sm zy-theme-toggle-btn shadow-sm py-1 px-2.5" onclick="toggleTheme()" title="Switch Light / Dark Theme">
+            <i class="bi bi-moon-stars-fill text-warning"></i>
+            <span class="theme-label fw-semibold d-none d-sm-inline">Dark Mode</span>
+          </button>
 
-          <!-- User Menu Dropdown -->
+          <!-- User Menu Dropdown Matching Image 2 -->
           <div class="dropdown">
-            <button class="btn btn-sm btn-brand py-1 px-2.5 dropdown-toggle d-flex align-items-center gap-1.5" type="button" data-bs-toggle="dropdown" id="userMenuBtn">
-              <div class="rounded-circle d-flex align-items-center justify-content-center text-white fw-bold" style="width: 22px; height: 22px; background: rgba(255,255,255,0.2); font-size: 0.7rem;">
-                <span id="sidebarUserInitials">ZT</span>
+            <button class="btn btn-sm btn-light border py-1.5 px-3 rounded-pill dropdown-toggle d-flex align-items-center gap-2 shadow-sm" type="button" data-bs-toggle="dropdown" id="userMenuBtn">
+              <span class="rounded-circle d-flex align-items-center justify-content-center text-white fw-bold shadow-sm" style="width: 26px; height: 26px; background: linear-gradient(135deg, #f7941e 0%, #1f4693 100%); font-size: 0.72rem;">
+                A
+              </span>
+              <div class="text-start d-none d-md-block" style="line-height: 1.1;">
+                <span class="d-block fw-bold small text-dark" id="sidebarUserName">Admin</span>
+                <small class="text-muted" style="font-size: 0.7rem;" id="userDropdownEmail">admin@zyllotech.com</small>
               </div>
-              <span id="sidebarUserName" class="d-none d-sm-inline">Admin</span>
             </button>
             <ul class="dropdown-menu dropdown-menu-end zy-dropdown-menu">
               <li class="px-3 py-2 border-bottom border-white/10">
                 <small class="text-white-50 d-block">Logged in as</small>
-                <span id="userDropdownEmail" class="fw-bold text-white">...</span>
+                <span class="fw-bold text-white">admin@zyllotech.com</span>
               </li>
               <li>
                 <a class="zy-dropdown-item mt-1" href="/" target="_blank"><i class="bi bi-box-arrow-up-right me-2 text-info"></i> Open Public Site</a>
@@ -270,97 +363,93 @@
               </li>
             </ul>
           </div>
-
-          <!-- Direct Logout Pill -->
-          <button class="btn btn-sm btn-outline-danger py-1 px-2.5 rounded-pill d-inline-flex align-items-center gap-1 shadow-sm" onclick="handleLogout()" title="Log out">
-            <i class="bi bi-box-arrow-right"></i> <span class="d-none d-sm-inline">Log Out</span>
-          </button>
         </div>
+      </header>
+
+      <!-- Horizontal Navigation Tabs Line Matching Image 2 -->
+      <div class="px-3 px-md-4 pt-3 pb-0">
+        <nav class="zy-horizontal-nav-bar mb-2" id="adminHorizontalNav">
+          <!-- 1. Overview -->
+          <button type="button" class="zy-hnav-item active" id="sidebar-nav-overview" onclick="switchDashboardTab('overview')">
+            <i class="bi bi-grid-fill"></i> <span>Overview</span>
+          </button>
+
+          <!-- 2. Enquiries -->
+          <button type="button" class="zy-hnav-item" id="sidebar-nav-inquiries" onclick="switchDashboardTab('inquiries')">
+            <i class="bi bi-envelope-fill"></i> <span>Enquiries</span>
+            <span class="zy-hnav-badge" id="sidebar-badge-inquiries">00</span>
+          </button>
+
+          <!-- 3. Services -->
+          <button type="button" class="zy-hnav-item" id="sidebar-nav-jobs" onclick="switchDashboardTab('jobs')">
+            <i class="bi bi-suit-diamond-fill"></i> <span>Services</span>
+            <span class="zy-hnav-badge" id="sidebar-badge-jobs">00</span>
+          </button>
+
+          <!-- 4. Projects -->
+          <button type="button" class="zy-hnav-item" id="sidebar-nav-projects" onclick="switchDashboardTab('projects')">
+            <i class="bi bi-slash-square-fill"></i> <span>Projects</span>
+          </button>
+
+          <!-- 5. Blog & Content -->
+          <button type="button" class="zy-hnav-item" id="sidebar-nav-blogs" onclick="switchDashboardTab('blogs')">
+            <i class="bi bi-newspaper"></i> <span>Blog &amp; Content</span>
+            <span class="zy-hnav-badge" id="sidebar-badge-blogs">07</span>
+          </button>
+
+          <!-- 6. Email Tracking & SMTP -->
+          <button type="button" class="zy-hnav-item" id="sidebar-nav-emails" onclick="switchDashboardTab('emails')">
+            <i class="bi bi-envelope-check-fill"></i> <span>Emails &amp; SMTP</span>
+            <span class="zy-hnav-badge" id="sidebar-badge-emails">00</span>
+          </button>
+
+          <!-- 7. Careers -->
+          <button type="button" class="zy-hnav-item" id="sidebar-nav-applications" onclick="switchDashboardTab('applications')">
+            <i class="bi bi-person-badge-fill"></i> <span>Careers</span>
+            <span class="zy-hnav-badge" id="sidebar-badge-applications">00</span>
+          </button>
+
+          <!-- 8. Leaves -->
+          <button type="button" class="zy-hnav-item" id="sidebar-nav-leaves" onclick="switchDashboardTab('leaves')">
+            <i class="bi bi-calendar2-check-fill text-warning"></i> <span>Leaves</span>
+            <span class="zy-hnav-badge" id="sidebar-badge-leaves">00</span>
+          </button>
+
+          <!-- 9. Attendance -->
+          <button type="button" class="zy-hnav-item" id="sidebar-nav-attendance" onclick="switchDashboardTab('attendance')">
+            <i class="bi bi-clock-history text-info"></i> <span>Attendance</span>
+            <span class="zy-hnav-badge" id="sidebar-badge-attendance">00</span>
+          </button>
+
+          <div class="zy-hnav-divider"></div>
+
+          <!-- Portals: HR, Client, Employee -->
+          <a href="/dashboard/hr" class="zy-hnav-item zy-hnav-portal" title="Open HR Operations Portal (/dashboard/hr)">
+            <i class="bi bi-person-badge-fill text-warning"></i> <span>HR Portal</span>
+            <i class="bi bi-arrow-up-right small text-white-50"></i>
+          </a>
+
+          <a href="/dashboard/client" class="zy-hnav-item zy-hnav-portal" title="Open Client Project Portal (/dashboard/client)">
+            <i class="bi bi-people-fill text-info"></i> <span>Client Portal</span>
+            <i class="bi bi-arrow-up-right small text-white-50"></i>
+          </a>
+
+          <a href="/dashboard/employee" class="zy-hnav-item zy-hnav-portal" title="Open Employee Workspace (/dashboard/employee)">
+            <i class="bi bi-person-workspace text-success"></i> <span>Employee Portal</span>
+            <i class="bi bi-arrow-up-right small text-white-50"></i>
+          </a>
+
+          <a href="https://mail.zoho.com" target="_blank" rel="noopener noreferrer" class="zy-hnav-item" title="Open Zoho Mail in new tab">
+            <i class="bi bi-envelope-at-fill text-warning"></i> <span>Zoho Mail</span>
+            <i class="bi bi-box-arrow-up-right small text-white-50"></i>
+          </a>
+
+          <a href="/" target="_blank" class="zy-hnav-item" title="Public Website">
+            <i class="bi bi-globe"></i> <span>Website</span>
+            <i class="bi bi-arrow-up-right small text-white-50"></i>
+          </a>
+        </nav>
       </div>
-
-      <!-- Row 2: Horizontal Navigation Line (Scrollable) -->
-      <nav class="zy-horizontal-nav-bar" id="adminHorizontalNav">
-        <!-- 1. Overview -->
-        <button type="button" class="zy-hnav-item active" id="sidebar-nav-overview" onclick="switchDashboardTab('overview')">
-          <i class="bi bi-grid-fill"></i> <span>Overview</span>
-        </button>
-
-        <!-- 2. Enquiries -->
-        <button type="button" class="zy-hnav-item" id="sidebar-nav-inquiries" onclick="switchDashboardTab('inquiries')">
-          <i class="bi bi-envelope-fill"></i> <span>Enquiries</span>
-          <span class="zy-hnav-badge" id="sidebar-badge-inquiries">00</span>
-        </button>
-
-        <!-- 3. Services -->
-        <button type="button" class="zy-hnav-item" id="sidebar-nav-jobs" onclick="switchDashboardTab('jobs')">
-          <i class="bi bi-suit-diamond-fill"></i> <span>Services</span>
-          <span class="zy-hnav-badge" id="sidebar-badge-jobs">00</span>
-        </button>
-
-        <!-- 4. Projects -->
-        <button type="button" class="zy-hnav-item" id="sidebar-nav-projects" onclick="switchDashboardTab('projects')">
-          <i class="bi bi-slash-square-fill"></i> <span>Projects</span>
-        </button>
-
-        <!-- 5. Blog & Content -->
-        <button type="button" class="zy-hnav-item" id="sidebar-nav-blogs" onclick="switchDashboardTab('blogs')">
-          <i class="bi bi-newspaper"></i> <span>Blog & Content</span>
-          <span class="zy-hnav-badge" id="sidebar-badge-blogs">07</span>
-        </button>
-
-        <!-- 6. Email Tracking & SMTP -->
-        <button type="button" class="zy-hnav-item" id="sidebar-nav-emails" onclick="switchDashboardTab('emails')">
-          <i class="bi bi-envelope-check-fill"></i> <span>Emails & SMTP</span>
-          <span class="zy-hnav-badge" id="sidebar-badge-emails">00</span>
-        </button>
-
-        <!-- 7. Careers -->
-        <button type="button" class="zy-hnav-item" id="sidebar-nav-applications" onclick="switchDashboardTab('applications')">
-          <i class="bi bi-person-badge-fill"></i> <span>Careers</span>
-          <span class="zy-hnav-badge" id="sidebar-badge-applications">00</span>
-        </button>
-
-        <!-- 8. Leaves -->
-        <button type="button" class="zy-hnav-item" id="sidebar-nav-leaves" onclick="switchDashboardTab('leaves')">
-          <i class="bi bi-calendar2-check-fill text-warning"></i> <span>Leaves</span>
-          <span class="zy-hnav-badge" id="sidebar-badge-leaves">00</span>
-        </button>
-
-        <!-- 9. Attendance -->
-        <button type="button" class="zy-hnav-item" id="sidebar-nav-attendance" onclick="switchDashboardTab('attendance')">
-          <i class="bi bi-clock-history text-info"></i> <span>Attendance</span>
-          <span class="zy-hnav-badge" id="sidebar-badge-attendance">00</span>
-        </button>
-
-        <div class="zy-hnav-divider"></div>
-
-        <!-- Portals: HR, Client, Employee -->
-        <a href="/dashboard/hr" class="zy-hnav-item zy-hnav-portal" title="Open HR Operations Portal (/dashboard/hr)">
-          <i class="bi bi-person-badge-fill text-warning"></i> <span>HR Portal</span>
-          <i class="bi bi-arrow-up-right small text-white-50"></i>
-        </a>
-
-        <a href="/dashboard/client" class="zy-hnav-item zy-hnav-portal" title="Open Client Project Portal (/dashboard/client)">
-          <i class="bi bi-people-fill text-info"></i> <span>Client Portal</span>
-          <i class="bi bi-arrow-up-right small text-white-50"></i>
-        </a>
-
-        <a href="/dashboard/employee" class="zy-hnav-item zy-hnav-portal" title="Open Employee Workspace (/dashboard/employee)">
-          <i class="bi bi-person-workspace text-success"></i> <span>Employee Portal</span>
-          <i class="bi bi-arrow-up-right small text-white-50"></i>
-        </a>
-
-        <a href="https://mail.zoho.com" target="_blank" rel="noopener noreferrer" class="zy-hnav-item" title="Open Zoho Mail in new tab">
-          <i class="bi bi-envelope-at-fill text-warning"></i> <span>Zoho Mail</span>
-          <i class="bi bi-box-arrow-up-right small text-white-50"></i>
-        </a>
-
-        <a href="/" target="_blank" class="zy-hnav-item" title="Public Website">
-          <i class="bi bi-globe"></i> <span>Website</span>
-          <i class="bi bi-arrow-up-right small text-white-50"></i>
-        </a>
-      </nav>
-    </header>
 
     <!-- Main Workspace Pane (Full Screen Width) -->
     <main class="zy-admin-main-pane">
@@ -1637,6 +1726,10 @@
       if (sidebarName) sidebarName.textContent = user.name || 'Admin';
       const sidebarEmail = document.getElementById('sidebarUserEmail');
       if (sidebarEmail) sidebarEmail.textContent = user.email || 'admin@zyllotech.com';
+      const sidebarAdminName = document.getElementById('sidebarAdminName');
+      if (sidebarAdminName) sidebarAdminName.textContent = user.name || 'Admin Command';
+      const sidebarAdminEmail = document.getElementById('sidebarAdminEmail');
+      if (sidebarAdminEmail) sidebarAdminEmail.textContent = user.email || 'admin@zyllotech.com';
 
       loadStats();
       loadInquiries();
@@ -1735,6 +1828,13 @@
           btn.setAttribute('aria-expanded', 'true');
         }
       });
+    }
+
+    function toggleAdminSidebarMobile() {
+      const sidebar = document.getElementById('adminSidebar');
+      const backdrop = document.getElementById('adminSidebarBackdrop');
+      if (sidebar) sidebar.classList.toggle('show');
+      if (backdrop) backdrop.classList.toggle('show');
     }
 
     function switchDashboardTab(tabName) {
