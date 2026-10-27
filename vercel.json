@@ -1,4 +1,5 @@
 {
+  "$schema": "https://openapi.vercel.sh/vercel.json",
   "version": 2,
   "rewrites": [
     {
@@ -8,10 +9,7 @@
   ],
   "functions": {
     "api/index.js": {
-      "includeFiles": [
-        "public/**",
-        "zyllotech.db"
-      ],
+      "includeFiles": "{public/**,zyllotech.db}",
       "maxDuration": 15
     }
   }
