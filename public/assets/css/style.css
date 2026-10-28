@@ -3651,9 +3651,13 @@ body.portal-active {
 
 .zy-admin-wrapper {
   height: 100vh !important;
-  width: 100vw !important;
+  max-height: 100vh !important;
+  width: 100% !important;
+  max-width: 100% !important;
   display: flex !important;
-  overflow: hidden !important;
+  flex-direction: row !important;
+  overflow-x: clip !important;
+  overflow-y: hidden !important;
   position: relative !important;
 }
 
@@ -3663,15 +3667,12 @@ body.portal-active {
   max-width: 270px !important;
   height: 100vh !important;
   max-height: 100vh !important;
-  position: sticky !important;
-  top: 0 !important;
-  left: 0 !important;
-  bottom: 0 !important;
+  position: relative !important;
   flex-shrink: 0 !important;
   overflow-y: auto !important;
   overflow-x: hidden !important;
   z-index: 1020 !important;
-  border-right: 1px solid #e2e8f0;
+  border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
 }
 
 @media (max-width: 991.98px) {
@@ -6841,6 +6842,12 @@ body[class*="hr"] #zy-page-loader,
 body.theme-dark .zy-admin-main-pane {
   background: #070a13 !important;
   color: #ffffff !important;
+}
+
+@media (max-width: 991.98px) {
+  .zy-admin-main-pane {
+    width: 100% !important;
+  }
 }
 
 /* Topbar matching Image 2 */
