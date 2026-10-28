@@ -2874,23 +2874,23 @@ app.get('/login', (req, res) => {
   res.sendFile(path.join(PUBLIC_DIR, 'login.html'));
 });
 
-// Admin Control Dashboard
-app.get('/dashboard', (req, res) => {
+// Admin Control Dashboard (Accessible via /admin, /dashboard, etc.)
+app.get(['/dashboard', '/dashboard/overview', '/admin', '/admin/', '/admin-portal', '/admin/dashboard', '/admin/overview'], (req, res) => {
   res.sendFile(path.join(PUBLIC_DIR, 'dashboard.html'));
 });
 
-// HR Operations Portal (Accessible via /dashboard/hr and /hr)
-app.get(['/dashboard/hr', '/dashboard/hr-portal', '/dashboard/hr/dashboard', '/hr', '/hr-portal', '/hr/dashboard'], (req, res) => {
+// HR Operations Portal (Accessible via /dashboard/hr, /admin/hr, /hr)
+app.get(['/dashboard/hr', '/admin/hr', '/dashboard/hr-portal', '/dashboard/hr/dashboard', '/hr', '/hr-portal', '/hr/dashboard'], (req, res) => {
   res.sendFile(path.join(PUBLIC_DIR, 'hr.html'));
 });
 
-// Client & Customer Project Portal (Accessible via /dashboard/client and /portal)
-app.get(['/dashboard/client', '/dashboard/client-portal', '/dashboard/portal', '/dashboard/customers', '/portal', '/client-portal'], (req, res) => {
+// Client & Customer Project Portal (Accessible via /dashboard/client, /admin/client, /portal)
+app.get(['/dashboard/client', '/admin/client', '/dashboard/client-portal', '/dashboard/portal', '/dashboard/customers', '/portal', '/client-portal'], (req, res) => {
   res.sendFile(path.join(PUBLIC_DIR, 'portal.html'));
 });
 
-// Staff & Employee Workspace Portal (Accessible via /dashboard/employee and /employee)
-app.get(['/dashboard/employee', '/dashboard/employee-portal', '/dashboard/employee/dashboard', '/employee', '/employee-portal', '/employee/dashboard'], (req, res) => {
+// Staff & Employee Workspace Portal (Accessible via /dashboard/employee, /admin/employee, /employee)
+app.get(['/dashboard/employee', '/admin/employee', '/dashboard/employee-portal', '/dashboard/employee/dashboard', '/employee', '/employee-portal', '/employee/dashboard'], (req, res) => {
   res.sendFile(path.join(PUBLIC_DIR, 'employee.html'));
 });
 
