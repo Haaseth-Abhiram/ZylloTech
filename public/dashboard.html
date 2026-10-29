@@ -5149,13 +5149,12 @@
     }
 
     function downloadUpdatesExcel() {
-      // If a specific project is selected, export for that project; otherwise export all / project 1
-      const projId = (currentTrackerProjectId && currentTrackerProjectId !== 'all') ? currentTrackerProjectId : 1;
+      const projId = currentLoadedProjectId || ((currentTrackerProjectId && currentTrackerProjectId !== 'all') ? currentTrackerProjectId : 1);
       window.location.href = `/api/tracker/projects/${projId}/export/excel`;
     }
 
     function downloadUpdatesPDF() {
-      const projId = (currentTrackerProjectId && currentTrackerProjectId !== 'all') ? currentTrackerProjectId : 1;
+      const projId = currentLoadedProjectId || ((currentTrackerProjectId && currentTrackerProjectId !== 'all') ? currentTrackerProjectId : 1);
       window.open(`/api/tracker/projects/${projId}/export/pdf`, '_blank');
     }
   </script>

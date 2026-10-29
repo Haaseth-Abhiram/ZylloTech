@@ -8,6 +8,7 @@ const db = require('./database');
 const mailer = require('./mailer');
 const auditService = require('./auditService');
 const aiAssistant = require('./aiAssistant');
+const ExcelJS = require('exceljs');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -3425,31 +3426,105 @@ app.get('/api/tracker/doc/:id/download', (req, res) => {
   );
 });
 
-// 7. Export Project Updates in Excel / CSV format
+// 7. Export Project Updates in Excel (.xlsx) format matching exact user layout
 app.get('/api/tracker/projects/:id/export/excel', (req, res) => {
   const projectId = req.params.id;
   db.get(`SELECT * FROM tracker_projects WHERE id = ? OR slug = ?`, [projectId, projectId], (err, project) => {
     if (err || !project) {
       return res.status(404).json({ error: 'Project not found' });
     }
-    db.all(`SELECT * FROM tracker_updates WHERE project_id = ? ORDER BY s_no ASC, id ASC`, [project.id], (err2, updates) => {
+    db.all(`SELECT * FROM tracker_updates WHERE project_id = ? ORDER BY s_no ASC, id ASC`, [project.id], async (err2, updates) => {
       if (err2) {
         return res.status(500).json({ error: 'Failed to fetch updates' });
       }
 
-      // Format as CSV with UTF-8 BOM so Excel opens with proper character encoding and formatting
-      const header = 'S.No,Update Request,Request From,Date of Modification,Status,Remarks\r\n';
-      const rows = (updates || []).map(u => {
-        const clean = str => `"${String(str || '').replace(/"/g, '""')}"`;
-        return `${u.s_no},${clean(u.update_request)},${clean(u.request_from)},${clean(u.date_of_modification)},${clean(u.status)},${clean(u.remarks)}`;
-      }).join('\r\n');
+      try {
+        const workbook = new ExcelJS.Workbook();
+        workbook.creator = 'Zyllo Tech Software Solutions';
+        workbook.created = new Date();
 
-      const csvContent = '\uFEFF' + header + rows;
-      const filename = `${project.slug}_project_updates_${new Date().toISOString().split('T')[0]}.csv`;
+        const sheet = workbook.addWorksheet(project.name || 'Project Updates', {
+          views: [{ showGridLines: true }]
+        });
 
-      res.setHeader('Content-Type', 'text/csv; charset=utf-8');
-      res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
-      res.send(csvContent);
+        // Columns specification matching user image exactly
+        sheet.columns = [
+          { header: 'S.No.', key: 's_no', width: 9 },
+          { header: 'Update Request', key: 'update_request', width: 44 },
+          { header: 'Request Received From', key: 'request_from', width: 34 },
+          { header: 'Date of Modification', key: 'date_of_modification', width: 22 },
+          { header: 'Status', key: 'status', width: 16 },
+          { header: 'Remarks', key: 'remarks', width: 58 }
+        ];
+
+        // Style Header Row (Row 1) - Orange background, Bold white text
+        const headerRow = sheet.getRow(1);
+        headerRow.height = 28;
+        headerRow.eachCell((cell, colNumber) => {
+          cell.fill = {
+            type: 'pattern',
+            pattern: 'solid',
+            fgColor: { argb: 'FFF96706' } // Brand Orange
+          };
+          cell.font = {
+            name: 'Calibri',
+            size: 11,
+            bold: true,
+            color: { argb: 'FFFFFFFF' } // Pure White
+          };
+          cell.alignment = {
+            vertical: 'middle',
+            horizontal: colNumber === 1 ? 'center' : 'left'
+          };
+          cell.border = {
+            top: { style: 'thin', color: { argb: 'FFEA580C' } },
+            bottom: { style: 'medium', color: { argb: 'FFC2410C' } },
+            left: { style: 'thin', color: { argb: 'FFEA580C' } },
+            right: { style: 'thin', color: { argb: 'FFEA580C' } }
+          };
+        });
+
+        // Sample / dynamic updates rendering with cell borders and clean multiline text
+        (updates || []).forEach((u, idx) => {
+          const row = sheet.addRow({
+            s_no: u.s_no || (idx + 1),
+            update_request: u.update_request || '',
+            request_from: u.request_from || '',
+            date_of_modification: u.date_of_modification || '',
+            status: u.status || 'Completed',
+            remarks: u.remarks || ''
+          });
+          row.height = 36;
+          row.eachCell((cell, colNumber) => {
+            cell.font = {
+              name: 'Calibri',
+              size: 11,
+              color: { argb: 'FF0F172A' }
+            };
+            cell.alignment = {
+              vertical: 'top',
+              horizontal: colNumber === 1 ? 'center' : 'left',
+              wrapText: true
+            };
+            cell.border = {
+              top: { style: 'thin', color: { argb: 'FFE2E8F0' } },
+              bottom: { style: 'thin', color: { argb: 'FFE2E8F0' } },
+              left: { style: 'thin', color: { argb: 'FFE2E8F0' } },
+              right: { style: 'thin', color: { argb: 'FFE2E8F0' } }
+            };
+          });
+        });
+
+        const buffer = await workbook.xlsx.writeBuffer();
+        const filename = `${project.slug}_project_updates_${new Date().toISOString().split('T')[0]}.xlsx`;
+
+        res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
+        res.send(buffer);
+      } catch (errExcel) {
+        console.error('Error generating Excel file:', errExcel);
+        res.status(500).json({ error: 'Failed to generate Excel file' });
+      }
     });
   });
 });

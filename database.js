@@ -1746,10 +1746,11 @@ db.serialize(() => {
       `);
 
       const updates = [
-        // Aims
-        [1, 1, 'Implement automated WhatsApp & SMS appointment reminders for outpatient clinics', 'Dr. Al-Mansoor (Chief Medical Officer)', '2026-10-24', 'Completed', 'Deployed to production via Twilio API gateway; tested across 500 simulated appointments.'],
-        [1, 2, 'Add biometric fingerprint authentication for inpatient pharmacy medicine dispensing', 'Farhan Qureshi (Hospital Pharmacy Director)', '2026-10-26', 'Completed', 'Integrated WebAuthn hardware device SDK; verified on Windows & Android hospital tablets.'],
-        [1, 3, 'Export patient discharge summary in NABH accredited digital PDF format', 'Quality & Clinical Compliance Audit Cell', '2026-10-28', 'In Progress', 'Draft layout shared with medical superintendent for clinical sign-off.'],
+        // Aims (matching user spreadsheet screenshot)
+        [1, 1, 'Multi-factor authentication (MFA) & SMS OTP gateway integration', 'Rajesh Varma (Security Lead, AIMS)', '2026-10-24', 'Completed', 'Twilio & WhatsApp OTP microservice deployed and tested with 99.9% delivery rate.'],
+        [1, 2, 'Patient discharge summary PDF export & digital doctor signatures', 'Dr. K. S. Rao (Clinical Director)', '2026-10-26', 'Completed', 'Digital PKI signature module verified; rendering sub-second hospital discharge reports.'],
+        [1, 3, 'Automated billing reconciliation with Tally Prime API sync', 'Finance & Accounts Dept (AIMS)', '2026-10-28', 'In Progress', 'End-to-end webhook sync active in staging environment; scheduled for production deploy on Friday.'],
+        [1, 4, 'Bed occupancy real-time WebSocket dashboard for emergency ward', 'Operations Control Desk', '2026-10-29', 'Testing', 'WebSocket load testing completed up to 5,000 concurrent sockets without connection drops.'],
         // STSLL
         [2, 1, 'Integration of real-time GPS geofencing alerts for cold-chain refrigerated container fleet', 'Capt. Salim (Logistics & Fleet VP)', '2026-10-22', 'Completed', 'MQTT telemetry broker tuned to handle ping intervals under 3 seconds without latency.'],
         [2, 2, 'Automate driver overtime and fuel allowance calculation based on GPS odometer logs', 'STS Accounts & Operations Dept', '2026-10-25', 'Completed', 'Formulas cross-checked with union labour guidelines and verified against test routes.'],
