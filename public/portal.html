@@ -82,18 +82,6 @@
         <span class="zy-sidebar-nav-left"><i class="bi bi-people-fill"></i><span>Job Applications</span></span>
       </a>
 
-      <!-- GROWTH Navigation Group -->
-      <div class="zy-sidebar-group-label">GROWTH</div>
-      <a href="/dashboard#seo" class="zy-sidebar-nav-item text-decoration-none" title="Search Engine Optimization">
-        <span class="zy-sidebar-nav-left"><i class="bi bi-search"></i><span>SEO</span></span>
-      </a>
-      <a href="/dashboard#search-console" class="zy-sidebar-nav-item text-decoration-none" title="Google Search Console Telemetry">
-        <span class="zy-sidebar-nav-left"><i class="bi bi-bar-chart-line-fill"></i><span>Search Console</span></span>
-      </a>
-      <a href="/dashboard#index-coverage" class="zy-sidebar-nav-item text-decoration-none" title="URL Index Coverage & Sitemap">
-        <span class="zy-sidebar-nav-left"><i class="bi bi-globe"></i><span>Index Coverage</span></span>
-      </a>
-
       <!-- WORKSPACES Navigation Group (Image 1 & 2 Reference) -->
       <div class="zy-sidebar-group-label">WORKSPACES</div>
       <a href="/dashboard/hr" class="zy-sidebar-nav-item text-decoration-none" title="HR Talent & People Operations">
@@ -1029,6 +1017,92 @@
     </div>
   </div>
 
+  <!-- ==================== MODAL: UPDATE PROJECT STATUS & PROGRESS ==================== -->
+  <div class="modal fade" id="updateProjectStatusModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content zy-modal-content">
+        <div class="modal-header border-bottom border-white/10">
+          <h5 class="modal-title fw-bold">
+            <i class="bi bi-arrow-repeat text-info me-2"></i>Update Project Status &amp; Progress
+          </h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form id="updateProjectStatusForm" onsubmit="handleStatusSubmit(event)">
+          <div class="modal-body">
+            <input type="hidden" id="update_status_project_id" value="">
+            <div class="p-2.5 rounded-3 mb-3" style="background: rgba(56,189,248,0.1); border: 1px solid rgba(56,189,248,0.25);">
+              <small class="text-white-50 d-block" style="font-size: 0.72rem;">PROJECT</small>
+              <strong class="text-white" id="updateStatusProjectName">-</strong>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label text-white-50 small mb-1">Project Delivery Status *</label>
+              <select class="form-select form-select-sm text-white bg-dark border-secondary" id="update_project_status" onchange="onStatusSelectChange(this.value)">
+                <option value="In Progress">In Progress (Active Sprint)</option>
+                <option value="Testing">Testing / Client UAT</option>
+                <option value="Completed">Completed &amp; Signed Off</option>
+                <option value="On Hold">On Hold / Client Feedback Required</option>
+                <option value="Under Review">Under Review / Code Audit</option>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <div class="d-flex justify-content-between align-items-center mb-1">
+                <label class="form-label text-white-50 small mb-0">Completion Percentage</label>
+                <span class="badge bg-primary fw-bold" id="update_percent_badge">88%</span>
+              </div>
+              <input type="range" class="form-range" min="0" max="100" step="1" id="update_project_percent_slider" oninput="onPercentSliderInput(this.value)">
+              <div class="input-group input-group-sm mt-1">
+                <input type="number" min="0" max="100" class="form-control text-white bg-dark border-secondary" id="update_project_percent" oninput="onPercentNumberInput(this.value)" required>
+                <span class="input-group-text bg-dark border-secondary text-white-50">% Completed</span>
+              </div>
+            </div>
+
+            <div class="mb-2">
+              <label class="form-label text-white-50 small mb-1">Target / Completion Date</label>
+              <input type="text" class="form-control form-control-sm text-white bg-dark border-secondary" id="update_project_date" placeholder="e.g. 2026-11-30 or Q4 2026">
+              <small class="text-white-50" style="font-size: 0.72rem;">Agreed final delivery date for this milestone.</small>
+            </div>
+          </div>
+          <div class="modal-footer border-top border-white/10">
+            <button type="button" class="btn btn-brand-outline" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" id="saveStatusBtn" class="btn btn-primary fw-bold">
+              <i class="bi bi-check2-circle me-1"></i> Update Status
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL: CONFIRM REMOVE PROJECT ==================== -->
+  <div class="modal fade" id="deleteProjectModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content zy-modal-content">
+        <div class="modal-header border-bottom border-white/10">
+          <h5 class="modal-title fw-bold text-danger">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i>Remove Project
+          </h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body text-start">
+          <input type="hidden" id="delete_project_id" value="">
+          <p class="text-white mb-2">Are you sure you want to remove project <strong class="text-warning" id="deleteProjectName">-</strong>?</p>
+          <div class="p-3 rounded-3 mb-2" style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3);">
+            <small class="text-danger-emphasis d-block mb-1"><i class="bi bi-info-circle me-1"></i> Permanent Deletion Warning</small>
+            <span class="text-white-50 small">This action will remove the project from both <strong>Client Workspace</strong> and <strong>Project Tracker</strong>, including its linked milestones and updates.</span>
+          </div>
+        </div>
+        <div class="modal-footer border-top border-white/10">
+          <button type="button" class="btn btn-brand-outline" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" id="confirmDeleteProjectBtn" class="btn btn-danger fw-bold" onclick="executeDeleteProject()">
+            <i class="bi bi-trash3-fill me-1"></i> Confirm Remove
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="/assets/js/main.js"></script>
   <script>
@@ -1250,7 +1324,9 @@
                         <span class="badge bg-success bg-opacity-25 text-success border border-success border-opacity-50 px-2.5 py-1 font-monospace">
                           ${escapeHtml(p.project_value || '₹4,50,000')}
                         </span>
-                        <span class="badge ${badgeClass} border border-white-10 px-2.5 py-1">${escapeHtml(p.status)}</span>
+                        <span class="badge ${badgeClass} border border-white-10 px-2.5 py-1" style="cursor: pointer;" onclick="openUpdateStatusModal(${p.id})" title="Click to update status">
+                          ${escapeHtml(p.status)} <i class="bi bi-pencil-fill ms-1" style="font-size: 0.65rem;"></i>
+                        </span>
                       </div>
                     </div>
 
@@ -1327,11 +1403,19 @@
                     </div>
                   </div>
 
-                  <div class="pt-3 border-top border-white-10 d-flex justify-content-between align-items-center">
+                  <div class="pt-3 border-top border-white-10 d-flex flex-wrap justify-content-between align-items-center gap-2">
                     <small class="text-white-50"><i class="bi bi-calendar3 me-1"></i> Target: <span class="text-white fw-semibold">${escapeHtml(p.completion_date || 'Q4 2026')}</span></small>
-                    <button class="btn btn-sm btn-brand-outline py-1 px-3" onclick="switchClientTab('milestones')">
-                      <i class="bi bi-flag me-1"></i> Milestones
-                    </button>
+                    <div class="d-flex align-items-center gap-1.5 flex-wrap">
+                      <button class="btn btn-sm btn-outline-primary py-1 px-2.5" onclick="openUpdateStatusModal(${p.id})" title="Update Project Status & Delivery %">
+                        <i class="bi bi-arrow-repeat me-1"></i> Update Status
+                      </button>
+                      <button class="btn btn-sm btn-brand-outline py-1 px-2.5" onclick="switchClientTab('milestones')">
+                        <i class="bi bi-flag me-1"></i> Milestones
+                      </button>
+                      <button class="btn btn-sm btn-outline-danger py-1 px-2.5" onclick="openDeleteProjectModal(${p.id}, '${escapeHtml(p.title)}')" title="Remove this project">
+                        <i class="bi bi-trash3 me-1"></i> Remove
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -1493,6 +1577,125 @@
           prog.classList.add('d-none');
           progBar.style.width = '0%';
         }, 500);
+      }
+    }
+
+    // Modal helpers for Update Project Status & Remove Project in Client Workspace
+    function openUpdateStatusModal(projectId) {
+      const p = currentProjects.find(item => item.id == projectId);
+      if (!p) return;
+      document.getElementById('update_status_project_id').value = p.id;
+      document.getElementById('updateStatusProjectName').textContent = p.title + ' (' + p.client + ')';
+      
+      const st = p.status || (p.progress >= 100 ? 'Completed' : 'In Progress');
+      document.getElementById('update_project_status').value = st;
+      document.getElementById('update_project_percent').value = p.progress || 88;
+      document.getElementById('update_project_percent_slider').value = p.progress || 88;
+      document.getElementById('update_percent_badge').textContent = (p.progress || 88) + '%';
+      document.getElementById('update_project_date').value = p.completion_date || 'Q4 2026';
+      
+      const modal = new bootstrap.Modal(document.getElementById('updateProjectStatusModal'));
+      modal.show();
+    }
+
+    function onStatusSelectChange(val) {
+      const numInput = document.getElementById('update_project_percent');
+      const slider = document.getElementById('update_project_percent_slider');
+      const badge = document.getElementById('update_percent_badge');
+      if (val === 'Completed') {
+        numInput.value = 100;
+        slider.value = 100;
+        badge.textContent = '100%';
+      } else if (val === 'Testing') {
+        numInput.value = 88;
+        slider.value = 88;
+        badge.textContent = '88%';
+      } else if (val === 'In Progress' && numInput.value == 100) {
+        numInput.value = 75;
+        slider.value = 75;
+        badge.textContent = '75%';
+      }
+    }
+
+    function onPercentSliderInput(val) {
+      document.getElementById('update_project_percent').value = val;
+      document.getElementById('update_percent_badge').textContent = val + '%';
+    }
+
+    function onPercentNumberInput(val) {
+      let v = Math.min(100, Math.max(0, Number(val) || 0));
+      document.getElementById('update_project_percent_slider').value = v;
+      document.getElementById('update_percent_badge').textContent = v + '%';
+    }
+
+    async function handleStatusSubmit(e) {
+      e.preventDefault();
+      const id = document.getElementById('update_status_project_id').value;
+      const saveBtn = document.getElementById('saveStatusBtn');
+      saveBtn.disabled = true;
+      saveBtn.innerHTML = `<span class="spinner-border spinner-border-sm me-1"></span> Updating...`;
+
+      const payload = {
+        status: document.getElementById('update_project_status').value,
+        completion_percent: Number(document.getElementById('update_project_percent').value),
+        completion_date: document.getElementById('update_project_date').value.trim()
+      };
+
+      try {
+        const res = await fetch(`/api/tracker/projects/${id}/status`, {
+          method: 'PUT',
+          headers: getAuthHeaders(),
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        if (data.success) {
+          const modalInstance = bootstrap.Modal.getInstance(document.getElementById('updateProjectStatusModal'));
+          if (modalInstance) modalInstance.hide();
+          await loadProjects();
+          alert('Project status and delivery progress updated successfully!');
+        } else {
+          alert(data.message || 'Error updating status.');
+        }
+      } catch (err) {
+        alert('Connection error. Please try again.');
+      } finally {
+        saveBtn.disabled = false;
+        saveBtn.innerHTML = `<i class="bi bi-check2-circle me-1"></i> Update Status`;
+      }
+    }
+
+    function openDeleteProjectModal(projectId, projectTitle) {
+      document.getElementById('delete_project_id').value = projectId;
+      document.getElementById('deleteProjectName').textContent = projectTitle;
+      const modal = new bootstrap.Modal(document.getElementById('deleteProjectModal'));
+      modal.show();
+    }
+
+    async function executeDeleteProject() {
+      const id = document.getElementById('delete_project_id').value;
+      const delBtn = document.getElementById('confirmDeleteProjectBtn');
+      delBtn.disabled = true;
+      delBtn.innerHTML = `<span class="spinner-border spinner-border-sm me-1"></span> Removing...`;
+
+      try {
+        const res = await fetch(`/api/tracker/projects/${id}`, {
+          method: 'DELETE',
+          headers: getAuthHeaders()
+        });
+        const data = await res.json();
+        if (data.success) {
+          const modalInstance = bootstrap.Modal.getInstance(document.getElementById('deleteProjectModal'));
+          if (modalInstance) modalInstance.hide();
+          await loadProjects();
+          alert('Project successfully removed from both Client Workspace and Project Tracker.');
+        } else {
+          alert(data.message || 'Error removing project.');
+        }
+      } catch (err) {
+        alert('Connection error. Please try again.');
+      } finally {
+        delBtn.disabled = false;
+        delBtn.innerHTML = `<i class="bi bi-trash3-fill me-1"></i> Confirm Remove`;
       }
     }
 

@@ -1544,9 +1544,15 @@ db.serialize(() => {
       project_value_raw REAL DEFAULT 0,
       currency TEXT DEFAULT 'INR',
       payment_status TEXT,
+      status TEXT DEFAULT 'In Progress',
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     )
   `);
+
+  // Ensure status column exists in tracker_projects for dynamic status updates
+  db.run("ALTER TABLE tracker_projects ADD COLUMN status TEXT DEFAULT 'In Progress'", (err) => {
+    db.run("UPDATE tracker_projects SET status = 'Completed' WHERE is_completed = 1 AND (status IS NULL OR status = 'In Progress')");
+  });
 
   db.run(`
     CREATE TABLE IF NOT EXISTS tracker_sales_docs (
