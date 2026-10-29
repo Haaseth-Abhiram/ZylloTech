@@ -53,6 +53,154 @@ function createFallbackDb() {
       smtp_user: 'haasethabhiram@gmail.com',
       smtp_from: 'haasethabhiram@gmail.com'
     },
+    tracker_projects: [
+      {
+        id: 1,
+        slug: 'aims',
+        name: 'Aims',
+        client_name: 'AIMS Healthcare Global',
+        category: 'Healthcare Cloud Platform & Telemedicine',
+        description: 'Comprehensive hospital management system, doctor-patient consultation suite, HIPAA-compliant EHR, and real-time telemedicine cloud engine.',
+        is_completed: 1,
+        completion_percent: 100,
+        completion_date: 'Completed on Oct 18, 2026',
+        backup_file_name: 'aims_healthcare_v3.4_prod_backup.tar.gz',
+        backup_location: 'AWS S3 Cold Storage (ap-south-1) - Bucket: zyllo-secure-backups/aims/',
+        backup_size: '2.45 GB',
+        backup_last_date: '2026-10-28 02:00 UTC',
+        is_hosted: 1,
+        hosted_status: 'Live in Production',
+        hosted_url: 'https://aims.zyllotech.com',
+        hosting_provider: 'AWS ECS & RDS Multi-AZ (ap-south-1)',
+        ssl_status: 'Active (Let\'s Encrypt 2048-bit RSA)',
+        project_value: '₹42,50,000 INR',
+        project_value_raw: 4250000,
+        currency: 'INR',
+        payment_status: 'Paid in Full (100% Cleared)',
+        created_at: new Date().toISOString()
+      },
+      {
+        id: 2,
+        slug: 'stsll',
+        name: 'STSLL',
+        client_name: 'Smart Transport & Supply Logistics Limited',
+        category: 'Freight & Supply Chain Logistics Engine',
+        description: 'End-to-end multi-modal freight management, real-time GPS fleet telemetry, customs clearance workflow, and automated consignee billing.',
+        is_completed: 1,
+        completion_percent: 100,
+        completion_date: 'Completed on Sep 28, 2026',
+        backup_file_name: 'stsll_freight_core_v2.1_mirror.tar.gz',
+        backup_location: 'GitHub Enterprise Vault + Cloudflare R2 (blr-dc1)',
+        backup_size: '1.85 GB',
+        backup_last_date: '2026-10-27 23:30 UTC',
+        is_hosted: 1,
+        hosted_status: 'Live in Production',
+        hosted_url: 'https://stsl-logistics.zyllotech.com',
+        hosting_provider: 'DigitalOcean Managed Kubernetes (blr1)',
+        ssl_status: 'Active (Cloudflare Universal SSL)',
+        project_value: '₹36,00,000 INR',
+        project_value_raw: 3600000,
+        currency: 'INR',
+        payment_status: '85% Milestone Cleared (Final Retainage in Nov)',
+        created_at: new Date().toISOString()
+      },
+      {
+        id: 3,
+        slug: 'gcoman',
+        name: 'Gc oman',
+        client_name: 'Gulf Commercial & Industrial Solutions Oman',
+        category: 'Industrial B2B Procurement Portal',
+        description: 'High-throughput GCC procurement marketplace, multi-currency invoicing (OMR/AED/USD), customs declaration sync, and supplier bidding engine.',
+        is_completed: 0,
+        completion_percent: 88,
+        completion_date: 'Target: Nov 25, 2026 (UAT Phase)',
+        backup_file_name: 'gcoman_b2b_release_v1.9_uat.zip',
+        backup_location: 'Zyllo Cold Vault & On-Prem Muscat Data Center NAS',
+        backup_size: '3.15 GB',
+        backup_last_date: '2026-10-28 18:45 UTC',
+        is_hosted: 1,
+        hosted_status: 'Live on Client UAT / Staging',
+        hosted_url: 'https://gcoman.zyllotech.com',
+        hosting_provider: 'Oracle Cloud Infrastructure (OCI - Muscat Region)',
+        ssl_status: 'Active (DigiCert EV SSL Wildcard)',
+        project_value: '18,500 OMR (₹40,30,000 INR)',
+        project_value_raw: 4030000,
+        currency: 'OMR',
+        payment_status: 'Advance & Milestone 2 Received (60%)',
+        created_at: new Date().toISOString()
+      },
+      {
+        id: 4,
+        slug: 'techwin',
+        name: 'Techwin',
+        client_name: 'Techwin Enterprise Solutions Global',
+        category: 'Cloud Enterprise Resource Planning (ERP)',
+        description: 'Modular enterprise resource platform encompassing double-entry financial ledger, inventory warehousing, HRMS payroll, and automated tax reporting.',
+        is_completed: 1,
+        completion_percent: 100,
+        completion_date: 'Completed on Oct 05, 2026',
+        backup_file_name: 'techwin_full_suite_prod_v4.2.tar.gz',
+        backup_location: 'AWS Glacier Deep Archive + Wasabi Hot Storage',
+        backup_size: '4.20 GB',
+        backup_last_date: '2026-10-29 01:15 UTC',
+        is_hosted: 1,
+        hosted_status: 'Live in Production',
+        hosted_url: 'https://techwin-erp.zyllotech.com',
+        hosting_provider: 'Google Cloud Platform (GCP - asia-south1)',
+        ssl_status: 'Active (Google Managed SSL Certificate)',
+        project_value: '$58,000 USD (₹48,20,000 INR)',
+        project_value_raw: 4820000,
+        currency: 'USD',
+        payment_status: 'Paid in Full (100% Cleared)',
+        created_at: new Date().toISOString()
+      }
+    ],
+    tracker_sales_docs: [
+      // Aims Docs
+      { id: 1, project_id: 1, doc_type: 'Quotation', doc_number: 'QT-AIMS-2026-01', title: 'Formal Commercial Quotation - AIMS Hospital Platform', issue_date: '2026-06-12', amount: '₹42,50,000 INR', status: 'Approved', file_name: 'Quotation_AIMS_Healthcare_QT-2026-01.pdf', created_at: new Date().toISOString() },
+      { id: 2, project_id: 1, doc_type: 'PO', doc_number: 'PO-AIMS-9801', title: 'Client Purchase Order - Approved & Signed by Medical Board', issue_date: '2026-06-25', amount: '₹42,50,000 INR', status: 'Accepted', file_name: 'Purchase_Order_AIMS_PO-9801.pdf', created_at: new Date().toISOString() },
+      { id: 3, project_id: 1, doc_type: 'SO', doc_number: 'SO-ZYLLO-2026-044', title: 'Internal Sales Order & Delivery Confirmation', issue_date: '2026-07-01', amount: '₹42,50,000 INR', status: 'Confirmed', file_name: 'Sales_Order_AIMS_SO-2026-044.pdf', created_at: new Date().toISOString() },
+      { id: 4, project_id: 1, doc_type: 'Invoice', doc_number: 'INV-ZYLLO-2026-088', title: 'Consolidated Tax Invoice - Final Sign-off Settlement', issue_date: '2026-10-18', amount: '₹42,50,000 INR', status: 'Paid', file_name: 'Tax_Invoice_AIMS_INV-2026-088.pdf', created_at: new Date().toISOString() },
+
+      // STSLL Docs
+      { id: 5, project_id: 2, doc_type: 'Quotation', doc_number: 'QT-STSLL-2026-03', title: 'Commercial Quotation - Smart Logistics Fleet Telemetry', issue_date: '2026-05-18', amount: '₹36,00,000 INR', status: 'Approved', file_name: 'Quotation_STSLL_QT-2026-03.pdf', created_at: new Date().toISOString() },
+      { id: 6, project_id: 2, doc_type: 'PO', doc_number: 'PO-STS-7721', title: 'Client Purchase Order - STS Logistics Fleet Division', issue_date: '2026-06-02', amount: '₹36,00,000 INR', status: 'Accepted', file_name: 'Purchase_Order_STSLL_PO-7721.pdf', created_at: new Date().toISOString() },
+      { id: 7, project_id: 2, doc_type: 'SO', doc_number: 'SO-ZYLLO-2026-031', title: 'Sales Order - Smart Transport Logistics Platform', issue_date: '2026-06-10', amount: '₹36,00,000 INR', status: 'Confirmed', file_name: 'Sales_Order_STSLL_SO-2026-031.pdf', created_at: new Date().toISOString() },
+      { id: 8, project_id: 2, doc_type: 'Invoice', doc_number: 'INV-ZYLLO-2026-079', title: 'Milestone 3 Deployment & UAT Sign-off Invoice', issue_date: '2026-09-30', amount: '₹30,60,000 INR', status: 'Paid', file_name: 'Tax_Invoice_STSLL_INV-2026-079.pdf', created_at: new Date().toISOString() },
+
+      // GC Oman Docs
+      { id: 9, project_id: 3, doc_type: 'Quotation', doc_number: 'QT-GCO-2026-07', title: 'Procurement Quotation - GCC Industrial B2B Marketplace', issue_date: '2026-07-15', amount: '18,500 OMR', status: 'Approved', file_name: 'Quotation_GC_Oman_QT-2026-07.pdf', created_at: new Date().toISOString() },
+      { id: 10, project_id: 3, doc_type: 'PO', doc_number: 'PO-GCO-1104', title: 'Client Purchase Order - GC Oman Directorate of Procurement', issue_date: '2026-07-28', amount: '18,500 OMR', status: 'Accepted', file_name: 'Purchase_Order_GCOman_PO-1104.pdf', created_at: new Date().toISOString() },
+      { id: 11, project_id: 3, doc_type: 'SO', doc_number: 'SO-ZYLLO-2026-058', title: 'Sales Order - GCC Marketplace Development Phase 1 & 2', issue_date: '2026-08-04', amount: '18,500 OMR', status: 'Confirmed', file_name: 'Sales_Order_GCOman_SO-2026-058.pdf', created_at: new Date().toISOString() },
+      { id: 12, project_id: 3, doc_type: 'Invoice', doc_number: 'INV-ZYLLO-2026-092', title: 'Milestone 2 UAT Delivery Invoice (60% Progress)', issue_date: '2026-10-12', amount: '11,100 OMR', status: 'Paid', file_name: 'Tax_Invoice_GCOman_INV-2026-092.pdf', created_at: new Date().toISOString() },
+
+      // Techwin Docs
+      { id: 13, project_id: 4, doc_type: 'Quotation', doc_number: 'QT-TCW-2026-02', title: 'Commercial Proposal - Enterprise ERP & Accounting Suite', issue_date: '2026-04-10', amount: '$58,000 USD', status: 'Approved', file_name: 'Quotation_Techwin_QT-2026-02.pdf', created_at: new Date().toISOString() },
+      { id: 14, project_id: 4, doc_type: 'PO', doc_number: 'PO-TCW-3389', title: 'Corporate Purchase Order - Techwin Board of Directors', issue_date: '2026-04-24', amount: '$58,000 USD', status: 'Accepted', file_name: 'Purchase_Order_Techwin_PO-3389.pdf', created_at: new Date().toISOString() },
+      { id: 15, project_id: 4, doc_type: 'SO', doc_number: 'SO-ZYLLO-2026-019', title: 'Sales Order - Techwin Multi-Cloud ERP Implementation', issue_date: '2026-05-01', amount: '$58,000 USD', status: 'Confirmed', file_name: 'Sales_Order_Techwin_SO-2026-019.pdf', created_at: new Date().toISOString() },
+      { id: 16, project_id: 4, doc_type: 'Invoice', doc_number: 'INV-ZYLLO-2026-083', title: 'Final Handover & Full Production Sign-off Invoice', issue_date: '2026-10-06', amount: '$58,000 USD', status: 'Paid', file_name: 'Tax_Invoice_Techwin_INV-2026-083.pdf', created_at: new Date().toISOString() }
+    ],
+    tracker_updates: [
+      // Aims Updates
+      { id: 1, project_id: 1, s_no: 1, update_request: 'Implement automated WhatsApp & SMS appointment reminders for outpatient clinics', request_from: 'Dr. Al-Mansoor (Chief Medical Officer)', date_of_modification: '2026-10-24', status: 'Completed', remarks: 'Deployed to production via Twilio API gateway; tested across 500 simulated appointments.', created_at: new Date().toISOString() },
+      { id: 2, project_id: 1, s_no: 2, update_request: 'Add biometric fingerprint authentication for inpatient pharmacy medicine dispensing', request_from: 'Farhan Qureshi (Hospital Pharmacy Director)', date_of_modification: '2026-10-26', status: 'Completed', remarks: 'Integrated WebAuthn hardware device SDK; verified on Windows & Android hospital tablets.', created_at: new Date().toISOString() },
+      { id: 3, project_id: 1, s_no: 3, update_request: 'Export patient discharge summary in NABH accredited digital PDF format', request_from: 'Quality & Clinical Compliance Audit Cell', date_of_modification: '2026-10-28', status: 'In Progress', remarks: 'Draft layout shared with medical superintendent for clinical sign-off.', created_at: new Date().toISOString() },
+
+      // STSLL Updates
+      { id: 4, project_id: 2, s_no: 1, update_request: 'Integration of real-time GPS geofencing alerts for cold-chain refrigerated container fleet', request_from: 'Capt. Salim (Logistics & Fleet VP)', date_of_modification: '2026-10-22', status: 'Completed', remarks: 'MQTT telemetry broker tuned to handle ping intervals under 3 seconds without latency.', created_at: new Date().toISOString() },
+      { id: 5, project_id: 2, s_no: 2, update_request: 'Automate driver overtime and fuel allowance calculation based on GPS odometer logs', request_from: 'STS Accounts & Operations Dept', date_of_modification: '2026-10-25', status: 'Completed', remarks: 'Formulas cross-checked with union labour guidelines and verified against test routes.', created_at: new Date().toISOString() },
+      { id: 6, project_id: 2, s_no: 3, update_request: 'Mobile app offline barcode scanner for warehouse loading dock manifests', request_from: 'Rajesh Nair (Terminal Dock Master)', date_of_modification: '2026-10-27', status: 'Under Testing', remarks: 'SQLite local sync queue active on Zebra handheld scanners; testing edge dropoffs.', created_at: new Date().toISOString() },
+
+      // GC Oman Updates
+      { id: 7, project_id: 3, s_no: 1, update_request: 'Bilingual English-Arabic invoice generator with Oman Tax Authority (OTA) QR code', request_from: 'Sultan Al-Harthy (Procurement Committee Chair)', date_of_modification: '2026-10-21', status: 'Completed', remarks: 'TLV base64 QR code compliant with Sultanate of Oman VAT regulations generated.', created_at: new Date().toISOString() },
+      { id: 8, project_id: 3, s_no: 2, update_request: 'Multi-vendor competitive tender countdown timer with live WebSocket price updates', request_from: 'Vendor Management Council', date_of_modification: '2026-10-25', status: 'In Progress', remarks: 'Redis pub/sub implemented; currently load testing with 200 concurrent suppliers.', created_at: new Date().toISOString() },
+      { id: 9, project_id: 3, s_no: 3, update_request: 'Customs declaration status webhook integration with Oman Bayan Customs electronic system', request_from: 'Customs Clearance Operations Team', date_of_modification: '2026-10-28', status: 'Pending Review', remarks: 'Awaiting official sandbox API credentials and SSL client cert from Oman Customs.', created_at: new Date().toISOString() },
+
+      // Techwin Updates
+      { id: 10, project_id: 4, s_no: 1, update_request: 'Role-based multi-tier approval hierarchy for capital expense vouchers exceeding $10,000', request_from: 'Audrey Jenkins (Chief Financial Officer)', date_of_modification: '2026-10-19', status: 'Completed', remarks: 'Configured automated multi-level approval chain with timed email escalation triggers.', created_at: new Date().toISOString() },
+      { id: 11, project_id: 4, s_no: 2, update_request: 'Automated asset depreciation schedule under both US GAAP and IFRS standards', request_from: 'Internal Audit & Corporate Tax Team', date_of_modification: '2026-10-23', status: 'Completed', remarks: 'Dual straight-line & declining balance formulas validated by certified public accountant.', created_at: new Date().toISOString() },
+      { id: 12, project_id: 4, s_no: 3, update_request: 'Single Sign-On (SSO) integration with corporate Microsoft Azure Active Directory / Entra ID', request_from: 'Chief Information Security Officer (CISO)', date_of_modification: '2026-10-27', status: 'Completed', remarks: 'SAML 2.0 and OAuth2 endpoints configured with conditional access and MFA enforcement.', created_at: new Date().toISOString() }
+    ],
     projects: [
       { id: 1, title: 'Enterprise Cloud Migration', client: 'HyperCloud Global', category: 'Cloud Infrastructure', status: 'In Progress', progress: 65, completion_date: 'Nov 2026', created_at: new Date().toISOString() }
     ],
@@ -192,15 +340,32 @@ function createFallbackDb() {
           email: p[0] || '',
           subscribed_at: new Date().toISOString()
         });
-      } else if (/^INSERT\s+INTO\s+job_applications/i.test(s)) {
-        state.job_applications.push({
-          id: state.job_applications.length + 1,
-          role: p[0] || '',
-          name: p[1] || '',
-          email: p[2] || '',
-          phone: p[3] || '',
+      } else if (/^INSERT\s+INTO\s+tracker_updates/i.test(s)) {
+        state.tracker_updates.push({
+          id: state.tracker_updates.length + 1,
+          project_id: Number(p[0]) || 1,
+          s_no: Number(p[1]) || (state.tracker_updates.filter(u => u.project_id === Number(p[0])).length + 1),
+          update_request: p[2] || '',
+          request_from: p[3] || '',
+          date_of_modification: p[4] || new Date().toISOString().split('T')[0],
+          status: p[5] || 'Completed',
+          remarks: p[6] || '',
           created_at: new Date().toISOString()
         });
+      } else if (/^UPDATE\s+tracker_updates/i.test(s)) {
+        // e.g. UPDATE tracker_updates SET update_request = ?, request_from = ?, date_of_modification = ?, status = ?, remarks = ? WHERE id = ?
+        const id = Number(p[p.length - 1]);
+        const updateItem = state.tracker_updates.find(u => u.id === id);
+        if (updateItem) {
+          if (p[0] !== undefined) updateItem.update_request = p[0];
+          if (p[1] !== undefined) updateItem.request_from = p[1];
+          if (p[2] !== undefined) updateItem.date_of_modification = p[2];
+          if (p[3] !== undefined) updateItem.status = p[3];
+          if (p[4] !== undefined) updateItem.remarks = p[4];
+        }
+      } else if (/^DELETE\s+FROM\s+tracker_updates/i.test(s)) {
+        const id = Number(p[0]);
+        state.tracker_updates = state.tracker_updates.filter(u => u.id !== id);
       }
 
       if (typeof callback === 'function') {
@@ -243,6 +408,22 @@ function createFallbackDb() {
       } else if (/FROM\s+settings/i.test(s)) {
         const key = p[0];
         result = key && state.settings[key] ? { key, value: state.settings[key] } : null;
+      } else if (/FROM\s+tracker_projects/i.test(s)) {
+        if (/id\s*=\s*\?/i.test(s) && p[0]) {
+          result = state.tracker_projects.find(pr => pr.id === Number(p[0])) || null;
+        } else if (/slug\s*=\s*\?/i.test(s) && p[0]) {
+          result = state.tracker_projects.find(pr => pr.slug === String(p[0])) || null;
+        } else {
+          result = state.tracker_projects[0] || null;
+        }
+      } else if (/FROM\s+tracker_sales_docs/i.test(s)) {
+        if (/id\s*=\s*\?/i.test(s) && p[0]) {
+          result = state.tracker_sales_docs.find(d => d.id === Number(p[0])) || null;
+        }
+      } else if (/FROM\s+tracker_updates/i.test(s)) {
+        if (/id\s*=\s*\?/i.test(s) && p[0]) {
+          result = state.tracker_updates.find(u => u.id === Number(p[0])) || null;
+        }
       }
 
       if (typeof callback === 'function') {
@@ -275,6 +456,20 @@ function createFallbackDb() {
         results = [...state.email_logs];
       } else if (/FROM\s+admin_alerts/i.test(s)) {
         results = [...state.admin_alerts];
+      } else if (/FROM\s+tracker_projects/i.test(s)) {
+        results = [...state.tracker_projects];
+      } else if (/FROM\s+tracker_sales_docs/i.test(s)) {
+        if (/project_id\s*=\s*\?/i.test(s) && p[0]) {
+          results = state.tracker_sales_docs.filter(d => d.project_id === Number(p[0]));
+        } else {
+          results = [...state.tracker_sales_docs];
+        }
+      } else if (/FROM\s+tracker_updates/i.test(s)) {
+        if (/project_id\s*=\s*\?/i.test(s) && p[0]) {
+          results = state.tracker_updates.filter(u => u.project_id === Number(p[0]));
+        } else {
+          results = [...state.tracker_updates];
+        }
       } else if (/FROM\s+settings/i.test(s)) {
         results = Object.keys(state.settings).map(k => ({ key: k, value: state.settings[k] }));
       }
@@ -1280,6 +1475,253 @@ db.serialize(() => {
       }
     }
   );
+
+  // ==================== PROJECT TRACKER TABLES (Aims, STSLL, GC Oman, Techwin) ====================
+  db.run(`
+    CREATE TABLE IF NOT EXISTS tracker_projects (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      slug TEXT UNIQUE NOT NULL,
+      name TEXT NOT NULL,
+      client_name TEXT NOT NULL,
+      category TEXT NOT NULL,
+      description TEXT,
+      is_completed INTEGER DEFAULT 0,
+      completion_percent INTEGER DEFAULT 100,
+      completion_date TEXT,
+      backup_file_name TEXT,
+      backup_location TEXT,
+      backup_size TEXT,
+      backup_last_date TEXT,
+      is_hosted INTEGER DEFAULT 1,
+      hosted_status TEXT,
+      hosted_url TEXT,
+      hosting_provider TEXT,
+      ssl_status TEXT,
+      project_value TEXT,
+      project_value_raw REAL DEFAULT 0,
+      currency TEXT DEFAULT 'INR',
+      payment_status TEXT,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    )
+  `);
+
+  db.run(`
+    CREATE TABLE IF NOT EXISTS tracker_sales_docs (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      project_id INTEGER NOT NULL,
+      doc_type TEXT NOT NULL,
+      doc_number TEXT NOT NULL,
+      title TEXT NOT NULL,
+      issue_date TEXT,
+      amount TEXT,
+      status TEXT DEFAULT 'Approved',
+      file_name TEXT,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY (project_id) REFERENCES tracker_projects(id) ON DELETE CASCADE
+    )
+  `);
+
+  db.run(`
+    CREATE TABLE IF NOT EXISTS tracker_updates (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      project_id INTEGER NOT NULL,
+      s_no INTEGER,
+      update_request TEXT NOT NULL,
+      request_from TEXT NOT NULL,
+      date_of_modification TEXT NOT NULL,
+      status TEXT DEFAULT 'Completed',
+      remarks TEXT,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY (project_id) REFERENCES tracker_projects(id) ON DELETE CASCADE
+    )
+  `);
+
+  db.run(`CREATE INDEX IF NOT EXISTS idx_tracker_sales_proj ON tracker_sales_docs(project_id)`);
+  db.run(`CREATE INDEX IF NOT EXISTS idx_tracker_updates_proj ON tracker_updates(project_id)`);
+
+  // Seed default tracker projects if empty
+  db.get(`SELECT COUNT(*) AS count FROM tracker_projects`, [], (err, row) => {
+    if (!err && (!row || row.count === 0)) {
+      const projects = [
+        {
+          slug: 'aims',
+          name: 'Aims',
+          client_name: 'AIMS Healthcare Global',
+          category: 'Healthcare Cloud Platform & Telemedicine',
+          description: 'Comprehensive hospital management system, doctor-patient consultation suite, HIPAA-compliant EHR, and real-time telemedicine cloud engine.',
+          is_completed: 1,
+          completion_percent: 100,
+          completion_date: 'Completed on Oct 18, 2026',
+          backup_file_name: 'aims_healthcare_v3.4_prod_backup.tar.gz',
+          backup_location: 'AWS S3 Cold Storage (ap-south-1) - Bucket: zyllo-secure-backups/aims/',
+          backup_size: '2.45 GB',
+          backup_last_date: '2026-10-28 02:00 UTC',
+          is_hosted: 1,
+          hosted_status: 'Live in Production',
+          hosted_url: 'https://aims.zyllotech.com',
+          hosting_provider: 'AWS ECS & RDS Multi-AZ (ap-south-1)',
+          ssl_status: 'Active (Let\'s Encrypt 2048-bit RSA)',
+          project_value: '₹42,50,000 INR',
+          project_value_raw: 4250000,
+          currency: 'INR',
+          payment_status: 'Paid in Full (100% Cleared)'
+        },
+        {
+          slug: 'stsll',
+          name: 'STSLL',
+          client_name: 'Smart Transport & Supply Logistics Limited',
+          category: 'Freight & Supply Chain Logistics Engine',
+          description: 'End-to-end multi-modal freight management, real-time GPS fleet telemetry, customs clearance workflow, and automated consignee billing.',
+          is_completed: 1,
+          completion_percent: 100,
+          completion_date: 'Completed on Sep 28, 2026',
+          backup_file_name: 'stsll_freight_core_v2.1_mirror.tar.gz',
+          backup_location: 'GitHub Enterprise Vault + Cloudflare R2 (blr-dc1)',
+          backup_size: '1.85 GB',
+          backup_last_date: '2026-10-27 23:30 UTC',
+          is_hosted: 1,
+          hosted_status: 'Live in Production',
+          hosted_url: 'https://stsl-logistics.zyllotech.com',
+          hosting_provider: 'DigitalOcean Managed Kubernetes (blr1)',
+          ssl_status: 'Active (Cloudflare Universal SSL)',
+          project_value: '₹36,00,000 INR',
+          project_value_raw: 3600000,
+          currency: 'INR',
+          payment_status: '85% Milestone Cleared (Final Retainage in Nov)'
+        },
+        {
+          slug: 'gcoman',
+          name: 'Gc oman',
+          client_name: 'Gulf Commercial & Industrial Solutions Oman',
+          category: 'Industrial B2B Procurement Portal',
+          description: 'High-throughput GCC procurement marketplace, multi-currency invoicing (OMR/AED/USD), customs declaration sync, and supplier bidding engine.',
+          is_completed: 0,
+          completion_percent: 88,
+          completion_date: 'Target: Nov 25, 2026 (UAT Phase)',
+          backup_file_name: 'gcoman_b2b_release_v1.9_uat.zip',
+          backup_location: 'Zyllo Cold Vault & On-Prem Muscat Data Center NAS',
+          backup_size: '3.15 GB',
+          backup_last_date: '2026-10-28 18:45 UTC',
+          is_hosted: 1,
+          hosted_status: 'Live on Client UAT / Staging',
+          hosted_url: 'https://gcoman.zyllotech.com',
+          hosting_provider: 'Oracle Cloud Infrastructure (OCI - Muscat Region)',
+          ssl_status: 'Active (DigiCert EV SSL Wildcard)',
+          project_value: '18,500 OMR (₹40,30,000 INR)',
+          project_value_raw: 4030000,
+          currency: 'OMR',
+          payment_status: 'Advance & Milestone 2 Received (60%)'
+        },
+        {
+          slug: 'techwin',
+          name: 'Techwin',
+          client_name: 'Techwin Enterprise Solutions Global',
+          category: 'Cloud Enterprise Resource Planning (ERP)',
+          description: 'Modular enterprise resource platform encompassing double-entry financial ledger, inventory warehousing, HRMS payroll, and automated tax reporting.',
+          is_completed: 1,
+          completion_percent: 100,
+          completion_date: 'Completed on Oct 05, 2026',
+          backup_file_name: 'techwin_full_suite_prod_v4.2.tar.gz',
+          backup_location: 'AWS Glacier Deep Archive + Wasabi Hot Storage',
+          backup_size: '4.20 GB',
+          backup_last_date: '2026-10-29 01:15 UTC',
+          is_hosted: 1,
+          hosted_status: 'Live in Production',
+          hosted_url: 'https://techwin-erp.zyllotech.com',
+          hosting_provider: 'Google Cloud Platform (GCP - asia-south1)',
+          ssl_status: 'Active (Google Managed SSL Certificate)',
+          project_value: '$58,000 USD (₹48,20,000 INR)',
+          project_value_raw: 4820000,
+          currency: 'USD',
+          payment_status: 'Paid in Full (100% Cleared)'
+        }
+      ];
+
+      const pStmt = db.prepare(`
+        INSERT INTO tracker_projects (
+          slug, name, client_name, category, description, is_completed, completion_percent,
+          completion_date, backup_file_name, backup_location, backup_size, backup_last_date,
+          is_hosted, hosted_status, hosted_url, hosting_provider, ssl_status,
+          project_value, project_value_raw, currency, payment_status
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      `);
+
+      projects.forEach(p => {
+        pStmt.run(
+          p.slug, p.name, p.client_name, p.category, p.description, p.is_completed, p.completion_percent,
+          p.completion_date, p.backup_file_name, p.backup_location, p.backup_size, p.backup_last_date,
+          p.is_hosted, p.hosted_status, p.hosted_url, p.hosting_provider, p.ssl_status,
+          p.project_value, p.project_value_raw, p.currency, p.payment_status
+        );
+      });
+      pStmt.finalize();
+
+      // Seed Sales Docs
+      const sStmt = db.prepare(`
+        INSERT INTO tracker_sales_docs (project_id, doc_type, doc_number, title, issue_date, amount, status, file_name)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+      `);
+
+      const docs = [
+        // Aims (1)
+        [1, 'Quotation', 'QT-AIMS-2026-01', 'Commercial Quotation - AIMS Hospital Platform', '2026-06-12', '₹42,50,000 INR', 'Approved', 'Quotation_AIMS_Healthcare_QT-2026-01.pdf'],
+        [1, 'PO', 'PO-AIMS-9801', 'Client Purchase Order - Approved & Signed by Medical Board', '2026-06-25', '₹42,50,000 INR', 'Accepted', 'Purchase_Order_AIMS_PO-9801.pdf'],
+        [1, 'SO', 'SO-ZYLLO-2026-044', 'Internal Sales Order & Delivery Confirmation', '2026-07-01', '₹42,50,000 INR', 'Confirmed', 'Sales_Order_AIMS_SO-2026-044.pdf'],
+        [1, 'Invoice', 'INV-ZYLLO-2026-088', 'Consolidated Tax Invoice - Final Sign-off Settlement', '2026-10-18', '₹42,50,000 INR', 'Paid', 'Tax_Invoice_AIMS_INV-2026-088.pdf'],
+        // STSLL (2)
+        [2, 'Quotation', 'QT-STSLL-2026-03', 'Commercial Quotation - Smart Logistics Fleet Telemetry', '2026-05-18', '₹36,00,000 INR', 'Approved', 'Quotation_STSLL_QT-2026-03.pdf'],
+        [2, 'PO', 'PO-STS-7721', 'Client Purchase Order - STS Logistics Fleet Division', '2026-06-02', '₹36,00,000 INR', 'Accepted', 'Purchase_Order_STSLL_PO-7721.pdf'],
+        [2, 'SO', 'SO-ZYLLO-2026-031', 'Sales Order - Smart Transport Logistics Platform', '2026-06-10', '₹36,00,000 INR', 'Confirmed', 'Sales_Order_STSLL_SO-2026-031.pdf'],
+        [2, 'Invoice', 'INV-ZYLLO-2026-079', 'Milestone 3 Deployment & UAT Sign-off Invoice', '2026-09-30', '₹30,60,000 INR', 'Paid', 'Tax_Invoice_STSLL_INV-2026-079.pdf'],
+        // GC Oman (3)
+        [3, 'Quotation', 'QT-GCO-2026-07', 'Procurement Quotation - GCC Industrial B2B Marketplace', '2026-07-15', '18,500 OMR', 'Approved', 'Quotation_GC_Oman_QT-2026-07.pdf'],
+        [3, 'PO', 'PO-GCO-1104', 'Client Purchase Order - GC Oman Directorate of Procurement', '2026-07-28', '18,500 OMR', 'Accepted', 'Purchase_Order_GCOman_PO-1104.pdf'],
+        [3, 'SO', 'SO-ZYLLO-2026-058', 'Sales Order - GCC Marketplace Development Phase 1 & 2', '2026-08-04', '18,500 OMR', 'Confirmed', 'Sales_Order_GCOman_SO-2026-058.pdf'],
+        [3, 'Invoice', 'INV-ZYLLO-2026-092', 'Milestone 2 UAT Delivery Invoice (60% Progress)', '2026-10-12', '11,100 OMR', 'Paid', 'Tax_Invoice_GCOman_INV-2026-092.pdf'],
+        // Techwin (4)
+        [4, 'Quotation', 'QT-TCW-2026-02', 'Commercial Proposal - Enterprise ERP & Accounting Suite', '2026-04-10', '$58,000 USD', 'Approved', 'Quotation_Techwin_QT-2026-02.pdf'],
+        [4, 'PO', 'PO-TCW-3389', 'Corporate Purchase Order - Techwin Board of Directors', '2026-04-24', '$58,000 USD', 'Accepted', 'Purchase_Order_Techwin_PO-3389.pdf'],
+        [4, 'SO', 'SO-ZYLLO-2026-019', 'Sales Order - Techwin Multi-Cloud ERP Implementation', '2026-05-01', '$58,000 USD', 'Confirmed', 'Sales_Order_Techwin_SO-2026-019.pdf'],
+        [4, 'Invoice', 'INV-ZYLLO-2026-083', 'Final Handover & Full Production Sign-off Invoice', '2026-10-06', '$58,000 USD', 'Paid', 'Tax_Invoice_Techwin_INV-2026-083.pdf']
+      ];
+
+      docs.forEach(d => {
+        sStmt.run(...d);
+      });
+      sStmt.finalize();
+
+      // Seed Updates
+      const uStmt = db.prepare(`
+        INSERT INTO tracker_updates (project_id, s_no, update_request, request_from, date_of_modification, status, remarks)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+      `);
+
+      const updates = [
+        // Aims
+        [1, 1, 'Implement automated WhatsApp & SMS appointment reminders for outpatient clinics', 'Dr. Al-Mansoor (Chief Medical Officer)', '2026-10-24', 'Completed', 'Deployed to production via Twilio API gateway; tested across 500 simulated appointments.'],
+        [1, 2, 'Add biometric fingerprint authentication for inpatient pharmacy medicine dispensing', 'Farhan Qureshi (Hospital Pharmacy Director)', '2026-10-26', 'Completed', 'Integrated WebAuthn hardware device SDK; verified on Windows & Android hospital tablets.'],
+        [1, 3, 'Export patient discharge summary in NABH accredited digital PDF format', 'Quality & Clinical Compliance Audit Cell', '2026-10-28', 'In Progress', 'Draft layout shared with medical superintendent for clinical sign-off.'],
+        // STSLL
+        [2, 1, 'Integration of real-time GPS geofencing alerts for cold-chain refrigerated container fleet', 'Capt. Salim (Logistics & Fleet VP)', '2026-10-22', 'Completed', 'MQTT telemetry broker tuned to handle ping intervals under 3 seconds without latency.'],
+        [2, 2, 'Automate driver overtime and fuel allowance calculation based on GPS odometer logs', 'STS Accounts & Operations Dept', '2026-10-25', 'Completed', 'Formulas cross-checked with union labour guidelines and verified against test routes.'],
+        [2, 3, 'Mobile app offline barcode scanner for warehouse loading dock manifests', 'Rajesh Nair (Terminal Dock Master)', '2026-10-27', 'Under Testing', 'SQLite local sync queue active on Zebra handheld scanners; testing edge dropoffs.'],
+        // GC Oman
+        [3, 1, 'Bilingual English-Arabic invoice generator with Oman Tax Authority (OTA) QR code', 'Sultan Al-Harthy (Procurement Committee Chair)', '2026-10-21', 'Completed', 'TLV base64 QR code compliant with Sultanate of Oman VAT regulations generated.'],
+        [3, 2, 'Multi-vendor competitive tender countdown timer with live WebSocket price updates', 'Vendor Management Council', '2026-10-25', 'In Progress', 'Redis pub/sub implemented; currently load testing with 200 concurrent suppliers.'],
+        [3, 3, 'Customs declaration status webhook integration with Oman Bayan Customs electronic system', 'Customs Clearance Operations Team', '2026-10-28', 'Pending Review', 'Awaiting official sandbox API credentials and SSL client cert from Oman Customs.'],
+        // Techwin
+        [4, 1, 'Role-based multi-tier approval hierarchy for capital expense vouchers exceeding $10,000', 'Audrey Jenkins (Chief Financial Officer)', '2026-10-19', 'Completed', 'Configured automated multi-level approval chain with timed email escalation triggers.'],
+        [4, 2, 'Automated asset depreciation schedule under both US GAAP and IFRS standards', 'Internal Audit & Corporate Tax Team', '2026-10-23', 'Completed', 'Dual straight-line & declining balance formulas validated by certified public accountant.'],
+        [4, 3, 'Single Sign-On (SSO) integration with corporate Microsoft Azure Active Directory / Entra ID', 'Chief Information Security Officer (CISO)', '2026-10-27', 'Completed', 'SAML 2.0 and OAuth2 endpoints configured with conditional access and MFA enforcement.']
+      ];
+
+      updates.forEach(u => {
+        uStmt.run(...u);
+      });
+      uStmt.finalize();
+      console.log('✅ Seeded Project Tracker demo data (Aims, STSLL, GC Oman, Techwin).');
+    }
+  });
 });
 
 module.exports = db;

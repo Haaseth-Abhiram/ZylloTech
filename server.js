@@ -2952,6 +2952,429 @@ app.get('/robots.txt', (req, res) => {
   res.sendFile(path.join(PUBLIC_DIR, 'robots.txt'));
 });
 
+// ==================== PROJECT TRACKER API ROUTES ====================
+// 1. Get all tracked projects with update counts
+app.get('/api/tracker/projects', (req, res) => {
+  db.all(`SELECT * FROM tracker_projects ORDER BY id ASC`, [], (err, projects) => {
+    if (err) {
+      return res.status(500).json({ error: 'Failed to fetch tracker projects', details: err.message });
+    }
+    db.all(`SELECT project_id, COUNT(*) AS update_count FROM tracker_updates GROUP BY project_id`, [], (err2, uCounts) => {
+      const updateMap = {};
+      (uCounts || []).forEach(uc => { updateMap[uc.project_id] = uc.update_count; });
+      const enriched = (projects || []).map(p => ({
+        ...p,
+        update_count: updateMap[p.id] || 0
+      }));
+      res.json({ success: true, projects: enriched });
+    });
+  });
+});
+
+// 2. Get single project with its sales documents & updates list
+app.get('/api/tracker/projects/:id', (req, res) => {
+  const projectId = req.params.id;
+  db.get(`SELECT * FROM tracker_projects WHERE id = ? OR slug = ?`, [projectId, projectId], (err, project) => {
+    if (err || !project) {
+      return res.status(404).json({ error: 'Project not found' });
+    }
+    db.all(`SELECT * FROM tracker_sales_docs WHERE project_id = ? ORDER BY id ASC`, [project.id], (errDocs, docs) => {
+      db.all(`SELECT * FROM tracker_updates WHERE project_id = ? ORDER BY s_no ASC, id ASC`, [project.id], (errUpdates, updates) => {
+        res.json({
+          success: true,
+          project,
+          sales_docs: docs || [],
+          updates: updates || []
+        });
+      });
+    });
+  });
+});
+
+// 3. Add a new update request for a project
+app.post('/api/tracker/updates', (req, res) => {
+  const { project_id, update_request, request_from, date_of_modification, status, remarks } = req.body;
+  if (!project_id || !update_request || !request_from) {
+    return res.status(400).json({ error: 'Missing required fields (project_id, update_request, request_from)' });
+  }
+
+  db.get(`SELECT MAX(s_no) as max_sno FROM tracker_updates WHERE project_id = ?`, [project_id], (err, row) => {
+    const nextSNo = (row && row.max_sno ? row.max_sno : 0) + 1;
+    const modDate = date_of_modification || new Date().toISOString().split('T')[0];
+    const stat = status || 'In Progress';
+    const rem = remarks || '';
+
+    db.run(
+      `INSERT INTO tracker_updates (project_id, s_no, update_request, request_from, date_of_modification, status, remarks)
+       VALUES (?, ?, ?, ?, ?, ?, ?)`,
+      [project_id, nextSNo, update_request, request_from, modDate, stat, rem],
+      function(insertErr) {
+        if (insertErr) {
+          return res.status(500).json({ error: 'Failed to record update', details: insertErr.message });
+        }
+        res.status(201).json({
+          success: true,
+          message: 'Update request created successfully',
+          id: this.lastID,
+          update: {
+            id: this.lastID,
+            project_id,
+            s_no: nextSNo,
+            update_request,
+            request_from,
+            date_of_modification: modDate,
+            status: stat,
+            remarks: rem
+          }
+        });
+      }
+    );
+  });
+});
+
+// 4. Update an existing update record
+app.put('/api/tracker/updates/:id', (req, res) => {
+  const updateId = req.params.id;
+  const { update_request, request_from, date_of_modification, status, remarks, s_no } = req.body;
+
+  db.run(
+    `UPDATE tracker_updates SET
+      update_request = COALESCE(?, update_request),
+      request_from = COALESCE(?, request_from),
+      date_of_modification = COALESCE(?, date_of_modification),
+      status = COALESCE(?, status),
+      remarks = COALESCE(?, remarks),
+      s_no = COALESCE(?, s_no)
+     WHERE id = ?`,
+    [update_request, request_from, date_of_modification, status, remarks, s_no, updateId],
+    function(err) {
+      if (err) {
+        return res.status(500).json({ error: 'Failed to save modifications', details: err.message });
+      }
+      res.json({ success: true, message: 'Update request saved successfully' });
+    }
+  );
+});
+
+// 5. Delete an update record
+app.delete('/api/tracker/updates/:id', (req, res) => {
+  const updateId = req.params.id;
+  db.run(`DELETE FROM tracker_updates WHERE id = ?`, [updateId], function(err) {
+    if (err) {
+      return res.status(500).json({ error: 'Failed to delete record', details: err.message });
+    }
+    res.json({ success: true, message: 'Update record removed successfully' });
+  });
+});
+
+// 6. Download / View official formatted Sales Document (Quotation, PO, SO, Invoice)
+app.get('/api/tracker/doc/:id/download', (req, res) => {
+  const docId = req.params.id;
+  db.get(
+    `SELECT d.*, p.name AS project_name, p.client_name, p.currency, p.project_value
+     FROM tracker_sales_docs d
+     JOIN tracker_projects p ON d.project_id = p.id
+     WHERE d.id = ?`,
+    [docId],
+    (err, doc) => {
+      if (err || !doc) {
+        return res.status(404).send('Document not found');
+      }
+
+      const isInvoice = doc.doc_type === 'Invoice';
+      const isPO = doc.doc_type === 'PO';
+      const isSO = doc.doc_type === 'SO';
+      const isQuotation = doc.doc_type === 'Quotation';
+
+      const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>${doc.doc_type} - ${doc.doc_number} | Zyllo Tech Software Solutions</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; color: #1e293b; background: #f8fafc; padding: 40px 20px; }
+    .doc-container { max-width: 840px; margin: 0 auto; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 48px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
+    .header-bar { display: flex; justify-content: space-between; align-items: flex-start; padding-bottom: 24px; border-bottom: 2px solid #0f172a; margin-bottom: 30px; }
+    .brand-title { font-size: 24px; font-weight: 800; color: #0f172a; letter-spacing: -0.02em; }
+    .brand-title span { color: #f96706; }
+    .brand-subtitle { font-size: 11px; font-weight: 700; color: #64748b; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 2px; }
+    .brand-address { font-size: 12px; color: #64748b; line-height: 1.5; margin-top: 8px; }
+    .doc-badge { text-align: right; }
+    .doc-type-pill { display: inline-block; padding: 6px 16px; background: #0f172a; color: #ffffff; font-weight: 800; font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase; border-radius: 6px; }
+    .doc-num { font-size: 18px; font-weight: 700; color: #f96706; margin-top: 6px; }
+    .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 32px; background: #f8fafc; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0; }
+    .meta-col h4 { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: #64748b; margin-bottom: 6px; }
+    .meta-col p { font-size: 14px; font-weight: 600; color: #0f172a; line-height: 1.4; }
+    table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+    th { background: #0f172a; color: #ffffff; text-align: left; padding: 12px 14px; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; }
+    td { padding: 14px; border-bottom: 1px solid #e2e8f0; font-size: 13px; color: #334155; }
+    .text-right { text-align: right; }
+    .total-box { margin-left: auto; width: 320px; border-top: 2px solid #0f172a; padding-top: 14px; margin-bottom: 40px; }
+    .total-row { display: flex; justify-content: space-between; font-size: 14px; padding: 4px 0; color: #475569; }
+    .total-row.grand { font-size: 18px; font-weight: 800; color: #0f172a; border-top: 1px dashed #cbd5e1; margin-top: 8px; padding-top: 8px; }
+    .footer-stamp { display: flex; justify-content: space-between; align-items: flex-end; padding-top: 20px; border-top: 1px solid #e2e8f0; }
+    .stamp-box { border: 2px solid #22c55e; color: #22c55e; padding: 8px 16px; border-radius: 8px; font-weight: 800; font-size: 13px; text-transform: uppercase; letter-spacing: 0.1em; transform: rotate(-5deg); display: inline-block; }
+    .sign-box { text-align: right; font-size: 12px; color: #64748b; }
+    .sign-box .sign-name { font-size: 14px; font-weight: 700; color: #0f172a; margin-top: 40px; border-top: 1px solid #cbd5e1; padding-top: 6px; }
+    .actions-bar { max-width: 840px; margin: 0 auto 20px auto; display: flex; justify-content: flex-end; gap: 12px; }
+    .btn { padding: 10px 20px; border-radius: 6px; font-weight: 600; font-size: 14px; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; }
+    .btn-print { background: #f96706; color: #ffffff; border: none; }
+    .btn-back { background: #e2e8f0; color: #0f172a; border: none; }
+    @media print {
+      body { background: #ffffff; padding: 0; }
+      .actions-bar { display: none; }
+      .doc-container { border: none; box-shadow: none; padding: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="actions-bar">
+    <button class="btn btn-back" onclick="window.close()">Close Window</button>
+    <button class="btn btn-print" onclick="window.print()">Download / Print PDF</button>
+  </div>
+
+  <div class="doc-container">
+    <div class="header-bar">
+      <div>
+        <div class="brand-title"><span>ZYLLO</span> TECH</div>
+        <div class="brand-subtitle">Software Solutions Pvt Ltd</div>
+        <div class="brand-address">
+          CIN: U72900AP2026PTC112345 &bull; GSTIN: 37AAACZ8901D1ZZ<br>
+          Cyber City IT Hub, Guntur &bull; Hyderabad &bull; info@zyllotech.com &bull; www.zyllotech.com
+        </div>
+      </div>
+      <div class="doc-badge">
+        <div class="doc-type-pill">${doc.doc_type}</div>
+        <div class="doc-num">${doc.doc_number}</div>
+        <div style="font-size: 12px; color: #64748b; margin-top: 4px;">Date: ${doc.issue_date}</div>
+      </div>
+    </div>
+
+    <div class="meta-grid">
+      <div class="meta-col">
+        <h4>Issued To (Client)</h4>
+        <p><strong>${doc.client_name}</strong></p>
+        <p>Project: ${doc.project_name}</p>
+        <p>Commercial Reference: ${doc.title}</p>
+      </div>
+      <div class="meta-col">
+        <h4>Document Status</h4>
+        <p>Status: <strong style="color: #22c55e;">${doc.status}</strong></p>
+        <p>File Reference: ${doc.file_name}</p>
+        <p>Authorized Channel: Zyllo Tech Enterprise Delivery Pod</p>
+      </div>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Deliverable Description</th>
+          <th>Milestone / Scope</th>
+          <th>Status</th>
+          <th class="text-right">Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>01</td>
+          <td>
+            <strong>${doc.title}</strong><br>
+            <span style="font-size: 11px; color: #64748b;">Enterprise custom software engineering, architectural blueprints, automated CI/CD pipeline, and SLA warranty.</span>
+          </td>
+          <td>Full Deliverable Scope</td>
+          <td>${doc.status}</td>
+          <td class="text-right"><strong>${doc.amount}</strong></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="total-box">
+      <div class="total-row">
+        <span>Subtotal:</span>
+        <span>${doc.amount}</span>
+      </div>
+      <div class="total-row">
+        <span>Taxes / VAT / GST:</span>
+        <span>Included (18%)</span>
+      </div>
+      <div class="total-row grand">
+        <span>Grand Total:</span>
+        <span style="color: #f96706;">${doc.amount}</span>
+      </div>
+    </div>
+
+    <div class="footer-stamp">
+      <div class="stamp-box">
+        &check; VERIFIED &amp; ${doc.status.toUpperCase()}
+      </div>
+      <div class="sign-box">
+        <div>For <strong>Zyllo Tech Software Solutions Pvt Ltd</strong></div>
+        <div class="sign-name">Haaseth Abhiram &bull; Managing Director</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>`;
+
+      res.setHeader('Content-Type', 'text/html');
+      res.setHeader('Content-Disposition', `inline; filename="${doc.file_name || 'document.pdf'}"`);
+      res.send(html);
+    }
+  );
+});
+
+// 7. Export Project Updates in Excel / CSV format
+app.get('/api/tracker/projects/:id/export/excel', (req, res) => {
+  const projectId = req.params.id;
+  db.get(`SELECT * FROM tracker_projects WHERE id = ? OR slug = ?`, [projectId, projectId], (err, project) => {
+    if (err || !project) {
+      return res.status(404).json({ error: 'Project not found' });
+    }
+    db.all(`SELECT * FROM tracker_updates WHERE project_id = ? ORDER BY s_no ASC, id ASC`, [project.id], (err2, updates) => {
+      if (err2) {
+        return res.status(500).json({ error: 'Failed to fetch updates' });
+      }
+
+      // Format as CSV with UTF-8 BOM so Excel opens with proper character encoding and formatting
+      const header = 'S.No,Update Request,Request From,Date of Modification,Status,Remarks\r\n';
+      const rows = (updates || []).map(u => {
+        const clean = str => `"${String(str || '').replace(/"/g, '""')}"`;
+        return `${u.s_no},${clean(u.update_request)},${clean(u.request_from)},${clean(u.date_of_modification)},${clean(u.status)},${clean(u.remarks)}`;
+      }).join('\r\n');
+
+      const csvContent = '\uFEFF' + header + rows;
+      const filename = `${project.slug}_project_updates_${new Date().toISOString().split('T')[0]}.csv`;
+
+      res.setHeader('Content-Type', 'text/csv; charset=utf-8');
+      res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
+      res.send(csvContent);
+    });
+  });
+});
+
+// 8. Export Project Updates in Print / PDF report format
+app.get('/api/tracker/projects/:id/export/pdf', (req, res) => {
+  const projectId = req.params.id;
+  db.get(`SELECT * FROM tracker_projects WHERE id = ? OR slug = ?`, [projectId, projectId], (err, project) => {
+    if (err || !project) {
+      return res.status(404).send('Project not found');
+    }
+    db.all(`SELECT * FROM tracker_updates WHERE project_id = ? ORDER BY s_no ASC, id ASC`, [project.id], (err2, updates) => {
+      const rowsHtml = (updates || []).map(u => `
+        <tr>
+          <td style="font-weight: 700; text-align: center;">${u.s_no}</td>
+          <td><strong>${u.update_request}</strong></td>
+          <td>${u.request_from}</td>
+          <td>${u.date_of_modification}</td>
+          <td><span class="badge status-${String(u.status || '').toLowerCase().replace(/\s+/g, '-')}">${u.status}</span></td>
+          <td style="color: #64748b; font-size: 12px;">${u.remarks || 'None'}</td>
+        </tr>
+      `).join('');
+
+      const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Project Updates Report - ${project.name} | Zyllo Tech</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; color: #0f172a; padding: 30px; background: #f8fafc; }
+    .report-wrap { max-width: 960px; margin: 0 auto; background: #ffffff; padding: 40px; border-radius: 12px; border: 1px solid #e2e8f0; }
+    .header { display: flex; justify-content: space-between; align-items: flex-start; padding-bottom: 20px; border-bottom: 2px solid #0f172a; margin-bottom: 24px; }
+    .title-box h1 { font-size: 22px; font-weight: 800; color: #0f172a; }
+    .title-box h1 span { color: #f96706; }
+    .title-box p { font-size: 12px; color: #64748b; margin-top: 4px; }
+    .badge-report { background: #0f172a; color: #ffffff; padding: 6px 14px; border-radius: 6px; font-size: 13px; font-weight: 700; text-transform: uppercase; }
+    .meta-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 28px; }
+    .m-card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px 16px; }
+    .m-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: #64748b; font-weight: 700; }
+    .m-val { font-size: 14px; font-weight: 800; color: #0f172a; margin-top: 4px; }
+    table { width: 100%; border-collapse: collapse; margin-bottom: 30px; font-size: 13px; }
+    th { background: #0f172a; color: #ffffff; padding: 10px 12px; text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; }
+    td { padding: 12px; border-bottom: 1px solid #e2e8f0; vertical-align: top; }
+    .badge { display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; text-transform: uppercase; background: #e2e8f0; color: #334155; }
+    .status-completed { background: #dcfce7; color: #166534; }
+    .status-in-progress { background: #dbeafe; color: #1e40af; }
+    .status-under-testing { background: #f3e8ff; color: #6b21a8; }
+    .status-pending-review { background: #fef9c3; color: #854d0e; }
+    .footer { display: flex; justify-content: space-between; align-items: center; padding-top: 20px; border-top: 1px solid #e2e8f0; font-size: 12px; color: #64748b; }
+    .actions { max-width: 960px; margin: 0 auto 16px auto; display: flex; justify-content: flex-end; gap: 10px; }
+    .btn { padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; border: none; }
+    .btn-pdf { background: #ef4444; color: #fff; }
+    @media print {
+      body { background: #fff; padding: 0; }
+      .actions { display: none; }
+      .report-wrap { border: none; padding: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="actions">
+    <button class="btn" onclick="window.close()" style="background:#e2e8f0; color:#0f172a;">Close</button>
+    <button class="btn btn-pdf" onclick="window.print()">Print / Save as PDF</button>
+  </div>
+
+  <div class="report-wrap">
+    <div class="header">
+      <div class="title-box">
+        <h1><span>ZYLLO</span> TECH &bull; Project Tracker Report</h1>
+        <p>Project: <strong>${project.name}</strong> &bull; Client: <strong>${project.client_name}</strong> &bull; Generated: ${new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</p>
+      </div>
+      <div class="badge-report">Updates Log</div>
+    </div>
+
+    <div class="meta-cards">
+      <div class="m-card">
+        <div class="m-label">Completion Status</div>
+        <div class="m-val" style="color: ${project.is_completed ? '#16a34a' : '#d97706'};">${project.is_completed ? 'Completed (100%)' : `${project.completion_percent}% (In Progress)`}</div>
+      </div>
+      <div class="m-card">
+        <div class="m-label">Hosting Status</div>
+        <div class="m-val">${project.hosted_status || 'Hosted Live'}</div>
+      </div>
+      <div class="m-card">
+        <div class="m-label">Backup Archive</div>
+        <div class="m-val">${project.backup_size || '2.4 GB'} (${project.backup_location ? 'Stored' : 'Local'})</div>
+      </div>
+      <div class="m-card">
+        <div class="m-label">Project Value</div>
+        <div class="m-val" style="color: #f96706;">${project.project_value}</div>
+      </div>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 50px; text-align: center;">S.No.</th>
+          <th>Update Request</th>
+          <th>Req Rec From</th>
+          <th>Date of Mod.</th>
+          <th>Status</th>
+          <th>Remarks</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${rowsHtml}
+      </tbody>
+    </table>
+
+    <div class="footer">
+      <div>Zyllo Tech Software Solutions Pvt Ltd &bull; Confidential &bull; Client Tracking Log</div>
+      <div>Page 1 of 1</div>
+    </div>
+  </div>
+</body>
+</html>`;
+
+      res.setHeader('Content-Type', 'text/html');
+      res.setHeader('Content-Disposition', `inline; filename="${project.slug}_updates_report.pdf"`);
+      res.send(html);
+    });
+  });
+});
+
 // Fallback for HTML5 pushState or index
 app.use((req, res) => {
   res.sendFile(path.join(PUBLIC_DIR, 'index.html'));
@@ -2959,7 +3382,7 @@ app.use((req, res) => {
 
 // Start local listener only if not running in serverless / Vercel
 if (!process.env.VERCEL) {
-  app.listen(PORT, () => {
+  const server = app.listen(PORT, '0.0.0.0', () => {
     console.log(`=======================================================`);
     console.log(`🚀 Zyllo Tech Server is running at http://localhost:${PORT}`);
     console.log(`📁 Database: SQLite (zyllotech.db)`);
@@ -2967,6 +3390,9 @@ if (!process.env.VERCEL) {
     console.log(`👤 Client Login: user@zyllotech.com / user123`);
     console.log(`=======================================================`);
   });
+
+  // Keep event loop alive and healthy
+  setInterval(() => {}, 60000);
 }
 
 module.exports = app;

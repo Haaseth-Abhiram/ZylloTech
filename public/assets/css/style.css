@@ -3123,12 +3123,20 @@ body.theme-dark .zy-tilt-card:hover {
 }
 
 .zy-admin-sidebar-header {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 0 8px 18px 8px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  margin-bottom: 20px;
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  padding: 0 8px 18px 8px !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  margin-bottom: 20px !important;
+}
+
+.zy-admin-sidebar-header a {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  text-decoration: none !important;
+  width: 100% !important;
 }
 
 .zy-admin-logo-box {
@@ -3140,14 +3148,15 @@ body.theme-dark .zy-tilt-card:hover {
   align-items: center !important;
   justify-content: center !important;
   flex-shrink: 0 !important;
+  margin-right: 12px !important;
   border: 1.5px solid #cbd5e1 !important;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06) !important;
   padding: 4px !important;
 }
 
 .theme-dark .zy-admin-logo-box {
-  background: #1e293b !important;
-  border-color: rgba(255, 255, 255, 0.15) !important;
+  background: #ffffff !important;
+  border-color: rgba(255, 255, 255, 0.25) !important;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35) !important;
 }
 
@@ -3159,22 +3168,25 @@ body.theme-dark .zy-tilt-card:hover {
 }
 
 .zy-admin-brand-title {
-  font-size: 1.05rem !important;
+  font-size: 1.1rem !important;
   font-weight: 800 !important;
   letter-spacing: 0.04em !important;
-  color: #0f172a !important;
+  color: #ffffff !important;
   line-height: 1.2 !important;
   display: flex !important;
   align-items: center !important;
-  gap: 4px !important;
+  gap: 5px !important;
+  white-space: nowrap !important;
 }
 
 .zy-admin-brand-title .zy-brand-zyllo {
   color: #f16623 !important;
+  font-weight: 800 !important;
 }
 
 .zy-admin-brand-title .zy-brand-tech {
-  color: #262262 !important;
+  color: #ffffff !important;
+  font-weight: 800 !important;
 }
 
 .theme-dark .zy-admin-brand-title {
@@ -3186,19 +3198,21 @@ body.theme-dark .zy-tilt-card:hover {
 }
 
 .theme-dark .zy-admin-brand-title .zy-brand-tech {
-  color: #ff7d3b !important;
+  color: #ffffff !important;
 }
 
 .zy-admin-brand-sub {
-  font-size: 0.68rem !important;
+  font-size: 0.62rem !important;
   font-weight: 700 !important;
-  letter-spacing: 0.06em !important;
-  color: #64748b !important;
+  letter-spacing: 0.08em !important;
+  color: rgba(255, 255, 255, 0.7) !important;
   text-transform: uppercase !important;
+  white-space: nowrap !important;
+  margin-top: 2px !important;
 }
 
 .theme-dark .zy-admin-brand-sub {
-  color: #94a3b8 !important;
+  color: rgba(255, 255, 255, 0.75) !important;
 }
 
 .zy-sidebar-group-label {
@@ -7023,4 +7037,445 @@ body.theme-dark .zy-hnav-badge {
   padding: 4px 10px !important;
   font-size: 0.72rem !important;
   letter-spacing: 0.02em !important;
+}
+
+/* ==================== LOGIN BRAND HEADER ALIGNMENT ==================== */
+.zy-login-brand-link {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 14px !important;
+  text-decoration: none !important;
+  margin-bottom: 0.85rem !important;
+}
+
+.zy-login-brand-logo {
+  width: 50px !important;
+  height: 50px !important;
+  border-radius: 12px !important;
+  background: #ffffff !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 7px !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
+  border: 1px solid rgba(255, 255, 255, 0.4) !important;
+  flex-shrink: 0 !important;
+}
+
+.zy-login-brand-logo img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+  display: block !important;
+}
+
+.zy-login-brand-text {
+  display: flex !important;
+  flex-direction: column !important;
+  text-align: left !important;
+  justify-content: center !important;
+  line-height: 1 !important;
+}
+
+.zy-login-brand-name {
+  font-size: 1.85rem !important;
+  font-weight: 800 !important;
+  text-transform: uppercase !important;
+  letter-spacing: -0.02em !important;
+  line-height: 1 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 5px !important;
+}
+
+.zy-login-brand-sub {
+  font-size: 0.65rem !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.12em !important;
+  color: #64748b !important;
+  margin-top: 5px !important;
+}
+
+body.theme-dark .zy-login-brand-sub {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+/* ==================== PROJECT TRACKER COMPONENT STYLES ==================== */
+.zy-tracker-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+body.theme-dark .zy-tracker-card {
+  background: #111827;
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+}
+
+.zy-tracker-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+  border-color: #f96706;
+}
+
+body.theme-dark .zy-tracker-card:hover {
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.5);
+  border-color: #f96706;
+}
+
+.zy-tracker-card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.zy-tracker-project-title {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.02em;
+  margin: 0;
+  line-height: 1.2;
+}
+
+body.theme-dark .zy-tracker-project-title {
+  color: #ffffff;
+}
+
+.zy-tracker-client {
+  font-size: 0.8rem;
+  color: #64748b;
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+body.theme-dark .zy-tracker-client {
+  color: #94a3b8;
+}
+
+.zy-tracker-status-pill {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.zy-status-completed {
+  background: #dcfce7;
+  color: #15803d;
+  border: 1px solid rgba(34, 197, 94, 0.25);
+}
+
+body.theme-dark .zy-status-completed {
+  background: rgba(34, 197, 94, 0.15);
+  color: #4ade80;
+  border-color: rgba(34, 197, 94, 0.3);
+}
+
+.zy-status-progress {
+  background: #fef3c7;
+  color: #b45309;
+  border: 1px solid rgba(245, 158, 11, 0.25);
+}
+
+body.theme-dark .zy-status-progress {
+  background: rgba(245, 158, 11, 0.15);
+  color: #fbbf24;
+  border-color: rgba(245, 158, 11, 0.3);
+}
+
+.zy-tracker-meta-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  background: #f8fafc;
+  padding: 14px;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  margin-bottom: 20px;
+}
+
+body.theme-dark .zy-tracker-meta-grid {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+.zy-tracker-meta-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.zy-tracker-meta-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #64748b;
+  margin-bottom: 2px;
+}
+
+body.theme-dark .zy-tracker-meta-label {
+  color: #94a3b8;
+}
+
+.zy-tracker-meta-value {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #0f172a;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+body.theme-dark .zy-tracker-meta-value {
+  color: #f1f5f9;
+}
+
+.zy-tracker-buttons-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
+  margin-top: auto;
+}
+
+.zy-btn-tracker {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  padding: 9px 10px;
+  border-radius: 10px;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.zy-btn-tracker-details {
+  background: rgba(38, 34, 98, 0.08);
+  color: #262262;
+  border-color: rgba(38, 34, 98, 0.15);
+}
+
+body.theme-dark .zy-btn-tracker-details {
+  background: rgba(255, 255, 255, 0.08);
+  color: #e2e8f0;
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.zy-btn-tracker-details:hover {
+  background: #262262;
+  color: #ffffff;
+}
+
+body.theme-dark .zy-btn-tracker-details:hover {
+  background: #3b82f6;
+  color: #ffffff;
+}
+
+.zy-btn-tracker-sales {
+  background: rgba(249, 103, 6, 0.08);
+  color: #ea580c;
+  border-color: rgba(249, 103, 6, 0.2);
+}
+
+body.theme-dark .zy-btn-tracker-sales {
+  background: rgba(249, 103, 6, 0.15);
+  color: #ff944d;
+  border-color: rgba(249, 103, 6, 0.3);
+}
+
+.zy-btn-tracker-sales:hover {
+  background: #f96706;
+  color: #ffffff;
+}
+
+.zy-btn-tracker-updates {
+  background: rgba(16, 185, 129, 0.08);
+  color: #059669;
+  border-color: rgba(16, 185, 129, 0.2);
+}
+
+body.theme-dark .zy-btn-tracker-updates {
+  background: rgba(16, 185, 129, 0.15);
+  color: #34d399;
+  border-color: rgba(16, 185, 129, 0.3);
+}
+
+.zy-btn-tracker-updates:hover {
+  background: #10b981;
+  color: #ffffff;
+}
+
+/* ==================== PROJECT UPDATES TABLE STYLES ==================== */
+.zy-updates-table-wrapper {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  margin-top: 24px;
+}
+
+body.theme-dark .zy-updates-table-wrapper {
+  background: #111827;
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+}
+
+.zy-updates-table-header {
+  padding: 20px 24px;
+  border-bottom: 1px solid #e2e8f0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  background: #fafafa;
+}
+
+body.theme-dark .zy-updates-table-header {
+  background: rgba(255, 255, 255, 0.02);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.zy-updates-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 0;
+}
+
+.zy-updates-table thead th {
+  background: #0f172a;
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 14px 18px;
+  border: none;
+  white-space: nowrap;
+}
+
+body.theme-dark .zy-updates-table thead th {
+  background: #0b1222;
+  color: #f1f5f9;
+}
+
+.zy-updates-table tbody td {
+  padding: 16px 18px;
+  border-bottom: 1px solid #f1f5f9;
+  font-size: 0.88rem;
+  color: #334155;
+  vertical-align: middle;
+}
+
+body.theme-dark .zy-updates-table tbody td {
+  border-color: rgba(255, 255, 255, 0.05);
+  color: #cbd5e1;
+}
+
+.zy-updates-table tbody tr:hover {
+  background: #f8fafc;
+}
+
+body.theme-dark .zy-updates-table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.zy-status-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.zy-status-chip-completed {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.zy-status-chip-progress {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.zy-status-chip-testing {
+  background: #f3e8ff;
+  color: #6b21a8;
+}
+
+.zy-status-chip-review {
+  background: #fef9c3;
+  color: #854d0e;
+}
+
+/* Modal styling overrides */
+.zy-tracker-modal .modal-content {
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.zy-tracker-modal .modal-header {
+  border-bottom: 1px solid #e2e8f0;
+  padding: 18px 24px;
+}
+
+body.theme-dark .zy-tracker-modal .modal-header {
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.zy-doc-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  border-radius: 12px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  margin-bottom: 10px;
+  transition: all 0.2s ease;
+}
+
+body.theme-dark .zy-doc-row {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.zy-doc-row:hover {
+  border-color: #f96706;
+  background: #ffffff;
+}
+
+body.theme-dark .zy-doc-row:hover {
+  background: rgba(255, 255, 255, 0.06);
 }
