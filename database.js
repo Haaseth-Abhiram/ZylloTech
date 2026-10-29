@@ -366,6 +366,49 @@ function createFallbackDb() {
       } else if (/^DELETE\s+FROM\s+tracker_updates/i.test(s)) {
         const id = Number(p[0]);
         state.tracker_updates = state.tracker_updates.filter(u => u.id !== id);
+      } else if (/^INSERT\s+INTO\s+tracker_projects/i.test(s)) {
+        const newProjId = state.tracker_projects.length + 1;
+        state.tracker_projects.push({
+          id: newProjId,
+          slug: p[0] || `project-${newProjId}`,
+          name: p[1] || 'New Project',
+          client_name: p[2] || 'Client',
+          category: p[3] || 'Enterprise Software',
+          description: p[4] || '',
+          is_completed: Number(p[5]) || 0,
+          completion_percent: Number(p[6]) || 50,
+          completion_date: p[7] || 'Target: Q4 2026',
+          backup_file_name: p[8] || 'backup.tar.gz',
+          backup_location: p[9] || 'AWS S3 Cold Storage',
+          backup_size: p[10] || '1.0 GB',
+          backup_last_date: p[11] || new Date().toISOString(),
+          is_hosted: Number(p[12]) || 1,
+          hosted_status: p[13] || 'Live in Production',
+          hosted_url: p[14] || 'https://zyllotech.com',
+          hosting_provider: p[15] || 'Cloud Server',
+          ssl_status: p[16] || 'Active',
+          project_value: p[17] || '₹30,00,000 INR',
+          project_value_raw: Number(p[18]) || 3000000,
+          currency: p[19] || 'INR',
+          payment_status: p[20] || 'In Progress',
+          created_at: new Date().toISOString()
+        });
+      } else if (/^UPDATE\s+tracker_projects/i.test(s)) {
+        const id = Number(p[p.length - 1]);
+        const proj = state.tracker_projects.find(pr => pr.id === id);
+        if (proj) {
+          if (/hosted_status/i.test(s)) {
+            proj.hosted_status = p[0] || proj.hosted_status;
+            proj.hosted_url = p[1] || proj.hosted_url;
+            proj.hosting_provider = p[2] || proj.hosting_provider;
+            proj.ssl_status = p[3] || proj.ssl_status;
+          } else if (/backup_file_name/i.test(s)) {
+            proj.backup_file_name = p[0] || proj.backup_file_name;
+            proj.backup_size = p[1] || proj.backup_size;
+            proj.backup_location = p[2] || proj.backup_location;
+            proj.backup_last_date = p[3] || new Date().toISOString();
+          }
+        }
       }
 
       if (typeof callback === 'function') {

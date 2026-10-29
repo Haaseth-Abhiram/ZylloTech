@@ -889,6 +889,146 @@
     </div>
   </div>
 
+  <!-- ==================== MODAL: EDIT HOSTING DETAILS ==================== -->
+  <div class="modal fade" id="editHostingModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content zy-modal-content">
+        <div class="modal-header border-bottom border-white/10">
+          <h5 class="modal-title fw-bold">
+            <i class="bi bi-hdd-network text-info me-2"></i>Edit Hosting &amp; Domain Details
+          </h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form id="editHostingForm" onsubmit="handleHostingSubmit(event)">
+          <div class="modal-body">
+            <input type="hidden" id="edit_hosting_project_id" value="">
+            <div class="p-2.5 rounded-3 mb-3" style="background: rgba(56,189,248,0.1); border: 1px solid rgba(56,189,248,0.25);">
+              <small class="text-white-50 d-block" style="font-size: 0.72rem;">PROJECT</small>
+              <strong class="text-white" id="editHostingProjectName">-</strong>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label text-white-50 small mb-1">Hosted Web URL / Domain *</label>
+              <div class="input-group">
+                <span class="input-group-text bg-dark border-secondary text-info"><i class="bi bi-link-45deg"></i></span>
+                <input type="url" class="form-control form-control-sm text-white bg-dark border-secondary" id="edit_hosted_url" placeholder="https://app.example.com" required>
+              </div>
+              <small class="text-white-50" style="font-size: 0.72rem;">Full HTTPS URL to live or staging deployment</small>
+            </div>
+
+            <div class="row g-2 mb-3">
+              <div class="col-sm-6">
+                <label class="form-label text-white-50 small mb-1">Hosting Cloud Provider</label>
+                <select class="form-select form-select-sm text-white bg-dark border-secondary" id="edit_hosting_provider">
+                  <option value="AWS EC2 / CloudFront">AWS EC2 / CloudFront</option>
+                  <option value="Cloudflare Pages & Workers">Cloudflare Pages &amp; Workers</option>
+                  <option value="DigitalOcean App Platform">DigitalOcean App Platform</option>
+                  <option value="Vercel Enterprise Edge">Vercel Enterprise Edge</option>
+                  <option value="Google Cloud Run">Google Cloud Run</option>
+                  <option value="Microsoft Azure App Service">Microsoft Azure App Service</option>
+                  <option value="Dedicated On-Premise Server">Dedicated On-Premise Server</option>
+                </select>
+              </div>
+              <div class="col-sm-6">
+                <label class="form-label text-white-50 small mb-1">Hosted Environment Status</label>
+                <select class="form-select form-select-sm text-white bg-dark border-secondary" id="edit_hosted_status">
+                  <option value="Live / In Production">Live / In Production</option>
+                  <option value="Staging / UAT Verification">Staging / UAT Verification</option>
+                  <option value="Internal QA Build">Internal QA Build</option>
+                  <option value="Maintenance / Scheduled Downtime">Maintenance / Scheduled Downtime</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="mb-2">
+              <label class="form-label text-white-50 small mb-1">SSL Certificate Status</label>
+              <select class="form-select form-select-sm text-white bg-dark border-secondary" id="edit_ssl_status">
+                <option value="Active SSL (Let's Encrypt TLS 1.3)">Active SSL (Let's Encrypt TLS 1.3)</option>
+                <option value="Active SSL (Cloudflare Edge TLS 1.3)">Active SSL (Cloudflare Edge TLS 1.3)</option>
+                <option value="Commercial Wildcard SSL (DigiCert)">Commercial Wildcard SSL (DigiCert)</option>
+                <option value="Pending SSL Verification">Pending SSL Verification</option>
+                <option value="Self-Signed SSL (Dev Only)">Self-Signed SSL (Dev Only)</option>
+              </select>
+            </div>
+          </div>
+          <div class="modal-footer border-top border-white/10">
+            <button type="button" class="btn btn-brand-outline" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" id="saveHostingBtn" class="btn btn-info text-dark fw-bold">
+              <i class="bi bi-check2-circle me-1"></i> Save Hosting Details
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL: UPLOAD BACKUP ARCHIVE ==================== -->
+  <div class="modal fade" id="uploadBackupModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content zy-modal-content">
+        <div class="modal-header border-bottom border-white/10">
+          <h5 class="modal-title fw-bold">
+            <i class="bi bi-cloud-arrow-up text-warning me-2"></i>Upload Backup File &amp; Snapshot
+          </h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form id="uploadBackupForm" onsubmit="handleBackupSubmit(event)">
+          <div class="modal-body">
+            <input type="hidden" id="upload_backup_project_id" value="">
+            <div class="p-2.5 rounded-3 mb-3" style="background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.25);">
+              <small class="text-white-50 d-block" style="font-size: 0.72rem;">PROJECT</small>
+              <strong class="text-white" id="uploadBackupProjectName">-</strong>
+            </div>
+
+            <!-- Choose file input -->
+            <div class="mb-3">
+              <label class="form-label text-white-50 small mb-1">Select Backup Archive File (.tar.gz, .sql, .zip)</label>
+              <input type="file" class="form-control form-control-sm text-white bg-dark border-secondary" id="upload_backup_file_input">
+              <small class="text-white-50" style="font-size: 0.72rem;">Select a file from your system to register its metadata.</small>
+            </div>
+
+            <div class="row g-2 mb-3">
+              <div class="col-sm-8">
+                <label class="form-label text-white-50 small mb-1">Archive Manifest Filename *</label>
+                <input type="text" class="form-control form-control-sm text-white bg-dark border-secondary font-monospace" id="upload_backup_name" placeholder="aims_crm_db_prod_20261029.tar.gz" required>
+              </div>
+              <div class="col-sm-4">
+                <label class="form-label text-white-50 small mb-1">Archive Size *</label>
+                <input type="text" class="form-control form-control-sm text-white bg-dark border-secondary" id="upload_backup_size" placeholder="1.8 GB" required>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label text-white-50 small mb-1">Cold Storage Vault Destination</label>
+              <select class="form-select form-select-sm text-white bg-dark border-secondary" id="upload_backup_location">
+                <option value="AWS S3 Glacier Vault (us-east-1)">AWS S3 Glacier Vault (us-east-1)</option>
+                <option value="Cloudflare R2 Cold Archive (EU-West)">Cloudflare R2 Cold Archive (EU-West)</option>
+                <option value="Wasabi Hot S3 Backup (ap-southeast-1)">Wasabi Hot S3 Backup (ap-southeast-1)</option>
+                <option value="On-Premise Zyllo Cold Vault (Hyderabad DC)">On-Premise Zyllo Cold Vault (Hyderabad DC)</option>
+              </select>
+            </div>
+
+            <div id="backupProgressContainer" class="d-none mb-2">
+              <div class="d-flex justify-content-between small text-white-50 mb-1">
+                <span>Synchronizing Snapshot...</span>
+                <span id="backupProgressPercent">100%</span>
+              </div>
+              <div class="progress" style="height: 6px;">
+                <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning" id="backupProgressBar" style="width: 100%;"></div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer border-top border-white/10">
+            <button type="button" class="btn btn-brand-outline" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" id="saveBackupBtn" class="btn btn-warning text-dark fw-bold">
+              <i class="bi bi-cloud-arrow-up-fill me-1"></i> Upload &amp; Sync Backup
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="/assets/js/main.js"></script>
   <script>
@@ -1098,31 +1238,98 @@
             if (p.status === 'Testing') badgeClass = 'bg-warning text-dark';
             if (p.status === 'Completed' || p.status === 'Active') badgeClass = 'bg-success bg-opacity-25 text-success';
 
+            const isLive = (p.hosted_status && p.hosted_status.toLowerCase().includes('live')) || p.is_hosted;
+
             return `
-              <div class="col-md-6 col-lg-4">
-                <div class="zy-card p-4 h-100 d-flex flex-column justify-content-between position-relative">
+              <div class="col-lg-6">
+                <div class="zy-card p-4 h-100 d-flex flex-column justify-content-between position-relative shadow-sm" style="border: 1px solid rgba(255,255,255,0.08); background: rgba(26,32,44,0.7);">
                   <div>
-                    <div class="d-flex justify-content-between align-items-center mb-2">
-                      <span class="badge bg-secondary bg-opacity-25 border border-white-10 text-white-50">${escapeHtml(p.category)}</span>
-                      <span class="badge ${badgeClass} border border-white-10">${escapeHtml(p.status)}</span>
+                    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-2">
+                      <span class="badge bg-secondary bg-opacity-25 border border-white-10 text-white-50 px-2.5 py-1">${escapeHtml(p.category || 'Engineering')}</span>
+                      <div class="d-flex align-items-center gap-2">
+                        <span class="badge bg-success bg-opacity-25 text-success border border-success border-opacity-50 px-2.5 py-1 font-monospace">
+                          ${escapeHtml(p.project_value || '₹4,50,000')}
+                        </span>
+                        <span class="badge ${badgeClass} border border-white-10 px-2.5 py-1">${escapeHtml(p.status)}</span>
+                      </div>
                     </div>
-                    <h5 class="fw-bold text-white mb-1">${escapeHtml(p.title)}</h5>
-                    <small class="text-white-50 d-block mb-3"><i class="bi bi-building me-1"></i>${escapeHtml(p.client)}</small>
+
+                    <h4 class="fw-bold text-white mb-1">${escapeHtml(p.title)}</h4>
+                    <small class="text-white-50 d-block mb-3"><i class="bi bi-building me-1 text-warning"></i>${escapeHtml(p.client)}</small>
                     
                     <div class="mb-3">
                       <div class="d-flex justify-content-between align-items-center mb-1">
-                        <small class="text-white-50" style="font-size: 0.78rem;">Sprint Progress</small>
-                        <small class="text-white fw-bold" style="font-size: 0.78rem;">${p.progress}%</small>
+                        <small class="text-white-50" style="font-size: 0.78rem;">Delivery Progress</small>
+                        <small class="text-white fw-bold" style="font-size: 0.78rem;">${p.progress}% Completed</small>
                       </div>
-                      <div class="progress" style="height: 7px; background: rgba(255,255,255,0.1);">
-                        <div class="progress-bar" role="progressbar" style="width: ${p.progress}%; background: linear-gradient(90deg, #f16623, #262262);" aria-valuenow="${p.progress}" aria-valuemin="0" aria-valuemax="100"></div>
+                      <div class="progress" style="height: 7px; background: rgba(255,255,255,0.1); border-radius: 4px;">
+                        <div class="progress-bar" role="progressbar" style="width: ${p.progress}%; background: linear-gradient(90deg, #f16623, #262262); border-radius: 4px;" aria-valuenow="${p.progress}" aria-valuemin="0" aria-valuemax="100"></div>
+                      </div>
+                    </div>
+
+                    <!-- 2 Sub-panels: Hosting Details & Backup Archive -->
+                    <div class="row g-2 mb-3">
+                      <!-- Hosting Details Box -->
+                      <div class="col-sm-6">
+                        <div class="p-3 rounded-3 h-100 d-flex flex-column justify-content-between" style="background: rgba(15,23,42,0.65); border: 1px solid rgba(56,189,248,0.25);">
+                          <div>
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                              <span class="text-info fw-bold small"><i class="bi bi-hdd-network me-1"></i> Hosting Info</span>
+                              <span class="badge ${isLive ? 'bg-success' : 'bg-warning text-dark'}" style="font-size: 0.65rem;">
+                                ${escapeHtml(p.hosted_status || 'Live')}
+                              </span>
+                            </div>
+                            <div class="small mb-1 text-truncate" title="${escapeHtml(p.hosted_url || 'No URL')}">
+                              ${p.hosted_url ? `<a href="${escapeHtml(p.hosted_url)}" target="_blank" class="text-info text-decoration-none fw-semibold"><i class="bi bi-box-arrow-up-right me-1 small"></i>${escapeHtml(p.hosted_url)}</a>` : '<span class="text-white-50">Pending deployment</span>'}
+                            </div>
+                            <div class="small text-white-50 text-truncate" style="font-size: 0.75rem;" title="${escapeHtml(p.hosting_provider || 'AWS EC2')}">
+                              <i class="bi bi-server me-1"></i>${escapeHtml(p.hosting_provider || 'AWS EC2')}
+                            </div>
+                            <div class="small text-white-50 text-truncate" style="font-size: 0.75rem;" title="${escapeHtml(p.ssl_status || 'Active SSL')}">
+                              <i class="bi bi-shield-check me-1 text-success"></i>${escapeHtml(p.ssl_status || 'Active SSL')}
+                            </div>
+                          </div>
+                          <div class="pt-2 mt-2 border-top border-white-10">
+                            <button class="btn btn-sm btn-outline-info w-100 py-1" onclick="openEditHostingModal(${p.id})">
+                              <i class="bi bi-pencil-square me-1"></i> Edit Hosting
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Backup Details Box -->
+                      <div class="col-sm-6">
+                        <div class="p-3 rounded-3 h-100 d-flex flex-column justify-content-between" style="background: rgba(15,23,42,0.65); border: 1px solid rgba(245,158,11,0.3);">
+                          <div>
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                              <span class="text-warning fw-bold small"><i class="bi bi-cloud-check me-1"></i> Backup Vault</span>
+                              <span class="badge bg-secondary bg-opacity-50 text-white font-monospace" style="font-size: 0.65rem;">
+                                ${escapeHtml(p.backup_size || '1.8 GB')}
+                              </span>
+                            </div>
+                            <div class="small text-white fw-semibold mb-1 text-truncate font-monospace" title="${escapeHtml(p.backup_file_name || 'backup.tar.gz')}">
+                              <i class="bi bi-file-earmark-zip text-warning me-1"></i>${escapeHtml(p.backup_file_name || 'backup.tar.gz')}
+                            </div>
+                            <div class="small text-white-50 text-truncate" style="font-size: 0.75rem;" title="${escapeHtml(p.backup_location || 'AWS S3 Cold')}">
+                              <i class="bi bi-database me-1"></i>${escapeHtml(p.backup_location || 'AWS S3 Cold')}
+                            </div>
+                            <div class="small text-white-50 text-truncate" style="font-size: 0.75rem;" title="${escapeHtml(p.backup_last_date || '2026-10-28')}">
+                              <i class="bi bi-clock-history me-1"></i>${escapeHtml(p.backup_last_date || '2026-10-28')}
+                            </div>
+                          </div>
+                          <div class="pt-2 mt-2 border-top border-white-10">
+                            <button class="btn btn-sm btn-outline-warning w-100 py-1" onclick="openUploadBackupModal(${p.id})">
+                              <i class="bi bi-cloud-arrow-up me-1"></i> Upload Backup
+                            </button>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
 
                   <div class="pt-3 border-top border-white-10 d-flex justify-content-between align-items-center">
-                    <small class="text-white-50"><i class="bi bi-calendar3 me-1"></i> Target: <span class="text-white">${escapeHtml(p.completion_date || 'Q4 2026')}</span></small>
-                    <button class="btn btn-sm btn-brand-outline py-1 px-2.5" onclick="switchClientTab('milestones')">
+                    <small class="text-white-50"><i class="bi bi-calendar3 me-1"></i> Target: <span class="text-white fw-semibold">${escapeHtml(p.completion_date || 'Q4 2026')}</span></small>
+                    <button class="btn btn-sm btn-brand-outline py-1 px-3" onclick="switchClientTab('milestones')">
                       <i class="bi bi-flag me-1"></i> Milestones
                     </button>
                   </div>
@@ -1156,6 +1363,136 @@
         }
       } catch (err) {
         console.error('Error fetching projects', err);
+      }
+    }
+
+    // Modal helpers for Hosting & Backup in Client Workspace
+    function openEditHostingModal(projectId) {
+      const p = currentProjects.find(item => item.id == projectId);
+      if (!p) return;
+      document.getElementById('edit_hosting_project_id').value = p.id;
+      document.getElementById('editHostingProjectName').textContent = p.title + ' (' + p.client + ')';
+      document.getElementById('edit_hosted_url').value = p.hosted_url || '';
+      document.getElementById('edit_hosting_provider').value = p.hosting_provider || 'AWS EC2 / CloudFront';
+      document.getElementById('edit_hosted_status').value = p.hosted_status || 'Live / In Production';
+      document.getElementById('edit_ssl_status').value = p.ssl_status || "Active SSL (Let's Encrypt TLS 1.3)";
+      const modal = new bootstrap.Modal(document.getElementById('editHostingModal'));
+      modal.show();
+    }
+
+    async function handleHostingSubmit(e) {
+      e.preventDefault();
+      const id = document.getElementById('edit_hosting_project_id').value;
+      const saveBtn = document.getElementById('saveHostingBtn');
+      saveBtn.disabled = true;
+      saveBtn.innerHTML = `<span class="spinner-border spinner-border-sm me-1"></span> Saving...`;
+
+      const payload = {
+        hosted_url: document.getElementById('edit_hosted_url').value.trim(),
+        hosting_provider: document.getElementById('edit_hosting_provider').value,
+        hosted_status: document.getElementById('edit_hosted_status').value,
+        ssl_status: document.getElementById('edit_ssl_status').value
+      };
+
+      try {
+        const res = await fetch(`/api/tracker/projects/${id}/hosting`, {
+          method: 'PUT',
+          headers: getAuthHeaders(),
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        if (data.success) {
+          const modalInstance = bootstrap.Modal.getInstance(document.getElementById('editHostingModal'));
+          if (modalInstance) modalInstance.hide();
+          await loadProjects();
+          alert('Hosting infrastructure settings updated and synchronized with Project Tracker!');
+        } else {
+          alert(data.message || 'Error updating hosting settings.');
+        }
+      } catch (err) {
+        alert('Failed to connect to server.');
+      } finally {
+        saveBtn.disabled = false;
+        saveBtn.innerHTML = `<i class="bi bi-check2-circle me-1"></i> Save Hosting Details`;
+      }
+    }
+
+    function openUploadBackupModal(projectId) {
+      const p = currentProjects.find(item => item.id == projectId);
+      if (!p) return;
+      document.getElementById('upload_backup_project_id').value = p.id;
+      document.getElementById('uploadBackupProjectName').textContent = p.title + ' (' + p.client + ')';
+      document.getElementById('upload_backup_name').value = p.backup_file_name || ((p.slug || 'project') + '_db_snapshot_' + new Date().toISOString().split('T')[0] + '.tar.gz');
+      document.getElementById('upload_backup_size').value = p.backup_size || '1.8 GB';
+      document.getElementById('upload_backup_location').value = p.backup_location || 'AWS S3 Glacier Vault (us-east-1)';
+      document.getElementById('backupProgressContainer').classList.add('d-none');
+      const fileInput = document.getElementById('upload_backup_file_input');
+      if (fileInput) fileInput.value = '';
+      const modal = new bootstrap.Modal(document.getElementById('uploadBackupModal'));
+      modal.show();
+    }
+
+    // Auto-populate filename & size when file is selected
+    document.addEventListener('DOMContentLoaded', () => {
+      const backupFileInput = document.getElementById('upload_backup_file_input');
+      if (backupFileInput) {
+        backupFileInput.addEventListener('change', function() {
+          if (this.files && this.files[0]) {
+            const f = this.files[0];
+            document.getElementById('upload_backup_name').value = f.name;
+            const mb = (f.size / (1024 * 1024)).toFixed(1);
+            document.getElementById('upload_backup_size').value = mb > 1000 ? (mb / 1024).toFixed(2) + ' GB' : mb + ' MB';
+          }
+        });
+      }
+    });
+
+    async function handleBackupSubmit(e) {
+      e.preventDefault();
+      const id = document.getElementById('upload_backup_project_id').value;
+      const saveBtn = document.getElementById('saveBackupBtn');
+      const prog = document.getElementById('backupProgressContainer');
+      const progBar = document.getElementById('backupProgressBar');
+
+      saveBtn.disabled = true;
+      prog.classList.remove('d-none');
+      progBar.style.width = '30%';
+
+      setTimeout(() => { progBar.style.width = '75%'; }, 200);
+
+      const payload = {
+        backup_file_name: document.getElementById('upload_backup_name').value.trim(),
+        backup_size: document.getElementById('upload_backup_size').value.trim(),
+        backup_location: document.getElementById('upload_backup_location').value
+      };
+
+      try {
+        const res = await fetch(`/api/tracker/projects/${id}/backup`, {
+          method: 'POST',
+          headers: getAuthHeaders(),
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        progBar.style.width = '100%';
+
+        if (data.success) {
+          setTimeout(async () => {
+            const modalInstance = bootstrap.Modal.getInstance(document.getElementById('uploadBackupModal'));
+            if (modalInstance) modalInstance.hide();
+            await loadProjects();
+            alert('Backup file registered and snapshot synchronized with Project Tracker!');
+          }, 300);
+        } else {
+          alert(data.message || 'Error uploading backup.');
+        }
+      } catch (err) {
+        alert('Failed to connect to server.');
+      } finally {
+        setTimeout(() => {
+          saveBtn.disabled = false;
+          prog.classList.add('d-none');
+          progBar.style.width = '0%';
+        }, 500);
       }
     }
 

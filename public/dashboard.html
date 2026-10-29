@@ -904,156 +904,368 @@
 
         <!-- ==================== TAB: PROJECT TRACKER (Aims, STSLL, GC Oman, Techwin) ==================== -->
         <div class="mb-4 d-none" id="trackerTabSection">
-          <!-- Top Tracker Banner / Metrics -->
-          <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
-            <div>
-              <div class="d-inline-flex align-items-center gap-2 px-2.5 py-1 rounded-pill small fw-bold text-warning mb-1" style="background: rgba(245, 158, 11, 0.12); border: 1px solid rgba(245, 158, 11, 0.25); font-size: 0.72rem;">
-                <i class="bi bi-kanban-fill"></i> ENTERPRISE PROJECT TRACKER
-              </div>
-              <h2 class="h4 fw-extrabold text-white mb-1" style="letter-spacing: -0.02em;">Tracked Projects &amp; Deliverables</h2>
-              <p class="text-white-50 small mb-0">Live project completion status, backup files &amp; storage nodes, cloud hosting infrastructure, commercial sales dossier, and client modification logs.</p>
-            </div>
-            <div class="d-flex align-items-center gap-2">
-              <button class="btn btn-sm btn-brand px-3 py-2 fw-semibold d-inline-flex align-items-center gap-2 shadow-sm" onclick="openAddUpdateModal()">
-                <i class="bi bi-plus-circle-fill"></i> + Add Update Request
-              </button>
-            </div>
-          </div>
-
-          <!-- Quick Metrics Grid -->
-          <div class="row g-3 mb-4">
-            <div class="col-6 col-lg-3">
-              <div class="zy-kpi-orange">
-                <div class="d-flex justify-content-between align-items-start mb-2">
-                  <div class="zy-kpi-icon-box"><i class="bi bi-kanban-fill"></i></div>
-                  <span class="zy-kpi-badge">TRACKED</span>
-                </div>
-                <div class="h2 fw-black text-white mb-1" id="trackerTotalProjectsCount">04</div>
-                <div class="small text-white-50 fw-semibold">Active Client Projects</div>
-              </div>
-            </div>
-            <div class="col-6 col-lg-3">
-              <div class="zy-kpi-green">
-                <div class="d-flex justify-content-between align-items-start mb-2">
-                  <div class="zy-kpi-icon-box"><i class="bi bi-check-circle-fill"></i></div>
-                  <span class="zy-kpi-badge">75% DONE</span>
-                </div>
-                <div class="h2 fw-black text-white mb-1" id="trackerCompletedCount">03 / 04</div>
-                <div class="small text-white-50 fw-semibold">Completed &amp; Delivered</div>
-              </div>
-            </div>
-            <div class="col-6 col-lg-3">
-              <div class="zy-kpi-cyan">
-                <div class="d-flex justify-content-between align-items-start mb-2">
-                  <div class="zy-kpi-icon-box"><i class="bi bi-currency-rupee"></i></div>
-                  <span class="zy-kpi-badge">COMMERCIAL</span>
-                </div>
-                <div class="h2 fw-black text-white mb-1" id="trackerTotalValue">₹1.67 Cr</div>
-                <div class="small text-white-50 fw-semibold">Total Projects Value</div>
-              </div>
-            </div>
-            <div class="col-6 col-lg-3">
-              <div class="zy-kpi-dark">
-                <div class="d-flex justify-content-between align-items-start mb-2">
-                  <div class="zy-kpi-icon-box"><i class="bi bi-clock-history"></i></div>
-                  <span class="zy-kpi-badge">LOGGED</span>
-                </div>
-                <div class="h2 fw-black text-white mb-1" id="trackerTotalUpdatesCount">12</div>
-                <div class="small text-white-50 fw-semibold">Client Update Requests</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Section 1: Tracked Projects Grid (Aims, STSLL, GC Oman, Techwin) -->
-          <div class="mb-4">
-            <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap gap-2">
+          <!-- ==================== VIEW 1: PROJECTS GRID VIEW (DEFAULT) ==================== -->
+          <div id="trackerProjectsGridView">
+            <!-- Top Tracker Banner / Metrics -->
+            <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
               <div>
-                <h3 class="h6 fw-bold text-white text-uppercase tracking-wider mb-0" style="font-size: 0.82rem; letter-spacing: 0.1em; color: rgba(255,255,255,0.7) !important;">
-                  <i class="bi bi-grid-3x3-gap-fill text-warning me-1.5"></i> Projects Alignment
-                </h3>
-                <span class="small text-white-50">Click on <strong>Project Details</strong>, <strong>Sales</strong>, or <strong>Project Updates</strong> on any project card below:</span>
-              </div>
-              <span class="badge bg-secondary-subtle text-white border border-white/10 px-3 py-1.5 rounded-pill small">
-                <i class="bi bi-shield-check text-success me-1"></i> 4 Projects Synchronized
-              </span>
-            </div>
-
-            <!-- Dynamic Project Cards Container -->
-            <div class="row g-4" id="trackerProjectsGrid">
-              <!-- Rendered via JavaScript -->
-            </div>
-          </div>
-
-          <!-- Section 2: Tabular Project Updates (Matching Page 2 handwritten sketch) -->
-          <div class="zy-updates-table-wrapper" id="trackerUpdatesSection">
-            <!-- Table Top Bar with Export Options -->
-            <div class="zy-updates-table-header">
-              <div>
-                <div class="d-flex align-items-center gap-2 mb-1">
-                  <span class="badge bg-warning text-dark fw-bold px-2.5 py-1" style="font-size: 0.72rem;">TABULAR LOG</span>
-                  <h4 class="h5 fw-bold mb-0 text-dark" id="trackerActiveProjectTitle" style="letter-spacing: -0.01em;">Project updates</h4>
+                <div class="d-inline-flex align-items-center gap-2 px-2.5 py-1 rounded-pill small fw-bold text-warning mb-1" style="background: rgba(245, 158, 11, 0.12); border: 1px solid rgba(245, 158, 11, 0.25); font-size: 0.72rem;">
+                  <i class="bi bi-kanban-fill"></i> ENTERPRISE PROJECT TRACKER
                 </div>
-                <div class="small text-muted" id="trackerActiveProjectSubtitle">
-                  Showing modification requests and engineering change orders for all tracked projects.
-                </div>
-              </div>
-
-              <!-- Top of Table: Download in Excel & PDF Format (Matching user requirement) -->
-              <div class="d-flex align-items-center flex-wrap gap-2">
-                <!-- Project Selector Filter Pills -->
-                <div class="btn-group btn-group-sm me-2 shadow-sm" role="group" id="trackerProjectFilterBtns">
-                  <button type="button" class="btn btn-outline-secondary active" onclick="filterTrackerUpdates('all', this)">All</button>
-                  <button type="button" class="btn btn-outline-secondary" onclick="filterTrackerUpdates(1, this)">Aims</button>
-                  <button type="button" class="btn btn-outline-secondary" onclick="filterTrackerUpdates(2, this)">STSLL</button>
-                  <button type="button" class="btn btn-outline-secondary" onclick="filterTrackerUpdates(3, this)">Gc oman</button>
-                  <button type="button" class="btn btn-outline-secondary" onclick="filterTrackerUpdates(4, this)">Techwin</button>
-                </div>
-
-                <!-- Excel Download Button -->
-                <button type="button" class="btn btn-sm btn-success fw-bold d-inline-flex align-items-center gap-1.5 px-3 py-1.5 shadow-sm" onclick="downloadUpdatesExcel()" title="Download tabular updates log in Excel (XLSX / CSV) format">
-                  <i class="bi bi-file-earmark-excel-fill"></i> Download Excel
-                </button>
-
-                <!-- PDF Download Button -->
-                <button type="button" class="btn btn-sm btn-danger fw-bold d-inline-flex align-items-center gap-1.5 px-3 py-1.5 shadow-sm" onclick="downloadUpdatesPDF()" title="Download official formatted Project Updates PDF report">
-                  <i class="bi bi-file-earmark-pdf-fill"></i> Download PDF
-                </button>
-
-                <!-- Add Update Request Button -->
-                <button type="button" class="btn btn-sm btn-brand fw-bold d-inline-flex align-items-center gap-1.5 px-3 py-1.5 shadow-sm" onclick="openAddUpdateModal()">
-                  <i class="bi bi-plus-lg"></i> + Add Update
-                </button>
-              </div>
-            </div>
-
-            <!-- Table Container (Columns: S.No, Update Req, Req Rec from, Date of modification, Status, Remarks / Actions View & Edit) -->
-            <div class="table-responsive">
-              <table class="zy-updates-table" id="trackerUpdatesTable">
-                <thead>
-                  <tr>
-                    <th style="width: 70px; text-align: center;">S.No.</th>
-                    <th style="width: 140px;">Project</th>
-                    <th>Update Request</th>
-                    <th style="width: 220px;">Request From</th>
-                    <th style="width: 150px;">Date of Modification</th>
-                    <th style="width: 130px;">Status</th>
-                    <th style="width: 170px; text-align: right;">Remarks &amp; Actions</th>
-                  </tr>
-                </thead>
-                <tbody id="trackerUpdatesTableBody">
-                  <!-- Rendered via JavaScript -->
-                </tbody>
-              </table>
-            </div>
-
-            <!-- Down the table summary & action footer -->
-            <div class="p-3 border-top d-flex align-items-center justify-content-between flex-wrap gap-2 text-muted small" style="background: #fdfdfd;">
-              <div id="trackerTableStatsText">
-                Showing 12 updates across 4 projects.
+                <h2 class="h4 fw-extrabold text-white mb-1" style="letter-spacing: -0.02em;">Tracked Projects &amp; Deliverables</h2>
+                <p class="text-white-50 small mb-0">Project completion status, cloud backup storage, live hosting telemetry, commercial sales dossier, and client modification logs.</p>
               </div>
               <div class="d-flex align-items-center gap-2">
-                <span class="badge bg-success-subtle text-success border border-success-subtle fw-semibold px-2 py-1"><i class="bi bi-check-circle me-1"></i> Completed: <span id="trackerCompletedUpdatesCount">9</span></span>
-                <span class="badge bg-primary-subtle text-primary border border-primary-subtle fw-semibold px-2 py-1"><i class="bi bi-arrow-repeat me-1"></i> In Progress: <span id="trackerInProgressUpdatesCount">3</span></span>
+                <button class="btn btn-sm btn-brand px-3 py-2 fw-semibold d-inline-flex align-items-center gap-2 shadow-sm" onclick="openAddProjectModal()">
+                  <i class="bi bi-folder-plus"></i> + Add New Project
+                </button>
+                <button class="btn btn-sm btn-brand-outline px-3 py-2 fw-semibold d-inline-flex align-items-center gap-2 shadow-sm text-white" onclick="openAddUpdateModal()">
+                  <i class="bi bi-plus-circle-fill"></i> + Add Update Request
+                </button>
+              </div>
+            </div>
+
+            <!-- Quick Metrics Grid -->
+            <div class="row g-3 mb-4">
+              <div class="col-6 col-lg-3">
+                <div class="zy-kpi-orange">
+                  <div class="d-flex justify-content-between align-items-start mb-2">
+                    <div class="zy-kpi-icon-box"><i class="bi bi-kanban-fill"></i></div>
+                    <span class="zy-kpi-badge">TRACKED</span>
+                  </div>
+                  <div class="h2 fw-black text-white mb-1" id="trackerTotalProjectsCount">04</div>
+                  <div class="small text-white-50 fw-semibold">Active Client Projects</div>
+                </div>
+              </div>
+              <div class="col-6 col-lg-3">
+                <div class="zy-kpi-green">
+                  <div class="d-flex justify-content-between align-items-start mb-2">
+                    <div class="zy-kpi-icon-box"><i class="bi bi-check-circle-fill"></i></div>
+                    <span class="zy-kpi-badge">DELIVERY</span>
+                  </div>
+                  <div class="h2 fw-black text-white mb-1" id="trackerCompletedCount">03 / 04</div>
+                  <div class="small text-white-50 fw-semibold">Completed &amp; Live</div>
+                </div>
+              </div>
+              <div class="col-6 col-lg-3">
+                <div class="zy-kpi-cyan">
+                  <div class="d-flex justify-content-between align-items-start mb-2">
+                    <div class="zy-kpi-icon-box"><i class="bi bi-currency-rupee"></i></div>
+                    <span class="zy-kpi-badge">COMMERCIAL</span>
+                  </div>
+                  <div class="h2 fw-black text-white mb-1" id="trackerTotalValue">₹1.67 Cr</div>
+                  <div class="small text-white-50 fw-semibold">Total Projects Value</div>
+                </div>
+              </div>
+              <div class="col-6 col-lg-3">
+                <div class="zy-kpi-dark">
+                  <div class="d-flex justify-content-between align-items-start mb-2">
+                    <div class="zy-kpi-icon-box"><i class="bi bi-clock-history"></i></div>
+                    <span class="zy-kpi-badge">LOGGED</span>
+                  </div>
+                  <div class="h2 fw-black text-white mb-1" id="trackerTotalUpdatesCount">13</div>
+                  <div class="small text-white-50 fw-semibold">Client Update Requests</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Projects Alignment Grid (matching sketch page 1) -->
+            <div class="mb-4">
+              <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap gap-2">
+                <div>
+                  <h3 class="h6 fw-bold text-white text-uppercase tracking-wider mb-0" style="font-size: 0.82rem; letter-spacing: 0.1em; color: rgba(255,255,255,0.7) !important;">
+                    <i class="bi bi-grid-3x3-gap-fill text-warning me-1.5"></i> Projects Alignment
+                  </h3>
+                  <span class="small text-white-50">Click on <strong>Project Details</strong>, <strong>Sales</strong>, or <strong>Project Updates</strong> to open that dedicated view:</span>
+                </div>
+                <span class="badge bg-secondary-subtle text-white border border-white/10 px-3 py-1.5 rounded-pill small" id="trackerSyncBadge">
+                  <i class="bi bi-shield-check text-success me-1"></i> Synchronized with Client Workspace
+                </span>
+              </div>
+
+              <!-- Dynamic Project Cards Container -->
+              <div class="row g-4" id="trackerProjectsGrid">
+                <!-- Rendered via JavaScript -->
+              </div>
+            </div>
+          </div>
+
+          <!-- ==================== VIEW 2: DEDICATED LOADED PAGE FOR PROJECT DETAILS ==================== -->
+          <div id="trackerDetailsLoadedView" class="d-none">
+            <!-- Back to Projects Action Header -->
+            <div class="d-flex align-items-center justify-content-between flex-wrap gap-3 mb-4 pb-3 border-bottom border-white/10">
+              <button type="button" class="btn btn-sm btn-outline-light px-3 py-2 fw-bold d-inline-flex align-items-center gap-2 shadow-sm" onclick="backToTrackerProjects()">
+                <i class="bi bi-arrow-left fs-6"></i> &larr; Back to Projects
+              </button>
+              <div class="d-flex align-items-center gap-2">
+                <button type="button" class="btn btn-sm btn-brand-outline text-white px-3 py-1.5 fw-semibold" id="tdPageSalesJumpBtn">
+                  <i class="bi bi-receipt me-1"></i> View Sales Dossier
+                </button>
+                <button type="button" class="btn btn-sm btn-brand px-3 py-1.5 fw-semibold" id="tdPageUpdatesJumpBtn">
+                  <i class="bi bi-table me-1"></i> View Project Updates
+                </button>
+              </div>
+            </div>
+
+            <!-- Full Page Project Details Card Container -->
+            <div class="zy-card p-4 p-md-5 mb-4" style="background: #ffffff; color: #0f172a; border-radius: 18px;">
+              <!-- Project Title Banner -->
+              <div class="d-flex align-items-center justify-content-between flex-wrap gap-3 pb-4 mb-4 border-bottom" style="border-color: #e2e8f0;">
+                <div class="d-flex align-items-center gap-3">
+                  <div class="rounded-3 p-3 text-white shadow-sm d-flex align-items-center justify-content-center" style="background: #262262; width: 56px; height: 56px; font-size: 1.6rem;" id="tdPageProjectIconBox">
+                    <i class="bi bi-folder-fill"></i>
+                  </div>
+                  <div>
+                    <h2 class="h3 fw-black text-dark mb-1" id="tdPageProjectTitle">Aims - Project Details</h2>
+                    <div class="small text-muted" id="tdPageProjectSubtitle">AIMS Healthcare Global &bull; Healthcare Cloud Platform</div>
+                  </div>
+                </div>
+                <div id="tdPageStatusPill">
+                  <span class="zy-tracker-status-pill zy-status-completed"><i class="bi bi-check-circle-fill"></i> Completed (100%)</span>
+                </div>
+              </div>
+
+              <!-- Grid: 4 Core Requirements from User Sketch -->
+              <div class="row g-4 mb-4">
+                <!-- 1. Project Completed or Not -->
+                <div class="col-12 col-lg-6">
+                  <div class="p-4 rounded-3 h-100 border" style="background: #f8fafc; border-color: #e2e8f0;">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                      <span class="small fw-bold text-uppercase tracking-wider text-muted" style="font-size: 0.76rem;">
+                        <i class="bi bi-check2-circle text-success me-1.5"></i> Project Completed or Not
+                      </span>
+                      <span class="badge" id="tdPageCompletionBadge" style="font-size: 0.8rem;">Status</span>
+                    </div>
+                    <div class="d-flex align-items-center gap-3 mb-2">
+                      <div class="flex-grow-1">
+                        <div class="progress" style="height: 12px; border-radius: 9999px; background: #e2e8f0;">
+                          <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" id="tdPageProgressBar" role="progressbar" style="width: 100%;"></div>
+                        </div>
+                      </div>
+                      <span class="fw-bold h5 mb-0 text-dark" id="tdPagePercentText">100%</span>
+                    </div>
+                    <div class="small text-muted mt-2" id="tdPageCompletionDate">
+                      <i class="bi bi-calendar-event me-1"></i> Target Milestone
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 2. Project Value -->
+                <div class="col-12 col-lg-6">
+                  <div class="p-4 rounded-3 h-100 border" style="background: #f8fafc; border-color: #e2e8f0;">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                      <span class="small fw-bold text-uppercase tracking-wider text-muted" style="font-size: 0.76rem;">
+                        <i class="bi bi-cash-stack text-warning me-1.5"></i> Project Commercial Value
+                      </span>
+                      <span class="badge bg-warning text-dark fw-bold" id="tdPagePaymentStatusBadge">Verified</span>
+                    </div>
+                    <div class="h2 fw-black text-dark mb-1" id="tdPageProjectValue" style="color: #f96706 !important;">
+                      ₹42,50,000 INR
+                    </div>
+                    <div class="small text-muted" id="tdPagePaymentTerms">
+                      Milestone: Paid in Full (100% Cleared)
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 3. Backup Files & Where Stored -->
+                <div class="col-12 col-lg-6">
+                  <div class="p-4 rounded-3 h-100 border" style="background: #f8fafc; border-color: #e2e8f0;">
+                    <div class="small fw-bold text-uppercase tracking-wider text-muted mb-3" style="font-size: 0.76rem;">
+                      <i class="bi bi-shield-lock-fill text-primary me-1.5"></i> Backup Files &amp; Storage Location
+                    </div>
+                    <div class="mb-2">
+                      <div class="small text-muted">Backup Archive File:</div>
+                      <div class="fw-bold text-dark text-break" id="tdPageBackupFileName" style="font-family: monospace; font-size: 0.9rem;">
+                        archive.tar.gz
+                      </div>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-2">
+                      <div>
+                        <div class="small text-muted">Archive File Size:</div>
+                        <div class="fw-bold text-dark" id="tdPageBackupSize">2.45 GB</div>
+                      </div>
+                      <button type="button" class="btn btn-sm btn-outline-dark fw-bold px-3" onclick="alert('Backup archive manifest verified: Cryptographic SHA-256 check PASSED.')">
+                        <i class="bi bi-download me-1"></i> Verify Manifest
+                      </button>
+                    </div>
+                    <div class="mt-2">
+                      <div class="small text-muted">Where Stored:</div>
+                      <div class="p-2 rounded bg-white border text-dark small fw-medium" id="tdPageBackupLocation" style="font-family: monospace;">
+                        AWS S3 Cold Storage
+                      </div>
+                      <div class="small text-muted mt-1" id="tdPageBackupLastDate">Last snapshot date</div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 4. Project is Hosted or Not -->
+                <div class="col-12 col-lg-6">
+                  <div class="p-4 rounded-3 h-100 border" style="background: #f8fafc; border-color: #e2e8f0;">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                      <span class="small fw-bold text-uppercase tracking-wider text-muted" style="font-size: 0.76rem;">
+                        <i class="bi bi-globe2 text-info me-1.5"></i> Project Hosted Status
+                      </span>
+                      <span class="badge bg-success-subtle text-success border border-success-subtle fw-bold" id="tdPageHostedBadge">
+                        <i class="bi bi-circle-fill me-1 small"></i> Live in Production
+                      </span>
+                    </div>
+                    <div class="mb-3">
+                      <div class="small text-muted">Live Production / Client URL:</div>
+                      <a href="#" target="_blank" id="tdPageHostedUrlLink" class="h6 fw-bold text-primary text-decoration-none d-inline-flex align-items-center gap-1.5 mt-1">
+                        <span id="tdPageHostedUrl">https://aims.zyllotech.com</span> <i class="bi bi-box-arrow-up-right small"></i>
+                      </a>
+                    </div>
+                    <div class="row g-2 mb-2">
+                      <div class="col-6">
+                        <div class="small text-muted">Hosting Provider:</div>
+                        <div class="fw-semibold text-dark small" id="tdPageHostingProvider">AWS ECS Multi-AZ</div>
+                      </div>
+                      <div class="col-6">
+                        <div class="small text-muted">SSL Certificate:</div>
+                        <div class="fw-semibold text-success small" id="tdPageSslStatus">Active (TLS 1.3)</div>
+                      </div>
+                    </div>
+                    <div class="mt-3 pt-2 border-top">
+                      <a href="#" target="_blank" id="tdPageLaunchBtn" class="btn btn-sm btn-brand fw-semibold px-4 py-1.5">
+                        <i class="bi bi-box-arrow-up-right me-1"></i> Launch Hosted Application
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ==================== VIEW 3: DEDICATED LOADED PAGE FOR SALES DOSSIER ==================== -->
+          <div id="trackerSalesLoadedView" class="d-none">
+            <!-- Back to Projects Action Header -->
+            <div class="d-flex align-items-center justify-content-between flex-wrap gap-3 mb-4 pb-3 border-bottom border-white/10">
+              <button type="button" class="btn btn-sm btn-outline-light px-3 py-2 fw-bold d-inline-flex align-items-center gap-2 shadow-sm" onclick="backToTrackerProjects()">
+                <i class="bi bi-arrow-left fs-6"></i> &larr; Back to Projects
+              </button>
+              <div class="d-flex align-items-center gap-2">
+                <button type="button" class="btn btn-sm btn-brand-outline text-white px-3 py-1.5 fw-semibold" id="tsPageDetailsJumpBtn">
+                  <i class="bi bi-info-circle-fill me-1"></i> Project Details
+                </button>
+                <button type="button" class="btn btn-sm btn-brand px-3 py-1.5 fw-semibold" id="tsPageUpdatesJumpBtn">
+                  <i class="bi bi-table me-1"></i> Project Updates
+                </button>
+              </div>
+            </div>
+
+            <!-- Full Page Sales Dossier Card -->
+            <div class="zy-card p-4 p-md-5 mb-4" style="background: #ffffff; color: #0f172a; border-radius: 18px;">
+              <div class="d-flex align-items-center justify-content-between flex-wrap gap-3 pb-3 mb-4 border-bottom" style="border-color: #e2e8f0;">
+                <div class="d-flex align-items-center gap-3">
+                  <div class="rounded-3 p-3 text-white shadow-sm d-flex align-items-center justify-content-center" style="background: #f96706; width: 56px; height: 56px; font-size: 1.6rem;">
+                    <i class="bi bi-receipt"></i>
+                  </div>
+                  <div>
+                    <h2 class="h3 fw-black text-dark mb-1" id="tsPageProjectTitle">Sales Documents Dossier</h2>
+                    <div class="small text-muted" id="tsPageProjectSubtitle">Commercial agreements: Quotation, Purchase Order (PO), Sales Order (SO), and Invoices</div>
+                  </div>
+                </div>
+                <span class="badge bg-success-subtle text-success border border-success-subtle fw-bold px-3 py-2">
+                  <i class="bi bi-shield-check me-1"></i> 4 Authorized Documents
+                </span>
+              </div>
+
+              <!-- List of Sales Documents Container -->
+              <div id="tsPageDocsList">
+                <!-- Rendered via JavaScript -->
+              </div>
+            </div>
+          </div>
+
+          <!-- ==================== VIEW 4: DEDICATED LOADED PAGE FOR TABULAR UPDATES ==================== -->
+          <div id="trackerUpdatesLoadedView" class="d-none">
+            <!-- Back to Projects Action Header -->
+            <div class="d-flex align-items-center justify-content-between flex-wrap gap-3 mb-4 pb-3 border-bottom border-white/10">
+              <button type="button" class="btn btn-sm btn-outline-light px-3 py-2 fw-bold d-inline-flex align-items-center gap-2 shadow-sm" onclick="backToTrackerProjects()">
+                <i class="bi bi-arrow-left fs-6"></i> &larr; Back to Projects
+              </button>
+              <div class="d-flex align-items-center gap-2">
+                <button type="button" class="btn btn-sm btn-brand-outline text-white px-3 py-1.5 fw-semibold" id="tuPageDetailsJumpBtn">
+                  <i class="bi bi-info-circle-fill me-1"></i> Project Details
+                </button>
+                <button type="button" class="btn btn-sm btn-brand text-white px-3 py-1.5 fw-semibold" id="tuPageSalesJumpBtn">
+                  <i class="bi bi-receipt me-1"></i> Sales Dossier
+                </button>
+              </div>
+            </div>
+
+            <!-- Tabular Project Updates Container (Matching Page 2 handwritten sketch) -->
+            <div class="zy-updates-table-wrapper" style="margin-top: 0;">
+              <!-- Table Top Bar with Export Options -->
+              <div class="zy-updates-table-header">
+                <div>
+                  <div class="d-flex align-items-center gap-2 mb-1">
+                    <span class="badge bg-warning text-dark fw-bold px-2.5 py-1" style="font-size: 0.72rem;">TABULAR LOG</span>
+                    <h4 class="h5 fw-bold mb-0 text-dark" id="trackerActiveProjectTitle" style="letter-spacing: -0.01em;">Project updates</h4>
+                  </div>
+                  <div class="small text-muted" id="trackerActiveProjectSubtitle">
+                    Showing modification requests and engineering change orders for all tracked projects.
+                  </div>
+                </div>
+
+                <!-- Top of Table: Download in Excel & PDF Format (Matching user requirement) -->
+                <div class="d-flex align-items-center flex-wrap gap-2">
+                  <!-- Project Selector Filter Pills -->
+                  <div class="btn-group btn-group-sm me-2 shadow-sm" role="group" id="trackerProjectFilterBtns">
+                    <button type="button" class="btn btn-outline-secondary active" onclick="filterTrackerUpdates('all', this)">All</button>
+                    <button type="button" class="btn btn-outline-secondary" onclick="filterTrackerUpdates(1, this)">Aims</button>
+                    <button type="button" class="btn btn-outline-secondary" onclick="filterTrackerUpdates(2, this)">STSLL</button>
+                    <button type="button" class="btn btn-outline-secondary" onclick="filterTrackerUpdates(3, this)">Gc oman</button>
+                    <button type="button" class="btn btn-outline-secondary" onclick="filterTrackerUpdates(4, this)">Techwin</button>
+                  </div>
+
+                  <!-- Excel Download Button -->
+                  <button type="button" class="btn btn-sm btn-success fw-bold d-inline-flex align-items-center gap-1.5 px-3 py-1.5 shadow-sm" onclick="downloadUpdatesExcel()" title="Download tabular updates log in Excel (XLSX / CSV) format">
+                    <i class="bi bi-file-earmark-excel-fill"></i> Download Excel
+                  </button>
+
+                  <!-- PDF Download Button -->
+                  <button type="button" class="btn btn-sm btn-danger fw-bold d-inline-flex align-items-center gap-1.5 px-3 py-1.5 shadow-sm" onclick="downloadUpdatesPDF()" title="Download official formatted Project Updates PDF report">
+                    <i class="bi bi-file-earmark-pdf-fill"></i> Download PDF
+                  </button>
+
+                  <!-- Add Update Request Button -->
+                  <button type="button" class="btn btn-sm btn-brand fw-bold d-inline-flex align-items-center gap-1.5 px-3 py-1.5 shadow-sm" onclick="openAddUpdateModal()">
+                    <i class="bi bi-plus-lg"></i> + Add Update
+                  </button>
+                </div>
+              </div>
+
+              <!-- Table Container (Columns: S.No, Update Req, Req Rec from, Date of modification, Status, Remarks / Actions View & Edit) -->
+              <div class="table-responsive">
+                <table class="zy-updates-table" id="trackerUpdatesTable">
+                  <thead>
+                    <tr>
+                      <th style="width: 70px; text-align: center;">S.No.</th>
+                      <th style="width: 140px;">Project</th>
+                      <th>Update Request</th>
+                      <th style="width: 220px;">Request From</th>
+                      <th style="width: 150px;">Date of Modification</th>
+                      <th style="width: 130px;">Status</th>
+                      <th style="width: 170px; text-align: right;">Remarks &amp; Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="trackerUpdatesTableBody">
+                    <!-- Rendered via JavaScript -->
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- Down the table summary & action footer -->
+              <div class="p-3 border-top d-flex align-items-center justify-content-between flex-wrap gap-2 text-muted small" style="background: #fdfdfd;">
+                <div id="trackerTableStatsText">
+                  Showing 13 updates across 4 projects.
+                </div>
+                <div class="d-flex align-items-center gap-2">
+                  <span class="badge bg-success-subtle text-success border border-success-subtle fw-semibold px-2 py-1"><i class="bi bi-check-circle me-1"></i> Completed: <span id="trackerCompletedUpdatesCount">10</span></span>
+                  <span class="badge bg-primary-subtle text-primary border border-primary-subtle fw-semibold px-2 py-1"><i class="bi bi-arrow-repeat me-1"></i> In Progress: <span id="trackerInProgressUpdatesCount">3</span></span>
+                </div>
               </div>
             </div>
           </div>
@@ -2131,6 +2343,108 @@
     </div>
   </div>
 
+  
+  <!-- ==================== MODAL: ADD NEW PROJECT (PROJECT TRACKER) ==================== -->
+  <div class="modal fade zy-tracker-modal" id="trackerAddProjectModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+      <div class="modal-content" style="background: #ffffff; color: #0f172a;">
+        <div class="modal-header border-bottom" style="background: #f8fafc; border-color: #e2e8f0;">
+          <div class="d-flex align-items-center gap-2">
+            <div class="rounded-3 p-1.5 text-white bg-warning d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;">
+              <i class="bi bi-folder-plus text-dark"></i>
+            </div>
+            <div>
+              <h5 class="modal-title fw-bold text-dark mb-0">Add New Project to Tracker</h5>
+              <div class="small text-muted">Synchronizes across Project Tracker &amp; Client Workspace</div>
+            </div>
+          </div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form id="trackerAddProjectForm" onsubmit="handleSaveAddProject(event)">
+          <div class="modal-body p-4">
+            <div class="row g-3 mb-3">
+              <div class="col-12 col-md-6">
+                <label for="tapName" class="form-label small fw-bold text-muted text-uppercase">Project Name *</label>
+                <input type="text" id="tapName" class="form-control" placeholder="e.g. OmniPay Gateway" required>
+              </div>
+              <div class="col-12 col-md-6">
+                <label for="tapClientName" class="form-label small fw-bold text-muted text-uppercase">Client Company Name *</label>
+                <input type="text" id="tapClientName" class="form-control" placeholder="e.g. OmniPay Financial Ltd" required>
+              </div>
+            </div>
+
+            <div class="row g-3 mb-3">
+              <div class="col-12 col-md-6">
+                <label for="tapCategory" class="form-label small fw-bold text-muted text-uppercase">Category / Industry</label>
+                <input type="text" id="tapCategory" class="form-control" placeholder="e.g. Fintech &amp; Payments">
+              </div>
+              <div class="col-12 col-md-6">
+                <label for="tapProjectValue" class="form-label small fw-bold text-muted text-uppercase">Total Project Value (INR / USD / OMR) *</label>
+                <input type="text" id="tapProjectValue" class="form-control" placeholder="e.g. ₹50,00,000 INR" required>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="tapDescription" class="form-label small fw-bold text-muted text-uppercase">Project Description &amp; Scope</label>
+              <textarea id="tapDescription" class="form-control" rows="2" placeholder="Brief technical summary..."></textarea>
+            </div>
+
+            <div class="row g-3 mb-3">
+              <div class="col-6 col-md-4">
+                <label for="tapStatus" class="form-label small fw-bold text-muted text-uppercase">Completion Status</label>
+                <select id="tapStatus" class="form-select">
+                  <option value="0">In Progress (UAT / Active)</option>
+                  <option value="1">Completed (100% Delivered)</option>
+                </select>
+              </div>
+              <div class="col-6 col-md-4">
+                <label for="tapPercent" class="form-label small fw-bold text-muted text-uppercase">Completion %</label>
+                <input type="number" id="tapPercent" class="form-control" min="0" max="100" value="80">
+              </div>
+              <div class="col-12 col-md-4">
+                <label for="tapCompletionDate" class="form-label small fw-bold text-muted text-uppercase">Target / Delivered Date</label>
+                <input type="text" id="tapCompletionDate" class="form-control" placeholder="e.g. Target: Dec 2026">
+              </div>
+            </div>
+
+            <hr class="my-3">
+            <h6 class="fw-bold text-dark mb-2"><i class="bi bi-globe2 text-info me-1"></i> Hosting &amp; Cloud Deployment</h6>
+            <div class="row g-3 mb-3">
+              <div class="col-12 col-md-6">
+                <label for="tapHostedUrl" class="form-label small fw-bold text-muted text-uppercase">Live Application URL</label>
+                <input type="url" id="tapHostedUrl" class="form-control" placeholder="https://app.zyllotech.com">
+              </div>
+              <div class="col-12 col-md-6">
+                <label for="tapHostingProvider" class="form-label small fw-bold text-muted text-uppercase">Hosting Provider</label>
+                <input type="text" id="tapHostingProvider" class="form-control" placeholder="e.g. AWS ECS &amp; RDS Multi-AZ">
+              </div>
+            </div>
+
+            <hr class="my-3">
+            <h6 class="fw-bold text-dark mb-2"><i class="bi bi-shield-lock text-warning me-1"></i> Backup &amp; Disaster Recovery</h6>
+            <div class="row g-3">
+              <div class="col-12 col-md-6">
+                <label for="tapBackupFile" class="form-label small fw-bold text-muted text-uppercase">Backup Archive Name</label>
+                <input type="text" id="tapBackupFile" class="form-control" placeholder="e.g. omnipay_prod_v1.0.tar.gz">
+              </div>
+              <div class="col-6 col-md-3">
+                <label for="tapBackupSize" class="form-label small fw-bold text-muted text-uppercase">Archive Size</label>
+                <input type="text" id="tapBackupSize" class="form-control" placeholder="e.g. 2.15 GB">
+              </div>
+              <div class="col-6 col-md-3">
+                <label for="tapBackupLocation" class="form-label small fw-bold text-muted text-uppercase">Storage Location</label>
+                <input type="text" id="tapBackupLocation" class="form-control" placeholder="e.g. AWS S3 Cold Storage">
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer border-top" style="background: #f8fafc; border-color: #e2e8f0;">
+            <button type="button" class="btn btn-secondary btn-sm px-3" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-brand btn-sm px-4 fw-bold" id="tapSubmitBtn">+ Create Project</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="/assets/js/main.js"></script>
   <script>
@@ -2217,9 +2531,13 @@
       function checkRouteTab() {
         const uParams = new URLSearchParams(window.location.search);
         const hash = window.location.hash.replace('#', '').trim();
-        const initialTab = uParams.get('tab') || hash;
-        if (initialTab && ['overview', 'inquiries', 'jobs', 'applications', 'projects', 'blogs', 'emails', 'leaves', 'attendance'].includes(initialTab)) {
-          switchDashboardTab(initialTab);
+        const storedTab = localStorage.getItem('admin_active_tab');
+        const allowedTabs = ['overview', 'tracker', 'inquiries', 'jobs', 'applications', 'projects', 'blogs', 'emails', 'leaves', 'attendance'];
+        const targetTab = uParams.get('tab') || hash || storedTab;
+        if (targetTab && allowedTabs.includes(targetTab)) {
+          switchDashboardTab(targetTab);
+        } else {
+          switchDashboardTab('overview');
         }
       }
       checkRouteTab();
@@ -2413,6 +2731,24 @@
       } else if (tabName === 'tracker') {
         loadTrackerProjects();
       }
+
+      // Update Left Sidebar Nav items active highlight
+      const leftSidebarItems = document.querySelectorAll('.zy-admin-sidebar .zy-sidebar-nav-item');
+      leftSidebarItems.forEach(item => item.classList.remove('active'));
+
+      if (tabName === 'overview') {
+        const dItem = document.querySelector('.zy-admin-sidebar a[href="/dashboard"], .zy-admin-sidebar a[onclick*="'overview'"]');
+        if (dItem) dItem.classList.add('active');
+      } else if (tabName === 'tracker') {
+        const tItem = document.getElementById('sidebar-tracker-link') || document.querySelector('.zy-admin-sidebar a[href="#tracker"]');
+        if (tItem) tItem.classList.add('active');
+      } else {
+        const matchingLink = document.querySelector(`.zy-admin-sidebar a[href="#${tabName}"]`);
+        if (matchingLink) matchingLink.classList.add('active');
+      }
+
+      // Persist active tab across browser reload
+      localStorage.setItem('admin_active_tab', tabName);
 
       // Smoothly scroll the main pane to top on tab switch
       const mainPane = document.querySelector('.zy-admin-main-pane');
@@ -4123,6 +4459,222 @@
       if (valEl) valEl.textContent = '₹1.67 Cr';
     }
 
+    
+    // ==================== LOADED PAGE VIEWS CONTROLLER ====================
+    let currentLoadedProjectId = null;
+
+    function backToTrackerProjects() {
+      document.getElementById('trackerProjectsGridView').classList.remove('d-none');
+      document.getElementById('trackerDetailsLoadedView').classList.add('d-none');
+      document.getElementById('trackerSalesLoadedView').classList.add('d-none');
+      document.getElementById('trackerUpdatesLoadedView').classList.add('d-none');
+      
+      const mainPane = document.querySelector('.zy-admin-main-pane');
+      if (mainPane) mainPane.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    async function openProjectDetailsView(projectId) {
+      try {
+        currentLoadedProjectId = projectId;
+        const res = await fetch(`/api/tracker/projects/${projectId}`);
+        const data = await res.json();
+        if (!data || !data.success || !data.project) return;
+        const p = data.project;
+
+        document.getElementById('tdPageProjectTitle').textContent = `${p.name} - Project Details`;
+        document.getElementById('tdPageProjectSubtitle').textContent = `${p.client_name} &bull; ${p.category}`;
+
+        const isComp = p.is_completed === 1;
+        const badge = document.getElementById('tdPageCompletionBadge');
+        if (badge) {
+          badge.className = `badge ${isComp ? 'bg-success' : 'bg-warning text-dark'} fw-bold`;
+          badge.innerHTML = `<i class="bi ${isComp ? 'bi-check-circle-fill' : 'bi-hourglass-split'} me-1"></i> ${isComp ? 'COMPLETED (100%)' : `IN PROGRESS (${p.completion_percent || 88}%)`}`;
+        }
+
+        const bar = document.getElementById('tdPageProgressBar');
+        if (bar) {
+          bar.style.width = `${p.completion_percent || 100}%`;
+          bar.className = `progress-bar progress-bar-striped progress-bar-animated ${isComp ? 'bg-success' : 'bg-warning'}`;
+        }
+        document.getElementById('tdPagePercentText').textContent = `${p.completion_percent || 100}%`;
+        document.getElementById('tdPageCompletionDate').innerHTML = `<i class="bi bi-calendar-check me-1"></i> ${p.completion_date || 'Target: Q4 2026'}`;
+
+        document.getElementById('tdPageProjectValue').textContent = p.project_value;
+        document.getElementById('tdPagePaymentTerms').textContent = `Milestone Status: ${p.payment_status || 'In Progress'}`;
+
+        document.getElementById('tdPageBackupFileName').textContent = p.backup_file_name || 'backup.tar.gz';
+        document.getElementById('tdPageBackupSize').textContent = p.backup_size || '2.45 GB';
+        document.getElementById('tdPageBackupLocation').textContent = p.backup_location || 'AWS S3 Cold Storage';
+        document.getElementById('tdPageBackupLastDate').textContent = `Last snapshot: ${p.backup_last_date || '2026-10-28 02:00 UTC'}`;
+
+        document.getElementById('tdPageHostedBadge').innerHTML = `<i class="bi bi-circle-fill me-1 small"></i> ${p.hosted_status || 'Live in Production'}`;
+        document.getElementById('tdPageHostedUrl').textContent = p.hosted_url || 'https://zyllotech.com';
+        document.getElementById('tdPageHostedUrlLink').href = p.hosted_url || '#';
+        document.getElementById('tdPageLaunchBtn').href = p.hosted_url || '#';
+        document.getElementById('tdPageHostingProvider').textContent = p.hosting_provider || 'Cloud Cluster';
+        document.getElementById('tdPageSslStatus').textContent = p.ssl_status || 'Active (TLS 1.3)';
+
+        // Jump buttons
+        document.getElementById('tdPageSalesJumpBtn').onclick = () => openProjectSalesView(p.id);
+        document.getElementById('tdPageUpdatesJumpBtn').onclick = () => openProjectUpdatesView(p.id);
+
+        // Switch to loaded view
+        document.getElementById('trackerProjectsGridView').classList.add('d-none');
+        document.getElementById('trackerDetailsLoadedView').classList.remove('d-none');
+        document.getElementById('trackerSalesLoadedView').classList.add('d-none');
+        document.getElementById('trackerUpdatesLoadedView').classList.add('d-none');
+
+        const mainPane = document.querySelector('.zy-admin-main-pane');
+        if (mainPane) mainPane.scrollTo({ top: 0, behavior: 'smooth' });
+      } catch (err) {
+        console.error('Error opening project details view:', err);
+      }
+    }
+
+    async function openProjectSalesView(projectId) {
+      try {
+        currentLoadedProjectId = projectId;
+        const res = await fetch(`/api/tracker/projects/${projectId}`);
+        const data = await res.json();
+        if (!data || !data.success || !data.project) return;
+        const p = data.project;
+        const docs = data.sales_docs || [];
+
+        document.getElementById('tsPageProjectTitle').textContent = `${p.name} - Sales Documents Dossier`;
+        document.getElementById('tsPageProjectSubtitle').textContent = `Commercial dossier for ${p.client_name} &bull; ${p.category}`;
+
+        const listContainer = document.getElementById('tsPageDocsList');
+        if (listContainer) {
+          if (docs.length === 0) {
+            listContainer.innerHTML = '<div class="text-center text-muted py-5">No sales documents uploaded yet for this project.</div>';
+          } else {
+            listContainer.innerHTML = docs.map(d => {
+              const docIcon = d.doc_type === 'Quotation' ? 'bi-file-earmark-text-fill text-primary' :
+                              d.doc_type === 'PO' ? 'bi-file-earmark-check-fill text-success' :
+                              d.doc_type === 'SO' ? 'bi-file-earmark-ruled-fill text-info' :
+                              'bi-file-earmark-medical-fill text-warning';
+
+              return `
+                <div class="zy-doc-row p-3 mb-3 border rounded-3 d-flex align-items-center justify-content-between flex-wrap gap-3">
+                  <div class="d-flex align-items-center gap-3">
+                    <div class="fs-2"><i class="bi ${docIcon}"></i></div>
+                    <div>
+                      <div class="d-flex align-items-center gap-2">
+                        <span class="badge bg-dark text-white fw-bold px-2 py-0.5" style="font-size: 0.72rem;">${d.doc_type}</span>
+                        <strong class="text-dark">${d.doc_number}</strong>
+                        <span class="badge bg-success-subtle text-success border border-success-subtle fw-semibold" style="font-size: 0.68rem;">${d.status}</span>
+                      </div>
+                      <div class="text-dark fw-bold mt-1">${d.title}</div>
+                      <div class="text-muted small" style="font-size: 0.78rem;">
+                        Date: ${d.issue_date} &bull; Amount: <strong class="text-dark">${d.amount}</strong> &bull; File: ${d.file_name}
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <a href="/api/tracker/doc/${d.id}/download" target="_blank" class="btn btn-sm btn-brand px-3 py-2 fw-bold d-inline-flex align-items-center gap-1.5 shadow-sm">
+                      <i class="bi bi-download"></i> Download ${d.doc_type}
+                    </a>
+                  </div>
+                </div>
+              `;
+            }).join('');
+          }
+        }
+
+        // Jump buttons
+        document.getElementById('tsPageDetailsJumpBtn').onclick = () => openProjectDetailsView(p.id);
+        document.getElementById('tsPageUpdatesJumpBtn').onclick = () => openProjectUpdatesView(p.id);
+
+        // Switch to loaded view
+        document.getElementById('trackerProjectsGridView').classList.add('d-none');
+        document.getElementById('trackerDetailsLoadedView').classList.add('d-none');
+        document.getElementById('trackerSalesLoadedView').classList.remove('d-none');
+        document.getElementById('trackerUpdatesLoadedView').classList.add('d-none');
+
+        const mainPane = document.querySelector('.zy-admin-main-pane');
+        if (mainPane) mainPane.scrollTo({ top: 0, behavior: 'smooth' });
+      } catch (err) {
+        console.error('Error opening project sales view:', err);
+      }
+    }
+
+    function openProjectUpdatesView(projectId) {
+      currentLoadedProjectId = projectId;
+      currentTrackerProjectId = projectId;
+
+      // Filter and render updates for this project
+      const filtered = trackerAllUpdatesData.filter(u => u.project_id === Number(projectId));
+      renderTrackerUpdates(filtered);
+
+      const p = trackerProjectsData.find(item => item.id === Number(projectId));
+      if (p) {
+        document.getElementById('trackerActiveProjectTitle').textContent = `Project updates &bull; ${p.name}`;
+        document.getElementById('trackerActiveProjectSubtitle').textContent = `Tabular modification log & change orders for ${p.name} (${p.client_name})`;
+      }
+
+      // Jump buttons
+      document.getElementById('tuPageDetailsJumpBtn').onclick = () => openProjectDetailsView(projectId);
+      document.getElementById('tuPageSalesJumpBtn').onclick = () => openProjectSalesView(projectId);
+
+      // Switch to loaded view
+      document.getElementById('trackerProjectsGridView').classList.add('d-none');
+      document.getElementById('trackerDetailsLoadedView').classList.add('d-none');
+      document.getElementById('trackerSalesLoadedView').classList.add('d-none');
+      document.getElementById('trackerUpdatesLoadedView').classList.remove('d-none');
+
+      const mainPane = document.querySelector('.zy-admin-main-pane');
+      if (mainPane) mainPane.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function openAddProjectModal() {
+      document.getElementById('trackerAddProjectForm').reset();
+      const modalEl = document.getElementById('trackerAddProjectModal');
+      const modal = new bootstrap.Modal(modalEl);
+      modal.show();
+    }
+
+    async function handleSaveAddProject(e) {
+      e.preventDefault();
+      const name = document.getElementById('tapName').value;
+      const client_name = document.getElementById('tapClientName').value;
+      const category = document.getElementById('tapCategory').value;
+      const project_value = document.getElementById('tapProjectValue').value;
+      const description = document.getElementById('tapDescription').value;
+      const is_completed = document.getElementById('tapStatus').value;
+      const completion_percent = document.getElementById('tapPercent').value;
+      const completion_date = document.getElementById('tapCompletionDate').value;
+      const hosted_url = document.getElementById('tapHostedUrl').value;
+      const hosting_provider = document.getElementById('tapHostingProvider').value;
+      const backup_file_name = document.getElementById('tapBackupFile').value;
+      const backup_size = document.getElementById('tapBackupSize').value;
+      const backup_location = document.getElementById('tapBackupLocation').value;
+
+      try {
+        const res = await fetch('/api/tracker/projects', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name, client_name, category, project_value, description,
+            is_completed, completion_percent, completion_date,
+            hosted_url, hosting_provider, backup_file_name, backup_size, backup_location
+          })
+        });
+        const data = await res.json();
+        if (data && data.success) {
+          const modalEl = document.getElementById('trackerAddProjectModal');
+          const modal = bootstrap.Modal.getInstance(modalEl);
+          if (modal) modal.hide();
+          await loadTrackerProjects();
+          showAdminToast('New project created and synchronized across portals!');
+        } else {
+          alert('Failed to add project: ' + (data.error || 'Server error'));
+        }
+      } catch (err) {
+        console.error('Error adding project:', err);
+        alert('Error adding project.');
+      }
+    }
+
     function renderTrackerProjects(projects) {
       const container = document.getElementById('trackerProjectsGrid');
       if (!container) return;
@@ -4193,17 +4745,17 @@
               <!-- Three Prominent Required Buttons matching user sketch -->
               <div class="zy-tracker-buttons-grid">
                 <!-- 1. Project Details Button -->
-                <button type="button" class="zy-btn-tracker zy-btn-tracker-details" onclick="openTrackerDetails(${p.id})" title="View completion status, backup storage, hosting & commercial value">
+                <button type="button" class="zy-btn-tracker zy-btn-tracker-details" onclick="openProjectDetailsView(${p.id})" title="View completion status, backup storage, hosting & commercial value">
                   <i class="bi bi-info-circle-fill"></i> Project Details
                 </button>
 
                 <!-- 2. Sales Button -->
-                <button type="button" class="zy-btn-tracker zy-btn-tracker-sales" onclick="openTrackerSales(${p.id})" title="Access Quotation, PO, SO, and Invoices with direct download">
+                <button type="button" class="zy-btn-tracker zy-btn-tracker-sales" onclick="openProjectSalesView(${p.id})" title="Access Quotation, PO, SO, and Invoices with direct download">
                   <i class="bi bi-receipt"></i> Sales
                 </button>
 
                 <!-- 3. Project Updates Button -->
-                <button type="button" class="zy-btn-tracker zy-btn-tracker-updates" onclick="openProjectUpdates(${p.id})" title="View tabular updates log with Excel and PDF export">
+                <button type="button" class="zy-btn-tracker zy-btn-tracker-updates" onclick="openProjectUpdatesView(${p.id})" title="View tabular updates log with Excel and PDF export">
                   <i class="bi bi-table"></i> Project Updates
                 </button>
               </div>

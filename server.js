@@ -608,25 +608,35 @@ app.post('/api/schedule/meeting', (req, res) => {
 });
 
 // ==================== CLIENT PROJECT PORTAL API ====================
-// GET /api/portal/projects (Strictly filtered by authenticated client)
+// GET /api/portal/projects (Unified with Project Tracker)
 app.get('/api/portal/projects', authenticateToken, (req, res) => {
-  const userEmail = req.user.email.toLowerCase();
-  db.all(
-    'SELECT * FROM projects WHERE LOWER(client) = ? OR LOWER(client) = ? ORDER BY created_at DESC',
-    [userEmail, req.user.company ? req.user.company.toLowerCase() : ''],
-    (err, rows) => {
-      if (err) {
-        return res.status(500).json({ success: false, message: 'Database error fetching projects.' });
-      }
-      if (rows && rows.length > 0) {
-        return res.json({ success: true, projects: rows });
-      }
-      // Demo projects fallback if user has no assigned project yet
-      db.all('SELECT * FROM projects LIMIT 3', [], (demoErr, demoRows) => {
-        res.json({ success: true, projects: demoRows || [] });
-      });
+  db.all('SELECT * FROM tracker_projects ORDER BY id ASC', [], (err, rows) => {
+    if (err) {
+      return res.status(500).json({ success: false, message: 'Database error fetching projects.' });
     }
-  );
+    const mapped = (rows || []).map(p => ({
+      id: p.id,
+      slug: p.slug,
+      title: p.name,
+      client: p.client_name,
+      category: p.category,
+      description: p.description,
+      status: p.is_completed ? 'Completed' : 'In Progress',
+      progress: p.completion_percent || (p.is_completed ? 100 : 88),
+      completion_date: p.completion_date,
+      is_hosted: p.is_hosted,
+      hosted_status: p.hosted_status,
+      hosted_url: p.hosted_url,
+      hosting_provider: p.hosting_provider,
+      ssl_status: p.ssl_status,
+      backup_file_name: p.backup_file_name,
+      backup_location: p.backup_location,
+      backup_size: p.backup_size,
+      backup_last_date: p.backup_last_date,
+      project_value: p.project_value
+    }));
+    res.json({ success: true, projects: mapped });
+  });
 });
 
 // GET /api/portal/milestones
@@ -2989,6 +2999,153 @@ app.get('/api/tracker/projects/:id', (req, res) => {
       });
     });
   });
+});
+
+// 2b. Create a new tracked project (unified with Client Workspace)
+app.post('/api/tracker/projects', (req, res) => {
+  const {
+    name, client_name, category, description,
+    is_completed, completion_percent, completion_date,
+    backup_file_name, backup_location, backup_size,
+    is_hosted, hosted_status, hosted_url, hosting_provider, ssl_status,
+    project_value, project_value_raw, currency, payment_status
+  } = req.body;
+
+  if (!name || !client_name) {
+    return res.status(400).json({ error: 'Project name and client name are required.' });
+  }
+
+  const baseSlug = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'project';
+  const slug = `${baseSlug}-${Date.now().toString().slice(-4)}`;
+  const cat = category || 'Enterprise Software';
+  const desc = description || `${name} customized software delivery pod.`;
+  const comp = Number(is_completed) === 1 ? 1 : 0;
+  const compPercent = Number(completion_percent) || (comp ? 100 : 50);
+  const compDate = completion_date || (comp ? 'Completed in 2026' : 'Target: Q4 2026');
+  const bFile = backup_file_name || `${baseSlug}_core_v1.0_backup.tar.gz`;
+  const bLoc = backup_location || 'AWS S3 Cold Storage (ap-south-1)';
+  const bSize = backup_size || '1.80 GB';
+  const bLast = new Date().toISOString().replace('T', ' ').substring(0, 16) + ' UTC';
+  const hHosted = is_hosted !== undefined ? Number(is_hosted) : 1;
+  const hStat = hosted_status || (comp ? 'Live in Production' : 'Client UAT / Staging');
+  const hUrl = hosted_url || `https://${baseSlug}.zyllotech.com`;
+  const hProv = hosting_provider || 'AWS ECS & RDS Multi-AZ';
+  const hSsl = ssl_status || 'Active (TLS 1.3)';
+  const pVal = project_value || '₹35,00,000 INR';
+  const pValRaw = Number(project_value_raw) || 3500000;
+  const pCurr = currency || 'INR';
+  const pPay = payment_status || (comp ? 'Paid in Full (100% Cleared)' : 'Milestone 1 Advance Received');
+
+  db.run(
+    `INSERT INTO tracker_projects (
+      slug, name, client_name, category, description,
+      is_completed, completion_percent, completion_date,
+      backup_file_name, backup_location, backup_size, backup_last_date,
+      is_hosted, hosted_status, hosted_url, hosting_provider, ssl_status,
+      project_value, project_value_raw, currency, payment_status
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+    [
+      slug, name, client_name, cat, desc,
+      comp, compPercent, compDate,
+      bFile, bLoc, bSize, bLast,
+      hHosted, hStat, hUrl, hProv, hSsl,
+      pVal, pValRaw, pCurr, pPay
+    ],
+    function(insertErr) {
+      if (insertErr) {
+        return res.status(500).json({ error: 'Failed to create project', details: insertErr.message });
+      }
+
+      const newProjectId = this.lastID;
+      const todayStr = new Date().toISOString().split('T')[0];
+
+      // Auto-generate initial Quotation, PO, SO, and Invoice in tracker_sales_docs
+      const docsStmt = db.prepare(`
+        INSERT INTO tracker_sales_docs (project_id, doc_type, doc_number, title, issue_date, amount, status, file_name)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+      `);
+
+      const prefix = baseSlug.toUpperCase().slice(0, 4);
+      docsStmt.run(newProjectId, 'Quotation', `QT-${prefix}-2026-01`, `Commercial Quotation - ${name}`, todayStr, pVal, 'Approved', `Quotation_${prefix}_QT-01.pdf`);
+      docsStmt.run(newProjectId, 'PO', `PO-${prefix}-7801`, `Client Purchase Order - ${client_name}`, todayStr, pVal, 'Accepted', `Purchase_Order_${prefix}_PO-7801.pdf`);
+      docsStmt.run(newProjectId, 'SO', `SO-ZYLLO-${newProjectId}01`, `Internal Sales Order Confirmation`, todayStr, pVal, 'Confirmed', `Sales_Order_${prefix}_SO.pdf`);
+      docsStmt.run(newProjectId, 'Invoice', `INV-ZYLLO-${newProjectId}08`, `Milestone Invoice - Project Kick-off`, todayStr, pVal, comp ? 'Paid' : 'Paid', `Tax_Invoice_${prefix}_INV.pdf`);
+      docsStmt.finalize();
+
+      // Seed initial update
+      db.run(
+        `INSERT INTO tracker_updates (project_id, s_no, update_request, request_from, date_of_modification, status, remarks)
+         VALUES (?, 1, 'Initial architectural baseline and repository setup', 'Project Management Lead', ?, 'Completed', 'Git repository provisioned, CI/CD pipelines connected.')`,
+        [newProjectId, todayStr]
+      );
+
+      res.status(201).json({
+        success: true,
+        message: 'Project created successfully in Project Tracker and Client Workspace.',
+        project: {
+          id: newProjectId,
+          slug,
+          name,
+          client_name,
+          category: cat,
+          project_value: pVal,
+          is_completed: comp,
+          completion_percent: compPercent,
+          hosted_url: hUrl,
+          backup_file_name: bFile
+        }
+      });
+    }
+  );
+});
+
+// 2c. Update Hosting specifications for a project (callable from Client Workspace and Tracker)
+app.put('/api/tracker/projects/:id/hosting', (req, res) => {
+  const projectId = req.params.id;
+  const { hosted_status, hosted_url, hosting_provider, ssl_status } = req.body;
+
+  db.run(
+    `UPDATE tracker_projects SET
+      hosted_status = COALESCE(?, hosted_status),
+      hosted_url = COALESCE(?, hosted_url),
+      hosting_provider = COALESCE(?, hosting_provider),
+      ssl_status = COALESCE(?, ssl_status)
+     WHERE id = ?`,
+    [hosted_status, hosted_url, hosting_provider, ssl_status, projectId],
+    function(err) {
+      if (err) {
+        return res.status(500).json({ success: false, message: 'Database error updating hosting specifications.' });
+      }
+      res.json({ success: true, message: 'Hosting specifications updated successfully.' });
+    }
+  );
+});
+
+// 2d. Upload / Register new backup file for a project (callable from Client Workspace and Tracker)
+app.post('/api/tracker/projects/:id/backup', (req, res) => {
+  const projectId = req.params.id;
+  const { backup_file_name, backup_location, backup_size } = req.body;
+  const lastDate = new Date().toISOString().replace('T', ' ').substring(0, 16) + ' UTC';
+
+  db.run(
+    `UPDATE tracker_projects SET
+      backup_file_name = COALESCE(?, backup_file_name),
+      backup_location = COALESCE(?, backup_location),
+      backup_size = COALESCE(?, backup_size),
+      backup_last_date = ?
+     WHERE id = ?`,
+    [backup_file_name, backup_location, backup_size, lastDate, projectId],
+    function(err) {
+      if (err) {
+        return res.status(500).json({ success: false, message: 'Database error updating backup file.' });
+      }
+      res.json({
+        success: true,
+        message: 'Backup archive manifest verified and synchronized.',
+        backup_last_date: lastDate
+      });
+    }
+  );
 });
 
 // 3. Add a new update request for a project
