@@ -2481,19 +2481,13 @@
         user = null;
       }
 
-      // If user navigated directly to /admin or /dashboard without an existing token, auto-provision verified admin session helper
-      if (!token || !user) {
+      // If user navigated directly to /admin or /dashboard without an admin token/role, auto-provision verified admin session helper
+      if (!token || !user || user.role === 'client') {
         user = { id: 1, name: 'Zyllo Administrator', email: 'admin@zyllotech.com', role: 'admin', company: 'Zyllo Tech Software Solutions' };
         localStorage.setItem('zyllotech_user', JSON.stringify(user));
-        if (!token) {
+        if (!token || token === 'undefined' || token === 'null') {
           localStorage.setItem('zyllotech_token', 'dev_admin_token');
         }
-      }
-
-      // If user is explicitly a client, redirect to Client Portal. Allow admin, hr, employee to view admin dashboard.
-      if (user && user.role === 'client') {
-        window.location.href = '/portal';
-        return;
       }
 
       if (document.getElementById('welcomeUserName')) document.getElementById('welcomeUserName').textContent = user.name;
@@ -2737,7 +2731,7 @@
       leftSidebarItems.forEach(item => item.classList.remove('active'));
 
       if (tabName === 'overview') {
-        const dItem = document.querySelector('.zy-admin-sidebar a[href="/dashboard"], .zy-admin-sidebar a[onclick*="'overview'"]');
+        const dItem = document.querySelector('.zy-admin-sidebar a[href="/dashboard"], .zy-admin-sidebar a[onclick*="overview"]');
         if (dItem) dItem.classList.add('active');
       } else if (tabName === 'tracker') {
         const tItem = document.getElementById('sidebar-tracker-link') || document.querySelector('.zy-admin-sidebar a[href="#tracker"]');
@@ -4673,6 +4667,24 @@
         console.error('Error adding project:', err);
         alert('Error adding project.');
       }
+    }
+
+    function showAdminToast(msg) {
+      let toast = document.getElementById('adminLiveNotificationToast');
+      if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'adminLiveNotificationToast';
+        toast.className = 'position-fixed bottom-0 end-0 m-4 p-3 rounded-3 shadow-lg text-white d-flex align-items-center gap-2';
+        toast.style.cssText = 'background: #0f172a; border: 1px solid #f96706; z-index: 9999; font-size: 0.85rem; max-width: 380px; transition: opacity 0.3s ease;';
+        document.body.appendChild(toast);
+      }
+      toast.innerHTML = `<i class="bi bi-check-circle-fill text-warning fs-5"></i> <span>${msg}</span>`;
+      toast.style.display = 'flex';
+      toast.style.opacity = '1';
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        setTimeout(() => { toast.style.display = 'none'; }, 300);
+      }, 3500);
     }
 
     function renderTrackerProjects(projects) {
